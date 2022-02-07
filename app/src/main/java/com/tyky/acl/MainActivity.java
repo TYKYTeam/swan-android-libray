@@ -2,13 +2,15 @@ package com.tyky.acl;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.tyky.webviewBase.activity.CustomWebViewActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends CustomWebViewActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setInitUrl("https://www.baidu.com/");
     }
+
+
 }
