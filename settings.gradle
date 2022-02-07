@@ -1,0 +1,3 @@
+include ':webviewBase'
+include ':app'
+rootProject.name = "AndroidComponentLibrary"
