@@ -32,8 +32,8 @@ android {
 }
 
 dependencies {
-    api 'androidx.appcompat:appcompat:1.1.0'
-    api 'com.google.android.material:material:1.1.0'
+    compileOnly 'androidx.appcompat:appcompat:1.1.0'
+    compileOnly 'com.google.android.material:material:1.1.0'
     //图片,视频,音频选择 https://github.com/LuckSiege/PictureSelector
     implementation 'io.github.lucksiege:pictureselector:v2.7.3-rc08'
     //Glide
@@ -46,4 +46,5 @@ dependencies {
     //日志输出    https://github.com/ZhaoKaiQiang/KLog
     implementation 'com.github.zhaokaiqiang.klog:library:1.6.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+    implementation 'org.apache.commons:commons-lang3:3.9'
 }

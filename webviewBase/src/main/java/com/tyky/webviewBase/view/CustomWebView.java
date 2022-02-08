@@ -6,8 +6,12 @@ import android.util.AttributeSet;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import com.tyky.webviewBase.annotation.WebViewInterface;
+import com.tyky.webviewBase.utils.ReflectUtil;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,7 +35,7 @@ public class CustomWebView extends WebView {
         initConfig();
     }
 
-    @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
+    @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface", "JavascriptInterface"})
     private void initConfig() {
         WebSettings webSettings = getSettings();
         webSettings.setAllowFileAccess(true);
@@ -51,6 +55,18 @@ public class CustomWebView extends WebView {
         webSettings.setSupportZoom(false);//支持缩放
         requestFocusFromTouch();
 
+        //遍历循环，筛选指定包名下含有指定注解的类，之后统一追加到webview中去
+        List<Class<?>> classes = ReflectUtil.scanClassListByAnnotation(getContext(), "com.tyky", WebViewInterface.class);
+        for (Class<?> aClass : classes) {
+            String value = aClass.getAnnotation(WebViewInterface.class).value();
+            Object o = null;
+            try {
+                o = aClass.newInstance();
+                addJavascriptInterface(o, value);
+            } catch (IllegalAccessException | InstantiationException e) {
+                e.printStackTrace();
+            }
+        }
         //跨域取消
         try {
             Class<?> clazz = getSettings().getClass();
@@ -63,7 +79,7 @@ public class CustomWebView extends WebView {
             e.printStackTrace();
         }
 
-        addJavascriptInterface(new WebViewJavaScript(), "android");
+        //addJavascriptInterface(new WebViewJavaScript(), "android");
         customWebViewChrome = new CustomWebViewChrome(this);
         setWebChromeClient(customWebViewChrome);
         setWebViewClient(new CustomWebViewClient());

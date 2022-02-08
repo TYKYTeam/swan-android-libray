@@ -3,7 +3,9 @@ package com.tyky.webviewBase.view;
 import android.webkit.JavascriptInterface;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.tyky.webviewBase.annotation.WebViewInterface;
 
+@WebViewInterface("android_base")
 public class WebViewJavaScript {
     /**
      * 设置视频文件录制的大小
