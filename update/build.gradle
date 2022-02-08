@@ -1,6 +1,10 @@
 plugins {
     id 'com.android.library'
+    id 'com.github.dcendents.android-maven'
 }
+
+group = 'com.github.stars-one'
+
 
 android {
     compileSdkVersion 32
