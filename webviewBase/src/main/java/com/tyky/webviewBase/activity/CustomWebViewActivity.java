@@ -57,9 +57,18 @@ public class CustomWebViewActivity extends AppCompatActivity {
 
     /**
      * 设置加载的url并加载
+     * @param path
+     */
+    public  void loadLocalUrl(String path) {
+        String url = "file:///android_asset"+path;
+        loadWebUrl(url);
+    }
+
+    /**
+     * 加载url
      * @param url
      */
-    public  void setInitUrl(String url) {
+    public void loadWebUrl(String url) {
         this.url = url;
         customWebView.loadUrl(url);
     }
