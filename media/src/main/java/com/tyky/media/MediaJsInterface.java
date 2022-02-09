@@ -1,5 +1,6 @@
 package com.tyky.media;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
@@ -46,6 +47,7 @@ public class MediaJsInterface {
      *
      * @param paramStr
      */
+    @SuppressLint("MissingPermission")
     @JavascriptInterface
     public String callPhone(String paramStr) {
         Activity topActivity = ActivityUtils.getTopActivity();
@@ -53,11 +55,12 @@ public class MediaJsInterface {
         AndPermission.with(topActivity)
                 .runtime()
                 .permission(callPhonePermission)
-                .onDenied(null).onGranted(data -> {
-            ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
-            String content = paramModel.getContent();
-            PhoneUtils.call(content);
-        })
+                .onDenied(null)
+                .onGranted(data -> {
+                    ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+                    String content = paramModel.getContent();
+                    PhoneUtils.call(content);
+                })
                 .start();
 
         //ClipboardUtils.copyText(content);
