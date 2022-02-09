@@ -94,9 +94,13 @@ if (window.android_media) {
     console.log(result);
 }
 ```
+
+### 3.拨打电话
+callPhone
+### 4.跳转拨号页面
+goToCall
 ### 还未实现功能清单
-0. 发送短信
-1. 拨打电话
+1. 发送短信
 2. 图片预览
 3. 图片压缩
 4. 拍照

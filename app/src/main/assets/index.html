@@ -8,7 +8,7 @@
         <script src="https://cdn.bootcss.com/vConsole/3.3.0/vconsole.min.js"></script>
 
     </head>
-    
+
     <body>
         <div>
             <div>
@@ -26,24 +26,53 @@
 
             <button type="default" onclick="copyTextToClipboard('hello woll')">复制文本</button>
             <br>
-            
+
             <button type="default" onclick="getTextFromClipboard()">获取文本</button>
+            <br>
+
+            <button type="default" onclick="callPhone()">拨打电话</button>
+            <br>
+
+
+            <button type="default" onclick="goToCall()">跳转拨号界面</button>
             <br>
 
             <button type="default" onclick="openLocation()">获取定位</button>
         </div>
     </body>
-    
+
     <script>
-        function copyTextToClipboard() {
+        function goToCall() {
             if (window.android_media) {
-                let content = {content:"hello world"}
-                let result = window.android_media.copyTextToClipboard(JSON.stringify(content))
+                let content = {
+                    content: "10086"
+                }
+                let result = window.android_media.goToCall(JSON.stringify(content))
                 console.log(result);
-                
             }
         }
-    
+
+        function callPhone() {
+            if (window.android_media) {
+                let content = {
+                    content: "10086"
+                }
+                let result = window.android_media.callPhone(JSON.stringify(content))
+                console.log(result);
+            }
+        }
+
+        function copyTextToClipboard() {
+            if (window.android_media) {
+                let content = {
+                    content: "hello world"
+                }
+                let result = window.android_media.copyTextToClipboard(JSON.stringify(content))
+                console.log(result);
+
+            }
+        }
+
         function getTextFromClipboard() {
             if (window.android_media) {
                 let result = window.android_media.getTextFromClipboard()
@@ -51,8 +80,8 @@
                 console.log(text)
             }
         }
-        
+
         var vConsole = new VConsole();
     </script>
-    
+
 </html>
