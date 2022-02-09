@@ -72,5 +72,4 @@ public class CustomWebViewActivity extends AppCompatActivity {
         this.url = url;
         customWebView.loadUrl(url);
     }
-
 }
