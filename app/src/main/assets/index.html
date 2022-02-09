@@ -1,33 +1,58 @@
 <!DOCTYPE html>
 <html>
     <meta name="viewport"
-          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <head>
         <title></title>
         <meta charset="UTF-8" />
         <script src="https://cdn.bootcss.com/vConsole/3.3.0/vconsole.min.js"></script>
 
     </head>
+    
     <body>
-       <div>
-           <div>
-               照片选择<input type="file" accept="image/*" />
-           </div>
-           <div>
-               视频选择<input type="file" accept="video/*" />
-           </div>
-           <div>
-               音频选择<input type="file" accept="audio/*" />
-           </div>
-           <div>
-               文件选择<input type="file" accept="*/*" />
-           </div>
+        <div>
+            <div>
+                照片选择<input type="file" accept="image/*" />
+            </div>
+            <div>
+                视频选择<input type="file" accept="video/*" />
+            </div>
+            <div>
+                音频选择<input type="file" accept="audio/*" />
+            </div>
+            <div>
+                文件选择<input type="file" accept="*/*" />
+            </div>
 
-           <button type="default" onclick="openLocation()">获取定位</button>
-       </div>
+            <button type="default" onclick="copyTextToClipboard('hello woll')">复制文本</button>
+            <br>
+            
+            <button type="default" onclick="getTextFromClipboard()">获取文本</button>
+            <br>
+
+            <button type="default" onclick="openLocation()">获取定位</button>
+        </div>
     </body>
+    
     <script>
+        function copyTextToClipboard() {
+            if (window.android_media) {
+                let content = {content:"hello world"}
+                let result = window.android_media.copyTextToClipboard(JSON.stringify(content))
+                console.log(result);
+                
+            }
+        }
+    
+        function getTextFromClipboard() {
+            if (window.android_media) {
+                let result = window.android_media.getTextFromClipboard()
+                let text = JSON.parse(result).result
+                console.log(text)
+            }
+        }
+        
         var vConsole = new VConsole();
-
     </script>
+    
 </html>

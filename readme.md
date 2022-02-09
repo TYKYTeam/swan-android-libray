@@ -29,6 +29,7 @@ implementation 'com.github.stars-one.android-component-libray:module名:版本�
 implementation 'com.github.stars-one.android-component-libray:0.2'
 ```
 
+注：以下使用的传参都是需要Json的字符串，需要调用
 ## webViewBase使用
 提供一个CustomWebViewActivity，首页的MainActivity需要继承于此Activity，之后再onCreate方法中调用以下两种方法之一，来加载url
 
@@ -40,20 +41,72 @@ implementation 'com.github.stars-one.android-component-libray:0.2'
 ![](https://img2022.cnblogs.com/blog/1210268/202202/1210268-20220208150005668-1077064887.png)
 
 ## media使用
-1. 拍照
-2. 录制视频
-3. 录音
-4. 图片选择
-5. 图片预览
-6. 二维码扫描
-7. 拨打电话
-8. 发送短信
-9. 图片压缩
-10. 安装apk
-11. 文件下载
-12. 获取剪切板内容
-13. 写入剪切板内容
 
+0. 获取剪切板内容
+1. 写入剪切板内容
+
+
+### 1.获取剪切板内容
+
+`getTextFromClipboard()`
+
+用来获取手机剪切板的文本内容
+
+**传参：无需传参**
+
+
+**返回结果：**
+```
+{"code":200,"desc":"","result":"剪切板的内容"}
+```
+
+**H5调用示例：**
+```
+if (window.android_media) {
+    let result = window.android_media.getTextFromClipboard()
+    let text = JSON.parse(result).result
+    console.log(text)
+}
+```
+### 2.复制文本
+
+`copyTextToClipboard(paramStr)` 
+
+往手机的剪切板写入内容，实现H5复制功能
+
+**传参：**
+```
+{
+    content:"hello world"
+}
+```
+
+**返回结果：**
+```
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.android_media) {
+    let content = {content:"hello world"}
+    let result = window.android_media.copyTextToClipboard(JSON.stringify(content))
+    console.log(result);
+}
+```
+### 还未实现功能清单
+0. 发送短信
+1. 拨打电话
+2. 图片预览
+3. 图片压缩
+4. 拍照
+5. 录制视频
+6. 录音
+7. 图片选择
+8. 二维码扫描
+9. 安装apk
+10. 文件下载
+11. 文件预览(文件先下载再预览)
 ## listener使用
 1. 网络状态监听
 2. 来电监听
