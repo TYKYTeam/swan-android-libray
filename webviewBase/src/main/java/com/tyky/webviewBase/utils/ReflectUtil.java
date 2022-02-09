@@ -2,8 +2,6 @@ package com.tyky.webviewBase.utils;
 
 import android.content.Context;
 
-import com.tyky.webviewBase.annotation.WebViewInterface;
-
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -13,8 +11,8 @@ import dalvik.system.DexFile;
 import dalvik.system.PathClassLoader;
 
 public class ReflectUtil {
-    public static List<Class<?>> scanClassListByAnnotation(Context ctx, String entityPackage,Class<WebViewInterface> annotationClass) {
-        List<Class<?>> classes = new ArrayList<Class<?>>();
+    public static List<Class<?>> scanClassListByAnnotation(Context ctx, String entityPackage,Class<? extends Annotation> annotationClass) {
+        List<Class<?>> classes = new ArrayList<>();
         try {
             PathClassLoader classLoader = (PathClassLoader) Thread
                     .currentThread().getContextClassLoader();
@@ -24,7 +22,7 @@ public class ReflectUtil {
             while (entries.hasMoreElements()) {
                 String entryName = entries.nextElement();
                 if (entryName.contains(entityPackage)) {
-                    Class<?> entryClass = Class.forName(entryName, true, classLoader);
+                    Class<?> entryClass = classLoader.loadClass(entryName);
                     Annotation annotation = entryClass.getAnnotation(annotationClass);
 
                     if (annotation != null) {

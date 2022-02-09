@@ -57,6 +57,7 @@ public class CustomWebView extends WebView {
 
         //遍历循环，筛选指定包名下含有指定注解的类，之后统一追加到webview中去
         List<Class<?>> classes = ReflectUtil.scanClassListByAnnotation(getContext(), "com.tyky", WebViewInterface.class);
+
         for (Class<?> aClass : classes) {
             String value = aClass.getAnnotation(WebViewInterface.class).value();
             Object o = null;
