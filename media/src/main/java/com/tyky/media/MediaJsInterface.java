@@ -2,7 +2,6 @@ package com.tyky.media;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -29,6 +28,9 @@ public class MediaJsInterface {
     public String copyTextToClipboard(String paramStr) {
         ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
         String content = paramModel.getContent();
+        if (content == null) {
+            return gson.toJson(ResultModel.errorParam());
+        }
         ClipboardUtils.copyText(content);
         return gson.toJson(ResultModel.success(""));
     }
@@ -50,6 +52,11 @@ public class MediaJsInterface {
     @SuppressLint("MissingPermission")
     @JavascriptInterface
     public String callPhone(String paramStr) {
+        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        String phone = paramModel.getContent();
+        if (phone == null) {
+            return gson.toJson(ResultModel.errorParam());
+        }
         Activity topActivity = ActivityUtils.getTopActivity();
         String callPhonePermission = Permission.CALL_PHONE;
         AndPermission.with(topActivity)
@@ -57,13 +64,11 @@ public class MediaJsInterface {
                 .permission(callPhonePermission)
                 .onDenied(null)
                 .onGranted(data -> {
-                    ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
-                    String content = paramModel.getContent();
-                    PhoneUtils.call(content);
+                    PhoneUtils.call(phone);
                 })
                 .start();
 
-        //ClipboardUtils.copyText(content);
+        //ClipboardUtils.copyText(phone);
         return gson.toJson(ResultModel.success(""));
     }
 
@@ -74,9 +79,11 @@ public class MediaJsInterface {
      */
     @JavascriptInterface
     public String goToCall(String paramStr) {
-        Log.e("--test", "拨打电话");
         ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
         String content = paramModel.getContent();
+        if (content == null) {
+            return gson.toJson(ResultModel.errorParam());
+        }
         PhoneUtils.dial(content);
         return gson.toJson(ResultModel.success(""));
     }

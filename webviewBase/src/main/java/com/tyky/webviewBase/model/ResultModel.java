@@ -12,6 +12,22 @@ public class ResultModel {
         return resultModel;
     }
 
+    public static ResultModel errorParam(String error) {
+        ResultModel resultModel = new ResultModel();
+        resultModel.code = 201;
+        resultModel.result = "";
+        resultModel.desc = error;
+        return resultModel;
+    }
+
+    public static ResultModel errorParam() {
+        ResultModel resultModel = new ResultModel();
+        resultModel.code = 201;
+        resultModel.result = "";
+        resultModel.desc = "必要参数未传";
+        return resultModel;
+    }
+
     public int getCode() {
         return code;
     }
