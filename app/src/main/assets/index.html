@@ -8,6 +8,11 @@
         <script src="https://cdn.bootcss.com/vConsole/3.3.0/vconsole.min.js"></script>
 
     </head>
+    <style>
+        button {
+            margin: 10px;
+        }
+    </style>
 
     <body>
         <div>
@@ -24,27 +29,37 @@
                 文件选择<input type="file" accept="*/*" />
             </div>
 
-            <button type="default" onclick="copyTextToClipboard('hello woll')">复制文本</button>
-            <br>
+            <div style="display: flex; flex-flow: row wrap;">
+                <button type="default" onclick="copyTextToClipboard('hello woll')">复制文本</button>
 
-            <button type="default" onclick="getTextFromClipboard()">获取文本</button>
-            <br>
+                <button type="default" onclick="getTextFromClipboard()">获取文本</button>
 
-            <button type="default" onclick="callPhone()">拨打电话</button>
-            <br>
+                <button type="default" onclick="callPhone()">拨打电话</button>
 
+                <button type="default" onclick="goToCall()">跳转拨号界面</button>
 
-            <button type="default" onclick="goToCall()">跳转拨号界面</button>
-            <br>
+                <button type="default" onclick="testCallBack()">测试回调</button>
 
-            <button type="default" onclick="testCallBack()">测试回调</button>
-            <br>
+                <button type="default" onclick="sendSms()">发送短信</button>
 
-            <button type="default" onclick="openLocation()">获取定位</button>
+                <button type="default" onclick="openLocation()">获取定位</button>
+            </div>
+
         </div>
     </body>
 
     <script>
+        function sendSms() {
+            if (window.android_media) {
+                let content = {
+                    phone: "10086",
+                    content: "111"
+                }
+                let result = window.android_media.sendSms(JSON.stringify(content))
+                console.log(result)
+            }
+        }
+        
         window.testMy = function(object) {
             console.log(object);
             console.log("这是测试");
@@ -64,7 +79,7 @@
         function goToCall() {
             if (window.android_media) {
                 let content = {
-                    content: "10086"
+                    phone: "10086"
                 }
                 let result = window.android_media.goToCall(JSON.stringify(content))
                 console.log(result);
@@ -74,7 +89,7 @@
         function callPhone() {
             if (window.android_media) {
                 let content = {
-                    content: "10086"
+                    phone: "10086"
                 }
                 let result = window.android_media.callPhone(JSON.stringify(content))
                 console.log(result);
