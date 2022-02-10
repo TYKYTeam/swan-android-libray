@@ -37,11 +37,30 @@
             <button type="default" onclick="goToCall()">跳转拨号界面</button>
             <br>
 
+            <button type="default" onclick="testCallBack()">测试回调</button>
+            <br>
+
             <button type="default" onclick="openLocation()">获取定位</button>
         </div>
     </body>
 
     <script>
+        window.testMy = function(object) {
+            console.log(object);
+            console.log("这是测试");
+        }
+
+        function testCallBack() {
+            if (window.android_media) {
+                let content = {
+                    content: "10086",
+                    callBackMethod: "testMy"
+                }
+                let result = window.android_media.testCallBack(JSON.stringify(content))
+                console.log(result)
+            }
+        }
+
         function goToCall() {
             if (window.android_media) {
                 let content = {
@@ -65,8 +84,10 @@
         function copyTextToClipboard() {
             if (window.android_media) {
                 let content = {
-                    content: "hello world"
+                    content: "hello world",
+                    name: null
                 }
+
                 let result = window.android_media.copyTextToClipboard(JSON.stringify(content))
                 console.log(result);
 
