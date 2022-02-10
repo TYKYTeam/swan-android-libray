@@ -29,7 +29,8 @@ implementation 'com.github.stars-one.android-component-libray:module名:版本�
 implementation 'com.github.stars-one.android-component-libray:0.2'
 ```
 
-注：以下使用的传参都是需要Json的字符串，需要调用
+**注：以下使用的传参都是需要Json的字符串，需要调用`JSON.stringify()`方法将对象转为字符串**
+
 ## webViewBase使用
 提供一个CustomWebViewActivity，首页的MainActivity需要继承于此Activity，之后再onCreate方法中调用以下两种方法之一，来加载url
 
@@ -42,10 +43,6 @@ implementation 'com.github.stars-one.android-component-libray:0.2'
 
 ## media使用
 
-0. 获取剪切板内容
-1. 写入剪切板内容
-
-
 ### 1.获取剪切板内容
 
 `getTextFromClipboard()`
@@ -53,7 +50,6 @@ implementation 'com.github.stars-one.android-component-libray:0.2'
 用来获取手机剪切板的文本内容
 
 **传参：无需传参**
-
 
 **返回结果：**
 ```
@@ -83,6 +79,7 @@ if (window.android_media) {
 
 **返回结果：**
 ```
+//成功
 {"code":200,"desc":"","result":""}
 ```
 
@@ -96,11 +93,98 @@ if (window.android_media) {
 ```
 
 ### 3.拨打电话
-callPhone
+`callPhone(paramStr)` 
+
+拨打电话，会直接拨号
+
+> 使用前需要声明电话权限，方法内已作了动态权限申请适配
+```
+<uses-permission android:name="android.permission.CALL_PHONE" />
+```
+
+**传参：**
+```
+{
+    phone:"10086"
+}
+```
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.android_media) {
+    let content = {
+        phone: "10086"
+    }
+    let result = window.android_media.callPhone(JSON.stringify(content))
+    console.log(result);
+}
+```
+
 ### 4.跳转拨号页面
 goToCall
+
+会跳转到拨号页面，无需申请电话权限
+
+**传参：**
+```
+{
+    phone:"10086"
+}
+```
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.android_media) {
+    let content = {
+        phone: "10086"
+    }
+    let result = window.android_media.goToCall(JSON.stringify(content))
+    console.log(result);
+}
+```
+
+### 5.发送短信
+sendSms 会跳转到短信发送页面，不会立即发送短信
+
+**传参：**
+```
+{
+    phone:"10086", //手机号码
+    content:"111" //短信内容
+}
+```
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.android_media) {
+    let content = {
+        phone: "10086",
+        content: "111"
+    }
+    let result = window.android_media.sendSms(JSON.stringify(content))
+    console.log(result)
+}
+```
+
 ### 还未实现功能清单
-1. 发送短信
 2. 图片预览
 3. 图片压缩
 4. 拍照
