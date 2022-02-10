@@ -11,6 +11,7 @@ import dalvik.system.DexFile;
 import dalvik.system.PathClassLoader;
 
 public class ReflectUtil {
+
     public static List<Class<?>> scanClassListByAnnotation(Context ctx, String entityPackage,Class<? extends Annotation> annotationClass) {
         List<Class<?>> classes = new ArrayList<>();
         try {

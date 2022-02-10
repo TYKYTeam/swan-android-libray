@@ -56,7 +56,7 @@ public class MediaJsInterface {
     @JavascriptInterface
     public String callPhone(String paramStr) {
         ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
-        String phone = paramModel.getContent();
+        String phone = paramModel.getPhone();
         if (phone == null) {
             return gson.toJson(ResultModel.errorParam());
         }
@@ -83,11 +83,28 @@ public class MediaJsInterface {
     @JavascriptInterface
     public String goToCall(String paramStr) {
         ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
-        String content = paramModel.getContent();
+        String content = paramModel.getPhone();
         if (content == null) {
             return gson.toJson(ResultModel.errorParam());
         }
         PhoneUtils.dial(content);
+        return gson.toJson(ResultModel.success(""));
+    }
+
+    /**
+     * 打电话
+     *
+     * @param paramStr
+     */
+    @JavascriptInterface
+    public String sendSms(String paramStr) {
+        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        String content = paramModel.getContent();
+        String phone = paramModel.getPhone();
+        if (content == null || phone ==null) {
+            return gson.toJson(ResultModel.errorParam());
+        }
+        PhoneUtils.sendSms(phone,content);
         return gson.toJson(ResultModel.success(""));
     }
 
