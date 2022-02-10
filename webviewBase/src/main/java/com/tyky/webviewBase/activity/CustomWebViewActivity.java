@@ -4,11 +4,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.socks.library.KLog;
 import com.tyky.webviewBase.R;
 import com.tyky.webviewBase.constants.RequestCodeConstants;
+import com.tyky.webviewBase.event.ImagePreviewEvent;
 import com.tyky.webviewBase.event.JsCallBackEvent;
 import com.tyky.webviewBase.view.CustomWebView;
 import com.tyky.webviewBase.view.CustomWebViewChrome;
@@ -28,6 +32,7 @@ public class CustomWebViewActivity extends AppCompatActivity {
     String url = "https://www.wenshushu.cn/";
     //String url = "http://10.232.241.118:8080/#/pages/index/index";
     private CustomWebView customWebView;
+    private ImageView ivPreview;
 
 
     @Override
@@ -47,7 +52,11 @@ public class CustomWebViewActivity extends AppCompatActivity {
 
 
         customWebView = findViewById(R.id.webview);
+        ivPreview = (ImageView) findViewById(R.id.ivPreview);
+        ivPreview.setOnClickListener(view -> ivPreview.setVisibility(View.GONE));
+
         customWebView.loadUrl(url);
+
     }
 
     @Override
@@ -98,5 +107,12 @@ public class CustomWebViewActivity extends AppCompatActivity {
         String jsScript = "javascript:" + method + "(" + gson.toJson(object) + ")";
         KLog.d("--回调JS方法", jsScript);
         customWebView.evaluateJavascript(jsScript, null);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void previewImg(ImagePreviewEvent event) {
+        String data = event.getData();
+        ivPreview.setVisibility(View.VISIBLE);
+        Glide.with(this).load(data).into(ivPreview);
     }
 }

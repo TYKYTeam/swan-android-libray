@@ -41,6 +41,8 @@
                 <button type="default" onclick="testCallBack()">测试回调</button>
 
                 <button type="default" onclick="sendSms()">发送短信</button>
+                
+                <button type="default" onclick="previewPictures()">图片预览</button>
 
                 <button type="default" onclick="openLocation()">获取定位</button>
             </div>
@@ -49,6 +51,16 @@
     </body>
 
     <script>
+    
+    function previewPictures(){
+        if (window.android_media) {
+            let content = {
+                dataList: ["https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.zhimg.com%2F50%2Fv2-6c581813261b4bc3ff1945b4c8336392_hd.jpg&refer=http%3A%2F%2Fpic2.zhimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1647080672&t=5212086c13d736971d211140a9b219c5","11545"]
+            }
+            let result = window.android_media.previewPictures(JSON.stringify(content))
+            console.log(result)
+        }
+    }
         function sendSms() {
             if (window.android_media) {
                 let content = {

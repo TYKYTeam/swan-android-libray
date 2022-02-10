@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.ClipboardUtils;
 import com.blankj.utilcode.util.PhoneUtils;
 import com.google.gson.Gson;
 import com.tyky.webviewBase.annotation.WebViewInterface;
+import com.tyky.webviewBase.event.ImagePreviewEvent;
 import com.tyky.webviewBase.event.JsCallBackEvent;
 import com.tyky.webviewBase.model.ParamModel;
 import com.tyky.webviewBase.model.ResultModel;
@@ -16,6 +17,8 @@ import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.List;
 
 @WebViewInterface("android_media")
 public class MediaJsInterface {
@@ -92,7 +95,7 @@ public class MediaJsInterface {
     }
 
     /**
-     * 打电话
+     * 发送短信
      *
      * @param paramStr
      */
@@ -107,6 +110,20 @@ public class MediaJsInterface {
         PhoneUtils.sendSms(phone,content);
         return gson.toJson(ResultModel.success(""));
     }
+
+    @JavascriptInterface
+    public String previewPictures(String paramStr) {
+        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        List<String> dataList = paramModel.getDataList();
+        if (dataList == null || dataList.size()<0) {
+            return gson.toJson(ResultModel.errorParam());
+        }
+        String s = dataList.get(0);
+        EventBus.getDefault().post(new ImagePreviewEvent(s));
+
+        return gson.toJson(ResultModel.success(""));
+    }
+
 
     @JavascriptInterface
     public String testCallBack(String paramStr) {
