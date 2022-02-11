@@ -2,4 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tyky.media">
 
+    <application>
+        <activity android:name=".activity.QrScanActivity"></activity>
+    </application>
+
 </manifest>

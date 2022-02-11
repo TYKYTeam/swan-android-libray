@@ -44,6 +44,7 @@
 
                 <button type="default" onclick="previewPicture()">图片预览(base64)</button>
                 <button type="default" onclick="previewPictureUrl()">图片预览(url)</button>
+                <button type="default" onclick="qrScan()">扫描二维码</button>
 
                 <button type="default" onclick="openLocation()">获取定位</button>
             </div>
@@ -52,6 +53,20 @@
     </body>
 
     <script>
+        window.qrScanResult = function(object) {
+            console.log(object);
+        }
+
+        function qrScan() {
+            if (window.android_media) {
+                let content = {
+                    callBackMethod: "qrScanResult"
+                }
+                let result = window.android_media.qrScan(JSON.stringify(content))
+                console.log(result)
+            }
+        }
+
         function previewPictureUrl() {
             if (window.android_media) {
                 let content = {

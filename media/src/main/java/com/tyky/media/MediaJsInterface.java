@@ -9,8 +9,10 @@ import com.blankj.utilcode.util.ClipboardUtils;
 import com.blankj.utilcode.util.PhoneUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.google.gson.Gson;
+import com.tyky.media.activity.QrScanActivity;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.event.ImagePreviewEvent;
+import com.tyky.webviewBase.event.IntentEvent;
 import com.tyky.webviewBase.event.JsCallBackEvent;
 import com.tyky.webviewBase.model.ParamModel;
 import com.tyky.webviewBase.model.ResultModel;
@@ -121,14 +123,32 @@ public class MediaJsInterface {
         ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
         String content = paramModel.getContent();
         int type = paramModel.getType();
-        if (type==0 || StringUtils.isEmpty(content)) {
+        if (type == 0 || StringUtils.isEmpty(content)) {
             return gson.toJson(ResultModel.errorParam(""));
         }
         EventBus.getDefault().post(new ImagePreviewEvent(content, type));
         return gson.toJson(ResultModel.success(""));
     }
 
+    /**
+     * 二维码扫描
+     *
+     * @param paramStr
+     * @return
+     */
+    @JavascriptInterface
+    public String qrScan(String paramStr) {
+        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        String callbackMethod = paramModel.getCallBackMethod();
+        if (callbackMethod == null) {
+            return gson.toJson(ResultModel.errorParam());
+        }
 
+        IntentEvent intentEvent = new IntentEvent(QrScanActivity.class, callbackMethod);
+        EventBus.getDefault().post(intentEvent);
+
+        return gson.toJson(ResultModel.success(""));
+    }
 
     @JavascriptInterface
     public String testCallBack(String paramStr) {

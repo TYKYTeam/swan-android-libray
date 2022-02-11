@@ -7,18 +7,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.blankj.utilcode.util.EncodeUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.socks.library.KLog;
 import com.tyky.webviewBase.R;
+import com.tyky.webviewBase.constants.PreviewPicture;
 import com.tyky.webviewBase.constants.RequestCodeConstants;
 import com.tyky.webviewBase.event.ImagePreviewEvent;
+import com.tyky.webviewBase.event.IntentEvent;
 import com.tyky.webviewBase.event.JsCallBackEvent;
 import com.tyky.webviewBase.view.CustomWebView;
 import com.tyky.webviewBase.view.CustomWebViewChrome;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
 
+import org.apache.commons.lang3.StringUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -100,6 +104,10 @@ public class CustomWebViewActivity extends AppCompatActivity {
 
     Gson gson = new Gson();
 
+    /**
+     * 回调页面的Js
+     * @param event
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void evaluateJavascript(JsCallBackEvent event) {
         Object object = event.getObject();
@@ -109,10 +117,44 @@ public class CustomWebViewActivity extends AppCompatActivity {
         customWebView.evaluateJavascript(jsScript, null);
     }
 
+    /**
+     * Activity跳转
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void GoToActivity(IntentEvent event) {
+        Class<?> goToActivity = event.getActivityClass();
+        Intent intent = new Intent(this, goToActivity);
+        intent.putExtra("methodName", event.getMethodName());
+        startActivity(intent);
+    }
+
+    /**
+     * 预览图片
+     * @param event
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void previewImg(ImagePreviewEvent event) {
         String data = event.getData();
-        ivPreview.setVisibility(View.VISIBLE);
-        Glide.with(this).load(data).into(ivPreview);
+        int type = event.getType();
+
+        //base64类型的需要解码
+        if (type == PreviewPicture.TYPE_BASE64) {
+            //判断如果有base64开头，处理一下
+            if (data.contains("base64,")) {
+                data = StringUtils.substringAfter(data, "base64,");
+            }
+            byte[] bytes = EncodeUtils.base64Encode(data);
+            ivPreview.setVisibility(View.VISIBLE);
+            Glide.with(this).load(bytes).into(ivPreview);
+        }
+
+        //链接直接预览
+        if (type == PreviewPicture.TYPE_URL) {
+            ivPreview.setVisibility(View.VISIBLE);
+            Glide.with(this).load(data).into(ivPreview);
+        }
     }
+
+
 }
