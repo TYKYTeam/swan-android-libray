@@ -5,8 +5,17 @@ import java.util.List;
 public class ParamModel {
     private String phone;
     private String content;
+    private Integer type;
     private String callBackMethod;
     private List<String> dataList;
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
 
     public List<String> getDataList() {
         return dataList;

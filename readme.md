@@ -184,14 +184,49 @@ if (window.android_media) {
 }
 ```
 
+### 6.图片预览
+
+previewPicture
+
+预览单张图片，之后点击图片会关闭
+
+**传参：**
+```
+{
+    content: "",
+    type: 2 
+}
+```
+> 当`type`为1，`content`传base64数据；
+> 
+> 当`type`为2，`content`传图片地址
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.android_media) {
+    let content = {
+        content: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2Ftp01%2F1ZZQ214233446-0-lp.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1647143194&t=b67961882a5e7d01f6ecd8a503a9db47",
+        type: 2
+    }
+    let result = window.android_media.previewPicture(JSON.stringify(content))
+    console.log(result)
+}
+```
+
 ### 还未实现功能清单
-2. 图片预览
+
+8. 二维码扫描
 3. 图片压缩
 4. 拍照
 5. 录制视频
 6. 录音
 7. 图片选择
-8. 二维码扫描
 9. 安装apk
 10. 文件下载
 11. 文件预览(文件先下载再预览)

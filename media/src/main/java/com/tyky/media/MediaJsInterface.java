@@ -7,6 +7,7 @@ import android.webkit.JavascriptInterface;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ClipboardUtils;
 import com.blankj.utilcode.util.PhoneUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.google.gson.Gson;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.event.ImagePreviewEvent;
@@ -17,8 +18,6 @@ import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
 
 import org.greenrobot.eventbus.EventBus;
-
-import java.util.List;
 
 @WebViewInterface("android_media")
 public class MediaJsInterface {
@@ -34,7 +33,7 @@ public class MediaJsInterface {
     public String copyTextToClipboard(String paramStr) {
         ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
         String content = paramModel.getContent();
-        if (content == null) {
+        if (StringUtils.isEmpty(content)) {
             return gson.toJson(ResultModel.errorParam());
         }
         ClipboardUtils.copyText(content);
@@ -60,7 +59,7 @@ public class MediaJsInterface {
     public String callPhone(String paramStr) {
         ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
         String phone = paramModel.getPhone();
-        if (phone == null) {
+        if (StringUtils.isEmpty(phone)) {
             return gson.toJson(ResultModel.errorParam());
         }
         Activity topActivity = ActivityUtils.getTopActivity();
@@ -87,7 +86,7 @@ public class MediaJsInterface {
     public String goToCall(String paramStr) {
         ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
         String content = paramModel.getPhone();
-        if (content == null) {
+        if (StringUtils.isEmpty(content)) {
             return gson.toJson(ResultModel.errorParam());
         }
         PhoneUtils.dial(content);
@@ -104,25 +103,31 @@ public class MediaJsInterface {
         ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
         String content = paramModel.getContent();
         String phone = paramModel.getPhone();
-        if (content == null || phone ==null) {
+        if (StringUtils.isEmpty(content) || StringUtils.isEmpty(phone)) {
             return gson.toJson(ResultModel.errorParam());
         }
-        PhoneUtils.sendSms(phone,content);
+        PhoneUtils.sendSms(phone, content);
         return gson.toJson(ResultModel.success(""));
     }
 
+    /**
+     * 预览单个图片
+     *
+     * @param paramStr
+     * @return
+     */
     @JavascriptInterface
-    public String previewPictures(String paramStr) {
+    public String previewPicture(String paramStr) {
         ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
-        List<String> dataList = paramModel.getDataList();
-        if (dataList == null || dataList.size()<0) {
-            return gson.toJson(ResultModel.errorParam());
+        String content = paramModel.getContent();
+        int type = paramModel.getType();
+        if (type==0 || StringUtils.isEmpty(content)) {
+            return gson.toJson(ResultModel.errorParam(""));
         }
-        String s = dataList.get(0);
-        EventBus.getDefault().post(new ImagePreviewEvent(s));
-
+        EventBus.getDefault().post(new ImagePreviewEvent(content, type));
         return gson.toJson(ResultModel.success(""));
     }
+
 
 
     @JavascriptInterface
@@ -132,7 +137,7 @@ public class MediaJsInterface {
         if (callbackMethod == null) {
             return gson.toJson(ResultModel.errorParam());
         }
-        EventBus.getDefault().post(new JsCallBackEvent(callbackMethod,ResultModel.success("测试。。")));
+        EventBus.getDefault().post(new JsCallBackEvent(callbackMethod, ResultModel.success("测试。。")));
         return gson.toJson(ResultModel.success(""));
     }
 
