@@ -218,6 +218,44 @@ if (window.android_media) {
     console.log(result)
 }
 ```
+### 7.扫描二维码
+
+qrScan
+
+扫描二维码
+
+**传参：**
+```
+{
+    callBackMethod: "" //扫描二维码成功后的回调js方法
+}
+```
+> 当`type`为1，`content`传base64数据；
+> 
+> 当`type`为2，`content`传图片地址
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+//object格式与返回结果一样
+window.qrScanResult = function(object) {
+    console.log(object);
+}
+
+function qrScan() {
+    if (window.android_media) {
+        let content = {
+            callBackMethod: "qrScanResult"
+        }
+        window.android_media.qrScan(JSON.stringify(content))
+    }
+}
+```
 
 ### 还未实现功能清单
 
