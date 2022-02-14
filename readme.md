@@ -230,9 +230,6 @@ qrScan
     callBackMethod: "" //扫描二维码成功后的回调js方法
 }
 ```
-> 当`type`为1，`content`传base64数据；
-> 
-> 当`type`为2，`content`传图片地址
 
 **返回结果：**
 ```
@@ -242,7 +239,7 @@ qrScan
 
 **H5调用示例：**
 ```
-//object格式与返回结果一样
+//object格式与返回结果一样，result即为二维码的文本数据
 window.qrScanResult = function(object) {
     console.log(object);
 }
@@ -259,7 +256,6 @@ function qrScan() {
 
 ### 还未实现功能清单
 
-8. 二维码扫描
 3. 图片压缩
 4. 拍照
 5. 录制视频
