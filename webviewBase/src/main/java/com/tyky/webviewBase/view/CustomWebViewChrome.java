@@ -44,6 +44,7 @@ public class CustomWebViewChrome extends WebChromeClient {
     public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
         this.filePathCallback = filePathCallback;
         String[] acceptTypes = fileChooserParams.getAcceptTypes();
+
         String acceptType = "*/*";
         StringBuilder sb = new StringBuilder();
         if (acceptTypes.length > 0) {
@@ -144,7 +145,7 @@ public class CustomWebViewChrome extends WebChromeClient {
         }
         if (type == 3) {
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("file/*");
+            intent.setType("*/*");
             currrentActivity.startActivityForResult(intent, RequestCodeConstants.FILE);
         }
     }
