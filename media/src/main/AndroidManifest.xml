@@ -2,8 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tyky.media">
 
+    <!--语音tts适配Android11-->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
+    </queries>
+
     <application>
-        <activity android:name=".activity.QrScanActivity"></activity>
+        <activity android:name=".activity.QrScanActivity"/>
     </application>
 
 </manifest>
