@@ -12,6 +12,11 @@
         button {
             margin: 10px;
         }
+
+        .contentDiv {
+            display: flex;
+            flex-flow: row wrap;
+        }
     </style>
 
     <body>
@@ -29,7 +34,7 @@
                 文件选择<input type="file" accept="file/*" />
             </div>
 
-            <div style="display: flex; flex-flow: row wrap;">
+            <div class="contentDiv">
                 <button type="default" onclick="copyTextToClipboard('hello woll')">复制文本</button>
 
                 <button type="default" onclick="getTextFromClipboard()">获取文本</button>
@@ -46,13 +51,29 @@
                 <button type="default" onclick="previewPictureUrl()">图片预览(url)</button>
                 <button type="default" onclick="qrScan()">扫描二维码</button>
 
-                <button type="default" onclick="openLocation()">获取定位</button>
             </div>
+            <div class="contentDiv">
+
+                <button type="default" onclick="sendNotification()">发送通知</button>
+            </div>
+
+            <button type="default" onclick="openLocation()">获取定位</button>
 
         </div>
     </body>
 
     <script>
+        function sendNotification() {
+            if (window.notification) {
+                let content = {
+                    content: "测试内容11111",
+                    title:"测试标题"
+                }
+                let result = window.notification.sendNotification(JSON.stringify(content))
+                console.log(result)
+            }
+        }
+
         window.qrScanResult = function(object) {
             console.log(object);
         }

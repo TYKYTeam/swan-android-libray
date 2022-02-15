@@ -4,10 +4,19 @@ import java.util.List;
 
 public class ParamModel {
     private String phone;
+    private String title;
     private String content;
     private Integer type;
     private String callBackMethod;
     private List<String> dataList;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public Integer getType() {
         return type;

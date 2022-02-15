@@ -13,5 +13,4 @@ public class MainActivity extends CustomWebViewActivity {
         //loadWebUrl("http://baidu.com");
     }
 
-
 }
