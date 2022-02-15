@@ -267,6 +267,36 @@ function qrScan() {
 9. 安装apk
 10. 文件下载
 11. 文件预览(文件先下载再预览)
+## notification通知
+### 1.发送通知
+sendNotification 状态栏显示一条新通知
+
+**传参：**
+```
+{
+    content: "测试内容11111",
+    title:"测试标题"
+}
+```
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.notification) {
+    let content = {
+        content: "测试内容11111",
+        title:"测试标题"
+    }
+    let result = window.notification.sendNotification(JSON.stringify(content))
+    console.log(result)
+}
+```
+
 ## listener使用
 1. 网络状态监听
 2. 来电监听
