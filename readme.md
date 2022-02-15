@@ -3,6 +3,8 @@
 [![](https://jitpack.io//v/stars-one/android-component-libray.svg)](https://github.com/stars-one/android-component-libray)
 ![](https://img.shields.io/badge/java-8-orange)
 ![](https://img.shields.io/badge/androix-8e24aa)
+![](https://img.shields.io/badge/minSdkVersion-21-blue)
+![](https://img.shields.io/badge/targetSdkVersion-32-yellow)
 
 Android原生组件库，为Html提供Android原生能力，增强H5
 
@@ -40,6 +42,11 @@ implementation 'com.github.stars-one.android-component-libray:0.2'
 > **PS：loadLocalUrl主要是自动拼接了assets里的本地资源html文件，如下图**
 
 ![](https://img2022.cnblogs.com/blog/1210268/202202/1210268-20220208150005668-1077064887.png)
+
+
+由于文件选择的功能与Webview比较耦合，无法单独划分出一个module，所以内置在主module中
+
+包含拍照，选择相册图片，录制视频，选择本地视频文件，录音，选择本地音频文件，和选择其他文件
 
 ## media使用
 
@@ -256,11 +263,7 @@ function qrScan() {
 
 ### 还未实现功能清单
 
-3. 图片压缩
-4. 拍照
-5. 录制视频
-6. 录音
-7. 图片选择
+8. 图片压缩
 9. 安装apk
 10. 文件下载
 11. 文件预览(文件先下载再预览)
