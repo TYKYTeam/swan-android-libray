@@ -1,3 +1,4 @@
+include ':notification'
 include ':media'
 include ':update'
 include ':webviewBase'
