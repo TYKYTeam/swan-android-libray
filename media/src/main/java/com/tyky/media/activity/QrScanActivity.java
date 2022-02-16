@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.blankj.utilcode.util.DeviceUtils;
 import com.blankj.utilcode.util.ImageUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.UriUtils;
 import com.google.zxing.Result;
 import com.king.zxing.CaptureActivity;
@@ -80,7 +82,7 @@ public class QrScanActivity extends CaptureActivity {
 
                     String path = localMedia.getPath();
 
-                    KLog.d("版本号：" + DeviceUtils.getSDKVersionCode());
+                    KLog.d("选择图片路径：" + path);
                     int sdkVersionCode = DeviceUtils.getSDKVersionCode();
                     Uri uri = null;
                     if (sdkVersionCode >= 29) {
@@ -97,8 +99,12 @@ public class QrScanActivity extends CaptureActivity {
                     bitmap.recycle();
                     bitmap = null;
                     KLog.d("图库照片扫码数据：" + text);
-                    finish();
-                    EventBus.getDefault().post(new JsCallBackEvent(methodName, ResultModel.success(text)));
+                    if (StringUtils.isEmpty(text)) {
+                        Toast.makeText(this, "识别图片二维码失败！", Toast.LENGTH_SHORT).show();
+                    } else {
+                        finish();
+                        EventBus.getDefault().post(new JsCallBackEvent(methodName, ResultModel.success(text)));
+                    }
                 }
             }
         } else {
