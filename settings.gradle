@@ -1,3 +1,4 @@
+include ':share'
 include ':notification'
 include ':media'
 include ':update'
