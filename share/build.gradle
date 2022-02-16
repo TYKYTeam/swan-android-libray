@@ -1,10 +1,13 @@
 plugins {
     id 'com.android.library'
+    id 'com.github.dcendents.android-maven'
 }
 
+group = 'com.github.stars-one'
+
 android {
-    compileSdkVersion 32
-    buildToolsVersion "31.0.0"
+    compileSdkVersion 30
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         minSdkVersion 21
@@ -29,10 +32,19 @@ android {
 }
 
 dependencies {
+    compileOnly 'androidx.appcompat:appcompat:1.1.0'
+    compileOnly 'com.google.android.material:material:1.1.0'
+    //图片,视频,音频选择 https://github.com/LuckSiege/PictureSelector
+    compileOnly 'io.github.lucksiege:pictureselector:v2.7.3-rc02'
 
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'com.google.android.material:material:1.1.0'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    // Android的工具类   https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
+    compileOnly 'com.blankj:utilcodex:1.30.6'
+
+    //日志输出    https://github.com/ZhaoKaiQiang/KLog
+    compileOnly 'com.github.zhaokaiqiang.klog:library:1.6.0'
+
+    compileOnly 'androidx.constraintlayout:constraintlayout:2.1.2'
+  
+    compileOnly project(path: ':webviewBase')
 }

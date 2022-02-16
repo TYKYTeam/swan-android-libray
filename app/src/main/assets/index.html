@@ -57,17 +57,31 @@
                 <button type="default" onclick="sendNotification()">发送通知</button>
             </div>
 
+            <div class="contentDiv">
+                <button type="default" onclick="shareText()">分享文本</button>
+            </div>
+
             <button type="default" onclick="openLocation()">获取定位</button>
 
         </div>
     </body>
 
     <script>
+        function shareText() {
+            if (window.share) {
+                let content = {
+                    content: "分享的文本内容"
+                }
+                let result = window.share.shareText(JSON.stringify(content))
+                console.log(result)
+            }
+        }
+
         function sendNotification() {
             if (window.notification) {
                 let content = {
                     content: "测试内容11111",
-                    title:"测试标题"
+                    title: "测试标题"
                 }
                 let result = window.notification.sendNotification(JSON.stringify(content))
                 console.log(result)

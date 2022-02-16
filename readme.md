@@ -297,17 +297,52 @@ if (window.notification) {
 }
 ```
 
+## share
+默认分享会弹出分享方式（如分享给微信好友，复制文本，分享到QQ等选项）
+
+### 1.分享文本
+
+shareText 弹出分享的对话框，选择某一应用进行分享
+
+**传参：**
+```
+{
+    content: "这是分享的文本内容"
+}
+```
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.share) {
+    let content = {
+        content: "这是分享的文本内容"
+    }
+    let result = window.share.shareText(JSON.stringify(content))
+    console.log(result)
+}
+```
+
+### 2.分享图片
+### 3.分享图文
 ## listener使用
 1. 网络状态监听
 2. 来电监听
 3. 返回键监听
 
-## share
-1. 分享到微信好友
-2. 分享给朋友圈
-3. 分享到QQ
-4. 使用浏览器打开
-5. 单纯复制链接
+
+
+
+0. 分享到微信好友
+1. 分享给朋友圈
+2. 分享到QQ
+3. 使用浏览器打开
+4. 单纯复制链接
 
 ## map
 
