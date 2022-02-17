@@ -151,7 +151,7 @@ public class CustomWebViewActivity extends AppCompatActivity {
             if (data.contains("base64,")) {
                 data = StringUtils.substringAfter(data, "base64,");
             }
-            byte[] bytes = EncodeUtils.base64Encode(data);
+            byte[] bytes = EncodeUtils.base64Decode(data);
             ivPreview.setVisibility(View.VISIBLE);
             Glide.with(this).load(bytes).into(ivPreview);
         }
