@@ -263,6 +263,33 @@ function qrScan() {
 
 ### 8.语音播放文本
 
+speakText 播放文本（如果没有tts引擎，会没法播放语音）
+
+**传参：**
+```
+{
+   content: "这是一段测试语音的文本"
+}
+```
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.android_media) {
+    let content = {
+        content: "这是一段测试语音的文本"
+    }
+    let result = window.android_media.speakText(JSON.stringify(content))
+    console.log(result)
+}
+```
+
+
 ### 还未实现功能清单
 
 8. 图片压缩
