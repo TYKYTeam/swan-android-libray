@@ -2,7 +2,6 @@ package com.tyky.share;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.webkit.JavascriptInterface;
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -57,10 +56,8 @@ public class ShareJsInterface {
         if (data.contains("base64,")) {
             data = org.apache.commons.lang3.StringUtils.substringAfter(data, "base64,");
         }
-        //byte[] bytes = Base64.decode(data, Base64.DEFAULT);
-        //Bitmap bitmap = ImageUtils.bytes2Bitmap(bytes);
         byte[] bytes = EncodeUtils.base64Decode(data);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        Bitmap bitmap = ImageUtils.bytes2Bitmap(bytes);
 
         String filePath = PathUtils.getExternalAppFilesPath() + System.currentTimeMillis() + ".png";
 
