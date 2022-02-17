@@ -129,7 +129,7 @@ public class CustomWebViewActivity extends AppCompatActivity {
      * @param event
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void GoToActivity(IntentEvent event) {
+    public void goToActivity(IntentEvent event) {
         Class<?> goToActivity = event.getActivityClass();
         Intent intent = new Intent(this, goToActivity);
         intent.putExtra("methodName", event.getMethodName());
