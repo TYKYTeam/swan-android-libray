@@ -18,6 +18,7 @@ import com.tyky.webviewBase.constants.RequestCodeConstants;
 import com.tyky.webviewBase.event.ImagePreviewEvent;
 import com.tyky.webviewBase.event.IntentEvent;
 import com.tyky.webviewBase.event.JsCallBackEvent;
+import com.tyky.webviewBase.utils.SpeechService;
 import com.tyky.webviewBase.view.CustomWebView;
 import com.tyky.webviewBase.view.CustomWebViewChrome;
 import com.yanzhenjie.permission.AndPermission;
@@ -46,6 +47,9 @@ public class CustomWebViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_custom_webview);
 
         EventBus.getDefault().register(this);
+        //语音初始化
+        SpeechService.init(this);
+
         AndPermission.with(this).runtime()
                 .permission(Permission.WRITE_EXTERNAL_STORAGE)
                 .onGranted(permissions -> {
@@ -106,6 +110,7 @@ public class CustomWebViewActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
+        SpeechService.release();
         super.onDestroy();
     }
 
@@ -162,6 +167,8 @@ public class CustomWebViewActivity extends AppCompatActivity {
             Glide.with(this).load(data).into(ivPreview);
         }
     }
+
+
 
 
 }

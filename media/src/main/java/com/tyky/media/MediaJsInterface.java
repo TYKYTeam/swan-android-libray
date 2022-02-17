@@ -10,6 +10,7 @@ import com.blankj.utilcode.util.PhoneUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.google.gson.Gson;
 import com.tyky.media.activity.QrScanActivity;
+import com.tyky.webviewBase.utils.SpeechService;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.event.ImagePreviewEvent;
 import com.tyky.webviewBase.event.IntentEvent;
@@ -147,6 +148,23 @@ public class MediaJsInterface {
         IntentEvent intentEvent = new IntentEvent(QrScanActivity.class, callbackMethod);
         EventBus.getDefault().post(intentEvent);
 
+        return gson.toJson(ResultModel.success(""));
+    }
+
+
+    /**
+     * 文字转语音
+     *
+     * @param paramStr
+     */
+    @JavascriptInterface
+    public String speakText(String paramStr) {
+        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        String content = paramModel.getContent();
+        if (StringUtils.isEmpty(content)) {
+            return gson.toJson(ResultModel.errorParam());
+        }
+        SpeechService.speakText(content);
         return gson.toJson(ResultModel.success(""));
     }
 
