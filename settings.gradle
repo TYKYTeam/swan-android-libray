@@ -1,3 +1,4 @@
+include ':device'
 include ':share'
 include ':notification'
 include ':media'
