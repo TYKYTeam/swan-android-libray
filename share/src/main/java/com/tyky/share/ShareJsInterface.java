@@ -35,7 +35,7 @@ public class ShareJsInterface {
             return gson.toJson(ResultModel.errorParam());
         }
         Intent shareTextIntent = IntentUtils.getShareTextIntent(content);
-        shareTextIntent.setType(shareTextIntent.getType() + ";");
+        shareTextIntent.setType(shareTextIntent.getType() );
         ActivityUtils.getTopActivity().startActivity(shareTextIntent);
         return gson.toJson(ResultModel.success(""));
     }
