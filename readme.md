@@ -417,6 +417,37 @@ if (window.share) {
     console.log(result)
 }
 ```
+## device设备
+
+### 1.获取设备mac地址
+
+getMacAddress 
+
+获取设备mac地址
+
+**传参：无需**
+
+**返回结果：**
+```
+//成功 result中即为mac地址数据
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.device) {
+    let result = window.device.getMacAddress()
+    alert(result);
+}
+```
+
+### 2.获取唯一设备id
+
+0. 获取原生APP的版本信息 （版本号，版本名）
+1. 获取设备mac地址
+2. 获取唯一设备ID
+3. 判断是否是平板
+4. 判断是否是模拟器
 
 ## listener使用
 1. 网络状态监听
@@ -436,12 +467,6 @@ if (window.share) {
 4. 路径规划
 5. 路径导航
 
-## device
-1. 获取原生APP的版本信息 （版本号，版本名）
-2. 获取设备mac地址
-3. 获取唯一设备ID
-4. 判断是否是平板
-5. 判断是否是模拟器
 
 ## handware
 1. NFC
