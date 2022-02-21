@@ -6,17 +6,18 @@ import android.webkit.JavascriptInterface;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ClipboardUtils;
+import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.PhoneUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.google.gson.Gson;
 import com.tyky.media.activity.QrScanActivity;
-import com.tyky.webviewBase.utils.SpeechService;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.event.ImagePreviewEvent;
 import com.tyky.webviewBase.event.IntentEvent;
 import com.tyky.webviewBase.event.JsCallBackEvent;
 import com.tyky.webviewBase.model.ParamModel;
 import com.tyky.webviewBase.model.ResultModel;
+import com.tyky.webviewBase.utils.SpeechService;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
 
@@ -25,7 +26,7 @@ import org.greenrobot.eventbus.EventBus;
 @WebViewInterface("android_media")
 public class MediaJsInterface {
 
-    Gson gson = new Gson();
+   Gson gson = GsonUtils.getGson();
 
     /**
      * 复制文本到剪切板

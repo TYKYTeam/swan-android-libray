@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.blankj.utilcode.util.EncodeUtils;
+import com.blankj.utilcode.util.GsonUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.socks.library.KLog;
@@ -114,7 +115,7 @@ public class CustomWebViewActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    Gson gson = new Gson();
+   Gson gson = GsonUtils.getGson();
 
     /**
      * 回调页面的Js

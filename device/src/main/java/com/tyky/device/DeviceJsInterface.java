@@ -3,6 +3,7 @@ package com.tyky.device;
 import android.webkit.JavascriptInterface;
 
 import com.blankj.utilcode.util.DeviceUtils;
+import com.blankj.utilcode.util.GsonUtils;
 import com.google.gson.Gson;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.model.ResultModel;
@@ -13,7 +14,7 @@ import java.util.Map;
 @WebViewInterface("device")
 public class DeviceJsInterface {
 
-    Gson gson = new Gson();
+   Gson gson = GsonUtils.getGson();
 
     /**
      * 获取mac地址

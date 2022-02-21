@@ -6,6 +6,7 @@ import android.webkit.JavascriptInterface;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.EncodeUtils;
+import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ImageUtils;
 import com.blankj.utilcode.util.IntentUtils;
 import com.blankj.utilcode.util.PathUtils;
@@ -20,7 +21,7 @@ import java.io.File;
 @WebViewInterface("share")
 public class ShareJsInterface {
 
-    Gson gson = new Gson();
+   Gson gson = GsonUtils.getGson();
 
     /**
      * 分享文本

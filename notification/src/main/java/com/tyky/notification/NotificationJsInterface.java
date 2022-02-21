@@ -2,6 +2,7 @@ package com.tyky.notification;
 
 import android.webkit.JavascriptInterface;
 
+import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.google.gson.Gson;
 import com.tyky.webviewBase.annotation.WebViewInterface;
@@ -11,7 +12,7 @@ import com.tyky.webviewBase.model.ResultModel;
 @WebViewInterface("notification")
 public class NotificationJsInterface {
 
-    Gson gson = new Gson();
+   Gson gson = GsonUtils.getGson();
 
 
     /**
