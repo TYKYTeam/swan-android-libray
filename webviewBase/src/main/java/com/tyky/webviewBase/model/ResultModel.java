@@ -5,6 +5,13 @@ public class ResultModel {
     private Object result;
     private String desc = "";
 
+    public static ResultModel success(Object result) {
+        ResultModel resultModel = new ResultModel();
+        resultModel.code = 200;
+        resultModel.result = result;
+        return resultModel;
+    }
+
     public static ResultModel success(String result) {
         ResultModel resultModel = new ResultModel();
         resultModel.code = 200;

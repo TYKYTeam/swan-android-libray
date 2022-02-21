@@ -69,6 +69,10 @@
 
             <div class="contentDiv">
                 <button type="default" onclick="getMacAddress()">获取mac地址</button>
+                <button type="default" onclick="isTablet()">当前设备是否为平板</button>
+                <button type="default" onclick="isEmulator()">当前设备是否为模拟器</button>
+                <button type="default" onclick="getDeviceInfo()">当前设备系统信息</button>
+                <button type="default" onclick="getUniqueDeviceId()">获取唯一设备ID</button>
             </div>
 
             <button type="default" onclick="openLocation()">获取定位</button>
@@ -77,6 +81,37 @@
     </body>
 
     <script>
+    
+        
+        function isTablet(){
+            if (window.device) {
+                let result = window.device.isTablet()
+                alert(result);
+            }
+        }
+        
+        function isEmulator(){
+            if (window.device) {
+                let result = window.device.isEmulator()
+                alert(result);
+            }
+        }
+        
+        function getUniqueDeviceId(){
+            if (window.device) {
+                let result = window.device.getUniqueDeviceId()
+                alert(result);
+            }
+        }
+        
+        function getDeviceInfo(){
+            if (window.device) {
+                let result = window.device.getDeviceInfo()
+                alert(result);
+            }
+        }
+        
+        
         function getMacAddress() {
             if (window.device) {
                 let result = window.device.getMacAddress()
