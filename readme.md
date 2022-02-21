@@ -442,12 +442,97 @@ if (window.device) {
 ```
 
 ### 2.获取唯一设备id
+getUniqueDeviceId 
 
-0. 获取原生APP的版本信息 （版本号，版本名）
-1. 获取设备mac地址
-2. 获取唯一设备ID
-3. 判断是否是平板
-4. 判断是否是模拟器
+获取唯一设备id
+
+**传参：无需**
+
+**返回结果：**
+```
+//成功 
+{"code":200,"desc":"","result":"2196aa50b16cd36d39df62298561809a1"}
+```
+
+**H5调用示例：**
+```
+if (window.device) {
+    let result = window.device.getUniqueDeviceId()
+    alert(result);
+}
+```
+
+### 3.判断当前设备是否为平板
+isTablet 
+
+获取唯一设备id
+
+**传参：无需**
+
+**返回结果：**
+```
+//成功 
+{"code":200,"desc":"","result":true}
+```
+
+**H5调用示例：**
+```
+if (window.device) {
+    let result = window.device.isTablet()
+    alert(result);
+}
+```
+### 4.判断当前设备是否为模拟器
+isEmulator 
+
+判断当前设备是否为模拟器
+
+**传参：无需**
+
+**返回结果：**
+```
+//成功 
+{"code":200,"desc":"","result":false}
+```
+
+**H5调用示例：**
+```
+if (window.device) {
+    let result = window.device.isEmulator()
+    alert(result);
+}
+```
+### 5.获取当前设备系统信息
+
+getDeviceInfo 
+
+获取当前设备系统信息
+
+**传参：无需**
+
+**返回结果：**
+```
+//成功 
+{
+    "code":200,
+    "desc":"",
+    "result":{
+        "model":"ZUKZ2121",//设备型号
+        "manufacturer":"ZUK" //设备厂商
+        "versionName":"11",//系统版本名
+        "versionCode":30,//系统版本号
+    }
+}
+```
+
+**H5调用示例：**
+```
+if (window.device) {
+    let result = window.device.getDeviceInfo()
+    alert(result);
+}
+```
+
 
 ## listener使用
 1. 网络状态监听

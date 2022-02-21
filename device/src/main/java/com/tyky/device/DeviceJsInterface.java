@@ -61,8 +61,10 @@ public class DeviceJsInterface {
     @JavascriptInterface
     public String getDeviceInfo() {
         Map<String, Object> map = new HashMap<>();
-        map.put("versionName", DeviceUtils.getSDKVersionName());
-        map.put("versionCode", DeviceUtils.getSDKVersionCode());
+        map.put("versionName", DeviceUtils.getSDKVersionName());//系统版本名
+        map.put("versionCode", DeviceUtils.getSDKVersionCode());//系统版本号
+        map.put("manufacturer", DeviceUtils.getManufacturer()); //设备厂商
+        map.put("model", DeviceUtils.getModel()); //设备型号
         return gson.toJson(ResultModel.success(map));
     }
 
