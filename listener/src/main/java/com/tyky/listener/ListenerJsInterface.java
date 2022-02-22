@@ -1,11 +1,16 @@
 package com.tyky.listener;
 
+import android.content.Context;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.webkit.JavascriptInterface;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.google.gson.Gson;
+import com.socks.library.KLog;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.model.ParamModel;
 import com.tyky.webviewBase.model.ResultModel;
@@ -19,7 +24,14 @@ public class ListenerJsInterface {
 
     Gson gson = GsonUtils.getGson();
     private NetWorkListener netWorkListener;
+    private PhoneListener phoneListener;
 
+    /**
+     * 网络状态监听
+     *
+     * @param paramStr
+     * @return
+     */
     @RequiresPermission(ACCESS_NETWORK_STATE)
     @JavascriptInterface
     public String registerNetworkListener(String paramStr) {
@@ -41,7 +53,40 @@ public class ListenerJsInterface {
         } else {
             return gson.toJson(ResultModel.errorParam());
         }
+    }
 
+    /**
+     * 来电监听
+     *
+     * @param paramStr
+     * @return
+     */
+    @JavascriptInterface
+    public String registerPhoneListener(String paramStr) {
+        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+
+        String methodName = paramModel.getCallBackMethod();
+        if (StringUtils.isEmpty(methodName)) {
+            return gson.toJson(ResultModel.errorParam());
+        }
+
+        if (phoneListener == null) {
+            phoneListener = new PhoneListener(methodName);
+
+            //获得相应的系统服务
+            TelephonyManager tm = (TelephonyManager) ActivityUtils.getTopActivity().getSystemService(Context.TELEPHONY_SERVICE);
+            if (tm != null) {
+                try {
+                    // 注册来电监听
+                    tm.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
+                } catch (Exception e) {
+                    // 异常捕捉
+                    KLog.e(e);
+                }
+            }
+        }
+
+        return gson.toJson(ResultModel.success(""));
     }
 
 

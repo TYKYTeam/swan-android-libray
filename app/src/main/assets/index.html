@@ -16,83 +16,132 @@
         .contentDiv {
             display: flex;
             flex-flow: row wrap;
-            border: gray solid 1px;
-            margin: 10px 0;
+        }
+
+        fieldset {
+            padding: 2px;
+            margin: 5px  ;
+        }
+        legend{
+            font-size: 15px;
         }
     </style>
 
     <body>
         <div>
-            <div>
-                照片选择<input type="file" accept="image/*" />
-            </div>
-            <div>
-                视频选择<input type="file" accept="video/*" />
-            </div>
-            <div>
-                音频选择<input type="file" accept="audio/*" />
-            </div>
-            <div>
-                文件选择<input type="file" accept="file/*" />
-            </div>
-
-            <div class="contentDiv">
-                <button type="default" onclick="copyTextToClipboard('hello woll')">复制文本</button>
-
-                <button type="default" onclick="getTextFromClipboard()">获取文本</button>
-
-                <button type="default" onclick="callPhone()">拨打电话</button>
-
-                <button type="default" onclick="goToCall()">跳转拨号界面</button>
-
-                <button type="default" onclick="testCallBack()">测试回调</button>
-
-                <button type="default" onclick="sendSms()">发送短信</button>
-
-                <button type="default" onclick="previewPicture()">图片预览(base64)</button>
-                <button type="default" onclick="previewPictureUrl()">图片预览(url)</button>
-                <button type="default" onclick="qrScan()">扫描二维码</button>
-                <button type="default" onclick="speakText()">文字转语音</button>
-
-            </div>
-            <div class="contentDiv">
-
-                <button type="default" onclick="sendNotification()">发送通知</button>
-            </div>
-
-            <div class="contentDiv">
-                <button type="default" onclick="shareText()">分享文本</button>
-                <button type="default" onclick="shareImage()">分享图片</button>
-                <button type="default" onclick="shareTextImage()">分享图文</button>
-            </div>
+            <fieldset>
+                <legend>文件上传</legend>
+                <div>
+                    照片选择<input type="file" accept="image/*" />
+                </div>
+                <div>
+                    视频选择<input type="file" accept="video/*" />
+                </div>
+                <div>
+                    音频选择<input type="file" accept="audio/*" />
+                </div>
+                <div>
+                    文件选择<input type="file" accept="file/*" />
+                </div>
+            </fieldset>
 
 
-            <div class="contentDiv">
-                <button type="default" onclick="getMacAddress()">获取mac地址</button>
-                <button type="default" onclick="isTablet()">当前设备是否为平板</button>
-                <button type="default" onclick="isEmulator()">当前设备是否为模拟器</button>
-                <button type="default" onclick="getDeviceInfo()">当前设备系统信息</button>
-                <button type="default" onclick="getUniqueDeviceId()">获取唯一设备ID</button>
-            </div>
+            <fieldset>
+                <legend>mdeia 媒体</legend>
+                <div class="contentDiv">
+                    <button type="default" onclick="copyTextToClipboard('hello woll')">复制文本</button>
 
-            <div class="contentDiv">
-                <button type="default" onclick="save()">保存数据到Sp</button>
-                <button type="default" onclick="get()">读取Sp数据</button>
-            </div>
+                    <button type="default" onclick="getTextFromClipboard()">获取文本</button>
 
-            <div class="contentDiv">
-                <button type="default" onclick="registerNetworkListener()">开启网络状态监听</button>
-            </div>
-            
+                    <button type="default" onclick="callPhone()">拨打电话</button>
+
+                    <button type="default" onclick="goToCall()">跳转拨号界面</button>
+
+                    <button type="default" onclick="testCallBack()">测试回调</button>
+
+                    <button type="default" onclick="sendSms()">发送短信</button>
+
+                    <button type="default" onclick="previewPicture()">图片预览(base64)</button>
+                    <button type="default" onclick="previewPictureUrl()">图片预览(url)</button>
+                    <button type="default" onclick="qrScan()">扫描二维码</button>
+                    <button type="default" onclick="speakText()">文字转语音</button>
+
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>notification 通知</legend>
+                <div class="contentDiv">
+                    <button type="default" onclick="sendNotification()">发送通知</button>
+                </div>
+            </fieldset>
+
+
+            <fieldset>
+                <legend>share 分享</legend>
+
+                <div class="contentDiv">
+                    <button type="default" onclick="shareText()">分享文本</button>
+                    <button type="default" onclick="shareImage()">分享图片</button>
+                    <button type="default" onclick="shareTextImage()">分享图文</button>
+                </div>
+            </fieldset>
+
+
+
+            <fieldset>
+                <legend>device 设备</legend>
+
+                <div class="contentDiv">
+                    <button type="default" onclick="getMacAddress()">获取mac地址</button>
+                    <button type="default" onclick="isTablet()">当前设备是否为平板</button>
+                    <button type="default" onclick="isEmulator()">当前设备是否为模拟器</button>
+                    <button type="default" onclick="getDeviceInfo()">当前设备系统信息</button>
+                    <button type="default" onclick="getUniqueDeviceId()">获取唯一设备ID</button>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>storage 存储</legend>
+
+                <div class="contentDiv">
+                    <button type="default" onclick="save()">保存数据到Sp</button>
+                    <button type="default" onclick="get()">读取Sp数据</button>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>listener 监听</legend>
+                <div class="contentDiv">
+                    <button type="default" onclick="registerNetworkListener()">开启网络状态监听</button>
+                    <button type="default" onclick="registerPhoneListener()">开启手机来电监听</button>
+                </div>
+            </fieldset>
+
             <button type="default" onclick="openLocation()">获取定位</button>
 
         </div>
     </body>
 
     <script>
+        window.phoneCall = function() {
+            alert("来电了。。")
+        }
+
+        function registerPhoneListener() {
+            if (window.listener) {
+                let content = {
+                    "callBackMethod": "phoneCall"
+                }
+                let result = window.listener.registerPhoneListener(JSON.stringify(content))
+                console.log(result)
+            }
+        }
+
         window.networkDisconnect = function() {
             alert("网络已断开")
         }
+
         window.networkConnect = function() {
             alert("网络已连接")
         }

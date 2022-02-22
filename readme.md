@@ -1,6 +1,7 @@
 # Android 组件库
 
-[![](https://jitpack.io//v/stars-one/android-component-libray.svg)](https://github.com/stars-one/android-component-libray)
+
+[![](https://jitpack.io/v/stars-one/android-component-libray.svg)](https://github.com/stars-one/android-component-libray)
 ![](https://img.shields.io/badge/java-8-orange)
 ![](https://img.shields.io/badge/androix-8e24aa)
 ![](https://img.shields.io/badge/minSdkVersion-21-blue)
@@ -604,9 +605,49 @@ if (window.storage) {
 ```
 
 ## listener使用
-1. 网络状态监听
-2. 来电监听
-3. 返回键监听
+### 1. 注册网络状态监听
+
+registerNetworkListener
+
+注册网络状态的监听回调
+
+**传参：**
+
+```
+//传两个js回调的方法名，之后Android原生会执行对应的JS方法
+{
+    "callBackMethod": "networkDisconnect,networkConnect"
+}
+```
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+window.networkDisconnect = function() {
+    alert("网络已断开")
+}
+window.networkConnect = function() {
+    alert("网络已连接")
+}
+
+if (window.listener) {
+    let content = {
+        "callBackMethod": "networkDisconnect,networkConnect"
+    }
+    let result = window.listener.registerNetworkListener(JSON.stringify(content))
+    console.log(result)
+}
+```
+
+### 2.来电监听
+
+
+1. 返回键监听
 
 
 
@@ -635,9 +676,15 @@ if (window.storage) {
 开发辅助配置功能
 
 1. bugly SDK接入
-2. 提供配置webview加载的地址（本地资源或是网络url地址）
+2. 提供配置webview加载的地址（本地资源或是网络url地址）页面 扫一扫+输入框
 3. h5是否也要做成可配置的方式，来实现更换接口地址（优先读storege里的数据），入口设计思路为**依次按下音量键`+`和`-`次**
 4. 360加固快捷打包
+
+文档最高要求
+
+打包验证，大小？
+
+权限写在module中
 
 ## update使用
 # 功能清单
