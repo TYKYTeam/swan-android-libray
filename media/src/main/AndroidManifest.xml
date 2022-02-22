@@ -13,4 +13,5 @@
         <activity android:name=".activity.QrScanActivity" android:label="扫一扫"/>
     </application>
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 </manifest>
