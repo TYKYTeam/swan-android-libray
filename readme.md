@@ -646,12 +646,39 @@ if (window.listener) {
 
 ### 2.来电监听
 
+registerPhoneListener
 
-1. 返回键监听
+来电时候的监听回调
 
+**传参：**
 
+```
+//传递个js回调的方法名，之后Android原生会执行对应的JS方法
+{
+    "callBackMethod": "phoneCall"
+}
+```
 
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
 
+**H5调用示例：**
+```
+window.phoneCall = function() {
+    alert("来电了。。")
+}
+
+if (window.listener) {
+    let content = {
+        "callBackMethod": "phoneCall"
+    }
+    let result = window.listener.registerPhoneListener(JSON.stringify(content))
+    console.log(result)
+}
+```
 
 
 ## map
