@@ -115,23 +115,30 @@ public class CustomWebViewActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-   Gson gson = GsonUtils.getGson();
+    Gson gson = GsonUtils.getGson();
 
     /**
      * 回调页面的Js
+     *
      * @param event
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void evaluateJavascript(JsCallBackEvent event) {
         Object object = event.getObject();
         String method = event.getMethod();
-        String jsScript = "javascript:" + method + "(" + gson.toJson(object) + ")";
+        String jsScript;
+        if (object == null) {
+            jsScript = "javascript:" + method + "()";
+        } else {
+            jsScript = "javascript:" + method + "(" + gson.toJson(object) + ")";
+        }
         KLog.d("--回调JS方法", jsScript);
         customWebView.evaluateJavascript(jsScript, null);
     }
 
     /**
      * Activity跳转
+     *
      * @param event
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -144,6 +151,7 @@ public class CustomWebViewActivity extends AppCompatActivity {
 
     /**
      * 预览图片
+     *
      * @param event
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -168,8 +176,6 @@ public class CustomWebViewActivity extends AppCompatActivity {
             Glide.with(this).load(data).into(ivPreview);
         }
     }
-
-
 
 
 }

@@ -80,17 +80,40 @@
                 <button type="default" onclick="get()">读取Sp数据</button>
             </div>
 
+            <div class="contentDiv">
+                <button type="default" onclick="registerNetworkListener()">开启网络状态监听</button>
+            </div>
+            
             <button type="default" onclick="openLocation()">获取定位</button>
 
         </div>
     </body>
 
     <script>
+        window.networkDisconnect = function() {
+            alert("网络已断开")
+        }
+        window.networkConnect = function() {
+            alert("网络已连接")
+        }
+
+        function registerNetworkListener() {
+            if (window.listener) {
+                let content = {
+                    "callBackMethod": "networkDisconnect,networkConnect"
+                }
+                let result = window.listener.registerNetworkListener(JSON.stringify(content))
+                console.log(result)
+            }
+        }
+
         function save() {
             if (window.storage) {
                 let content = {
                     key: "test",
-                    value: {"xx":22}
+                    value: {
+                        "xx": 22
+                    }
                 }
                 let result = window.storage.save(JSON.stringify(content))
                 alert(result);

@@ -32,6 +32,7 @@ android {
 }
 
 dependencies {
+    implementation 'org.greenrobot:eventbus:3.0.0'
     // Android的工具类   https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
     compileOnly 'com.blankj:utilcodex:1.30.6'
     //日志输出    https://github.com/ZhaoKaiQiang/KLog
