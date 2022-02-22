@@ -16,9 +16,10 @@ Android原生组件库，为Html提供Android原生能力，增强H5
 |--				|--		|--															|
 |webViewBase	|√		|核心库，包含文件上传										|
 |media			|×		|媒体库，包含拨打电话，发短信，拍照，录制视频等功能			|
-|share			|×		|分享库，包含QQ，微信等第三方社交软件的分享					|
+|share			|×		|分享库，使用Android系统内置分享功能，进行文本或图片的分享	|
 |device			|×		|设备信息库，用来获取当前设备的系统等信息					|
 |notification	|×		|通知库，用来弹出通知栏通知									|
+|storage		|×		|存储库，调用SharePerfence进行简单数据的存储（键值对形式）				|
 |listener		|×		|监听回调类的开源库，包含来电监听，网络状态监听，返回键监听	|
 |update			|×		|自动更新库													|
 
@@ -535,6 +536,72 @@ if (window.device) {
 }
 ```
 
+## storage使用
+### 1.保存数据
+
+save 
+
+保存数据到Android内置的SharePerfence
+
+**传参：**
+
+```
+{
+    key: "test", 
+    value: "hello woll" //value可以是布尔值，字符串，整数，不能是一个JsonObject对象
+}
+```
+
+**返回结果：**
+```
+//成功 
+{"code":200,"desc":"","result":false}
+```
+
+**H5调用示例：**
+```
+if (window.storage) {
+    let content = {
+        key: "test",
+        value: "hello woll"
+    }
+    let result = window.storage.save(JSON.stringify(content))
+    alert(result);
+    console.log(result)
+}
+```
+
+### 2.读取数据
+
+get
+
+根据key值去获取保存的数据
+
+**传参：**
+
+```
+{
+    key: "test"
+}
+```
+
+**返回结果：**
+```
+//成功  若result为空，则表示该key没有对应的数据
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.storage) {
+    let content = {
+        key: "test"
+    }
+    let result = window.storage.get(JSON.stringify(content))
+    alert(result);
+    console.log(result)
+}
+```
 
 ## listener使用
 1. 网络状态监听
