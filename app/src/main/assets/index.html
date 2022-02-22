@@ -75,45 +75,72 @@
                 <button type="default" onclick="getUniqueDeviceId()">获取唯一设备ID</button>
             </div>
 
+            <div class="contentDiv">
+                <button type="default" onclick="save()">保存数据到Sp</button>
+                <button type="default" onclick="get()">读取Sp数据</button>
+            </div>
+
             <button type="default" onclick="openLocation()">获取定位</button>
 
         </div>
     </body>
 
     <script>
-    
-        
-        function isTablet(){
+        function save() {
+            if (window.storage) {
+                let content = {
+                    key: "test",
+                    value: "hello woll"
+                }
+                let result = window.storage.save(JSON.stringify(content))
+                alert(result);
+                console.log(result)
+            }
+        }
+
+        function get() {
+            if (window.storage) {
+                let content = {
+                    key: "test"
+                }
+                let result = window.storage.get(JSON.stringify(content))
+                alert(result);
+                console.log(result)
+            }
+        }
+
+
+        function isTablet() {
             if (window.device) {
                 let result = window.device.isTablet()
                 alert(result);
             }
         }
-        
-        function isEmulator(){
+
+        function isEmulator() {
             if (window.device) {
                 let result = window.device.isEmulator()
                 alert(result);
             }
         }
-        
-        function getUniqueDeviceId(){
+
+        function getUniqueDeviceId() {
             if (window.device) {
                 let result = window.device.getUniqueDeviceId()
                 console.log(result);
                 alert(result);
             }
         }
-        
-        function getDeviceInfo(){
+
+        function getDeviceInfo() {
             if (window.device) {
                 let result = window.device.getDeviceInfo()
                 console.log(result);
                 alert(result);
             }
         }
-        
-        
+
+
         function getMacAddress() {
             if (window.device) {
                 let result = window.device.getMacAddress()
