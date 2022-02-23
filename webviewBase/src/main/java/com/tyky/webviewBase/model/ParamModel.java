@@ -3,12 +3,31 @@ package com.tyky.webviewBase.model;
 import java.util.List;
 
 public class ParamModel {
+    /**
+     * 电话号码
+     */
     private String phone;
+
+    /**
+     * 标题
+     */
     private String title;
+    /**
+     * 内容
+     */
     private String content;
+    /**
+     * 类型
+     */
     private Integer type;
+    /**
+     * 回调方法，多个用逗号隔开
+     */
     private String callBackMethod;
 
+    /**
+     * shareperfence存储需要用到的key和value
+     */
     private String key;
     private String value;
 

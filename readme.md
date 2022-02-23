@@ -22,6 +22,7 @@ Android原生组件库，为Html提供Android原生能力，增强H5
 |notification	|×		|通知库，用来弹出通知栏通知									|
 |storage		|×		|存储库，调用SharePerfence进行简单数据的存储（键值对形式）				|
 |listener		|×		|监听回调类的开源库，包含来电监听，网络状态监听，返回键监听	|
+|debugger			|×		|开发调试辅助库													|
 |update			|×		|自动更新库													|
 
 
@@ -700,6 +701,31 @@ if (window.listener) {
 7. 获取当前网络状态（数据网络还是Wifi）
 
 ## debugger
+
+> 注意：由于配置页面中需要扫一扫的功能，目前是复用了media的Module中的扫一扫页面，导致**使用此模块需要前提引入media的模块**
+
+### 1.跳转到debugger页面
+goSettingPage
+
+跳转到debugger页面，可输入一个在线地址用来测试页面功能
+
+**传参：无需**
+
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.debugger) {
+    let result = window.debugger.goSettingPage()
+    console.log(result)
+}
+```
+
 开发辅助配置功能
 
 1. bugly SDK接入
@@ -707,13 +733,82 @@ if (window.listener) {
 3. h5是否也要做成可配置的方式，来实现更换接口地址（优先读storege里的数据），入口设计思路为**依次按下音量键`+`和`-`次**
 4. 360加固快捷打包
 
-文档最高要求
-
-打包验证，大小？
-
-权限写在module中
-
 ## update使用
+
+## 关于Module创建
+
+若是想要创建一个module，需要进行以下几步
+### 1.新建module
+![](https://img2022.cnblogs.com/blog/1210268/202202/1210268-20220223145218325-33691126.png)
+
+![](https://img2022.cnblogs.com/blog/1210268/202202/1210268-20220223145238780-1117709618.png)
+
+![](https://img2022.cnblogs.com/blog/1210268/202202/1210268-20220223145308210-1011843895.png)
+
+> **注意：**由于封装了自动扫描包实现了Js注入功能，规定包名一定要为`com.tyky`
+> 
+### 2.module依赖修改
+由于新建的module，没有核心库`webViewBase`的依赖，所以，需要导入依赖
+
+![](https://img2022.cnblogs.com/blog/1210268/202202/1210268-20220223145530826-890303716.png)
+
+上面的截图，由于module都是与webviewBase在同一项目中，所以可以这样写
+
+实际上，这部分源码在对应的项目中是不存在的，所以，需要导入jitpack上的那个`webViewBase`依赖
+
+### 3.创建Js注入类
+使用Gradle进行sync，之后在新建的module中创建一个类，并标上注解`WebViewInterface`
+
+![](https://img2022.cnblogs.com/blog/1210268/202202/1210268-20220223145412353-1421518910.png)
+
+`@WebViewInterface("share")`
+
+此注解是个人自定义的一个注解，主要是实现了自动注入Js方法的功能，而无需去设置webview，可以十分方便的实现功能扩展
+
+后面的参数为之后注入到Js中的使用方式
+
+以上面为例：
+
+之后注入到Js代码中，就可以在Js层通过`window.share.xx()`去调用我们原生Android的方法
+
+### 3.创建Js注入方法
+
+这里不再过多赘述，就写个注解即可
+
+![](https://img2022.cnblogs.com/blog/1210268/202202/1210268-20220223150148932-555298842.png)
+
+如果想要保持返回结果规范，可以参考上述代码
+
+补充(ParamModel实体类字段)：
+```
+/**
+ * 电话号码
+ */
+private String phone;
+
+/**
+ * 标题
+ */
+private String title;
+/**
+ * 内容
+ */
+private String content;
+/**
+ * 类型
+ */
+private Integer type;
+/**
+ * 回调方法，多个用逗号隔开
+ */
+private String callBackMethod;
+
+/**
+ * shareperfence存储需要用到的key和value
+ */
+private String key;
+private String value;
+```
 # 功能清单
 ## 设备
 
