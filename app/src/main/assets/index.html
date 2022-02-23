@@ -117,6 +117,13 @@
                     <button type="default" onclick="registerPhoneListener()">开启手机来电监听</button>
                 </div>
             </fieldset>
+            
+            <fieldset>
+                <legend>debugger 调试</legend>
+                <div class="contentDiv">
+                    <button type="default" onclick="goSettingPage()">进调试设置页</button>
+                </div>
+            </fieldset>
 
             <button type="default" onclick="openLocation()">获取定位</button>
 
@@ -124,6 +131,14 @@
     </body>
 
     <script>
+    
+        function goSettingPage(){
+            if (window.debugger) {
+                let result = window.debugger.goSettingPage()
+                console.log(result)
+            }
+        }
+        
         window.phoneCall = function() {
             alert("来电了。。")
         }

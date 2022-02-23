@@ -1,0 +1,52 @@
+plugins {
+    id 'com.android.library'
+    id 'com.github.dcendents.android-maven'
+}
+
+group = 'com.github.stars-one'
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion '28.0.3'
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 32
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation 'org.greenrobot:eventbus:3.0.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.google.android.material:material:1.1.0'
+    //图片,视频,音频选择 https://github.com/LuckSiege/PictureSelector
+    compileOnly 'io.github.lucksiege:pictureselector:v2.7.3-rc02'
+    compileOnly 'org.apache.commons:commons-lang3:3.9'
+
+    // Android的工具类   https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
+    compileOnly 'com.blankj:utilcodex:1.30.6'
+
+    //日志输出    https://github.com/ZhaoKaiQiang/KLog
+    compileOnly 'com.github.zhaokaiqiang.klog:library:1.6.0'
+
+    compileOnly 'androidx.constraintlayout:constraintlayout:2.1.2'
+
+    compileOnly project(path: ':webviewBase')
+    implementation project(path: ':media')
+}

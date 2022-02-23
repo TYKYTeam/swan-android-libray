@@ -5,6 +5,9 @@ package com.tyky.webviewBase.event;
  */
 public class IntentEvent {
     Class<?> activityClass;
+    /**
+     * 当methodName传空白字符串，标明事件是由原生触发的页面跳转，而不是JS触发的
+     */
     String methodName;
 
     public IntentEvent(Class<?> activityClass, String methodName) {

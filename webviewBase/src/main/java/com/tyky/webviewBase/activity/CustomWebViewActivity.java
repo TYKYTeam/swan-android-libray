@@ -19,6 +19,7 @@ import com.tyky.webviewBase.constants.RequestCodeConstants;
 import com.tyky.webviewBase.event.ImagePreviewEvent;
 import com.tyky.webviewBase.event.IntentEvent;
 import com.tyky.webviewBase.event.JsCallBackEvent;
+import com.tyky.webviewBase.event.UrlLoadEvent;
 import com.tyky.webviewBase.utils.SpeechService;
 import com.tyky.webviewBase.view.CustomWebView;
 import com.tyky.webviewBase.view.CustomWebViewChrome;
@@ -89,11 +90,35 @@ public class CustomWebViewActivity extends AppCompatActivity {
     }
 
     /**
+     * 加载地址
+     *
+     * @param url 以`/`开头，即为加载本地html（放在assets文件夹中）,如`/index.html`;
+     *            或者以http开头的链接，会直接加载
+     */
+    public void loadUrl(String url) {
+        if (url.startsWith("/")) {
+            loadLocalUrl(url);
+        } else {
+            loadWebUrl(url);
+        }
+    }
+
+    /**
+     * 加载地址（通过EventBus来实现）
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void loadUrl(UrlLoadEvent event) {
+        String url = event.getUrl();
+        loadUrl(url);
+    }
+
+    /**
      * 设置加载的url并加载
      *
      * @param path
      */
-    public void loadLocalUrl(String path) {
+    private void loadLocalUrl(String path) {
         String url = "file:///android_asset" + path;
         loadWebUrl(url);
     }
@@ -103,13 +128,14 @@ public class CustomWebViewActivity extends AppCompatActivity {
      *
      * @param url
      */
-    public void loadWebUrl(String url) {
+    private void loadWebUrl(String url) {
         this.url = url;
         customWebView.loadUrl(url);
     }
 
     @Override
     protected void onDestroy() {
+        //释放EventBus和语音TTS
         EventBus.getDefault().unregister(this);
         SpeechService.release();
         super.onDestroy();
