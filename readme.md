@@ -779,7 +779,25 @@ if (window.debugger) {
 
 如果想要保持返回结果规范，可以参考上述代码
 
-补充(ParamModel实体类字段)：
+PS：之后使用不要忘记了依赖自己新建的module哦！！
+
+### 补充
+#### 清单文件怎么写？
+
+如果需求是要在module新建页面或者其他四大组件，可以在AndroidManifest文件中这样写对应的声明:
+
+下面给出的Activity的声明，其他组件类似，这里不再赘述
+```
+<application>
+    <activity android:name=".SettingActivity"></activity>
+</application>
+```
+
+如果是需要权限的，也是在此声明对应的权限，同时也要考虑到动态权限申请的情况
+
+比较好的方式就是卸载对应Js方法里,用到就声明
+
+#### ParamModel实体类字段：
 ```
 /**
  * 电话号码
@@ -809,6 +827,7 @@ private String callBackMethod;
 private String key;
 private String value;
 ```
+
 # 功能清单
 ## 设备
 

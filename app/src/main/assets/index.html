@@ -20,9 +20,10 @@
 
         fieldset {
             padding: 2px;
-            margin: 5px  ;
+            margin: 5px;
         }
-        legend{
+
+        legend {
             font-size: 15px;
         }
     </style>
@@ -117,7 +118,14 @@
                     <button type="default" onclick="registerPhoneListener()">开启手机来电监听</button>
                 </div>
             </fieldset>
-            
+
+            <fieldset>
+                <legend>hardware 硬件</legend>
+                <div class="contentDiv">
+                    <button type="default" onclick="getBattery()">获取当前电量</button>
+                </div>
+            </fieldset>
+
             <fieldset>
                 <legend>debugger 调试</legend>
                 <div class="contentDiv">
@@ -131,14 +139,21 @@
     </body>
 
     <script>
-    
-        function goSettingPage(){
+        function getBattery() {
+            if (window.hardware) {
+                let result = window.hardware.getBattery()
+                alert(result)
+                console.log(result)
+            }
+        }
+
+        function goSettingPage() {
             if (window.debugger) {
                 let result = window.debugger.goSettingPage()
                 console.log(result)
             }
         }
-        
+
         window.phoneCall = function() {
             alert("来电了。。")
         }

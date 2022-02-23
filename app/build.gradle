@@ -49,6 +49,7 @@ dependencies {
     implementation project(path: ':device')
     implementation project(path: ':storage')
     implementation project(path: ':listener')
+    implementation project(path: ':hardware')
     implementation project(path: ':debugger')
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
