@@ -123,6 +123,7 @@
                 <legend>hardware 硬件</legend>
                 <div class="contentDiv">
                     <button type="default" onclick="getBattery()">获取当前电量</button>
+                    <button type="default" onclick="getNetworkState()">获取网络状态</button>
                 </div>
             </fieldset>
 
@@ -139,6 +140,14 @@
     </body>
 
     <script>
+        function getNetworkState() {
+            if (window.hardware) {
+                let result = window.hardware.getNetworkState()
+                alert(result)
+                console.log(result)
+            }
+        }
+
         function getBattery() {
             if (window.hardware) {
                 let result = window.hardware.getBattery()

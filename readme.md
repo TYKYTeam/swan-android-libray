@@ -692,13 +692,68 @@ if (window.listener) {
 
 
 ## handware
+### 1.获取当前电量数值
+
+getBattery
+
+获取当前电量数值
+
+**传参：无需**
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":"98%"}
+```
+
+**H5调用示例：**
+```
+if (window.hardware) {
+    let result = window.hardware.getBattery()
+    alert(result)
+    console.log(result)
+}
+```
+### 2.获取当前网络状态
+
+getNetworkState
+
+获取当前网络状态
+
+**传参：无需**
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":"NETWORK_WIFI"}
+```
+
+result字段的数值如下：
+- `NETWORK_ETHERNET` 以太网
+- `NETWORK_WIFI`     Wifi
+- `NETWORK_4G`       
+- `NETWORK_3G`       
+- `NETWORK_2G`       
+- `NETWORK_UNKNOWN`  未知网络
+- `NETWORK_NO`  无网络
+
+**H5调用示例：**
+```
+if (window.hardware) {
+    let result = window.hardware.getNetworkState()
+    alert(result)
+    console.log(result)
+}
+```
+
+### 3.获取音量
+### 4.设置音量
 1. NFC
 2. 蓝牙配对
 3. 指纹识别
 4. 人脸识别（包含活体检测）
-5. 获取当前电量数值
-6. 设置屏幕亮度
-7. 获取当前网络状态（数据网络还是Wifi）
+5. 设置屏幕亮度
+6. 获取当前网络状态（数据网络还是Wifi）
 
 ## debugger
 

@@ -43,7 +43,6 @@ public class SettingActivity extends AppCompatActivity {
 
         String settingUrl = SPUtils.getInstance().getString("settingUrl", "");
         mEturl.setText(settingUrl);
-
     }
 
     private void saveAndVisit() {
