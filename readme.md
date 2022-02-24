@@ -824,13 +824,67 @@ if (window.hardware) {
 }
 ```
 ### 5.获取屏幕亮度
+
+getBrightness
+
+获取当前媒体音量
+
+**传参：无需**
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":"11"}
+```
+
+
+**H5调用示例：**
+```
+if (window.hardware) {
+    let result = window.hardware.getBrightness()
+    alert(result)
+    console.log(result)
+}
+```
+
 ### 6.设置屏幕亮度
-1. NFC
-2. 蓝牙配对
-3. 指纹识别
-4. 人脸识别（包含活体检测）
-5. 设置屏幕亮度
-6. 获取当前网络状态（数据网络还是Wifi）
+
+setBrightness
+
+设置当前的媒体音量
+
+**传参：**
+```
+{
+    content: "11"
+}
+```
+
+> 注：亮度范围为0-255
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.hardware) {
+    let content = {
+        content: "11"
+    }
+    let result = window.hardware.setBrightness(JSON.stringify(content))
+    alert(result)
+    console.log(result)
+}
+```
+
+
+0. NFC
+1. 蓝牙配对
+2. 指纹识别
+3. 人脸识别（包含活体检测）
 
 ## debugger
 
