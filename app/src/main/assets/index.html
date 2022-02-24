@@ -124,6 +124,9 @@
                 <div class="contentDiv">
                     <button type="default" onclick="getBattery()">获取当前电量</button>
                     <button type="default" onclick="getNetworkState()">获取网络状态</button>
+                    <button type="default" onclick="getMaxVolume()">获取媒体最大音量</button>
+                    <button type="default" onclick="getVolume()">获取媒体音量</button>
+                    <button type="default" onclick="setVolume()">设置媒体音量</button>
                 </div>
             </fieldset>
 
@@ -140,6 +143,33 @@
     </body>
 
     <script>
+        function getMaxVolume() {
+            if (window.hardware) {
+                let result = window.hardware.getMaxVolume()
+                alert(result)
+                console.log(result)
+            }
+        }
+
+        function setVolume() {
+            if (window.hardware) {
+                let content = {
+                    content: "11"
+                }
+                let result = window.hardware.setVolume(JSON.stringify(content))
+                alert(result)
+                console.log(result)
+            }
+        }
+
+        function getVolume() {
+            if (window.hardware) {
+                let result = window.hardware.getVolume()
+                alert(result)
+                console.log(result)
+            }
+        }
+
         function getNetworkState() {
             if (window.hardware) {
                 let result = window.hardware.getNetworkState()

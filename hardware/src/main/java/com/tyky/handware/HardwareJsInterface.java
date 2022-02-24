@@ -2,12 +2,14 @@ package com.tyky.handware;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.AudioManager;
 import android.webkit.JavascriptInterface;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.VolumeUtils;
 import com.google.gson.Gson;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.model.ParamModel;
@@ -65,32 +67,43 @@ public class HardwareJsInterface {
     }
 
     /**
-     * 获取音量
+     * 获取最大媒体音量
+     *
+     * @return
+     */
+    @RequiresPermission(ACCESS_NETWORK_STATE)
+    @JavascriptInterface
+    public String getMaxVolume() {
+        int volume = VolumeUtils.getMaxVolume(AudioManager.STREAM_MUSIC);
+        return gson.toJson(ResultModel.success(volume));
+    }
+
+    /**
+     * 获取媒体音量
      *
      * @return
      */
     @RequiresPermission(ACCESS_NETWORK_STATE)
     @JavascriptInterface
     public String getVolume() {
-
-
-        return gson.toJson(ResultModel.success(""));
+        int volume = VolumeUtils.getVolume(AudioManager.STREAM_MUSIC);
+        return gson.toJson(ResultModel.success(volume));
     }
 
     /**
-     * 设置音量
+     * 设置媒体音量
      *
      * @return
      */
     @JavascriptInterface
     public String setVolume(String paramStr) {
         ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
-
         String content = paramModel.getContent();
         if (StringUtils.isEmpty(content)) {
             return gson.toJson(ResultModel.errorParam());
         }
-
+        int volume = Integer.parseInt(content);
+        VolumeUtils.setVolume(AudioManager.STREAM_MUSIC,volume,AudioManager.FLAG_SHOW_UI);
 
         return gson.toJson(ResultModel.success(""));
     }

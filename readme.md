@@ -746,8 +746,85 @@ if (window.hardware) {
 }
 ```
 
-### 3.获取音量
-### 4.设置音量
+### 3.获取媒体最大音量
+getMaxVolume
+
+获取当前网络状态
+
+**传参：无需**
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":"25"}
+```
+
+> PS:不同手机，返回的最大音量可能会不同
+
+**H5调用示例：**
+```
+if (window.hardware) {
+    let result = window.hardware.getMaxVolume()
+    alert(result)
+    console.log(result)
+}
+```
+
+
+### 3.获取媒体音量
+getVolume
+
+获取当前媒体音量
+
+**传参：无需**
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":"11"}
+```
+
+
+**H5调用示例：**
+```
+if (window.hardware) {
+    let result = window.hardware.getVolume()
+    alert(result)
+    console.log(result)
+}
+```
+
+### 4.设置媒体音量
+setVolume
+
+设置当前的媒体音量
+
+**传参：**
+```
+{
+    content: "11"
+}
+```
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.hardware) {
+    let content = {
+        content: "11"
+    }
+    let result = window.hardware.setVolume(JSON.stringify(content))
+    alert(result)
+    console.log(result)
+}
+```
+### 5.获取屏幕亮度
+### 6.设置屏幕亮度
 1. NFC
 2. 蓝牙配对
 3. 指纹识别
