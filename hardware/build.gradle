@@ -33,6 +33,7 @@ android {
 
 dependencies {
 
+    compileOnly 'com.yanzhenjie:permission:2.0.3'
     // Android的工具类   https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
     compileOnly 'com.blankj:utilcodex:1.30.6'
 

@@ -1,11 +1,16 @@
 package com.tyky.handware;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
+import android.net.Uri;
+import android.provider.Settings;
 import android.webkit.JavascriptInterface;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.BrightnessUtils;
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.StringUtils;
@@ -103,9 +108,53 @@ public class HardwareJsInterface {
             return gson.toJson(ResultModel.errorParam());
         }
         int volume = Integer.parseInt(content);
-        VolumeUtils.setVolume(AudioManager.STREAM_MUSIC,volume,AudioManager.FLAG_SHOW_UI);
+        VolumeUtils.setVolume(AudioManager.STREAM_MUSIC, volume, AudioManager.FLAG_SHOW_UI);
 
         return gson.toJson(ResultModel.success(""));
     }
 
+    /**
+     * 获取屏幕亮度
+     *
+     * @return
+     */
+    @RequiresPermission(ACCESS_NETWORK_STATE)
+    @JavascriptInterface
+    public String getBrightness() {
+        int brightness = BrightnessUtils.getBrightness();
+        return gson.toJson(ResultModel.success(brightness));
+    }
+
+    /**
+     * 设置屏幕亮度
+     *
+     * @return
+     */
+    @JavascriptInterface
+    public String setBrightness(String paramStr) {
+        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        String content = paramModel.getContent();
+        if (StringUtils.isEmpty(content)) {
+            return gson.toJson(ResultModel.errorParam());
+        }
+        int brightness = Integer.parseInt(content);
+
+
+        Activity topActivity = ActivityUtils.getTopActivity();
+        //版本号大于
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            //是否有Setting权限
+            if (!Settings.System.canWrite(topActivity)) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                intent.setData(Uri.parse("package:" + AppUtils.getAppPackageName()));
+                topActivity.startActivity(intent);
+            } else {
+                BrightnessUtils.setBrightness(brightness);
+                return gson.toJson(ResultModel.success(""));
+            }
+            return gson.toJson(ResultModel.errorParam("未授予权限，设置亮度失败"));
+        }
+        return gson.toJson(ResultModel.success(""));
+
+    }
 }

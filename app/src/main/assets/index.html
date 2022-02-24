@@ -127,6 +127,8 @@
                     <button type="default" onclick="getMaxVolume()">获取媒体最大音量</button>
                     <button type="default" onclick="getVolume()">获取媒体音量</button>
                     <button type="default" onclick="setVolume()">设置媒体音量</button>
+                    <button type="default" onclick="getBrightness()">获取屏幕亮度</button>
+                    <button type="default" onclick="setBrightness()">设置屏幕亮度</button>
                 </div>
             </fieldset>
 
@@ -143,6 +145,25 @@
     </body>
 
     <script>
+        function setBrightness() {
+            if (window.hardware) {
+                let content = {
+                    content: "11"
+                }
+                let result = window.hardware.setBrightness(JSON.stringify(content))
+                alert(result)
+                console.log(result)
+            }
+        }
+
+        function getBrightness() {
+            if (window.hardware) {
+                let result = window.hardware.getBrightness()
+                alert(result)
+                console.log(result)
+            }
+        }
+
         function getMaxVolume() {
             if (window.hardware) {
                 let result = window.hardware.getMaxVolume()
