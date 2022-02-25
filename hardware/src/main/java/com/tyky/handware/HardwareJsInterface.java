@@ -12,10 +12,12 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.BrightnessUtils;
 import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.MetaDataUtils;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.VolumeUtils;
 import com.google.gson.Gson;
+import com.socks.library.KLog;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.model.ParamModel;
 import com.tyky.webviewBase.model.ResultModel;
@@ -121,6 +123,8 @@ public class HardwareJsInterface {
     @RequiresPermission(ACCESS_NETWORK_STATE)
     @JavascriptInterface
     public String getBrightness() {
+        String bugly_appid = MetaDataUtils.getMetaDataInApp("BUGLY_APPID");
+        KLog.d(bugly_appid);
         int brightness = BrightnessUtils.getBrightness();
         return gson.toJson(ResultModel.success(brightness));
     }
