@@ -902,7 +902,7 @@ if (window.hardware) {
 ### 1.跳转到debugger页面
 goSettingPage
 
-跳转到debugger页面，可输入一个在线地址用来测试页面功能
+跳转到debugger页面，可输入一个在线地址用来测试页面功能（也含有扫一扫功能）
 
 **传参：无需**
 
@@ -921,10 +921,50 @@ if (window.debugger) {
 }
 ```
 
-开发辅助配置功能
+### 2.Bugly配置
+目前引入了Bugly对接，**注意公司的网络环境对Bugly有限制，可能无法测试得到预料的结果，建议使用移动网络**
 
-1. bugly SDK接入
-2. 提供配置webview加载的地址（本地资源或是网络url地址）页面 扫一扫+输入框
+**使用步骤：**
+
+
+在AndroidManifest文件中，声明application，并修改Bugly的配置
+
+![](https://img2022.cnblogs.com/blog/1210268/202202/1210268-20220225164726034-974049188.png)
+
+**注：debugger默认有个appId，下面这个是在APP的AndroidManifest.xml文件，会将debugger模块中的覆盖掉**
+
+```
+android:name="com.tyky.debugger.DebuggerApplication"
+
+<!-- Bugly配置 -->
+<!-- 配置APP ID -->
+<meta-data
+    tools:node="replace"
+    android:name="BUGLY_APPID"
+    android:value="4ec93574ce" />
+<!-- 配置APP版本号 -->
+<meta-data
+    tools:node="replace"
+    android:name="BUGLY_APP_VERSION"
+    android:value="test-version" />
+<!-- 配置APP渠道号 -->
+<meta-data
+    tools:node="replace"
+    android:name="BUGLY_APP_CHANNEL"
+    android:value="m-debug" />
+<!-- 配置Bugly调试模式（true或者false）-->
+<meta-data
+    tools:node="replace"
+    android:name="BUGLY_ENABLE_DEBUG"
+    android:value="true" />
+```
+
+> 注意：如果需要自己实现Application，请先继承`DebuggerApplication`,再编写对应的逻辑
+
+
+
+### 剩余功能
+
 3. h5是否也要做成可配置的方式，来实现更换接口地址（优先读storege里的数据），入口设计思路为**依次按下音量键`+`和`-`次**
 4. 360加固快捷打包
 
