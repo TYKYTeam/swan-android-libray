@@ -19,11 +19,41 @@ public class ResultModel {
         return resultModel;
     }
 
+    /**
+     * 参数验证错误
+     * @param error
+     * @return
+     */
     public static ResultModel errorParam(String error) {
         ResultModel resultModel = new ResultModel();
         resultModel.code = 201;
         resultModel.result = "";
         resultModel.desc = error;
+        return resultModel;
+    }
+
+    /**
+     * 缺少权限
+     * @param error
+     * @return
+     */
+    public static ResultModel errorPermission(String error) {
+        ResultModel resultModel = new ResultModel();
+        resultModel.code = 202;
+        resultModel.result = "";
+        resultModel.desc = error;
+        return resultModel;
+    }
+
+    /**
+     * 缺少权限
+     * @return
+     */
+    public static ResultModel errorPermission() {
+        ResultModel resultModel = new ResultModel();
+        resultModel.code = 202;
+        resultModel.result = "";
+        resultModel.desc = "";
         return resultModel;
     }
 

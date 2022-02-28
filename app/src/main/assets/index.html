@@ -139,12 +139,34 @@
                 </div>
             </fieldset>
 
-            <button type="default" onclick="openLocation()">获取定位</button>
+            <fieldset>
+                <legend>map 地图</legend>
+                <div class="contentDiv">
+                    <button type="default" onclick="startLocation()">获取定位</button>
+                </div>
+            </fieldset>
+
 
         </div>
     </body>
 
     <script>
+      window.getLocation = function(object) {
+          console.log(object);
+          alert(JSON.stringify(object))
+      }
+
+        function startLocation() {
+            if (window.map) {
+                let content = {
+                    "callBackMethod": "getLocation"
+                }
+                let result = window.map.startLocation(JSON.stringify(content))
+                alert(result)
+                console.log(result)
+            }
+        }
+
         function setBrightness() {
             if (window.hardware) {
                 let content = {

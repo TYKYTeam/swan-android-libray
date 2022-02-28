@@ -872,7 +872,7 @@ setBrightness
 
 由于设置屏幕亮度需要权限的申请，所以第一次设置屏幕亮度会出现不成功（因为是申请权限操作），返回的结果为
 ```
-"{"code":201,"desc":"未授予权限，设置亮度失败","result":""}"
+"{"code":202,"desc":"未授予权限，设置亮度失败","result":""}"
 ```
 
 需要注意判断一下
@@ -1006,7 +1006,7 @@ android:name="com.tyky.debugger.DebuggerApplication"
 
 之后注入到Js代码中，就可以在Js层通过`window.share.xx()`去调用我们原生Android的方法
 
-### 3.创建Js注入方法
+### 4.创建Js注入方法
 
 这里不再过多赘述，就写个注解即可
 

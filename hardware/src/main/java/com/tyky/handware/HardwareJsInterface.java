@@ -156,7 +156,8 @@ public class HardwareJsInterface {
                 BrightnessUtils.setBrightness(brightness);
                 return gson.toJson(ResultModel.success(""));
             }
-            return gson.toJson(ResultModel.errorParam("未授予权限，设置亮度失败"));
+
+            return gson.toJson(ResultModel.errorPermission("未授予权限，设置亮度失败"));
         }
         return gson.toJson(ResultModel.success(""));
 
