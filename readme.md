@@ -684,7 +684,49 @@ if (window.listener) {
 
 ## map
 
-1. 获取当前位置地址
+### 1. 获取当前地址
+
+startLocation
+
+获取当前地址
+
+**传参：**
+
+```
+//传递个js回调的方法名，之后Android原生会执行对应的JS方法
+{
+    "callBackMethod": "getLocation"
+}
+```
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+
+**H5调用示例：**
+```
+window.getLocation = function(object) {
+    //object内容为{"addrStr":"中国广东省深圳市福田区梅林街道梅坳八路","city":"深圳市","district":"福田区","province":"广东省","street":"梅坳八路"}
+    console.log(object);
+    alert(JSON.stringify(object))
+}
+
+function startLocation() {
+    if (window.map) {
+        let content = {
+            "callBackMethod": "getLocation"
+        }
+        let result = window.map.startLocation(JSON.stringify(content))
+        alert(result)
+        console.log(result)
+    }
+}
+```
+
+### 待完成功能
 2. 地图选择
 3. 地图显示当前位置
 4. 路径规划
