@@ -41,7 +41,7 @@ android {
 dependencies {
 
 
-    //  百度地图
+    //  百度地图定位SDK（只有定位） https://lbsyun.baidu.com/index.php?title=android-locsdk/guide/create-project/android-studio
     implementation 'com.baidu.lbsyun:BaiduMapSDK_Location:9.1.8'
 
     //权限申请 https://github.com/yanzhenjie/AndPermission
