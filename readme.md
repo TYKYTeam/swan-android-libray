@@ -964,20 +964,18 @@ if (window.debugger) {
 ```
 
 ### 2.Bugly配置
-目前引入了Bugly对接，**注意公司的网络环境对Bugly有限制，可能无法测试得到预料的结果，建议使用移动网络**
+目前引入了Bugly对接，**注意公司的网络环境对Bugly有限制，无法测试，建议使用移动网络**
 
 **使用步骤：**
 
 
 在AndroidManifest文件中，声明application，并修改Bugly的配置
 
-![](https://img2022.cnblogs.com/blog/1210268/202202/1210268-20220225164726034-974049188.png)
+![](https://img2022.cnblogs.com/blog/1210268/202203/1210268-20220301170652451-2078281283.png)
 
-**注：debugger默认有个appId，下面这个是在APP的AndroidManifest.xml文件，会将debugger模块中的覆盖掉**
+**注：debugger默认有个appId，下面这个是在APP的AndroidManifest.xml文件，会将debugger模块中的`AndroidManifest.xml`覆盖掉**
 
 ```
-android:name="com.tyky.debugger.DebuggerApplication"
-
 <!-- Bugly配置 -->
 <!-- 配置APP ID -->
 <meta-data
@@ -1001,9 +999,9 @@ android:name="com.tyky.debugger.DebuggerApplication"
     android:value="true" />
 ```
 
-> 注意：如果需要自己实现Application，请先继承`DebuggerApplication`,再编写对应的逻辑
+如果有需求需要改动，只需要在主Module中，修改上述数值即可
 
-
+> 注意：BaseApplication中是使用了**反射+注解**的方式实现了Module自动初始化（假如Module中使用的库需要在Application中进行初始化）
 
 ### 剩余功能
 
@@ -1013,6 +1011,7 @@ android:name="com.tyky.debugger.DebuggerApplication"
 ## update使用
 
 ## 关于Module创建
+
 
 若是想要创建一个module，需要进行以下几步
 ### 1.新建module
@@ -1059,6 +1058,25 @@ android:name="com.tyky.debugger.DebuggerApplication"
 PS：之后使用不要忘记了依赖自己新建的module哦！！
 
 ### 补充
+#### 需要Application进行初始化操作
+
+目前是使用了注解+反射方式，实现了Application的初始化，下面介绍一下步骤：
+
+1.新建类，标明注解`@ApplicationInit`
+2.实现接口`ModuleInit`
+
+```
+@ApplicationInit
+public class UpdateModuleInit implements ModuleInit {
+
+    @Override
+    public void init(Application application) {
+        //写你的初始化操作
+    }
+}
+```
+
+> PS：由于采用的包名扫描方式，**需要注意包名得在`com.tyky`下**
 #### 清单文件怎么写？
 
 如果需求是要在module新建页面或者其他四大组件，可以在AndroidManifest文件中这样写对应的声明:
