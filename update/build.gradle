@@ -36,7 +36,7 @@ dependencies {
     implementation 'com.github.xuexiangjys:XUpdate:2.1.1'
 
     implementation 'com.zhy:okhttputils:2.6.2'
-    compileOnly 'com.squareup.okhttp3:okhttp:3.4.1'
+    compileOnly 'com.squareup.okhttp3:okhttp:3.3.1'
 
     // Android的工具类   https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
     compileOnly 'com.blankj:utilcodex:1.30.6'
