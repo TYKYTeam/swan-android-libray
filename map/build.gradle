@@ -17,6 +17,11 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+        ndk {
+            // 设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","x86_64"
+        }
+
     }
 
     buildTypes {
@@ -29,20 +34,15 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
-    defaultConfig {
-        ndk {
-            // 设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
-            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","x86_64"
-        }
-    }
 }
 
 dependencies {
 
-
-    //  百度地图定位SDK（只有定位） https://lbsyun.baidu.com/index.php?title=android-locsdk/guide/create-project/android-studio
+    //  百度地图定位SDK https://lbsyun.baidu.com/index.php?title=android-locsdk/guide/create-project/android-studio
     implementation 'com.baidu.lbsyun:BaiduMapSDK_Location:9.1.8'
+    implementation 'com.baidu.lbsyun:BaiduMapSDK_Map:7.4.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     //权限申请 https://github.com/yanzhenjie/AndPermission
     compileOnly 'com.yanzhenjie:permission:2.0.3'
