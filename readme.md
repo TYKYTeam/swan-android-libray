@@ -297,10 +297,11 @@ if (window.android_media) {
 
 ### 还未实现功能清单
 
-8. 图片压缩
-9. 安装apk
-10. 文件下载
-11. 文件预览(文件先下载再预览)
+8. 图片压缩（H5传参）
+
+9. 文件下载
+10. 文件预览(文件先下载再预览)
+11. 安装apk
 ## notification通知
 ### 1.发送通知
 sendNotification 状态栏显示一条新通知
@@ -726,11 +727,36 @@ function startLocation() {
 }
 ```
 
+### 2.地图显示当前位置
+
+showLocationInMap
+
+打开地图页面，并展示当前的位置
+
+**传参：无需**
+
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+
+**H5调用示例：**
+```
+if (window.map) {
+    let result = window.map.showLocationInMap()
+    alert(result)
+    console.log(result)
+}
+```
+
 ### 待完成功能
-2. 地图选择
-3. 地图显示当前位置
-4. 路径规划
-5. 路径导航
+
+4. 路径导航
+5. 地图选点 
+6. 路径规划
 
 
 ## handware
@@ -931,7 +957,7 @@ if (window.hardware) {
 }
 ```
 
-
+### 未完成
 0. NFC
 1. 蓝牙配对
 2. 指纹识别
@@ -968,7 +994,6 @@ if (window.debugger) {
 
 **使用步骤：**
 
-
 在AndroidManifest文件中，声明application，并修改Bugly的配置
 
 ![](https://img2022.cnblogs.com/blog/1210268/202203/1210268-20220301170652451-2078281283.png)
@@ -1003,12 +1028,18 @@ if (window.debugger) {
 
 > 注意：BaseApplication中是使用了**反射+注解**的方式实现了Module自动初始化（假如Module中使用的库需要在Application中进行初始化）
 
+
+
 ### 剩余功能
 
 3. h5是否也要做成可配置的方式，来实现更换接口地址（优先读storege里的数据），入口设计思路为**依次按下音量键`+`和`-`次**
 4. 360加固快捷打包
 
 ## update使用
+
+更新后台的部署操作，及更新
+
+考虑几套更新策略
 
 ## 关于Module创建
 

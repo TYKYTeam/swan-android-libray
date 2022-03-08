@@ -143,6 +143,7 @@
                 <legend>map 地图</legend>
                 <div class="contentDiv">
                     <button type="default" onclick="startLocation()">获取定位</button>
+                    <button type="default" onclick="showLocationInMap()">地图展示当前位置</button>
                 </div>
             </fieldset>
 
@@ -151,6 +152,14 @@
     </body>
 
     <script>
+        function showLocationInMap() {
+            if (window.map) {
+                let result = window.map.showLocationInMap()
+                alert(result)
+                console.log(result)
+            }
+        }
+        
         window.getLocation = function(object) {
             console.log(object);
             alert(JSON.stringify(object))

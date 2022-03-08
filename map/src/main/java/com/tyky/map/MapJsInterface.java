@@ -8,10 +8,13 @@ import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.google.gson.Gson;
 import com.tyky.webviewBase.annotation.WebViewInterface;
+import com.tyky.webviewBase.event.IntentEvent;
 import com.tyky.webviewBase.model.ParamModel;
 import com.tyky.webviewBase.model.ResultModel;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
+
+import org.greenrobot.eventbus.EventBus;
 
 @WebViewInterface("map")
 public class MapJsInterface {
@@ -42,9 +45,19 @@ public class MapJsInterface {
                     .start();
             return gson.toJson(ResultModel.errorPermission());
         }
-
         return gson.toJson(ResultModel.success(""));
     }
+
+    /**
+     * 在地图显示当前位置
+     * @return
+     */
+    @JavascriptInterface
+    public String showLocationInMap() {
+        EventBus.getDefault().post(new IntentEvent(MapActivity.class));
+        return gson.toJson(ResultModel.success(""));
+    }
+
 
 
 
