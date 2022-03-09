@@ -1041,6 +1041,43 @@ if (window.debugger) {
 
 考虑几套更新策略
 
+## page
+### 1.跳转其他APP页面
+
+gotoApp
+
+跳转其他APP页面
+
+**传参：**
+
+```
+{
+    "packageName": "com.android.settings",//app应用应用包名
+    "activityName": "com.android.settings.Settings"//具体的某个页面Activity（全包名）
+}
+
+```
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.page) {
+    //下面这里是进入设置页面
+    let content = {
+        "packageName": "com.android.settings",
+        "activityName": "com.android.settings.Settings"
+    }
+    let result = window.page.gotoApp(JSON.stringify(content))
+    console.log(result)
+}
+```
+
+
 ## 关于Module创建
 
 
