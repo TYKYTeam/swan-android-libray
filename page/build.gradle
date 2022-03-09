@@ -1,0 +1,55 @@
+plugins {
+    id 'com.android.library'
+    id 'com.github.dcendents.android-maven'
+}
+
+group = 'com.github.stars-one'
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion '28.0.3'
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 32
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+        ndk {
+            // 设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","x86_64"
+        }
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            consumerProguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+
+
+    //权限申请 https://github.com/yanzhenjie/AndPermission
+    compileOnly 'com.yanzhenjie:permission:2.0.3'
+
+    // Android的工具类   https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
+    compileOnly 'com.blankj:utilcodex:1.30.6'
+
+    //日志输出    https://github.com/ZhaoKaiQiang/KLog
+    compileOnly 'com.github.zhaokaiqiang.klog:library:1.6.0'
+
+    compileOnly 'org.greenrobot:eventbus:3.0.0'
+
+    compileOnly project(path: ':webviewBase')
+}

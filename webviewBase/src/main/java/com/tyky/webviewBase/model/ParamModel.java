@@ -31,6 +31,31 @@ public class ParamModel {
     private String key;
     private String value;
 
+    /**
+     * 应用包名
+     */
+    private String packageName;
+    /**
+     * activity全类名
+     */
+    private String activityName;
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
+    }
+
+    public String getActivityName() {
+        return activityName;
+    }
+
+    public void setActivityName(String activityName) {
+        this.activityName = activityName;
+    }
+
     public String getKey() {
         return key;
     }

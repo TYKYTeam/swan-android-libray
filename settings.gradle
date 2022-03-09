@@ -1,3 +1,4 @@
+include ':page'
 include ':map'
 include ':hardware'
 include ':debugger'

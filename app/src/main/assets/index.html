@@ -147,11 +147,28 @@
                 </div>
             </fieldset>
 
-
+            <fieldset>
+                <legend>page 页面</legend>
+                <div class="contentDiv">
+                    <button type="default" onclick="gotoApp()">跳转其他APP的某一页面</button>
+                </div>
+            </fieldset>
         </div>
     </body>
 
     <script>
+        function gotoApp() {
+            if (window.page) {
+                //下面这里是进入设置页面
+                let content = {
+                    "packageName": "com.android.settings",
+                    "activityName": "com.android.settings.Settings"
+                }
+                let result = window.page.gotoApp(JSON.stringify(content))
+                console.log(result)
+            }
+        }
+
         function showLocationInMap() {
             if (window.map) {
                 let result = window.map.showLocationInMap()
@@ -159,7 +176,7 @@
                 console.log(result)
             }
         }
-        
+
         window.getLocation = function(object) {
             console.log(object);
             alert(JSON.stringify(object))
