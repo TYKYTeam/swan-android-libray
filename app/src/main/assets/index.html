@@ -372,11 +372,10 @@
 
         function shareToWechatFriend() {
             if (window.share) {
-                //下面这里是进入设置页面
                 let content = {
                     content: "分享的文本内容"
                 }
-                let result = window.page.gotoApp(JSON.stringify(content))
+                let result = window.share.shareToWechatFriend(JSON.stringify(content))
                 console.log(result)
             }
         }

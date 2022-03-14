@@ -423,6 +423,35 @@ if (window.share) {
     console.log(result)
 }
 ```
+
+### 4.分享文本给微信好友
+shareToWechatFriend
+
+分享文本给微信好友，会直接弹出选择好友的列表页面
+
+**传参：**
+```
+{
+    content: "分享的文本内容"
+}
+```
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.share) {
+    let content = {
+        content: "分享的文本内容"
+    }
+    let result = window.share.shareToWechatFriend(JSON.stringify(content))
+    console.log(result)
+}
+```
 ## device设备
 
 ### 1.获取设备mac地址
