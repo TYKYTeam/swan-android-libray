@@ -85,6 +85,7 @@
                     <button type="default" onclick="shareText()">分享文本</button>
                     <button type="default" onclick="shareImage()">分享图片</button>
                     <button type="default" onclick="shareTextImage()">分享图文</button>
+                    <button type="default" onclick="shareToWechatFriend()">分享文本给微信好友</button>
                 </div>
             </fieldset>
 
@@ -365,6 +366,17 @@
                 }
                 let result = window.android_media.speakText(JSON.stringify(content))
                 alert(result);
+                console.log(result)
+            }
+        }
+
+        function shareToWechatFriend() {
+            if (window.share) {
+                //下面这里是进入设置页面
+                let content = {
+                    content: "分享的文本内容"
+                }
+                let result = window.page.gotoApp(JSON.stringify(content))
                 console.log(result)
             }
         }
