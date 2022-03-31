@@ -26,7 +26,7 @@
 
 
         <!-- Bugly配置 -->
-        <!-- 配置APP ID -->
+        <!-- 配置APP ID,快速使用改这个即可 -->
         <meta-data
             tools:node="replace"
             android:name="BUGLY_APPID"
