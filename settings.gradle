@@ -12,3 +12,26 @@ include ':update'
 include ':webviewBase'
 include ':app'
 rootProject.name = "AndroidComponentLibrary"
+
+//以下是腾讯云IM的Module接入
+include ':tim'
+
+// 引入内部组件通信模块 (必要模块)
+include ':tuicore'
+project(':tuicore').projectDir = new File(settingsDir, '/TUIKit/TUICore/tuicore')
+
+// 引入聊天功能模块 (基础功能模块)
+include ':tuichat'
+project(':tuichat').projectDir = new File(settingsDir, '/TUIKit/TUIChat/tuichat')
+
+// 引入关系链功能模块 (基础功能模块)
+include ':tuicontact'
+project(':tuicontact').projectDir = new File(settingsDir, '/TUIKit/TUIContact/tuicontact')
+
+// 引入会话功能模块 (基础功能模块)
+include ':tuiconversation'
+project(':tuiconversation').projectDir = new File(settingsDir, '/TUIKit/TUIConversation/tuiconversation')
+
+// 引入群组功能模块
+include ':tuigroup'
+project(':tuigroup').projectDir = new File(settingsDir, '/TUIKit/TUIGroup/tuigroup')

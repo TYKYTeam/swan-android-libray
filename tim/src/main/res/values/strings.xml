@@ -1,0 +1,158 @@
+<resources>
+
+    <string name="welcome_tip">Thank you for joining Instant Messaging!</string>
+    <string name="test_custom_action">Custom Messages</string>
+
+    <string name="test_custom_message">View Details>></string>
+
+
+    // 登录相关
+    <string name="account">Username</string>
+    <string name="password">Password</string>
+
+    <string name="demo_login_country_or_region_label">Country/Region</string>
+    <string name="demo_area_code_title">Select country or region</string>
+    <string name="demo_language_title">Language</string>
+    <string name="demo_login_chinese_mainland">Chinese Mainland</string>
+    <string name="demo_login_mobile_phone_number">Phone Number</string>
+    <string name="demo_login_verification_code_label">Verification Code</string>
+    <string name="demo_search">Search</string>
+
+
+    <string name="login_title">Log in to IM</string>
+    <string name="login_sub_title">Use Group Chat, Voice/Video Call, and various IM features</string>
+    <string name="input_number">Enter mobile number</string>
+    <string name="input_verification">Enter SMS verification code</string>
+    <string name="verification_code">Send Code</string>
+    <string name="button_login">Log In</string>
+    <string name="password_login">Log in via password</string>
+    <string name="official_website">Visit Us</string>
+    <string name="debug_mode_summary">IM login screen that is only visible in debug mode.</string>
+    <string name="account_hint">Use any non-empty character. Refer to the class comments.</string>
+
+    <string name="repeat_login_tip">Your account has been logged in on another device.</string>
+    <string name="expired_login_tip">Account expired. Log in again.</string>
+    <string name="failed_login_tip">Login failed</string>
+
+    // "我"相关
+    <string name="profile">Me</string>
+    <string name="modify_user_icon">Profile Photo</string>
+    <string name="modify_nick_name">Nick Name</string>
+    <string name="modify_signature">Signature</string>
+    <string name="modify_account">Account</string>
+    <string name="add_rule">Friend Request</string>
+    <string name="allow_type_allow_any">Allow any user to add you as friend</string>
+    <string name="allow_type_deny_any">Decline friend request from any user</string>
+    <string name="allow_type_need_confirm">Anyone upon Request</string>
+    <string name="exit">Log Out</string>
+    <string name="about_im">About Instant Messaging</string>
+    <string name="modify_birthday">birthday</string>
+    <string name="modify_gender">Gender</string>
+
+    <string name="modify_theme">Theme</string>
+    <string name="light_theme">Light</string>
+    <string name="lively_theme">Lively</string>
+    <string name="serious_theme">Solemn</string>
+    <string name="modify_language">Modify Language</string>
+
+    <string name="demo_language">English</string>
+    <string name="demo_theme_light">light</string>
+
+    <string name="demo_signature_tag">Signature : </string>
+    <string name="demo_account_tag">ID : </string>
+
+    <string name="demo_about_sdk_version">SDK Version</string>
+    <string name="demo_about_im">About</string>
+
+    <string name="demo_self_detail_gender_male">Male</string>
+    <string name="demo_self_detail_gender_female">Female</string>
+    <string name="demo_self_detail_gender_unknown">Unknown</string>
+
+    <string name="demo_self_detail_modify_nickname">Modify NickName</string>
+    <string name="demo_self_detail_modify_signature">Modify Signature</string>
+    <string name="demo_self_detail_modify_gender">Modify Gender</string>
+
+    <string name="demo_self_detail_modify_nickname_rule">Only for chinese, characters, numbers and underline.</string>
+
+    // 主页Tab相关
+    <string name="tab_contact_tab_text">Contacts</string>
+    <string name="tab_conversation_tab_text">Message</string>
+    <string name="tab_profile_tab_text">Me</string>
+    <string name="tab_scenes_tab_text">Live Stream</string>
+
+
+    <string name="conversation_title">Tencent·Instant Messaging</string>
+    <string name="contact_title">Contacts</string>
+    <string name="add_friend">Add to Contacts</string>
+    <string name="add_group">Add Group Chat</string>
+    <string name="start_conversation">New Chat</string>
+    <string name="create_group_chat">Create Group Chat</string>
+    <string name="create_chat_room">Create Chat Room</string>
+    <string name="create_community">Create Community</string>
+    <string name="create_private_group">Create Discussion Group</string>
+
+
+    <string name="test_excluded_from_unread_count_action">Message excluded from unread count</string>
+
+    <string name="privacy_text">Agreed to <a href="http://privacy.qq.com/">Privacy Policy</a></string>
+
+    <string name="no_support_msg">Unsupported custom messages</string>
+    <string name="live">\'s live stream</string>
+    <string name="living">In Progress</string>
+    <string name="stop_live">End Live Stream</string>
+    <string name="http_error_invalid">Username must begin with a letter and should be a combination of 3-23 letters and numbers.</string>
+    <string name="http_error_user">User already exists.</string>
+    <string name="http_error_server">Server error</string>
+    <string name="http_error_no_user">User does not exist.</string>
+    <string name="http_error_password">Incorrect password</string>
+    <string name="not_retry_more">Do not send too many verification codes.</string>
+    <string name="input_phone">Enter valid mobile number</string>
+    <string name="verify_code_fail">Failed to get verification code:</string>
+    <string name="send_verify_code">Verification code sent</string>
+    <string name="input_phone_code">Enter the mobile number and verification code</string>
+    <string name="login_fail_tip">Login failed:</string>
+    <string name="login_suc_tip">Login successful</string>
+    <string name="second">s</string>
+    <string name="get_verify_code">Send Code</string>
+    <string name="permission_tip">Not fully authorized. Some features may not be available.</string>
+
+    <string name="logout_tip">Log out now?</string>
+    <string name="sure">OK</string>
+    <string name="cancle">Cancel</string>
+    <string name="online_fail">Network request failed</string>
+    <string name="online">Online</string>
+    <string name="unknow_error">Unknown error</string>
+    <string name="you_app">Your App</string>
+    <string name="low_version"> The version is too low. Unable to open the offline message.</string>
+    <string name="call_timeout">Call timed out</string>
+    <string name="call_notification">Voice/Video Call Notifications</string>
+    <string name="background_tip">When the program is running in the background, new incoming call notifications will be displayed in the Notifications bar.</string>
+    <string name="new_msg_notification">New Messages</string>
+    <string name="new_msg">You\'ve received a new message.</string>
+    <string name="call_nos">No response</string>
+    <string name="login_password_tips">1~16 characters(letters+numbers)</string>
+    <string name="login_user_tips">Letters start, 4~24 characters(letters+numbers)</string>
+
+    <string name="login_agree_content">I have read and agreed to the "Privacy Regulations" and "User Agreement".</string>
+    <string name="login_agree_privacy_regulations">"Privacy Regulations"</string>
+    <string name="login_agree_user_agreement">"User Agreement"</string>
+    <string name="im_privacy">Privacy Regulations</string>
+    <string name="im_statement">Disclaimer</string>
+    <string name="im_user_agreement">User Agreement</string>
+
+    <string name="im_statement_content">IM ("this product") is a test product provided by Tencent Cloud, and Tencent Cloud enjoys the copyright and ownership of this product. This product is only used for functional experience and must not be used for any commercial purposes. In order to comply with the regulatory requirements of relevant departments, the audio and video interactions of this product are archived throughout the entire audio and video interactions. Any pornography, abusive, violent, and politically related content is strictly prohibited during use.</string>
+    <string name="im_privacy_tips">Please read and approve the agreement first</string>
+
+    <string name="get_verify_code_error">Failed to get verifcation code！(%d)</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="modify_group_name">Edit Group Name</string>
+    <string name="input_tip">No nickname entered, please fill in again</string>
+    <string name="call_time_out">time out</string>
+
+    <string name="mark_all_message_as_read_succ">Success to mark all as read</string>
+    <string name="mark_all_message_as_read_err_format">Error, %d, %s</string>
+
+    <string name="demo_profile_detail">Details</string>
+
+</resources>

@@ -1,0 +1,137 @@
+ext {
+    android = [
+            compileSdkVersion: 28,
+            buildToolsVersion: "28.0.3",
+            applicationId    : "",
+            minSdkVersion    : 19,
+            targetSdkVersion : 26,
+            versionCode      : 1 as int,
+            versionName      : "1.0",
+            flavorDimensions : "net",
+
+    ]
+    version = [
+            androidSupportSdkVersion: "28.0.0",
+            design                  : "25.3.0",
+            retrofitSdkVersion      : "2.2.0",
+            butterknifeSdkVersion   : "8.8.1",
+            constraintLayout        : "1.1.2",
+            greendao                : "3.2.2",
+            espressoSdkVersion      : "2.2.2",
+            canarySdkVersion        : "1.5.1",
+            dagger2SdkVersion       : "2.10",
+            rxlifecycleSdkVersion   : "1.0",
+            rxlifecycle2SdkVersion  : "2.0.1",
+            butterknife             : "8.8.1",
+            eventbus                : "3.1.1",
+
+    ]
+    dependencies = [
+            // support
+            "appcompat-v7"             : "com.android.support:appcompat-v7:${version["androidSupportSdkVersion"]}",
+            "design"                   : "com.android.support:design:${version["design"]}",
+            "cardview-v7"              : "com.android.support:cardview-v7:${version["androidSupportSdkVersion"]}",
+            "support-v4"               : "com.android.support:support-v4:${version["androidSupportSdkVersion"]}",
+            "recyclerview-v7"          : "com.android.support:recyclerview-v7:${version["androidSupportSdkVersion"]}",
+            "constraint-layout"        : "com.android.support.constraint:constraint-layout:${version["constraintLayout"]}",
+
+            "guava"                    : "com.google.guava:guava:20.0",
+            "findbugs-jsr305"          : "com.google.code.findbugs:jsr305:3.0.1",
+            "greendao"                 : "org.greenrobot:greendao:${version["greendao"]}",
+            //net
+            "rxpermissions"            : "com.tbruyelle.rxpermissions2:rxpermissions:0.8.2@aar",
+            "converter-simplexml"      : "com.squareup.retrofit2:converter-simplexml:2.1.0",
+
+
+            "okhttp3"                  : "com.squareup.okhttp3:okhttp:3.9.0",
+            "retrofit2"                : "com.squareup.retrofit2:retrofit:2.3.0",
+            "converter-gson"           : "com.squareup.retrofit2:converter-gson:2.1.0",
+            "converter-scalars"        : "com.squareup.retrofit2:converter-scalars:2.1.0",
+            "logging-interceptor"      : "com.squareup.okhttp3:logging-interceptor:3.4.1",
+            "okhttp3.4.1"              : "com.squareup.okhttp3:okhttp:3.4.1",
+            "retrofit2-rxjava2-adapter": "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0",
+
+
+            "klog-library"             : "com.github.zhaokaiqiang.klog:library:1.5.0",
+            "AndroidBase"              : "com.github.TYKYTeam:AndroidBase:1.1.42",
+            "latest-integration"       : "com.better.android:customui:latest.integration",
+            //黄油刀
+//            "butterknife"              : "com.jakewharton:butterknife-compiler:8.5.1",
+            "butterknife"              : "com.jakewharton:butterknife:${version["butterknife"]}",
+            "butterknife-compiler"     : "com.jakewharton:butterknife-compiler:${version["butterknife"]}",
+            //多图选择器
+            "galleryfinal"             : "cn.finalteam:galleryfinal:1.4.8.7",
+
+            //捕获崩溃信息
+            "crashreport_upgrade"      : "com.tencent.bugly:crashreport_upgrade:latest.release",
+            "nativecrashreport"        : "com.tencent.bugly:nativecrashreport:latest.release",
+            "alisdk-hotfix"            : "com.taobao.android:alisdk-hotfix:2.0.7",
+
+            //解决方法数问题
+            "multidex"                 : "com.android.support:multidex:1.0.1",
+
+            //stetho 工具
+            "stetho"                   : "com.facebook.stetho:stetho:1.3.1",
+            "stetho-okhttp"            : "com.facebook.stetho:stetho-okhttp3:1.3.1",
+
+            // 百分比布局
+            "percent-support-extends"  : "com.zhy:percent-support-extends:1.1.1",
+
+            //可折叠textview
+            "expandableTextView"       : "com.ms-square:expandableTextView:0.1.4",
+            "gson2.7"                  : "com.google.code.gson:gson:2.7",
+
+            //动态权限
+            //"rxpermissions"                  : "com.tbruyelle.rxpermissions2:rxpermissions:0.8.2@aar",
+
+            // 圆形进度条
+            "library-circular"         : "com.github.castorflex.smoothprogressbar:library-circular:1.1.0",
+
+            //图片放大缩小
+            "photoview"                : "com.bm.photoview:library:1.4.1",
+
+            //广告滚动条
+            "convenientbanner"         : "com.bigkoo:convenientbanner:2.0.4",
+
+            //环形百分比进度条
+            "circleprogress"           : "com.github.lzyzsd:circleprogress:1.1.0",
+
+            // pay password view
+            "gridPasswordView"         : "com.jungly:gridPasswordView:0.3",
+
+            //悬浮按钮样式
+            "clans-fab"                : "com.github.clans:fab:1.6.4",
+
+            // --------------------     二维码扫描       ----------------------------
+            "zxing"                    : "com.google.zxing:core:3.2.1",
+            "bga-qrcodecore"           : "cn.bingoogolapple:bga-qrcodecore:1.1.7@aar",
+            "bga-zxing"                : "cn.bingoogolapple:bga-zxing:1.1.7@aar",
+            "bga-zbar"                 : "cn.bingoogolapple:bga-zbar:1.1.7@aar",
+
+            //dialogs
+            "material-dialogs"         : "com.afollestad.material-dialogs:core:0.9.4.2",
+
+            //日历
+            "PickerView"               : "com.contrarywind:Android-PickerView:3.2.5",
+
+
+            "pdfview"                  : "com.joanzapata.pdfview:android-pdfview:1.0.4@aar",
+            "android-async-http"       : "com.loopj.android:android-async-http:1.4.9",
+
+            "highlight"                : "com.isanwenyu.highlight:highlight:1.8.0",
+
+            "systembartint"            : "com.readystatesoftware.systembartint:systembartint:1.0.3",
+
+            "freeline-runtime"         : "com.antfortune.freeline:runtime:0.8.8",
+
+            "runtime-no-op"            : "com.antfortune.freeline:runtime-no-op:0.8.8",
+            "switchbutton"             : "com.kyleduo.switchbutton:library:2.0.0",
+            "FlycoTabLayout"           : 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar',
+
+            //eventbus
+            "eventbus"                 : "org.greenrobot:eventbus:${version["eventbus"]}",
+            "bga-banner"               : "cn.bingoogolapple:bga-banner:2.2.6@aar",
+            "nice-spinner"             : 'com.github.arcadefire:nice-spinner:1.3.8',
+            "CustomPopwindow"          : 'com.github.pinguo-zhouwei:CustomPopwindow:2.1.1'
+    ]
+}

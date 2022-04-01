@@ -7,6 +7,7 @@ buildscript {
         maven{ url'https://maven.aliyun.com/repository/google'}
         mavenCentral()
         maven { url 'https://jitpack.io' }
+        maven { url "https://mirrors.tencent.com/nexus/repository/maven-public/" }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.0"
@@ -24,9 +25,21 @@ allprojects {
         maven{ url'https://maven.aliyun.com/repository/google'}
         mavenCentral()
         maven { url 'https://jitpack.io' }
+        maven { url "https://mirrors.tencent.com/nexus/repository/maven-public/" }
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    compileSdkVersion = 28
+    minSdkVersion = 19
+    targetSdkVersion = 28
+    versionCode = 1
+    versionName = "6.0.1992"
+    abiFilters = ['armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'] //['armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64']
+    arguments = "-DANDROID_STL=c++_static"
+    cppFlags = "-std=c++11"
 }
