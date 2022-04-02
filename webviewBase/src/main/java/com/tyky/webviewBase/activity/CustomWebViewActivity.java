@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.blankj.utilcode.util.EncodeUtils;
@@ -201,6 +202,16 @@ public class CustomWebViewActivity extends AppCompatActivity {
             ivPreview.setVisibility(View.VISIBLE);
             Glide.with(this).load(data).into(ivPreview);
         }
+    }
+
+    /**
+     * 显示测试按钮并设置点击事件
+     * @param listener
+     */
+    public void showTestBtn(View.OnClickListener listener) {
+        Button btnTest = findViewById(R.id.btnTest);
+        btnTest.setVisibility(View.VISIBLE);
+        btnTest.setOnClickListener(listener);
     }
 
 
