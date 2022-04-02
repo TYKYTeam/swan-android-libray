@@ -10,7 +10,6 @@ import com.tencent.imsdk.v2.V2TIMManager;
 import com.tencent.imsdk.v2.V2TIMSDKListener;
 import com.tencent.imsdk.v2.V2TIMValueCallback;
 import com.tencent.qcloud.tim.demo.bean.UserInfo;
-import com.tencent.qcloud.tim.demo.login.LoginForDevActivity;
 import com.tencent.qcloud.tim.demo.signature.GenerateTestUserSig;
 import com.tencent.qcloud.tim.demo.thirdpush.OEMPush.HUAWEIHmsMessageService;
 import com.tencent.qcloud.tim.demo.thirdpush.PushSetting;
@@ -152,10 +151,10 @@ public class DemoApplication extends BaseApplication {
         unBindUserID(UserInfo.getInstance().getUserId());
         unInitPush();
 
-        Intent intent = new Intent(this, LoginForDevActivity.class);
+        /*Intent intent = new Intent(this, LoginForDevActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("LOGOUT", true);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
     class StatisticActivityLifecycleCallback implements ActivityLifecycleCallbacks {
