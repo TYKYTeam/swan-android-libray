@@ -54,7 +54,7 @@ public class TimJsInterface {
      * @return
      */
     @JavascriptInterface
-    public String login() {
+    public String logout() {
         TIMLoginUtils.logout();
         return gson.toJson(ResultModel.success(""));
     }
