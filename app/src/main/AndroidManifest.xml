@@ -5,15 +5,15 @@
 
 
     <application
-        android:name="com.tyky.webviewBase.BaseApplication"
+        android:name="com.tencent.qcloud.tim.demo.DemoApplication"
         android:allowBackup="true"
-        tools:replace="android:allowBackup"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/Theme.AndroidComponentLibrary"
+        tools:replace="android:allowBackup"
         tools:targetApi="n">
 
         <activity android:name=".MainActivity">
@@ -28,26 +28,35 @@
         <!-- Bugly配置 -->
         <!-- 配置APP ID,快速使用改这个即可 -->
         <meta-data
-            tools:node="replace"
             android:name="BUGLY_APPID"
-            android:value="4ec93574ce" />
+            android:value="4ec93574ce"
+            tools:node="replace" />
         <!-- 配置APP版本号 -->
         <meta-data
-            tools:node="replace"
             android:name="BUGLY_APP_VERSION"
-            android:value="test-version" />
+            android:value="test-version"
+            tools:node="replace" />
         <!-- 配置APP渠道号 -->
         <meta-data
-            tools:node="replace"
             android:name="BUGLY_APP_CHANNEL"
-            android:value="m-debug" />
+            android:value="m-debug"
+            tools:node="replace" />
         <!-- 配置Bugly调试模式（true或者false）-->
         <meta-data
-            tools:node="replace"
             android:name="BUGLY_ENABLE_DEBUG"
-            android:value="true" />
+            android:value="true"
+            tools:node="replace" />
 
+        <!--腾讯sdk中的相关参数-->
+        <meta-data
+            tools:node="replace"
+            android:name="SDKAPPID"
+            android:value="1400646775" />
 
+        <meta-data
+            tools:node="replace"
+            android:name="SECRETKEY"
+            android:value="350bef21480442764c97b739cf2215e94d04ee9a2fc1254871d64046a5c23fcb" />
     </application>
 
 </manifest>
