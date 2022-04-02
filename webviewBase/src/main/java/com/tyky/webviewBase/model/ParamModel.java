@@ -40,6 +40,46 @@ public class ParamModel {
      */
     private String activityName;
 
+    //-------------IM的Module传参字段开始----------
+    /**
+     * 登录userId
+     */
+    private String userId;
+    /**
+     * 登录签名
+     */
+    private String userSig;
+    /**
+     * 登录成功胡是否跳转IM首页
+     */
+    private boolean isGotoPage;
+    //-------------IM的Module传参字段结束----------
+
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUserSig() {
+        return userSig;
+    }
+
+    public void setUserSig(String userSig) {
+        this.userSig = userSig;
+    }
+
+    public boolean isGotoPage() {
+        return isGotoPage;
+    }
+
+    public void setGotoPage(boolean gotoPage) {
+        isGotoPage = gotoPage;
+    }
+
     public String getPackageName() {
         return packageName;
     }

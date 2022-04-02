@@ -91,7 +91,9 @@ dependencies {
     implementation 'com.tencent.tpns:huawei:1.2.7.1-release'
     implementation 'com.huawei.hms:push:5.0.2.300'
     implementation 'androidx.multidex:multidex:2.0.0'
-    
+
+    //日志输出    https://github.com/ZhaoKaiQiang/KLog
+    compileOnly 'com.github.zhaokaiqiang.klog:library:1.6.0'
     // Android的工具类   https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
     compileOnly 'com.blankj:utilcodex:1.30.6'
 
