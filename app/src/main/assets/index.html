@@ -159,14 +159,34 @@
                 <legend>腾讯云IM</legend>
                 <div class="contentDiv">
                     <button type="default" onclick="gotoImLogin()">进入IM登录页</button>
+                    <button type="default" onclick="timLogin()">IM登录</button>
+                    <button type="default" onclick="timLogout()">IM退出</button>
                 </div>
             </fieldset>
         </div>
     </body>
 
     <script>
+        function timLogin() {
+            if (window.tim) {
+                let content = {
+                    "userId": "5913635",
+                    "userSig": "",
+                    "isGotoPage": true
+                }
+                let result = window.tim.login(JSON.stringify(content))
+                console.log(result)
+            }
+        }
+
+        function timLogout() {
+            if (window.tim) {
+                window.tim.logout()
+            }
+        }
+
         function gotoImLogin() {
-            if (window.page) {
+            if (window.tim) {
                 window.tim.gotoImLogin()
             }
         }

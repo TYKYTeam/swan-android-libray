@@ -19,6 +19,8 @@ public class TIMLoginUtils {
 
     public static void logout() {
         V2TIMManagerImpl.getInstance().logout(null);
+        UserInfo.getInstance().setToken("");
+        UserInfo.getInstance().setAutoLogin(false);
     }
 
     /**
@@ -31,6 +33,8 @@ public class TIMLoginUtils {
     public static void login(String userId, String userSignature, boolean isGotoPage) {
 
         UserInfo mUserInfo = UserInfo.getInstance();
+        DemoApplication.instance().init();
+
         int loginStatus = V2TIMManagerImpl.getInstance().getLoginStatus();
         String userSig = userSignature;
         if (TextUtils.isEmpty(userSig)) {
@@ -42,7 +46,6 @@ public class TIMLoginUtils {
         if (loginStatus == V2TIMManager.V2TIM_STATUS_LOGINED) {//已登录
             doCheckGotoPage(isGotoPage);
         } else {
-            DemoApplication.instance().init();
             mUserInfo.setUserId(userId);
             mUserInfo.setUserSig(userSig);
 
