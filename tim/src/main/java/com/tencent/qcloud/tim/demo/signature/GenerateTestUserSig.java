@@ -3,6 +3,8 @@ package com.tencent.qcloud.tim.demo.signature;
 import android.text.TextUtils;
 import android.util.Base64;
 
+import com.blankj.utilcode.util.MetaDataUtils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -53,8 +55,8 @@ public class GenerateTestUserSig {
      * 文档：https://cloud.tencent.com/document/product/269/32688#Server
      */
     //体验版（测试用的）
-    public static final int SDKAPPID = 1400646775;
-    private static final String SECRETKEY = "350bef21480442764c97b739cf2215e94d04ee9a2fc1254871d64046a5c23fcb";
+    public static final int SDKAPPID = Integer.parseInt(MetaDataUtils.getMetaDataInApp("SDKAPPID"));
+    public static final String SECRETKEY = MetaDataUtils.getMetaDataInApp("SECRETKEY");
 
     /**
      * 签名过期时间，建议不要设置的过短

@@ -67,6 +67,9 @@
     <!-- ********************************* OEMPush Permission end************************ -->
 
     <application>
+        <meta-data android:name="SDKAPPID" android:value="1400646775"/>
+        <meta-data android:name="SECRETKEY" android:value="350bef21480442764c97b739cf2215e94d04ee9a2fc1254871d64046a5c23fcb"/>
+
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait"
