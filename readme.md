@@ -1106,6 +1106,18 @@ if (window.page) {
 }
 ```
 
+## tim
+腾讯云IM模块
+
+依赖时候，需要配置下Androidmainfest文件
+
+```
+android:name="com.tencent.qcloud.tim.demo.DemoApplication"
+tools:replace="android:allowBackup"
+```
+
+### 1.进入登录页
+gotoImLogin
 
 ## 关于Module创建
 

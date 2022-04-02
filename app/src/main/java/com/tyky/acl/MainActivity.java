@@ -11,6 +11,8 @@ public class MainActivity extends CustomWebViewActivity {
         super.onCreate(savedInstanceState);
         loadUrl("/index.html");
         //loadWebUrl("http://baidu.com");
+
+
     }
 
 }

@@ -1,4 +1,4 @@
-package com.tencent.qcloud.tim.demo;
+package com.tyky.tim;
 
 import android.app.Application;
 

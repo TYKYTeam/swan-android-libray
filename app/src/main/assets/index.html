@@ -154,10 +154,23 @@
                     <button type="default" onclick="gotoApp()">跳转其他APP的某一页面</button>
                 </div>
             </fieldset>
+
+            <fieldset>
+                <legend>腾讯云IM</legend>
+                <div class="contentDiv">
+                    <button type="default" onclick="gotoImLogin()">进入IM登录页</button>
+                </div>
+            </fieldset>
         </div>
     </body>
 
     <script>
+        function gotoImLogin() {
+            if (window.page) {
+                window.tim.gotoImLogin()
+            }
+        }
+
         function gotoApp() {
             if (window.page) {
                 //下面这里是进入设置页面
