@@ -175,19 +175,22 @@
                     "isGotoPage": true
                 }
                 let result = window.tim.login(JSON.stringify(content))
+                alert(result)
                 console.log(result)
             }
         }
 
         function timLogout() {
             if (window.tim) {
-                window.tim.logout()
+                let result = window.tim.logout()
+                alert(result)
             }
         }
 
         function gotoImLogin() {
             if (window.tim) {
-                window.tim.gotoImLogin()
+                let result = window.tim.gotoImLogin()
+                alert(result)
             }
         }
 

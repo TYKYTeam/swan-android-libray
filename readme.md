@@ -1109,7 +1109,7 @@ if (window.page) {
 ## tim
 腾讯云IM模块
 
-依赖时候，需要配置下Androidmainfest文件
+依赖之后，需要配置主module的Androidmainfest文件
 
 ```
 android:name="com.tencent.qcloud.tim.demo.DemoApplication"
@@ -1117,7 +1117,73 @@ tools:replace="android:allowBackup"
 ```
 
 ### 1.进入登录页
-gotoImLogin
+gotoImLogin 进入IM内置的登录页
+
+**传参：无**
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.tim) {
+    window.tim.gotoImLogin()
+}
+```
+### 2.IM登录
+login
+
+**传参：**
+
+```
+{
+    "userId": "5913635",//im的userId
+    "userSig": "",//im的签名，不传会使用内置的sdkid计算
+    "isGotoPage": true //是否登录后跳转到IM的会话列表页面
+}
+```
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.tim) {
+    let content = {
+        "userId": "5913635",
+        "userSig": "",
+        "isGotoPage": true
+    }
+    let result = window.tim.login(JSON.stringify(content))
+    alert(result)
+}
+```
+
+### 3.IM退出
+logout
+
+**传参：无需**
+
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.tim) {
+    let result = window.tim.logout()
+    alert(result)
+}
+```
 
 ## 关于Module创建
 
