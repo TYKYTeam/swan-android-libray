@@ -1185,6 +1185,40 @@ if (window.tim) {
 }
 ```
 
+### 4.获取消息未读数
+使用前，需要调用上述2中的IM登录
+
+**传参：**
+
+```
+{
+    "callBackMethod": "loadUnreadCount",
+}
+```
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+//返回数据以回调方式的回传给h5
+window.loadUnreadCount = function(object){
+    alert(JSON.stringify(object))
+}
+
+if (window.tim) {
+    let content = {
+        "callBackMethod": "loadUnreadCount",
+    }
+    let result = window.tim.getUnreadCount(JSON.stringify(content))
+    console.log(result)
+}
+```
+
+
 ## 关于Module创建
 
 
