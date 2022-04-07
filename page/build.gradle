@@ -41,15 +41,15 @@ dependencies {
 
 
     //权限申请 https://github.com/yanzhenjie/AndPermission
-    api 'com.yanzhenjie:permission:2.0.3'
+    compileOnly 'com.yanzhenjie:permission:2.0.3'
 
     // Android的工具类   https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
-    api 'com.blankj:utilcodex:1.30.6'
+    compileOnly 'com.blankj:utilcodex:1.30.6'
 
     //日志输出    https://github.com/ZhaoKaiQiang/KLog
-    api 'com.github.zhaokaiqiang.klog:library:1.6.0'
+    compileOnly 'com.github.zhaokaiqiang.klog:library:1.6.0'
 
-    api 'org.greenrobot:eventbus:3.0.0'
+    compileOnly 'org.greenrobot:eventbus:3.0.0'
 
-    api project(path: ':webviewBase')
+    compileOnly project(path: ':webviewBase')
 }

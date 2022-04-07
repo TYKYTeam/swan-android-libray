@@ -32,19 +32,19 @@ android {
 }
 
 dependencies {
-    api 'androidx.appcompat:appcompat:1.1.0'
-    api 'com.google.android.material:material:1.1.0'
+    compileOnly 'androidx.appcompat:appcompat:1.1.0'
+    compileOnly 'com.google.android.material:material:1.1.0'
     //图片,视频,音频选择 https://github.com/LuckSiege/PictureSelector
-    api 'io.github.lucksiege:pictureselector:v2.7.3-rc08'
+    compileOnly 'io.github.lucksiege:pictureselector:v2.7.3-rc08'
     //Glide
-    api "com.github.bumptech.glide:glide:4.12.0"
+    compileOnly "com.github.bumptech.glide:glide:4.12.0"
     //权限申请
-    api 'com.yanzhenjie:permission:2.0.3'
+    compileOnly 'com.yanzhenjie:permission:2.0.3'
 
     // Android的工具类   https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
-    api 'com.blankj:utilcodex:1.30.6'
+    compileOnly 'com.blankj:utilcodex:1.30.6'
     //日志输出    https://github.com/ZhaoKaiQiang/KLog
-    api 'com.github.zhaokaiqiang.klog:library:1.6.0'
-    api 'androidx.constraintlayout:constraintlayout:2.1.2'
-    api project(path: ':webviewBase')
+    compileOnly 'com.github.zhaokaiqiang.klog:library:1.6.0'
+    compileOnly 'androidx.constraintlayout:constraintlayout:2.1.2'
+    compileOnly project(path: ':webviewBase')
 }
