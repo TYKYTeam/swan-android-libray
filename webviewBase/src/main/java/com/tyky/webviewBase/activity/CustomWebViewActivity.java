@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.blankj.utilcode.util.EncodeUtils;
 import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.socks.library.KLog;
@@ -106,11 +107,14 @@ public class CustomWebViewActivity extends AppCompatActivity {
 
     /**
      * 加载地址（通过EventBus来实现）
+     *
      * @param event
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void loadUrl(UrlLoadEvent event) {
         String url = event.getUrl();
+        //清除缓存，加载数据
+        customWebView.clearCache(true);
         loadUrl(url);
     }
 
@@ -206,6 +210,7 @@ public class CustomWebViewActivity extends AppCompatActivity {
 
     /**
      * 显示测试按钮并设置点击事件
+     *
      * @param listener
      */
     public void showTestBtn(View.OnClickListener listener) {
@@ -214,5 +219,37 @@ public class CustomWebViewActivity extends AppCompatActivity {
         btnTest.setOnClickListener(listener);
     }
 
+    private boolean doubleBackFlag = true;
 
+    /**
+     * 是否开启双击返回
+     * @param flag
+     */
+    public void openDoubleBack(boolean flag) {
+        doubleBackFlag = flag;
+    }
+
+    private long mPressedTime = 0;
+
+    @Override
+    public void onBackPressed() {
+        if (customWebView.canGoBack()) {
+            customWebView.goBack();
+        } else {
+            //是否开启双击退出
+            if (doubleBackFlag) {
+                long mNowTime = System.currentTimeMillis();//获取第一次按键时间
+                if ((mNowTime - mPressedTime) > 2000) {
+                    ToastUtils.showShort("再按一次退出程序");
+                    mPressedTime = mNowTime;
+                } else {
+                    super.onBackPressed();
+                }
+            } else {
+                super.onBackPressed();
+            }
+
+        }
+
+    }
 }
