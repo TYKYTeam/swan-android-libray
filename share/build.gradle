@@ -33,13 +33,13 @@ android {
 
 dependencies {
 
-    compileOnly 'org.apache.commons:commons-lang3:3.9'
+    api 'org.apache.commons:commons-lang3:3.9'
 
     // Android的工具类   https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
-    compileOnly 'com.blankj:utilcodex:1.30.6'
+    api 'com.blankj:utilcodex:1.30.6'
 
     //日志输出    https://github.com/ZhaoKaiQiang/KLog
-    compileOnly 'com.github.zhaokaiqiang.klog:library:1.6.0'
+    api 'com.github.zhaokaiqiang.klog:library:1.6.0'
 
-    compileOnly project(path: ':webviewBase')
+    api project(path: ':webviewBase')
 }

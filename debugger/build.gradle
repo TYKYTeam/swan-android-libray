@@ -40,30 +40,30 @@ android {
 dependencies {
 
     //Bugly的SDK接入（只有异常捕获） http://bugly.qq.com/docs/user-guide/instruction-manual-android/#_2
-    //implementation 'com.tencent.bugly:crashreport:3.4.4'
+    //api 'com.tencent.bugly:crashreport:3.4.4'
 
     //Bugly的SDK接入（含更新,异常捕获） https://bugly.qq.com/docs/user-guide/instruction-manual-android-upgrade/?v=1.0.0#_1
-    implementation 'com.tencent.bugly:crashreport_upgrade:1.5.23'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
-    implementation 'com.tencent.bugly:nativecrashreport:3.9.2' //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
+    api 'com.tencent.bugly:crashreport_upgrade:1.5.23'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
+    api 'com.tencent.bugly:nativecrashreport:3.9.2' //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
 
     //Bugly热更新
-    implementation 'com.tencent.tinker:tinker-android-lib:1.9.9'
+    api 'com.tencent.tinker:tinker-android-lib:1.9.9'
 
-    implementation 'org.greenrobot:eventbus:3.0.0'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'com.google.android.material:material:1.1.0'
+    api 'org.greenrobot:eventbus:3.0.0'
+    api 'androidx.appcompat:appcompat:1.1.0'
+    api 'com.google.android.material:material:1.1.0'
     //图片,视频,音频选择 https://github.com/LuckSiege/PictureSelector
-    compileOnly 'io.github.lucksiege:pictureselector:v2.7.3-rc02'
-    compileOnly 'org.apache.commons:commons-lang3:3.9'
+    api 'io.github.lucksiege:pictureselector:v2.7.3-rc02'
+    api 'org.apache.commons:commons-lang3:3.9'
 
     // Android的工具类   https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
-    compileOnly 'com.blankj:utilcodex:1.30.6'
+    api 'com.blankj:utilcodex:1.30.6'
 
     //日志输出    https://github.com/ZhaoKaiQiang/KLog
-    compileOnly 'com.github.zhaokaiqiang.klog:library:1.6.0'
+    api 'com.github.zhaokaiqiang.klog:library:1.6.0'
 
-    compileOnly 'androidx.constraintlayout:constraintlayout:2.1.2'
+    api 'androidx.constraintlayout:constraintlayout:2.1.2'
 
-    compileOnly project(path: ':webviewBase')
-    implementation project(path: ':media')
+    api project(path: ':webviewBase')
+    api project(path: ':media')
 }
