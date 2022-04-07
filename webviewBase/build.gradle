@@ -23,7 +23,7 @@ android {
         release {
             minifyEnabled false
             //混淆配置修改
-            consumerProguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
         }
     }
     compileOptions {
@@ -33,7 +33,7 @@ android {
 }
 
 dependencies {
-    compileOnly 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     compileOnly 'com.google.android.material:material:1.1.0'
     //图片,视频,音频选择 https://github.com/LuckSiege/PictureSelector
     implementation 'io.github.lucksiege:pictureselector:v2.7.3-rc08'

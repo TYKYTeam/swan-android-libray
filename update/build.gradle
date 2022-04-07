@@ -22,7 +22,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            consumerProguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
         }
     }
     compileOptions {
@@ -32,6 +32,7 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     // androidx版本
     implementation 'com.github.xuexiangjys:XUpdate:2.1.1'
 

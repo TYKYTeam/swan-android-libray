@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
 //apply plugin: "com.tencent.android.tpns"
 
+group = 'com.github.stars-one'
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
