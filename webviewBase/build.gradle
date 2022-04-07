@@ -1,9 +1,42 @@
 plugins {
     id 'com.android.library'
     id 'com.github.dcendents.android-maven'
+    id 'publishing'
+    id 'maven-publish'
 }
 
 group = 'com.github.stars-one'
+
+publishing {
+    publications {
+        myPublicationName(MavenPublication) {
+
+            pom {
+
+            }
+            pom.withXml {
+                def dependenciesNode = asNode().appendNode('dependencies')
+                configurations.implementation.allDependencies.withType(ModuleDependency) { ModuleDependency dp ->
+                    if (dp.version != "unspecified") { // 过滤项目内library引用
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', dp.group)
+                        dependencyNode.appendNode('artifactId', dp.name)
+                        dependencyNode.appendNode('version', dp.version)
+                        // for exclusions
+                        if (dp.excludeRules.size() > 0) {
+                            def exclusions = dependencyNode.appendNode('exclusions')
+                            dp.excludeRules.each { ExcludeRule ex ->
+                                def exclusion = exclusions.appendNode('exclusion')
+                                exclusion.appendNode('groupId', ex.group)
+                                exclusion.appendNode('artifactId', ex.module)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 android {
     compileSdkVersion 30
