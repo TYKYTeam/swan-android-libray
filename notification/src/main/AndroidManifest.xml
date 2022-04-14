@@ -3,4 +3,25 @@
     package="com.tyky.notification">
 
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+
+    <!-- 华为角标权限 -->
+    <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- 三星 -->
+    <uses-permission android:name="com.sec.android.provider.badge.permission.READ"/>
+    <uses-permission android:name="com.sec.android.provider.badge.permission.WRITE"/>
+
+    <!-- OPPO -->
+    <uses-permission android:name="com.oppo.launcher.permission.READ_SETTINGS"/>
+    <uses-permission android:name="com.oppo.launcher.permission.WRITE_SETTINGS"/>
+
+    <!-- 联想ZUK -->
+    <uses-permission android:name="android.permission.READ_APP_BADGE"/>
+
+    <!-- HTC -->
+    <uses-permission android:name="com.htc.launcher.permission.READ_SETTINGS"/>
+    <uses-permission android:name="com.htc.launcher.permission.UPDATE_SHORTCUT"/>
+
+    <!--vivo角标权限-->
+    <uses-permission android:name="com.vivo.notification.permission.BADGE_ICON" />
 </manifest>
