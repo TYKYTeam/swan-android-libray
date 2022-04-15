@@ -74,7 +74,7 @@ public class BadgeUtils {
     }
 
 
-    public static boolean setNotificationBadge(@Nullable Activity activity,@Nullable Integer count) {
+    private static boolean setNotificationBadge(@Nullable Activity activity,@Nullable Integer count) {
         NotificationManager notificationManager = (NotificationManager) activity.getSystemService
                 (Context.NOTIFICATION_SERVICE);
         if (notificationManager == null) {

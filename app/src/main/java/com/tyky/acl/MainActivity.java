@@ -1,9 +1,7 @@
 package com.tyky.acl;
 
 import android.os.Bundle;
-import android.view.View;
 
-import com.tyky.tim.TIMLoginUtils;
 import com.tyky.webviewBase.activity.CustomWebViewActivity;
 
 public class MainActivity extends CustomWebViewActivity {
@@ -12,15 +10,17 @@ public class MainActivity extends CustomWebViewActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadUrl("/index.html");
-        //loadWebUrl("http://baidu.com");
+        //loadUrl("https://www.bingtuanbdc.com.cn/mobile-jsbt/#/home");
 
 
-        showTestBtn(new View.OnClickListener() {
+        /*showTestBtn(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TIMLoginUtils.login("5913635", "",true);
+                boolean b = BadgeUtils.setCount(MainActivity.this, 0);
+                Toast.makeText(MainActivity.this, "" + b, Toast.LENGTH_SHORT).show();
+
             }
-        });
+        });*/
     }
 
 }

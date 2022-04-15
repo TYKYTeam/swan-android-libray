@@ -74,6 +74,7 @@
                 <legend>notification 通知</legend>
                 <div class="contentDiv">
                     <button type="default" onclick="sendNotification()">发送通知</button>
+                    <button type="default" onclick="setBargeCount()">设置桌面小红点</button>
                 </div>
             </fieldset>
 
@@ -471,6 +472,17 @@
                     title: "测试标题"
                 }
                 let result = window.notification.sendNotification(JSON.stringify(content))
+                alert(result);
+                console.log(result)
+            }
+        }
+        
+        function setBargeCount() {
+            if (window.notification) {
+                let content = {
+                    content: "11",
+                }
+                let result = window.notification.setBargeCount(JSON.stringify(content))
                 alert(result);
                 console.log(result)
             }
