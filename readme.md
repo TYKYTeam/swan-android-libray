@@ -24,6 +24,8 @@ Android原生组件库，为Html提供Android原生能力，增强H5
 |listener		|×		|监听回调类的开源库，包含来电监听，网络状态监听，返回键监听	|
 |debugger			|×		|开发调试辅助库													|
 |update			|×		|自动更新库													|
+|page			|×		|页面相关													|
+|tim			|×		|腾讯IM													|
 
 
 依赖引入（需要添加jitpack仓库源）：
@@ -331,7 +333,33 @@ if (window.notification) {
     console.log(result)
 }
 ```
+### 2. 设置桌面小红点
 
+setBargeCount 
+
+**传参：**
+```
+{
+    content: "11" //未读数
+}
+```
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.notification) {
+    let content = {
+        content: "11"
+    }
+    let result = window.notification.setBargeCount(JSON.stringify(content))
+    console.log(result)
+}
+```
 ## share
 默认分享会弹出分享方式（如分享给微信好友，复制文本，分享到QQ等选项）
 
