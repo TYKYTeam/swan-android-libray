@@ -105,7 +105,12 @@ public class BadgeUtils {
         if (Build.BRAND.equalsIgnoreCase("xiaomi")) {
             setXiaomiBadge(count, notification);
         }
-        notificationManager.notify(notificationId++, notification);
+        //在原生，如果不大于0，则取消通知
+        if (count > 0) {
+            notificationManager.notify(notificationId, notification);
+        } else {
+            notificationManager.cancel(notificationId);
+        }
         return true;
     }
 
