@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <permission-group android:name="${applicationId}.andpermission"/>
+
     <!--适配Android R包可见性 开始-->
     <queries package="${applicationId}">
         <intent>

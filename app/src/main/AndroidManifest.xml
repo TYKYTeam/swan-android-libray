@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.tyky.acl">
 
-    <permission-group android:name="com.tyky.acl.andpermission"/>
+
     <application
         android:name="com.tencent.qcloud.tim.demo.DemoApplication"
         android:allowBackup="true"
