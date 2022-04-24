@@ -133,7 +133,9 @@ public class MapActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
-        mLocationClient.stop();
+        if (mLocationClient != null) {
+            mLocationClient.stop();
+        }
         mMapView.getMap().setMyLocationEnabled(false);
         mMapView.onDestroy();
         mMapView = null;
