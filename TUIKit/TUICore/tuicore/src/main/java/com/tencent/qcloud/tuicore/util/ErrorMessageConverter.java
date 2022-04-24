@@ -1,8 +1,8 @@
 package com.tencent.qcloud.tuicore.util;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.tencent.imsdk.BaseConstants;
 import com.tencent.qcloud.tuicore.R;
-import com.tencent.qcloud.tuicore.TUIConfig;
 
 public class ErrorMessageConverter {
 
@@ -714,6 +714,6 @@ public class ErrorMessageConverter {
     }
 
     private static String getLocalizedString(int errStringId) {
-        return TUIConfig.getAppContext().getString(errStringId);
+        return StringUtils.getString(errStringId);
     }
 }
