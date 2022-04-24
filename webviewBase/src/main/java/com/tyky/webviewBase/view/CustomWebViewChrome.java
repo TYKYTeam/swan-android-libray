@@ -187,7 +187,10 @@ public class CustomWebViewChrome extends WebChromeClient {
                 return;
             }
         }
-        filePathCallback.onReceiveValue(new Uri[]{});
+        //可能为空，在选择音频文件可能会出现
+        if (filePathCallback != null) {
+            filePathCallback.onReceiveValue(new Uri[]{});
+        }
     }
 
 }
