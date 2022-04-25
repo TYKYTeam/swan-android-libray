@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -22,6 +24,7 @@ import com.tyky.webviewBase.event.ImagePreviewEvent;
 import com.tyky.webviewBase.event.IntentEvent;
 import com.tyky.webviewBase.event.JsCallBackEvent;
 import com.tyky.webviewBase.event.UrlLoadEvent;
+import com.tyky.webviewBase.event.UrlLoadFinishEvent;
 import com.tyky.webviewBase.utils.SpeechService;
 import com.tyky.webviewBase.view.CustomWebView;
 import com.tyky.webviewBase.view.CustomWebViewChrome;
@@ -35,6 +38,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class CustomWebViewActivity extends AppCompatActivity {
 
@@ -44,6 +48,7 @@ public class CustomWebViewActivity extends AppCompatActivity {
     private CustomWebView customWebView;
     private ImageView ivPreview;
 
+    private ConstraintLayout clLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +72,8 @@ public class CustomWebViewActivity extends AppCompatActivity {
         customWebView = findViewById(R.id.webview);
         ivPreview = (ImageView) findViewById(R.id.ivPreview);
         ivPreview.setOnClickListener(view -> ivPreview.setVisibility(View.GONE));
+
+        clLoading = findViewById(R.id.clLoading);
 
         customWebView.loadUrl(url);
 
@@ -92,6 +99,12 @@ public class CustomWebViewActivity extends AppCompatActivity {
     }
 
     /**
+     * 开启启动页的效果
+     */
+    public void openLoading() {
+        clLoading.setVisibility(View.VISIBLE);
+    }
+    /**
      * 加载地址
      *
      * @param url 以`/`开头，即为加载本地html（放在assets文件夹中）,如`/index.html`;
@@ -116,6 +129,37 @@ public class CustomWebViewActivity extends AppCompatActivity {
         //清除缓存，加载数据
         customWebView.clearCache(true);
         loadUrl(url);
+    }
+
+    /**
+     * 取消启动图效果
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void loadUrl(UrlLoadFinishEvent event) {
+        if (clLoading.getVisibility() == View.VISIBLE) {
+            AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
+            alphaAnimation.setFillAfter(true);
+            alphaAnimation.setDuration(500);
+            alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    clLoading.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+            clLoading.startAnimation(alphaAnimation);
+        }
+
     }
 
     /**

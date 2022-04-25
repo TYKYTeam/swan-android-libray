@@ -16,8 +16,11 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.tyky.webviewBase.constants.RequestCodeConstants;
+import com.tyky.webviewBase.event.UrlLoadFinishEvent;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.List;
@@ -148,6 +151,14 @@ public class CustomWebViewChrome extends WebChromeClient {
             intent.setType("*/*");
             currrentActivity.startActivityForResult(intent, RequestCodeConstants.FILE);
         }
+    }
+
+    @Override
+    public void onProgressChanged(WebView view, int newProgress) {
+        if (newProgress >= 100) {
+            EventBus.getDefault().post(new UrlLoadFinishEvent());
+        }
+        super.onProgressChanged(view, newProgress);
     }
 
     /**

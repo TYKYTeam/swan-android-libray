@@ -23,4 +23,5 @@ public class CustomWebViewClient extends WebViewClient {
         view.loadUrl(request.getUrl().toString());
         return true;
     }
+
 }
