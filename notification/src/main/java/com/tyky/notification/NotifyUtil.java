@@ -47,8 +47,8 @@ public class NotifyUtil {
                 .setContentTitle(title)
                 .setContentText(text)
                 .setWhen(System.currentTimeMillis())
-                .setSmallIcon(ResourceUtils.getMipmapIdByName("ic_launcher"))
-                .setLargeIcon(BitmapFactory.decodeResource(ActivityUtils.getTopActivity().getResources(),ResourceUtils.getMipmapIdByName("ic_launcher")))
+                .setSmallIcon(ResourceUtils.getDrawableIdByName("ic_launcher"))
+                .setLargeIcon(BitmapFactory.decodeResource(ActivityUtils.getTopActivity().getResources(),ResourceUtils.getDrawableIdByName("ic_launcher")))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .build();
         notificationManager.notify(notifyId++,notification);
@@ -60,8 +60,8 @@ public class NotifyUtil {
                 .setContentTitle(title)
                 .setContentText(text)
                 .setWhen(System.currentTimeMillis())
-                .setSmallIcon(ResourceUtils.getMipmapIdByName("ic_launcher"))
-                .setLargeIcon(BitmapFactory.decodeResource(ActivityUtils.getTopActivity().getResources(),ResourceUtils.getMipmapIdByName("ic_launcher")))
+                .setSmallIcon(ResourceUtils.getDrawableIdByName("ic_launcher"))
+                .setLargeIcon(BitmapFactory.decodeResource(ActivityUtils.getTopActivity().getResources(),ResourceUtils.getDrawableIdByName("ic_launcher")))
                 .setPriority(priority)
                 .build();
         notificationManager.notify(notifyId++,notification);
@@ -73,8 +73,8 @@ public class NotifyUtil {
                 .setContentTitle(title)
                 .setContentText(text)
                 .setWhen(System.currentTimeMillis())
-                .setSmallIcon(ResourceUtils.getMipmapIdByName("ic_launcher"))
-                .setLargeIcon(BitmapFactory.decodeResource(ActivityUtils.getTopActivity().getResources(),ResourceUtils.getMipmapIdByName("ic_launcher")))
+                .setSmallIcon(ResourceUtils.getDrawableIdByName("ic_launcher"))
+                .setLargeIcon(BitmapFactory.decodeResource(ActivityUtils.getTopActivity().getResources(),ResourceUtils.getDrawableIdByName("ic_launcher")))
                 .setPriority(priority)
                 .setContentIntent(pendingIntent)
                 .build();

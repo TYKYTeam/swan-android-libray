@@ -90,7 +90,7 @@ public class CustomWebViewChrome extends WebChromeClient {
             //添加列表
             AlertDialog alertDialog = new AlertDialog.Builder(currrentActivity)
                     .setTitle("选择方式")
-                    .setIcon(ResourceUtils.getMipmapIdByName("ic_launcher"))
+                    .setIcon(ResourceUtils.getDrawableIdByName("ic_launcher"))
                     .setItems(items, (dialogInterface, i) -> {
                         isClickDialog = true;
                         chooseFileFromWay(i);
