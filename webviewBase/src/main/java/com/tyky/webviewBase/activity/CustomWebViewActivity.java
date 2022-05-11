@@ -25,6 +25,7 @@ import com.tyky.webviewBase.event.IntentEvent;
 import com.tyky.webviewBase.event.JsCallBackEvent;
 import com.tyky.webviewBase.event.UrlLoadEvent;
 import com.tyky.webviewBase.event.UrlLoadFinishEvent;
+import com.tyky.webviewBase.model.ResultModel;
 import com.tyky.webviewBase.utils.SpeechService;
 import com.tyky.webviewBase.view.CustomWebView;
 import com.tyky.webviewBase.view.CustomWebViewChrome;
@@ -205,7 +206,7 @@ public class CustomWebViewActivity extends AppCompatActivity {
         if (object == null) {
             jsScript = "javascript:" + method + "()";
         } else {
-            jsScript = "javascript:" + method + "(" + gson.toJson(object) + ")";
+            jsScript = "javascript:" + method + "('" + gson.toJson(ResultModel.success(object)) + "')";
         }
         KLog.d("--回调JS方法", jsScript);
         customWebView.evaluateJavascript(jsScript, null);
