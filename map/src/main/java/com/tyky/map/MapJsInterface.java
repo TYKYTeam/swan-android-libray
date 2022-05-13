@@ -1,23 +1,29 @@
 package com.tyky.map;
 
-import android.content.Context;
 import android.webkit.JavascriptInterface;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
+import com.socks.library.KLog;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.event.IntentEvent;
 import com.tyky.webviewBase.model.ParamModel;
 import com.tyky.webviewBase.model.ResultModel;
-import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.List;
+
+import androidx.annotation.NonNull;
+
 @WebViewInterface("map")
 public class MapJsInterface {
+
+    String tag = "MapJsInterface";
 
     Gson gson = GsonUtils.getGson();
 
@@ -35,21 +41,30 @@ public class MapJsInterface {
             return gson.toJson(ResultModel.errorParam());
         }
 
-        Context applicationContext = ActivityUtils.getTopActivity().getApplicationContext();
-        if (AndPermission.hasPermissions(applicationContext, Permission.ACCESS_FINE_LOCATION)) {
+        if (PermissionUtils.isGranted(Permission.ACCESS_FINE_LOCATION)) {
+            KLog.e(tag, "有定位权限");
             BaiduMapUtils.startBdLocation(methodName);
         } else {
-            AndPermission.with(applicationContext).runtime()
-                    .permission(Permission.ACCESS_FINE_LOCATION)
-                    .onGranted(data -> BaiduMapUtils.startBdLocation(methodName))
-                    .start();
-            return gson.toJson(ResultModel.errorPermission());
+            PermissionUtils.permission(Permission.ACCESS_FINE_LOCATION)
+                    .callback(new PermissionUtils.FullCallback() {
+                        @Override
+                        public void onGranted(@NonNull List<String> granted) {
+                            BaiduMapUtils.startBdLocation(methodName);
+                        }
+
+                        @Override
+                        public void onDenied(@NonNull List<String> deniedForever, @NonNull List<String> denied) {
+                            ToastUtils.showShort("拒绝权限");
+                        }
+                    })
+                    .request();
         }
         return gson.toJson(ResultModel.success(""));
     }
 
     /**
      * 在地图显示当前位置
+     *
      * @return
      */
     @JavascriptInterface
@@ -57,8 +72,6 @@ public class MapJsInterface {
         EventBus.getDefault().post(new IntentEvent(MapActivity.class));
         return gson.toJson(ResultModel.success(""));
     }
-
-
 
 
 }

@@ -97,18 +97,16 @@ public class BaiduMapUtils {
 
     private static LocationClient startBdLocation(BDAbstractLocationListener listener) {
         Context applicationContext = ActivityUtils.getTopActivity().getApplicationContext();
-        if (mLocationClient == null) {
-            //声明LocationClient类
-            mLocationClient = new LocationClient(applicationContext);
+        //声明LocationClient类
+        mLocationClient = new LocationClient(applicationContext);
 
-            LocationClientOption mOption = initOptions();
-            mLocationClient.setLocOption(mOption);
-            //注册监听函数
-            mLocationClient.registerLocationListener(listener);
+        LocationClientOption mOption = initOptions();
+        mLocationClient.setLocOption(mOption);
+        //注册监听函数
+        mLocationClient.registerLocationListener(listener);
 
-            ThreadUtils.runOnUiThread(() -> mLocationClient.start());
+        ThreadUtils.runOnUiThread(() -> mLocationClient.start());
 
-        }
         return mLocationClient;
     }
 
