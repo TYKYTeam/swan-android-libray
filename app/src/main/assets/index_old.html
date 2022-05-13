@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html>
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <head>
+        <title></title>
+        <meta charset="UTF-8" />
+        <script src="https://cdn.bootcss.com/vConsole/3.3.0/vconsole.min.js"></script>
+
+    </head>
+    <style>
+        button {
+            margin: 10px;
+        }
+
+        .contentDiv {
+            display: flex;
+            flex-flow: row wrap;
+        }
+
+        fieldset {
+            padding: 2px;
+            margin: 5px;
+        }
+
+        legend {
+            font-size: 15px;
+        }
+    </style>
+
+    <body>
+        <div>
+            <fieldset>
+                <legend>文件上传</legend>
+                <div>
+                    照片选择<input type="file" accept="image/*" />
+                </div>
+                <div>
+                    视频选择<input type="file" accept="video/*" />
+                </div>
+                <div>
+                    音频选择<input type="file" accept="audio/*" />
+                </div>
+                <div>
+                    文件选择<input type="file" accept="file/*" />
+                </div>
+            </fieldset>
+
+
+            <fieldset>
+                <legend>mdeia 媒体</legend>
+                <div class="contentDiv">
+                    <button type="default" onclick="copyTextToClipboard('hello woll')">复制文本</button>
+
+                    <button type="default" onclick="getTextFromClipboard()">获取文本</button>
+
+                    <button type="default" onclick="callPhone()">拨打电话</button>
+
+                    <button type="default" onclick="goToCall()">跳转拨号界面</button>
+
+                    <button type="default" onclick="testCallBack()">测试回调</button>
+
+                    <button type="default" onclick="sendSms()">发送短信</button>
+
+                    <button type="default" onclick="previewPicture()">图片预览(base64)</button>
+                    <button type="default" onclick="previewPictureUrl()">图片预览(url)</button>
+                    <button type="default" onclick="qrScan()">扫描二维码</button>
+                    <button type="default" onclick="speakText()">文字转语音</button>
+
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>notification 通知</legend>
+                <div class="contentDiv">
+                    <button type="default" onclick="sendNotification()">发送通知</button>
+                    <button type="default" onclick="setBargeCount()">设置桌面小红点</button>
+                </div>
+            </fieldset>
+
+
+            <fieldset>
+                <legend>share 分享</legend>
+
+                <div class="contentDiv">
+                    <button type="default" onclick="shareText()">分享文本</button>
+                    <button type="default" onclick="shareImage()">分享图片</button>
+                    <button type="default" onclick="shareTextImage()">分享图文</button>
+                    <button type="default" onclick="shareToWechatFriend()">分享文本给微信好友</button>
+                </div>
+            </fieldset>
+
+
+
+            <fieldset>
+                <legend>device 设备</legend>
+
+                <div class="contentDiv">
+                    <button type="default" onclick="getMacAddress()">获取mac地址</button>
+                    <button type="default" onclick="isTablet()">当前设备是否为平板</button>
+                    <button type="default" onclick="isEmulator()">当前设备是否为模拟器</button>
+                    <button type="default" onclick="getDeviceInfo()">当前设备系统信息</button>
+                    <button type="default" onclick="getUniqueDeviceId()">获取唯一设备ID</button>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>storage 存储</legend>
+
+                <div class="contentDiv">
+                    <button type="default" onclick="save()">保存数据到Sp</button>
+                    <button type="default" onclick="get()">读取Sp数据</button>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>listener 监听</legend>
+                <div class="contentDiv">
+                    <button type="default" onclick="registerNetworkListener()">开启网络状态监听</button>
+                    <button type="default" onclick="registerPhoneListener()">开启手机来电监听</button>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>hardware 硬件</legend>
+                <div class="contentDiv">
+                    <button type="default" onclick="getBattery()">获取当前电量</button>
+                    <button type="default" onclick="getNetworkState()">获取网络状态</button>
+                    <button type="default" onclick="getMaxVolume()">获取媒体最大音量</button>
+                    <button type="default" onclick="getVolume()">获取媒体音量</button>
+                    <button type="default" onclick="setVolume()">设置媒体音量</button>
+                    <button type="default" onclick="getBrightness()">获取屏幕亮度</button>
+                    <button type="default" onclick="setBrightness()">设置屏幕亮度</button>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>debugger 调试</legend>
+                <div class="contentDiv">
+                    <button type="default" onclick="goSettingPage()">进调试设置页</button>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>map 地图</legend>
+                <div class="contentDiv">
+                    <button type="default" onclick="startLocation()">获取定位</button>
+                    <button type="default" onclick="showLocationInMap()">地图展示当前位置</button>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>page 页面</legend>
+                <div class="contentDiv">
+                    <button type="default" onclick="gotoApp()">跳转其他APP的某一页面</button>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>腾讯云IM</legend>
+                <div class="contentDiv">
+                    <button type="default" onclick="gotoImLogin()">进入IM登录页</button>
+                    <button type="default" onclick="timLogin()">IM登录</button>
+                    <button type="default" onclick="timLogout()">IM退出</button>
+                    <button type="default" onclick="getUnreadCount()">获取消息未读数</button>
+                </div>
+            </fieldset>
+        </div>
+    </body>
+
+    <script>
+        window.loadUnreadCount = function(object){
+            alert(JSON.stringify(object))
+        }
+        function getUnreadCount() {
+            if (window.tim) {
+                let content = {
+                    "callBackMethod": "loadUnreadCount",
+                }
+                let result = window.tim.getUnreadCount(JSON.stringify(content))
+                console.log(result)
+            }
+        }
+         
+        function timLogin() {
+            if (window.tim) {
+                let content = {
+                    "userId": "5913635",
+                    "userSig": "",
+                    "isGotoPage": true
+                }
+                let result = window.tim.login(JSON.stringify(content))
+                alert(result)
+                console.log(result)
+            }
+        }
+
+        function timLogout() {
+            if (window.tim) {
+                let result = window.tim.logout()
+                alert(result)
+            }
+        }
+
+        function gotoImLogin() {
+            if (window.tim) {
+                let result = window.tim.gotoImLogin()
+                alert(result)
+            }
+        }
+
+        function gotoApp() {
+            if (window.page) {
+                //下面这里是进入设置页面
+                let content = {
+                    "packageName": "com.android.settings",
+                    "activityName": "com.android.settings.Settings"
+                }
+                let result = window.page.gotoApp(JSON.stringify(content))
+                console.log(result)
+            }
+        }
+
+        function showLocationInMap() {
+            if (window.map) {
+                let result = window.map.showLocationInMap()
+                alert(result)
+                console.log(result)
+            }
+        }
+
+        window.getLocation = function(object) {
+            console.log(object);
+            alert(JSON.stringify(object))
+        }
+
+        function startLocation() {
+            if (window.map) {
+                let content = {
+                    "callBackMethod": "getLocation"
+                }
+                let result = window.map.startLocation(JSON.stringify(content))
+                alert(result)
+                console.log(result)
+            }
+        }
+
+        function setBrightness() {
+            if (window.hardware) {
+                let content = {
+                    content: "11"
+                }
+                let result = window.hardware.setBrightness(JSON.stringify(content))
+                alert(result)
+                console.log(result)
+            }
+        }
+
+        function getBrightness() {
+            if (window.hardware) {
+                let result = window.hardware.getBrightness()
+                alert(result)
+                console.log(result)
+            }
+        }
+
+        function getMaxVolume() {
+            if (window.hardware) {
+                let result = window.hardware.getMaxVolume()
+                alert(result)
+                console.log(result)
+            }
+        }
+
+        function setVolume() {
+            if (window.hardware) {
+                let content = {
+                    content: "11"
+                }
+                let result = window.hardware.setVolume(JSON.stringify(content))
+                alert(result)
+                console.log(result)
+            }
+        }
+
+        function getVolume() {
+            if (window.hardware) {
+                let result = window.hardware.getVolume()
+                alert(result)
+                console.log(result)
+            }
+        }
+
+        function getNetworkState() {
+            if (window.hardware) {
+                let result = window.hardware.getNetworkState()
+                alert(result)
+                console.log(result)
+            }
+        }
+
+        function getBattery() {
+            if (window.hardware) {
+                let result = window.hardware.getBattery()
+                alert(result)
+                console.log(result)
+            }
+        }
+
+        function goSettingPage() {
+            if (window.debugger) {
+                let result = window.debugger.goSettingPage()
+                console.log(result)
+            }
+        }
+
+        window.phoneCall = function() {
+            alert("来电了。。")
+        }
+
+        function registerPhoneListener() {
+            if (window.listener) {
+                let content = {
+                    "callBackMethod": "phoneCall"
+                }
+                let result = window.listener.registerPhoneListener(JSON.stringify(content))
+                console.log(result)
+            }
+        }
+
+        window.networkDisconnect = function() {
+            alert("网络已断开")
+        }
+
+        window.networkConnect = function() {
+            alert("网络已连接")
+        }
+
+        function registerNetworkListener() {
+            if (window.listener) {
+                let content = {
+                    "callBackMethod": "networkDisconnect,networkConnect"
+                }
+                let result = window.listener.registerNetworkListener(JSON.stringify(content))
+                console.log(result)
+            }
+        }
+
+        function save() {
+            if (window.storage) {
+                let content = {
+                    key: "test",
+                    value: {
+                        "xx": 22
+                    }
+                }
+                let result = window.storage.save(JSON.stringify(content))
+                alert(result);
+                console.log(result)
+            }
+        }
+
+        function get() {
+            if (window.storage) {
+                let content = {
+                    key: "test"
+                }
+                let result = window.storage.get(JSON.stringify(content))
+                alert(result);
+                console.log(result)
+            }
+        }
+
+
+        function isTablet() {
+            if (window.device) {
+                let result = window.device.isTablet()
+                alert(result);
+            }
+        }
+
+        function isEmulator() {
+            if (window.device) {
+                let result = window.device.isEmulator()
+                alert(result);
+            }
+        }
+
+        function getUniqueDeviceId() {
+            if (window.device) {
+                let result = window.device.getUniqueDeviceId()
+                console.log(result);
+                alert(result);
+            }
+        }
+
+        function getDeviceInfo() {
+            if (window.device) {
+                let result = window.device.getDeviceInfo()
+                console.log(result);
+                alert(result);
+            }
+        }
+
+
+        function getMacAddress() {
+            if (window.device) {
+                let result = window.device.getMacAddress()
+                alert(result);
+            }
+        }
+
+        function speakText() {
+            if (window.android_media) {
+                let content = {
+                    content: "这是一段测试语音的文本"
+                }
+                let result = window.android_media.speakText(JSON.stringify(content))
+                alert(result);
+                console.log(result)
+            }
+        }
+
+        function shareToWechatFriend() {
+            if (window.share) {
+                let content = {
+                    content: "分享的文本内容"
+                }
+                let result = window.share.shareToWechatFriend(JSON.stringify(content))
+                console.log(result)
+            }
+        }
+
+        function shareImage() {
+            if (window.share) {
+                let content = {
+                    content: "data:image/png;base64,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"
+                }
+                let result = window.share.shareImage(JSON.stringify(content))
+                alert(result);
+                console.log(result)
+            }
+        }
+
+        function shareTextImage() {
+            if (window.share) {
+                let content = {
+                    title: "分享的标题",
+                    content: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACkAAAAmCAIAAADWVCV0AAAACXBIWXMAABJ0AAASdAHeZh94AAAAEXRFWHRTb2Z0d2FyZQBTbmlwYXN0ZV0Xzt0AAAiqSURBVFiFfVhbbx1XFf6+vfecq+1jO5fGhqapQUVVo6QBtZXSllAeGpCiIlGJ0D60LxEFiRf+AMpTRMUP4CUP5QFHQhQoBQotJdA0QBsaEkJxjEOTFJxYqW/Hl+NzZmavxcOemTN2SJcsn5k9M/tb98vmUnudgALF/0CqIElCVIvFYj1ckhRREqqlD/qbFe+Hy+wrzZ7AEARIICxpAUIoVFQNCfT/jGHYQBXihWTYnYYkw8bh6W2kAFTUMGPeKFShioy7nGEiR9N8J4UCKqIFhzTcDKKbFZPLo8jfUpCiCoCkIUAQmzWlyPQcbkkAmzSfL2YXKlpez5Wbv6bFNiT7H7qc1eyDAC8f3qodP2m7vWTnSLxtW7x9BNta0XBDaxWtVXVk0O3eYSouWFcViceV6xtxrJ/ZXavVjEIznnLQzBw5ajCTC4AsLRHwf7tSvfpfo2JvfuRoI5rU2MQ4cVFSraRDAzz04MDXPx/VKyRSwZ8urr78+6X1Lr5wYOArjw+1hqOywsvmyMUHoC63cjBGeAUDvzljVABYFQWVgBLik0St97oRxz99e6Mama89ZqyZnev98s3FhcXY07z2l/b6WvLcUzsaDVu43iZUZPYGgtwFUwSA9cs3BqavF/azKhDAQIO7KRWopHHy2p+7nxpbGh8/+eO5W/OxNVZVxcubF1c9efTwtu0th0xEFqFVNofr80UAkF46MvkrI5lj579KqCEM1QCGRo1ivr3+g1+8Ozxxi3usjUTUwpAk+fbF9bll/9TBoQP3N6OoBJzHerh1mXtlJievzNrL/yZUVH8Wrb5ve4W5BFRSyXAhoHx0LZm/sDIwltAGcRRQMNrxpX9dGzu5ED/b9Y99tmUt0He93O0IV8gcgje6MG2XOgBiyEWz8QfXwceTAqu3tqzZ1kOutrO9yh/9bkloHn9wwLmQgqiqJAypUAcQqhrkXu3YqauUGIBXTVVEZN++fXv37jXGAHjnnXdmZmYCQLPZfOKJJ4aHhycnJ0WkjE2fWBE1stLGD3+9MP1h71tPb8/yE/pWL8cYsbjiPrhh8n1ERET279//zDPPOOcAzM/PT09Ph6f1ev3IkSMTExOnTp3aiq3eqqgqKN0NnL7Q+eZX+ykFgIrS0OQZGICaazc4v1h+w3t/9uzZc+fOkXzllVcuXLjgcxIRa61zzt9GFDWqRr1RTY2NGi6kfSB3exKAyVmFAnz3sokTBYRMaVIR7/3MzMzVq1dF5Pz589evXy9jhE//D7aKVbEqsXVdE9WqdkvaDxyEvJgZILr5Uac17DvdiqY9miSF955kmqYA0jT13he7iEi4LvMRyIg3kK6prtqa0FTrLjh5IXrm51oqm2vf+/bqB4vu8qXht0/0uia+tuHbvkhPIhKYCCsBL1xswYZi3dUWqkMeRslqJSS0TRVdVV2ucgJwNTd832jl5tlk13/iXj294dIU27dvHxkZITk2NjY4OFiv1w8dOnTmzJldu3YNDg7Oz8+naRp4KmjFVeJoIDVWAnbNliQkVECT15KsaBJAdPOvZvq3ojaF86rey+HDh5988knn3AsvvLCwsDA+Pv78888fO3bMGNNqtSYnJ5Mk2SL3smtYEymtAkJTr0e5tpn7m6rCEVl1U6h2V3Hx5XRtIUGUMEp97L1fXl6+cuVKiLHV1dXXX399bGxsz549AC5dunTy5Mk4jrGZUhgYozBCKlivsJzVCyM6hZLMUvzcP/XqW4kyRiVBlEgvSZJXX3319OnT4evl5eVOp3P8+PHBwUEA7Xa71+vhNjJK0IqxIfU2a1SFIUQUpeLm8soEgr6zYuJegiiFS+BSL0mSLC4uLi4ulrdOkmRlZeV2yIIsoDRKo6DS1KqGoVUK4rOoJf1eQjHx6NqD3/CXfpLEcTcd2Oite9/+GIw7kQeRYwvZrCKP6aKVAEmX97RUqKk1Ko8e29j1kLw32bnc7qxvJMlso9GoVqu3AywtLd0J24FKq8YqKGCzgqIXLIRWVaeF0AQUrlYZfOBhMzqmcz8Xfy1N00ceeeTAgQMsp2MAwIsvvngn7BQEjeQ6b1b6rS0yb1cArtS3Mze8Vkd2xX5CU3jvDx48ePTo0VDHynTixIk7YXsg93OjZLPqixhT1VwBdFnxViD3OAC9TtJb7qpPvfcvvfTSG2+8cbvcW3NZWW7mfg4K2ahKnlO1KOGqea8YykzwBgDpWuyX18RLmqZTU1NTU1N3grmD3AYwkueWRk1KRSyjIq9p4f8Bu7Owlq7EX5744ufGDniogqFbVVCBDRct1ap/HxnvsNFF1fqsVVJSQbiK7tibWiuk0jiLiutDBqEDuaJ7DyNPwF+4skjjPtG6Z2frblGE9CRkbO3VHY1b9dZCbajJoZRDCZo2pdJIBm/EGHF1YQSj94+kz+2T7QMMg+OWltkFNSvDyMNQ6BZmbolxNC6iEUAiZ+vVaGzn+P679n6yfuq9pbm2gQwCLWVTUgqNZIoxnmhGeu8Inn3AP31f2mpaa7JgKldSBD9XbhpVu+3u0vUFNGrVgVrzrsGhPaOt3SMj94wO72zQAsDdd4++Ob328vt+eYUe1hsT4nioIveO4tHdemi3f3g8aVRIGmxujfuDEsCl5fVi9A6iL1xbnD0/O3rvtoGdA7XBStSoGEuyn4Kgmnj9x5z//ln942zNi7urqUc+7R/fo3t3YkcDFavGQKWfRMvUx15ur2fOnbfK4gWAcSZ0dP1hXou0QEC9YLYt332rElnznYeTiVFUrJqAFcpGP6D74gZmQrBxud3JJ95+84T+AUQxF/eH4iIcy7RloVwry3oubkmYABxmrezVrJhnwCTzBJyN/WQxY5cG9q2DJ7bUj6JvyMZ9hSmUnR99QKF5llFFdt6SQ/YTM4vDCfSn6JLQm5aZ20LDOBnOPJB5UPmIASwcr3wYoXn455FS6sECc5vgVSEi4bAhJNTiUdjlf0H/cmTEkykkAAAAAElFTkSuQmCC"
+                }
+                let result = window.share.shareTextImage(JSON.stringify(content))
+                alert(result);
+                console.log(result)
+            }
+        }
+
+        function shareText() {
+            if (window.share) {
+                let content = {
+                    content: "https://stars-one.site"
+                }
+                let result = window.share.shareText(JSON.stringify(content))
+                alert(result);
+                console.log(result)
+            }
+        }
+
+        function sendNotification() {
+            if (window.notification) {
+                let content = {
+                    content: "测试内容11111",
+                    title: "测试标题"
+                }
+                let result = window.notification.sendNotification(JSON.stringify(content))
+                alert(result);
+                console.log(result)
+            }
+        }
+        
+        function setBargeCount() {
+            if (window.notification) {
+                let content = {
+                    content: "11"
+                }
+                let result = window.notification.setBargeCount(JSON.stringify(content))
+                alert(result);
+                console.log(result)
+            }
+        }
+
+        window.qrScanResult = function(object) {
+            console.log(object);
+        }
+
+        function qrScan() {
+            if (window.android_media) {
+                let content = {
+                    callBackMethod: "qrScanResult"
+                }
+                let result = window.android_media.qrScan(JSON.stringify(content))
+                alert(result);
+                console.log(result)
+            }
+        }
+
+        function previewPictureUrl() {
+            if (window.android_media) {
+                let content = {
+                    // content: "https://img2022.cnblogs.com/blog/1210268/202202/1210268-20220217145302917-553929092.png",
+                    content: "https://img2022.cnblogs.com/blog/1210268/202202/1210268-20220217150223429-1683696304.png",
+                    type: 2
+                }
+                let result = window.android_media.previewPicture(JSON.stringify(content))
+                alert(result);
+                console.log(result)
+            }
+        }
+
+        function previewPicture() {
+            if (window.android_media) {
+                let content = {
+                    content: "data:image/png;base64,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",
+                    type: 1
+                }
+                let result = window.android_media.previewPicture(JSON.stringify(content))
+                alert(result);
+                console.log(result)
+            }
+        }
+
+        function sendSms() {
+            if (window.android_media) {
+                let content = {
+                    phone: "10086",
+                    content: "111"
+                }
+                let result = window.android_media.sendSms(JSON.stringify(content))
+                alert(result);
+                console.log(result)
+            }
+        }
+
+        window.testMy = function(object) {
+            console.log(object);
+            console.log("这是测试");
+        }
+
+        function testCallBack() {
+            if (window.android_media) {
+                let content = {
+                    content: "10086",
+                    callBackMethod: "testMy"
+                }
+                let result = window.android_media.testCallBack(JSON.stringify(content))
+                alert(result);
+                console.log(result)
+            }
+        }
+
+        function goToCall() {
+            if (window.android_media) {
+                let content = {
+                    phone: "10086"
+                }
+                let result = window.android_media.goToCall(JSON.stringify(content))
+                alert(result);
+                console.log(result);
+            }
+        }
+
+        function callPhone() {
+            if (window.android_media) {
+                let content = {
+                    phone: "10086"
+                }
+                let result = window.android_media.callPhone(JSON.stringify(content))
+                alert(result);
+                console.log(result);
+            }
+        }
+
+        function copyTextToClipboard() {
+            if (window.android_media) {
+                let content = {
+                    content: "hello world",
+                    name: null
+                }
+
+                let result = window.android_media.copyTextToClipboard(JSON.stringify(content))
+                alert(result);
+                console.log(result);
+
+            }
+        }
+
+        function getTextFromClipboard() {
+            if (window.android_media) {
+                let result = window.android_media.getTextFromClipboard()
+                let text = JSON.parse(result).result
+                console.log(text);
+                alert(result)
+            }
+        }
+
+        var vConsole = new VConsole();
+    </script>
+
+</html>
