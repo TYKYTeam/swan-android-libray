@@ -8,6 +8,7 @@ import android.webkit.JavascriptInterface;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.google.gson.Gson;
 import com.socks.library.KLog;
@@ -23,36 +24,67 @@ import static android.Manifest.permission.ACCESS_NETWORK_STATE;
 public class ListenerJsInterface {
 
     Gson gson = GsonUtils.getGson();
-    private NetWorkListener netWorkListener;
     private PhoneListener phoneListener;
 
     /**
-     * 网络状态监听
+     * 网络连接断开状态监听
      *
      * @param paramStr
      * @return
      */
     @RequiresPermission(ACCESS_NETWORK_STATE)
     @JavascriptInterface
-    public String registerNetworkListener(String paramStr) {
+    public String registerNetworkDisconnectionListener(String paramStr) {
         ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
 
         String method = paramModel.getCallBackMethod();
-
-        if (!StringUtils.isEmpty(method) && method.contains(",")) {
-            String[] split = method.split(",");
-            String callback1 = split[0];//网络断开的回调方法
-            String callback2 = split[1];//网络连接的回调方法
-            if (netWorkListener == null) {
-                netWorkListener = new NetWorkListener(callback1, callback2);
-                NetworkUtils.registerNetworkStatusChangedListener(netWorkListener);
-            }
-            //不为空，说明之前已经注册过了，没必要重新注册监听
-
-            return gson.toJson(ResultModel.success(""));
-        } else {
+        if (StringUtils.isTrimEmpty(method)) {
             return gson.toJson(ResultModel.errorParam());
         }
+
+        //将方法存本地，之后监听器取出方法名并回调JS
+        SPUtils.getInstance().put("disconnectCallbackMethodName", method);
+
+        NetWorkListener netWorkListener = GlobalListenerStorage.netWorkListener;
+
+        if (netWorkListener == null) {
+            //开启时，把之前留存的网络连接状态监听回调方法名置空
+            SPUtils.getInstance().put("connectCallbackMethodName", "");
+
+            GlobalListenerStorage.netWorkListener = new NetWorkListener();
+            NetworkUtils.registerNetworkStatusChangedListener(GlobalListenerStorage.netWorkListener);
+        }
+
+        return gson.toJson(ResultModel.success(""));
+    }
+
+    /**
+     * 网络已连接状态监听
+     *
+     * @param paramStr
+     * @return
+     */
+    @RequiresPermission(ACCESS_NETWORK_STATE)
+    @JavascriptInterface
+    public String registerNetworkConnectionListener(String paramStr) {
+        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+
+        String method = paramModel.getCallBackMethod();
+        if (StringUtils.isTrimEmpty(method)) {
+            return gson.toJson(ResultModel.errorParam());
+        }
+        //将方法存本地，之后监听器取出方法名并回调JS
+        SPUtils.getInstance().put("connectCallbackMethodName", method);
+
+        NetWorkListener netWorkListener = GlobalListenerStorage.netWorkListener;
+        if (netWorkListener == null) {
+            //开启时，把之前留存的断开状态方法名置空
+            SPUtils.getInstance().put("disconnectCallbackMethodName", "");
+
+            GlobalListenerStorage.netWorkListener = new NetWorkListener();
+            NetworkUtils.registerNetworkStatusChangedListener(GlobalListenerStorage.netWorkListener);
+        }
+        return gson.toJson(ResultModel.success(""));
     }
 
     /**

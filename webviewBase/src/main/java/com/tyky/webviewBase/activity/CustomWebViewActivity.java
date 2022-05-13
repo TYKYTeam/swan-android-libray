@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import com.blankj.utilcode.util.EncodeUtils;
 import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -36,6 +37,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.lang.reflect.Field;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -185,6 +188,15 @@ public class CustomWebViewActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        //退出APP移除网络状态监听器
+        try {
+            Class<?> aClass = Class.forName("com.tyky.listener.GlobalListenerStorage");
+            Field netWorkListener = aClass.getDeclaredField("netWorkListener");
+            Object o = netWorkListener.get(null);
+            NetworkUtils.unregisterNetworkStatusChangedListener((NetworkUtils.OnNetworkStatusChangedListener) o);
+
+        } catch (ClassNotFoundException  | IllegalAccessException |NoSuchFieldException ignored) {
+        }
         //释放EventBus和语音TTS
         EventBus.getDefault().unregister(this);
         SpeechService.release();

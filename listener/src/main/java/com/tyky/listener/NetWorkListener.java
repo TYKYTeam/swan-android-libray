@@ -1,28 +1,28 @@
 package com.tyky.listener;
 
 import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.tyky.webviewBase.event.JsCallBackEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
 public class NetWorkListener implements NetworkUtils.OnNetworkStatusChangedListener {
 
-    //网络未连接回调方法
-    private String disconnectCallbackMethodName = "";
-    private String connectCallbackMethodName = "";
-
-    public NetWorkListener(String disconnectCallbackMethodName, String connectCallbackMethodName) {
-        this.disconnectCallbackMethodName = disconnectCallbackMethodName;
-        this.connectCallbackMethodName = connectCallbackMethodName;
-    }
 
     @Override
     public void onDisconnected() {
-        EventBus.getDefault().post(new JsCallBackEvent(disconnectCallbackMethodName,null));
+        String disconnectCallbackMethodName = SPUtils.getInstance().getString("disconnectCallbackMethodName", "");
+        if (!StringUtils.isTrimEmpty(disconnectCallbackMethodName)) {
+            EventBus.getDefault().post(new JsCallBackEvent(disconnectCallbackMethodName, null));
+        }
     }
 
     @Override
     public void onConnected(NetworkUtils.NetworkType networkType) {
-        EventBus.getDefault().post(new JsCallBackEvent(connectCallbackMethodName,null));
+        String connectCallbackMethodName = SPUtils.getInstance().getString("connectCallbackMethodName", "");
+        if (!StringUtils.isTrimEmpty(connectCallbackMethodName)) {
+            EventBus.getDefault().post(new JsCallBackEvent(connectCallbackMethodName, null));
+        }
     }
 }
