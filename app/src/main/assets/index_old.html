@@ -5,7 +5,7 @@
     <head>
         <title></title>
         <meta charset="UTF-8" />
-        <script src="https://cdn.bootcss.com/vConsole/3.3.0/vconsole.min.js"></script>
+        <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
 
     </head>
     <style>
@@ -153,6 +153,7 @@
                 <legend>page 页面</legend>
                 <div class="contentDiv">
                     <button type="default" onclick="gotoApp()">跳转其他APP的某一页面</button>
+                    <button type="default" onclick="openUrlByBrowser()">使用浏览器打开链接</button>
                 </div>
             </fieldset>
 
@@ -209,6 +210,17 @@
             }
         }
 
+        function openUrlByBrowser() {
+            if (window.page) {
+                //下面这里是进入设置页面
+                let content = {
+                    "content": "https://www.baidu.com/",
+                }
+                let result = window.page.openUrlByBrowser(JSON.stringify(content))
+                console.log(result)
+            }
+        }
+        
         function gotoApp() {
             if (window.page) {
                 //下面这里是进入设置页面

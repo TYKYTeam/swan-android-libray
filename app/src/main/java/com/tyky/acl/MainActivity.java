@@ -9,8 +9,8 @@ public class MainActivity extends CustomWebViewActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //loadUrl("/index.html");
-        loadUrl("http://101.43.17.174:10003/#/");
+        loadUrl("/index_old.html");
+        //loadUrl("http://101.43.17.174:10003/#/");
         //loadUrl("https://www.bingtuanbdc.com.cn/mobile-jsbt/#/home");
 
 

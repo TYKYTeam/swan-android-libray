@@ -1,6 +1,7 @@
 package com.tyky.page;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.webkit.JavascriptInterface;
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -36,4 +37,24 @@ public class PageJsInterface {
 
         return gson.toJson(ResultModel.success(""));
     }
+
+    /**
+     * 使用浏览器打开H5链接
+     * @param paramStr
+     * @return
+     */
+    @JavascriptInterface
+    public String openUrlByBrowser(String paramStr) {
+        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        String url = paramModel.getContent();
+        if (StringUtils.isEmpty(url) && url.startsWith("http")) {
+            return gson.toJson(ResultModel.errorParam("传递参数有误，要求是一个链接地址"));
+        }
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri uri = Uri.parse(url);
+        intent.setData(uri);
+        ActivityUtils.getTopActivity().startActivity(intent);
+        return gson.toJson(ResultModel.success(""));
+    }
+
 }
