@@ -1136,6 +1136,39 @@ if (window.page) {
 }
 ```
 
+### 2.使用手机外部浏览器打开链接
+
+openUrlByBrowser
+
+使用手机的浏览器，打开链接
+
+**传参：**
+
+```
+{
+    "content": "https://www.baidu.com",
+}
+
+```
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+
+```
+if (window.page) {
+    //下面这里是进入设置页面
+    let content = {
+        "content": "https://www.baidu.com/",
+    }
+    let result = window.page.openUrlByBrowser(JSON.stringify(content))
+    console.log(result)
+}
+```
 ## tim
 腾讯云IM模块
 
@@ -1412,7 +1445,6 @@ private String value;
 ## 页面
 
 1. 设置页面标题
-2. 打开第三方链接
 3. 设置页面全屏
 4. 设置隐藏导航条及还原
 5. 退出APP

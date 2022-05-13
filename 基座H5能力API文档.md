@@ -1095,6 +1095,38 @@ if (window.page) {
 }
 ```
 
+openUrlByBrowser
+
+使用手机的浏览器，打开链接
+
+**传参：**
+
+```
+{
+    "content": "https://www.baidu.com",
+}
+
+```
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+
+```
+if (window.page) {
+    //下面这里是进入设置页面
+    let content = {
+        "content": "https://www.baidu.com/",
+    }
+    let result = window.page.openUrlByBrowser(JSON.stringify(content))
+    console.log(result)
+}
+```
+
 ## 即时通讯（腾讯云IM）
 腾讯云IM模块
 
