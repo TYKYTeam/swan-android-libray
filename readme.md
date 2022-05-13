@@ -666,18 +666,18 @@ if (window.storage) {
 ```
 
 ## listener使用
-### 1. 注册网络状态监听
+### 1. 注册网络断开连接监听
 
-registerNetworkListener
+registerNetworkDisconnectionListener
 
-注册网络状态的监听回调
+注册网络断开连接的监听回调
 
 **传参：**
 
 ```
 //传两个js回调的方法名，之后Android原生会执行对应的JS方法
 {
-    "callBackMethod": "networkDisconnect,networkConnect"
+    "callBackMethod": "networkDisconnect"
 }
 ```
 
@@ -692,20 +692,53 @@ registerNetworkListener
 window.networkDisconnect = function() {
     alert("网络已断开")
 }
+
+if (window.listener) {
+    let content = {
+        "callBackMethod": "networkDisconnect"
+    }
+    let result = window.listener.registerNetworkDisconnectionListener(JSON.stringify(content))
+    console.log(result)
+}
+```
+
+### 2. 注册网络成功连接监听
+
+registerNetworkConnectionListener
+
+注册网络成功连接监听回调
+
+**传参：**
+
+```
+//传两个js回调的方法名，之后Android原生会执行对应的JS方法
+{
+     "callBackMethod": "networkConnect"
+}
+```
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
 window.networkConnect = function() {
     alert("网络已连接")
 }
 
 if (window.listener) {
     let content = {
-        "callBackMethod": "networkDisconnect,networkConnect"
+        "callBackMethod": "networkConnect"
     }
-    let result = window.listener.registerNetworkListener(JSON.stringify(content))
+    let result = window.listener.registerNetworkConnectionListener(JSON.stringify(content))
     console.log(result)
 }
 ```
 
-### 2.来电监听
+### 3.来电监听
 
 registerPhoneListener
 

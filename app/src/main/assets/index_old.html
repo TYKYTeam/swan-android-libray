@@ -116,7 +116,8 @@
             <fieldset>
                 <legend>listener 监听</legend>
                 <div class="contentDiv">
-                    <button type="default" onclick="registerNetworkListener()">开启网络状态监听</button>
+                    <button type="default" onclick="registerNetworkDisconnectionListener()">开启网络连接断开监听</button>
+                    <button type="default" onclick="registerNetworkConnectionListener()">开启网络连接成功监听</button>
                     <button type="default" onclick="registerPhoneListener()">开启手机来电监听</button>
                 </div>
             </fieldset>
@@ -348,15 +349,26 @@
             alert("网络已连接")
         }
 
-        function registerNetworkListener() {
+        function registerNetworkDisconnectionListener() {
             if (window.listener) {
                 let content = {
-                    "callBackMethod": "networkDisconnect,networkConnect"
+                    "callBackMethod": "networkDisconnect"
                 }
-                let result = window.listener.registerNetworkListener(JSON.stringify(content))
+                let result = window.listener.registerNetworkDisconnectionListener(JSON.stringify(content))
                 console.log(result)
             }
         }
+        
+        function registerNetworkConnectionListener() {
+            if (window.listener) {
+                let content = {
+                    "callBackMethod": "networkConnect"
+                }
+                let result = window.listener.registerNetworkConnectionListener(JSON.stringify(content))
+                console.log(result)
+            }
+        }
+        
 
         function save() {
             if (window.storage) {
