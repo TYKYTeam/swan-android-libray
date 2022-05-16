@@ -11,23 +11,61 @@ Android原生组件库，为Html提供Android原生能力，增强H5
 
 <meta name="referrer" content="no-referrer">
 
+## 功能清单
+
+|模块名				|功能							|方法名									|Android|Ios|
+|--					|--								|--										|--		|--	|
+|media媒体			|1.获取剪切板内容				|getTextFromClipboard					|√		|	|
+|media媒体			|2.复制文本						|copyTextToClipboard					|√		|	|
+|media媒体			|3.拨打电话						|callPhone								|√		|	|
+|media媒体			|4.跳转拨号页面					|goToCall								|√		|	|
+|media媒体			|5.发送短信						|sendSms								|√		|	|
+|media媒体			|6.图片预览						|previewPicture							|√		|	|
+|media媒体			|7.扫描二维码					|qrScan									|√		|	|
+|media媒体			|8.语音播放文本					|speakText								|√		|	|
+|media媒体			|9.文件下载						|										|		|	|
+|media媒体			|10.文件预览					|										|		|	|
+|media媒体			|11.安装apk						|										|		|	|
+|notification通知	|1.发送通知						|sendNotification						|√		|	|
+|notification通知	|1.设置桌面小红点				|setBargeCount							|√		|	|
+|share分享			|1.分享文本						|shareText								|√		|	|
+|share分享			|2.分享图片						|shareImage								|√		|	|
+|share分享			|3.分享图文						|shareTextImage							|√		|	|
+|share分享			|4.分享文本给微信好友			|shareToWechatFriend					|√		|	|
+|share分享			|5.分享到微博					|										|		|	|
+|device设备			|1.获取设备mac地址				|getMacAddress							|√		|	|
+|device设备			|2.获取唯一设备id				|getUniqueDeviceId						|√		|	|
+|device设备			|3.判断当前设备是否为平板		|isTablet								|√		|	|
+|device设备			|4.判断当前设备是否为模拟器		|isEmulator								|√		|	|
+|device设备			|5.获取当前设备系统信息			|getDeviceInfo							|√		|	|
+|storage使用		|1.保存数据						|save									|√		|	|
+|storage使用		|2.读取数据						|get									|√		|	|
+|listener监听		|1. 注册网络断开连接监听		|registerNetworkDisconnectionListener	|√		|	|
+|listener监听		|2. 注册网络成功连接监听		|registerNetworkConnectionListener		|√		|	|
+|listener监听		|3.来电监听						|registerPhoneListener					|√		|	|
+|map地图			|1. 获取当前地址				|startLocation							|√		|	|
+|map地图			|2. 地图显示当前位置			|showLocationInMap						|√		|	|
+|map地图			|3. 路径导航					|										|		|	|
+|map地图			|4. 地图选点					|										|		|	|
+|map地图			|5. 路径规划					|										|		|	|
+|map地图			|6. 位置检索					|										|		|	|
+|handware硬件		|1.获取当前电量数值				|getBattery								|√		|	|
+|handware硬件		|2.获取当前网络状态				|getNetworkState						|√		|	|
+|handware硬件		|3.获取媒体最大音量				|getMaxVolume							|√		|	|
+|handware硬件		|3.获取媒体音量					|getVolume								|√		|	|
+|handware硬件		|4.设置媒体音量					|setVolume								|√		|	|
+|handware硬件		|5.获取屏幕亮度					|getBrightness							|√		|	|
+|handware硬件		|6.设置屏幕亮度					|setBrightness							|√		|	|
+|debugger调试		|1.跳转到debugger页面			|goSettingPage							|√		|	|
+|page页面			|1.跳转其他APP页面				|gotoApp								|√		|	|
+|page页面			|2.使用手机外部浏览器打开链接	|openUrlByBrowser						|√		|	|
+|tim				|1.进入登录页					|gotoImLogin							|√		|	|
+|tim				|2.IM登录						|login									|√		|	|
+|tim				|3.IM退出						|logout									|√		|	|
+|tim				|4.获取消息未读数				|getUnreadCount							|√		|	|
+
 ## Module目录及引用说明
 
-|module名		|必选	|描述														|
-|--				|--		|--															|
-|webViewBase	|√		|核心库，包含文件上传										|
-|media			|×		|媒体库，包含拨打电话，发短信，拍照，录制视频等功能			|
-|share			|×		|分享库，使用Android系统内置分享功能，进行文本或图片的分享	|
-|device			|×		|设备信息库，用来获取当前设备的系统等信息					|
-|notification	|×		|通知库，用来弹出通知栏通知									|
-|storage		|×		|存储库，调用SharePerfence进行简单数据的存储（键值对形式）				|
-|listener		|×		|监听回调类的开源库，包含来电监听，网络状态监听，返回键监听	|
-|debugger			|×		|开发调试辅助库													|
-|update			|×		|自动更新库													|
-|page			|×		|页面跳转及页面设置												|
-|map			|×		|地图													|
-|handware			|×		|硬件能力，获取和设置电量，音量和屏幕亮度													|
-|tim			|×		|腾讯IM													|
 
 
 依赖引入（需要添加jitpack仓库源）：
@@ -423,7 +461,7 @@ if (window.share) {
 ```
 
 ### 3.分享图文
-shareImage 弹出分享的对话框，选择某一应用进行分享
+shareTextImage 弹出分享的对话框，选择某一应用进行分享
 
 目前只支持传base64图片数据,测试发现文字没法获取，和分享图片效果一样
 
@@ -1284,6 +1322,9 @@ if (window.tim) {
 ```
 
 ### 4.获取消息未读数
+
+getUnreadCount
+
 使用前，需要调用上述2中的IM登录
 
 **传参：**
