@@ -38,6 +38,7 @@ Android原生组件库，为Html提供Android原生能力，增强H5
 |device设备			|3.判断当前设备是否为平板		|isTablet								|√		|	|
 |device设备			|4.判断当前设备是否为模拟器		|isEmulator								|√		|	|
 |device设备			|5.获取当前设备系统信息			|getDeviceInfo							|√		|	|
+|device设备			|6.判断当前机型品牌		|isBrand							|√		|	|
 |storage使用		|1.保存数据						|save									|√		|	|
 |storage使用		|2.读取数据						|get									|√		|	|
 |listener监听		|1. 注册网络断开连接监听		|registerNetworkDisconnectionListener	|√		|	|
@@ -637,6 +638,62 @@ if (window.device) {
 }
 ```
 
+### 6.判断是否为某个机型品牌
+
+isBrand 
+
+判断当前机型是否为某个品牌
+
+**传参：**
+
+```
+{
+    "content": "1"//型号类型，详见下表
+}
+```
+
+|	类型|	品牌|
+|--	|--	|
+|1  | 360|
+|2  | 酷派|
+|3  | 金立|
+|4  | 谷歌|
+|5  | HTC|
+|6  | 华为|
+|7  | 乐视|
+|8  | 联想|
+|9  | LG|
+|10 |魅族|
+|11 |摩托罗拉|
+|12 |努比亚|
+|13 |一加|
+|14 |Oppo|
+|15 |三星|
+|16 |锤子|
+|17 |索尼|
+|18 |Vivo|
+|19 |小米|
+|20 |中兴|
+
+**返回结果：**
+
+```
+("code":200,"desc":","result":false)
+```
+
+**H5调用示例：**
+
+```
+//判断是否为360品牌手机
+if (window.device) {
+    let content = {
+        "content": "1"
+    }
+    let result = window.device.isBrand(JSON.stringify(content))
+    console.log(result);
+    alert(result);
+}
+```
 ## storage使用
 ### 1.保存数据
 
