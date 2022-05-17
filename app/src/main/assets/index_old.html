@@ -101,6 +101,7 @@
                     <button type="default" onclick="isEmulator()">当前设备是否为模拟器</button>
                     <button type="default" onclick="getDeviceInfo()">当前设备系统信息</button>
                     <button type="default" onclick="getUniqueDeviceId()">获取唯一设备ID</button>
+                    <button type="default" onclick="isBrand()">判断品牌</button>
                 </div>
             </fieldset>
 
@@ -171,9 +172,10 @@
     </body>
 
     <script>
-        window.loadUnreadCount = function(object){
+        window.loadUnreadCount = function(object) {
             alert(JSON.stringify(object))
         }
+
         function getUnreadCount() {
             if (window.tim) {
                 let content = {
@@ -183,7 +185,7 @@
                 console.log(result)
             }
         }
-         
+
         function timLogin() {
             if (window.tim) {
                 let content = {
@@ -221,7 +223,7 @@
                 console.log(result)
             }
         }
-        
+
         function gotoApp() {
             if (window.page) {
                 //下面这里是进入设置页面
@@ -358,7 +360,7 @@
                 console.log(result)
             }
         }
-        
+
         function registerNetworkConnectionListener() {
             if (window.listener) {
                 let content = {
@@ -368,7 +370,7 @@
                 console.log(result)
             }
         }
-        
+
 
         function save() {
             if (window.storage) {
@@ -413,6 +415,17 @@
         function getUniqueDeviceId() {
             if (window.device) {
                 let result = window.device.getUniqueDeviceId()
+                console.log(result);
+                alert(result);
+            }
+        }
+
+        function isBrand() {
+            if (window.device) {
+                let content = {
+                    "content": "1"
+                }
+                let result = window.device.isBrand(JSON.stringify(content))
                 console.log(result);
                 alert(result);
             }
@@ -500,7 +513,7 @@
                 console.log(result)
             }
         }
-        
+
         function setBargeCount() {
             if (window.notification) {
                 let content = {
