@@ -49,6 +49,7 @@ Android原生组件库，为Html提供Android原生能力，增强H5
 |map地图			|4. 地图选点					|										|		|	|
 |map地图			|5. 路径规划					|										|		|	|
 |map地图			|6. 位置检索					|										|		|	|
+|map地图			|7. 判断当前位置是否在某区域内					|										|		|	|
 |handware硬件		|1.获取当前电量数值				|getBattery								|√		|	|
 |handware硬件		|2.获取当前网络状态				|getNetworkState						|√		|	|
 |handware硬件		|3.获取媒体最大音量				|getMaxVolume							|√		|	|
