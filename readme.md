@@ -39,6 +39,11 @@ Android原生组件库，为Html提供Android原生能力，增强H5
 |device设备			|4.判断当前设备是否为模拟器		|isEmulator								|√		|	|
 |device设备			|5.获取当前设备系统信息			|getDeviceInfo							|√		|	|
 |device设备			|6.判断当前机型品牌		|isBrand							|√		|	|
+|device设备			|7.截图		|screenShot         				|		|	|
+|device设备			|8.设置屏幕横屏或竖屏		|                				|		|	|
+|device设备			|9.判断是否为横屏		|                				|		|	|
+|device设备			|10.获取手机屏幕宽高		|                				|		|	|
+|device设备			|11.获取应用屏幕宽高		|                				|		|	|
 |storage使用		|1.保存数据						|save									|√		|	|
 |storage使用		|2.读取数据						|get									|√		|	|
 |listener监听		|1. 注册网络断开连接监听		|registerNetworkDisconnectionListener	|√		|	|
