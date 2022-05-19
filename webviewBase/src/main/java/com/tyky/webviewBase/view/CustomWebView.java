@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import com.socks.library.KLog;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.utils.ReflectUtil;
 
@@ -79,6 +80,9 @@ public class CustomWebView extends WebView {
         } catch (IllegalArgumentException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
+        String userAgentString = webSettings.getUserAgentString();
+        KLog.e(userAgentString);
+        webSettings.setUserAgentString(userAgentString + " tyky_android");
 
         //addJavascriptInterface(new WebViewJavaScript(), "android");
         customWebViewChrome = new CustomWebViewChrome(this);
