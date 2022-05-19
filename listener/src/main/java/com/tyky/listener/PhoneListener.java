@@ -4,6 +4,7 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 
 import com.tyky.webviewBase.event.JsCallBackEvent;
+import com.tyky.webviewBase.model.ResultModel;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -23,7 +24,7 @@ public class PhoneListener extends PhoneStateListener {
             case TelephonyManager.CALL_STATE_OFFHOOK: //电话通话的状态
                 break;
             case TelephonyManager.CALL_STATE_RINGING: //电话响铃的状态
-                EventBus.getDefault().post(new JsCallBackEvent(callbackMethodName,null));
+                EventBus.getDefault().post(new JsCallBackEvent(callbackMethodName, ResultModel.success("")));
                 break;
         }
 
