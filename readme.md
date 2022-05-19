@@ -23,9 +23,10 @@ Android原生组件库，为Html提供Android原生能力，增强H5
 |media媒体			|6.图片预览						|previewPicture							|√		|	|
 |media媒体			|7.扫描二维码					|qrScan									|√		|	|
 |media媒体			|8.语音播放文本					|speakText								|√		|	|
-|media媒体			|9.文件下载						|										|		|	|
+|media媒体			|9.获取手机通讯录						|	getContacts									|√		|	|
 |media媒体			|10.文件预览					|										|		|	|
 |media媒体			|11.安装apk						|										|		|	|
+|media媒体			|12.文件下载						|										|		|	|
 |notification通知	|1.发送通知						|sendNotification						|√		|	|
 |notification通知	|1.设置桌面小红点				|setBargeCount							|√		|	|
 |share分享			|1.分享文本						|shareText								|√		|	|
@@ -343,6 +344,37 @@ if (window.android_media) {
 }
 ```
 
+### 9.获取手机通讯录
+
+getContacts
+
+**传参：**
+```
+{
+    callBackMethod: "myContacts" //回调方法
+}
+```
+
+**返回结果：**
+```
+{"code":200,"desc":"","result":[{"name":"xing wan","number":"18778089853"},{"name":"one stars","number":"147663358935"}]}
+```
+
+**H5调用示例：**
+```
+window.myContacts = function(object) {
+    console.log(object);
+}
+
+if (window.android_media) {
+    let content = {
+        callBackMethod: "myContacts"
+    }
+    let result = window.android_media.getContacts(JSON.stringify(content))
+    alert(result);
+    console.log(result)
+}
+```
 
 ### 还未实现功能清单
 

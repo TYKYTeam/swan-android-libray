@@ -66,6 +66,7 @@
                     <button type="default" onclick="previewPictureUrl()">图片预览(url)</button>
                     <button type="default" onclick="qrScan()">扫描二维码</button>
                     <button type="default" onclick="speakText()">文字转语音</button>
+                    <button type="default" onclick="getContacts()">获取手机通讯录列表</button>
 
                 </div>
             </fieldset>
@@ -453,6 +454,21 @@
                     content: "这是一段测试语音的文本"
                 }
                 let result = window.android_media.speakText(JSON.stringify(content))
+                alert(result);
+                console.log(result)
+            }
+        }
+        
+        window.myContacts = function(object) {
+            console.log(object);
+        }
+        
+        function getContacts(){
+            if (window.android_media) {
+                let content = {
+                    callBackMethod: "myContacts"
+                }
+                let result = window.android_media.getContacts(JSON.stringify(content))
                 alert(result);
                 console.log(result)
             }

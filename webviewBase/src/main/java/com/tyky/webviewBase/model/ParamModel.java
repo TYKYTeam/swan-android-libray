@@ -21,7 +21,7 @@ public class ParamModel {
      */
     private Integer type;
     /**
-     * 回调方法，多个用逗号隔开
+     * 回调方法
      */
     private String callBackMethod;
 
