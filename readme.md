@@ -731,6 +731,43 @@ if (window.device) {
     alert(result);
 }
 ```
+
+### 7.截图
+
+takeScreenshot
+
+**传参：**
+
+```
+{
+    callBackMethod: "getScreenshot"
+}
+```
+
+**返回结果：**
+
+```
+//getScreenshot中回调的result为图片本地路径
+{"code":200,"desc":"","result":"/storage/emulated/0/DCIM/com.tyky.acl/1653012630717_100.JPG"}
+```
+
+**H5调用示例：**
+
+```
+window.getScreenshot = function(res){
+    console.log(res);
+}
+
+if (window.device) {
+    let content = {
+        callBackMethod: "getScreenshot"
+    }
+    let result = window.device.takeScreenshot(JSON.stringify(content))
+    console.log(result);
+    alert(result);
+}
+```
+
 ## storage使用
 ### 1.保存数据
 
