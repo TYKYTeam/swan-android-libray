@@ -1,6 +1,7 @@
 package com.tyky.webviewBase.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -13,7 +14,9 @@ import android.widget.ImageView;
 
 import com.blankj.utilcode.util.EncodeUtils;
 import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.ImageUtils;
 import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -24,6 +27,7 @@ import com.tyky.webviewBase.constants.RequestCodeConstants;
 import com.tyky.webviewBase.event.ImagePreviewEvent;
 import com.tyky.webviewBase.event.IntentEvent;
 import com.tyky.webviewBase.event.JsCallBackEvent;
+import com.tyky.webviewBase.event.TakeScreenshotEvent;
 import com.tyky.webviewBase.event.UrlLoadEvent;
 import com.tyky.webviewBase.event.UrlLoadFinishEvent;
 import com.tyky.webviewBase.model.ResultModel;
@@ -38,6 +42,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
 import java.lang.reflect.Field;
 
 import androidx.annotation.Nullable;
@@ -108,6 +113,7 @@ public class CustomWebViewActivity extends AppCompatActivity {
     public void openLoading() {
         clLoading.setVisibility(View.VISIBLE);
     }
+
     /**
      * 加载地址
      *
@@ -137,6 +143,7 @@ public class CustomWebViewActivity extends AppCompatActivity {
 
     /**
      * 取消启动图效果
+     *
      * @param event
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -195,7 +202,7 @@ public class CustomWebViewActivity extends AppCompatActivity {
             Object o = netWorkListener.get(null);
             NetworkUtils.unregisterNetworkStatusChangedListener((NetworkUtils.OnNetworkStatusChangedListener) o);
 
-        } catch (ClassNotFoundException  | IllegalAccessException |NoSuchFieldException ignored) {
+        } catch (ClassNotFoundException | IllegalAccessException | NoSuchFieldException ignored) {
         }
         //释放EventBus和语音TTS
         EventBus.getDefault().unregister(this);
@@ -278,8 +285,18 @@ public class CustomWebViewActivity extends AppCompatActivity {
 
     private boolean doubleBackFlag = true;
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void takeScreenshot(TakeScreenshotEvent event) {
+        String callBackMethod = event.getCallBackMethod();
+        Bitmap bitmap = ScreenUtils.screenShot(this,false);
+        File file = ImageUtils.save2Album(bitmap, Bitmap.CompressFormat.JPEG);
+        EventBus.getDefault().post(new JsCallBackEvent(callBackMethod,file.getPath()));
+    }
+
+
     /**
      * 是否开启双击返回
+     *
      * @param flag
      */
     public void openDoubleBack(boolean flag) {

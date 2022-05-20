@@ -51,7 +51,7 @@ dependencies {
     implementation 'com.github.zhaokaiqiang.klog:library:1.6.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
     implementation 'org.apache.commons:commons-lang3:3.9'
-    implementation 'org.greenrobot:eventbus:3.0.0'
+    api 'org.greenrobot:eventbus:3.0.0'
     implementation 'androidx.multidex:multidex:2.0.0'
 
 }

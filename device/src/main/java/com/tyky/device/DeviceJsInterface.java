@@ -7,10 +7,12 @@ import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.RomUtils;
 import com.google.gson.Gson;
 import com.tyky.webviewBase.annotation.WebViewInterface;
+import com.tyky.webviewBase.event.TakeScreenshotEvent;
 import com.tyky.webviewBase.model.ParamModel;
 import com.tyky.webviewBase.model.ResultModel;
 
 import org.apache.commons.lang3.StringUtils;
+import org.greenrobot.eventbus.EventBus;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -111,16 +113,33 @@ public class DeviceJsInterface {
 
         //转为数字
         int type = Integer.parseInt(content);
-        if (type > allCount || type==0) {
+        if (type > allCount || type == 0) {
             return gson.toJson(ResultModel.errorParam("类型传值失败，请参考文档说明"));
         }
         try {
-            Boolean flag = (Boolean) methods.get(type - 1).invoke(null, null);
+            Boolean flag = (Boolean) methods.get(type - 1).invoke(null, (Object) null);
             return gson.toJson(ResultModel.success(flag));
         } catch (IllegalAccessException | InvocationTargetException e) {
             return gson.toJson(ResultModel.errorParam(e.getMessage()));
         }
 
+    }
+
+    /**
+     * 截图
+     *
+     * @return
+     */
+    @JavascriptInterface
+    public String takeScreenshot(String json) {
+        ParamModel paramModel = gson.fromJson(json, ParamModel.class);
+        String callBackMethod = paramModel.getCallBackMethod();
+        if (StringUtils.isBlank(callBackMethod)) {
+            return gson.toJson(ResultModel.errorParam());
+        }
+
+        EventBus.getDefault().post(new TakeScreenshotEvent(callBackMethod));
+        return gson.toJson(ResultModel.success(""));
     }
 
 }

@@ -5,7 +5,7 @@
     <head>
         <title></title>
         <meta charset="UTF-8" />
-        <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+        <script src="https://unpkg.com/vconsole@3.14.6/dist/vconsole.min.js"></script>
 
     </head>
     <style>
@@ -45,7 +45,6 @@
                     文件选择<input type="file" accept="file/*" />
                 </div>
             </fieldset>
-
 
             <fieldset>
                 <legend>mdeia 媒体</legend>
@@ -103,6 +102,7 @@
                     <button type="default" onclick="getDeviceInfo()">当前设备系统信息</button>
                     <button type="default" onclick="getUniqueDeviceId()">获取唯一设备ID</button>
                     <button type="default" onclick="isBrand()">判断品牌</button>
+                    <button type="default" onclick="takeScreenshot()">截屏</button>
                 </div>
             </fieldset>
 
@@ -431,6 +431,21 @@
                 alert(result);
             }
         }
+        
+        window.getScreenshot = function(res){
+            console.log(res);
+        }
+        
+        function takeScreenshot() {
+            if (window.device) {
+                let content = {
+                    callBackMethod: "getScreenshot"
+                }
+                let result = window.device.takeScreenshot(JSON.stringify(content))
+                console.log(result);
+                alert(result);
+            }
+        }
 
         function getDeviceInfo() {
             if (window.device) {
@@ -458,12 +473,12 @@
                 console.log(result)
             }
         }
-        
+
         window.myContacts = function(object) {
             console.log(object);
         }
-        
-        function getContacts(){
+
+        function getContacts() {
             if (window.android_media) {
                 let content = {
                     callBackMethod: "myContacts"
