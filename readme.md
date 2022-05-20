@@ -45,8 +45,8 @@ Android原生组件库，为Html提供Android原生能力，增强H5
 |device设备			|9.判断是否为横屏		|                				|		|	|
 |device设备			|10.获取手机屏幕宽高		|                				|		|	|
 |device设备			|11.获取应用屏幕宽高		|                				|		|	|
-|storage使用		|1.保存数据						|save									|√		|	|
-|storage使用		|2.读取数据						|get									|√		|	|
+|storage使用		|1.保存数据						|saveStorage									|√		|	|
+|storage使用		|2.读取数据						|getStorage									|√		|	|
 |listener监听		|1. 注册网络断开连接监听		|registerNetworkDisconnectionListener	|√		|	|
 |listener监听		|2. 注册网络成功连接监听		|registerNetworkConnectionListener		|√		|	|
 |listener监听		|3.来电监听						|registerPhoneListener					|√		|	|
@@ -734,7 +734,7 @@ if (window.device) {
 ## storage使用
 ### 1.保存数据
 
-save 
+saveStorage 
 
 保存数据到Android内置的SharePerfence
 
@@ -760,7 +760,7 @@ if (window.storage) {
         key: "test",
         value: "hello woll"
     }
-    let result = window.storage.save(JSON.stringify(content))
+    let result = window.storage.saveStorage(JSON.stringify(content))
     alert(result);
     console.log(result)
 }
@@ -768,7 +768,7 @@ if (window.storage) {
 
 ### 2.读取数据
 
-get
+getStorage
 
 根据key值去获取保存的数据
 
@@ -792,7 +792,7 @@ if (window.storage) {
     let content = {
         key: "test"
     }
-    let result = window.storage.get(JSON.stringify(content))
+    let result = window.storage.getStorage(JSON.stringify(content))
     alert(result);
     console.log(result)
 }
