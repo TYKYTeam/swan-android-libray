@@ -104,6 +104,7 @@
                     <button type="default" onclick="isBrand()">判断品牌</button>
                     <button type="default" onclick="takeScreenshot()">截屏</button>
                     <button type="default" onclick="getScreenOrientation()">获取当前屏幕方向状态</button>
+                    <button type="default" onclick="getScreenWH()">获取当前屏幕分辨率</button>
                 </div>
             </fieldset>
 
@@ -434,6 +435,14 @@
         function getScreenOrientation() {
             if (window.device) {
                 let result = window.device.getScreenOrientation()
+                console.log(result);
+                alert(result);
+            }
+        }
+        
+        function getScreenWH() {
+            if (window.device) {
+                let result = window.device.getScreenWH()
                 console.log(result);
                 alert(result);
             }

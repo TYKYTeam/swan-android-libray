@@ -790,6 +790,28 @@ if (window.device) {
     alert(result);
 }
 ```
+### 9.获取屏幕分辨率
+
+getScreenWH
+
+**传参：无需**
+
+**返回结果：**
+
+```
+"{"code":200,"desc":"","result":{"width":1080,"height":1920}}"
+```
+
+**H5调用示例：**
+
+```
+if (window.device) {
+    let result = window.device.getScreenWH()
+    console.log(result);
+    alert(result);
+}
+```
+
 ## storage使用
 ### 1.保存数据
 

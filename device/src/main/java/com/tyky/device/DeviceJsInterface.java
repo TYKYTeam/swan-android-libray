@@ -157,4 +157,19 @@ public class DeviceJsInterface {
         //1：横屏 0：竖屏
         return gson.toJson(ResultModel.success(result));
     }
+
+    /**
+     * 获取屏幕宽高
+     *
+     * @return
+     */
+    @JavascriptInterface
+    public String getScreenWH() {
+        int appScreenWidth = ScreenUtils.getScreenWidth();
+        int appScreenHeight = ScreenUtils.getScreenHeight();
+        Map<String, Integer> map = new HashMap<>();
+        map.put("width", appScreenWidth);
+        map.put("height", appScreenHeight);
+        return gson.toJson(ResultModel.success(map));
+    }
 }
