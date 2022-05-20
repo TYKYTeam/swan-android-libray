@@ -1,7 +1,6 @@
 package com.tencent.qcloud.tim.demo;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.tencent.imsdk.v2.V2TIMCallback;
@@ -170,13 +169,13 @@ public class DemoApplication extends BaseApplication {
 
         @Override
         public void onActivityCreated(Activity activity, Bundle bundle) {
-            DemoLog.i(TAG, "onActivityCreated bundle: " + bundle);
+            /*DemoLog.i(TAG, "onActivityCreated bundle: " + bundle);
             if (bundle != null) { // 若bundle不为空则程序异常结束
                 // 重启整个程序
                 Intent intent = new Intent(activity, SplashActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-            }
+            }*/
         }
 
         @Override
