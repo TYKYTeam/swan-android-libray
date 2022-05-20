@@ -22,7 +22,7 @@ public class StorageJsInterface {
      * @return
      */
     @JavascriptInterface
-    public String save(String paramStr) {
+    public String saveStorage(String paramStr) {
         ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
         String key = paramModel.getKey();
         String value = paramModel.getValue();
@@ -41,7 +41,7 @@ public class StorageJsInterface {
      * @return
      */
     @JavascriptInterface
-    public String get(String paramStr) {
+    public String getStorage(String paramStr) {
         ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
         String key = paramModel.getKey();
         if (StringUtils.isEmpty(key)) {
