@@ -5,6 +5,7 @@ import android.webkit.JavascriptInterface;
 import com.blankj.utilcode.util.DeviceUtils;
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.RomUtils;
+import com.blankj.utilcode.util.ScreenUtils;
 import com.google.gson.Gson;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.event.TakeScreenshotEvent;
@@ -142,4 +143,18 @@ public class DeviceJsInterface {
         return gson.toJson(ResultModel.success(""));
     }
 
+    /**
+     * 获取屏幕状态
+     *
+     * @return
+     */
+    @JavascriptInterface
+    public String getScreenOrientation() {
+        int result = 0;
+        if (ScreenUtils.isLandscape()) {
+            result = 1;
+        }
+        //1：横屏 0：竖屏
+        return gson.toJson(ResultModel.success(result));
+    }
 }

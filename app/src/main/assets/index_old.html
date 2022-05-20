@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <meta name="viewport"
-        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <head>
         <title></title>
         <meta charset="UTF-8" />
@@ -103,6 +103,7 @@
                     <button type="default" onclick="getUniqueDeviceId()">获取唯一设备ID</button>
                     <button type="default" onclick="isBrand()">判断品牌</button>
                     <button type="default" onclick="takeScreenshot()">截屏</button>
+                    <button type="default" onclick="getScreenOrientation()">获取当前屏幕方向状态</button>
                 </div>
             </fieldset>
 
@@ -425,6 +426,14 @@
                     "content": "1"
                 }
                 let result = window.device.isBrand(JSON.stringify(content))
+                console.log(result);
+                alert(result);
+            }
+        }
+        
+        function getScreenOrientation() {
+            if (window.device) {
+                let result = window.device.getScreenOrientation()
                 console.log(result);
                 alert(result);
             }

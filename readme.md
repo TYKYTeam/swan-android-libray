@@ -768,6 +768,28 @@ if (window.device) {
 }
 ```
 
+### 8.获取当前屏幕方向状态
+
+getScreenOrientation
+
+**传参：无需**
+
+**返回结果：**
+
+```
+//0:竖屏 1：横屏
+{"code":200,"desc":"","result":0}
+```
+
+**H5调用示例：**
+
+```
+if (window.device) {
+    let result = window.device.getScreenOrientation()
+    console.log(result);
+    alert(result);
+}
+```
 ## storage使用
 ### 1.保存数据
 
