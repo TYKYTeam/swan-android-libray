@@ -102,8 +102,9 @@ public class ListenerJsInterface {
             return gson.toJson(ResultModel.errorParam());
         }
 
+        SPUtils.getInstance().put("phoneCallMethod",methodName);
         if (phoneListener == null) {
-            phoneListener = new PhoneListener(methodName);
+            phoneListener = new PhoneListener();
 
             //获得相应的系统服务
             TelephonyManager tm = (TelephonyManager) ActivityUtils.getTopActivity().getSystemService(Context.TELEPHONY_SERVICE);
