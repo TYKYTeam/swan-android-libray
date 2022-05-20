@@ -949,7 +949,7 @@ if (window.listener) {
 
 ### 1. 获取当前地址
 
-startLocation
+getLocation
 
 获取当前地址
 
@@ -982,7 +982,7 @@ function startLocation() {
         let content = {
             "callBackMethod": "getLocation"
         }
-        let result = window.map.startLocation(JSON.stringify(content))
+        let result = window.map.getLocation(JSON.stringify(content))
         alert(result)
         console.log(result)
     }

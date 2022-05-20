@@ -255,7 +255,7 @@
                 let content = {
                     "callBackMethod": "getLocation"
                 }
-                let result = window.map.startLocation(JSON.stringify(content))
+                let result = window.map.getLocation(JSON.stringify(content))
                 alert(result)
                 console.log(result)
             }
@@ -377,11 +377,9 @@
             if (window.storage) {
                 let content = {
                     key: "test",
-                    value: {
-                        "xx": 22
-                    }
+                    value: "内容"
                 }
-                let result = window.storage.save(JSON.stringify(content))
+                let result = window.storage.saveStorage(JSON.stringify(content))
                 alert(result);
                 console.log(result)
             }
@@ -392,7 +390,7 @@
                 let content = {
                     key: "test"
                 }
-                let result = window.storage.get(JSON.stringify(content))
+                let result = window.storage.getStorage(JSON.stringify(content))
                 alert(result);
                 console.log(result)
             }
