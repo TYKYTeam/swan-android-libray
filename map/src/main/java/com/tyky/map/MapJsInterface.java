@@ -34,7 +34,7 @@ public class MapJsInterface {
      * @return
      */
     @JavascriptInterface
-    public String startLocation(String paramStr) {
+    public String getLocation(String paramStr) {
         ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
         String methodName = paramModel.getCallBackMethod();
         if (StringUtils.isEmpty(methodName)) {
