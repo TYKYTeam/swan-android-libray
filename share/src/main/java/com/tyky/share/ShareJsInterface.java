@@ -3,6 +3,8 @@ package com.tyky.share;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.text.TextUtils;
 import android.webkit.JavascriptInterface;
 
@@ -12,8 +14,8 @@ import com.blankj.utilcode.util.EncodeUtils;
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ImageUtils;
 import com.blankj.utilcode.util.IntentUtils;
-import com.blankj.utilcode.util.PathUtils;
 import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.UriUtils;
 import com.google.gson.Gson;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.model.ParamModel;
@@ -24,7 +26,7 @@ import java.io.File;
 @WebViewInterface("share")
 public class ShareJsInterface {
 
-   Gson gson = GsonUtils.getGson();
+    Gson gson = GsonUtils.getGson();
 
     /**
      * 分享文本
@@ -39,7 +41,7 @@ public class ShareJsInterface {
             return gson.toJson(ResultModel.errorParam());
         }
         Intent shareTextIntent = IntentUtils.getShareTextIntent(content);
-        shareTextIntent.setType(shareTextIntent.getType() );
+        shareTextIntent.setType(shareTextIntent.getType());
         ActivityUtils.getTopActivity().startActivity(shareTextIntent);
         return gson.toJson(ResultModel.success(""));
     }
@@ -63,15 +65,21 @@ public class ShareJsInterface {
         byte[] bytes = EncodeUtils.base64Decode(data);
         Bitmap bitmap = ImageUtils.bytes2Bitmap(bytes);
 
-        String filePath = PathUtils.getExternalAppFilesPath() + System.currentTimeMillis() + ".png";
+        File file = ImageUtils.save2Album(bitmap, Bitmap.CompressFormat.PNG, true);
+        Uri uri = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            UriUtils.file2Uri(file);
+        } else {
+            uri = UriUtils.file2Uri(file);
+        }
 
-        File file = ImageUtils.save2Album(bitmap, filePath, Bitmap.CompressFormat.PNG, true);
         if (file.exists()) {
-            Intent shareImageIntent = IntentUtils.getShareImageIntent(file);
+            Intent shareImageIntent = IntentUtils.getShareImageIntent(uri);
             ActivityUtils.getTopActivity().startActivity(shareImageIntent);
         }
         return gson.toJson(ResultModel.success(""));
     }
+
 
     /**
      * 分享图文(单张图片）
@@ -93,11 +101,17 @@ public class ShareJsInterface {
         byte[] bytes = EncodeUtils.base64Decode(data);
         Bitmap bitmap = ImageUtils.bytes2Bitmap(bytes);
 
-        String filePath = PathUtils.getExternalAppFilesPath() + System.currentTimeMillis() + ".png";
+        File file = ImageUtils.save2Album(bitmap, Bitmap.CompressFormat.PNG, true);
 
-        File file = ImageUtils.save2Album(bitmap, filePath, Bitmap.CompressFormat.PNG, true);
+        Uri uri = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            UriUtils.file2Uri(file);
+        } else {
+            uri = UriUtils.file2Uri(file);
+        }
+
         if (file.exists()) {
-            Intent shareImageIntent = IntentUtils.getShareTextImageIntent(title, file);
+            Intent shareImageIntent = IntentUtils.getShareTextImageIntent(title, uri);
             ActivityUtils.getTopActivity().startActivity(shareImageIntent);
         }
         return gson.toJson(ResultModel.success(""));
