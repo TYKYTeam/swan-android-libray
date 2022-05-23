@@ -88,6 +88,9 @@ public class CustomWebView extends WebView {
         customWebViewChrome = new CustomWebViewChrome(this);
         setWebChromeClient(customWebViewChrome);
         setWebViewClient(new CustomWebViewClient());
+
+        //设置下载文件监听器
+        setDownloadListener(new WebviewDownloader(getContext()));
     }
 
     public CustomWebViewChrome getCustomWebViewChrome() {
