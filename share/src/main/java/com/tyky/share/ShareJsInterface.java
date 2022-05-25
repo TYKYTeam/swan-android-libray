@@ -67,10 +67,10 @@ public class ShareJsInterface {
 
         File file = ImageUtils.save2Album(bitmap, Bitmap.CompressFormat.PNG, true);
         Uri uri = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
             UriUtils.file2Uri(file);
         } else {
-            uri = UriUtils.file2Uri(file);
+            uri = Uri.fromFile(file);
         }
 
         if (file.exists()) {
@@ -104,10 +104,10 @@ public class ShareJsInterface {
         File file = ImageUtils.save2Album(bitmap, Bitmap.CompressFormat.PNG, true);
 
         Uri uri = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
             UriUtils.file2Uri(file);
         } else {
-            uri = UriUtils.file2Uri(file);
+            uri = Uri.fromFile(file);
         }
 
         if (file.exists()) {
