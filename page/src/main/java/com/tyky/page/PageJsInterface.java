@@ -1,5 +1,6 @@
 package com.tyky.page;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 import android.webkit.JavascriptInterface;
@@ -30,8 +31,12 @@ public class PageJsInterface {
         if (StringUtils.isEmpty(packageName) || StringUtils.isEmpty(activityName)) {
             return gson.toJson(ResultModel.errorParam());
         }
-
+        
         Intent intent = new Intent();
+        ComponentName cmp = new ComponentName(packageName,activityName);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setComponent(cmp);
         intent.setClassName(packageName, activityName);
         ActivityUtils.getTopActivity().startActivity(intent);
 
