@@ -19,6 +19,10 @@ import com.tyky.webviewBase.R;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.text.DecimalFormat;
+
 public class WebviewDownloader implements DownloadListener {
     private Context mContext;
 
@@ -30,13 +34,19 @@ public class WebviewDownloader implements DownloadListener {
     @Override
     public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimeType, long contentLength) {
 
-        final String fileName = StringUtils.substringBetween(contentDisposition, "\"");
+        String tempFileName = StringUtils.substringBetween(contentDisposition, "\"");
+        try {
+            tempFileName = URLDecoder.decode(tempFileName, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            KLog.e("解码失败"+e.getMessage());
+        }
+        final String fileName = tempFileName;
         //字节转为具体大小
-        final String fileSize = contentLength / 1024 + "KB";
+        final String fileSize = formatFileSize(contentLength);
         //扩展名
         String extendName = "";
         if (fileName != null && fileName.contains(".")) {
-            extendName = StringUtils.substringAfter(fileName, ".");
+            extendName = StringUtils.substringAfterLast(fileName, ".");
         }
         String finalExtendName = extendName;
 
@@ -52,6 +62,7 @@ public class WebviewDownloader implements DownloadListener {
                 tvExtendName.setText(finalExtendName);
 
                 TextView tvFileName = v.findViewById(R.id.tvFileName);
+
                 if (StringUtils.isNotBlank(fileName)) {
                     tvFileName.setText(fileName);
                 } else {
@@ -113,4 +124,30 @@ public class WebviewDownloader implements DownloadListener {
         long downloadId = downloadManager.enqueue(request);
         KLog.d("下载任务" + downloadId);
     }
+
+    /**
+     * 计算文件大小
+     * @param fileS
+     * @return
+     */
+    private String formatFileSize(long fileS) {
+        DecimalFormat df = new DecimalFormat("#.00");
+        String fileSizeString = "";
+        String wrongSize = "0B";
+        if (fileS == 0) {
+            return wrongSize;
+        }
+        if (fileS < 1024) {
+            fileSizeString = df.format((double) fileS) + "B";
+        } else if (fileS < 1048576) {
+            fileSizeString = df.format((double) fileS / 1024) + "KB";
+        } else if (fileS < 1073741824) {
+            fileSizeString = df.format((double) fileS / 1048576) + "MB";
+        } else {
+            fileSizeString = df.format((double) fileS / 1073741824) + "GB";
+        }
+        return fileSizeString;
+    }
+
+
 }
