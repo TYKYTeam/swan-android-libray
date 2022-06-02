@@ -1,5 +1,6 @@
-# Android 组件库
+<meta name="referrer" content="no-referrer">
 
+# Android 组件库
 
 [![](https://jitpack.io/v/stars-one/android-component-libray.svg)](https://github.com/stars-one/android-component-libray)
 ![](https://img.shields.io/badge/java-8-orange)
@@ -9,72 +10,8 @@
 
 Android原生组件库，为Html提供Android原生能力，增强H5
 
-<meta name="referrer" content="no-referrer">
-
-## 功能清单
-
-|模块名				|功能							|方法名									|Android|Ios|
-|--					|--								|--										|--		|--	|
-|media媒体			|1.获取剪切板内容				|getTextFromClipboard					|√		|	|
-|media媒体			|2.复制文本						|copyTextToClipboard					|√		|	|
-|media媒体			|3.拨打电话						|callPhone								|√		|	|
-|media媒体			|4.跳转拨号页面					|goToCall								|√		|	|
-|media媒体			|5.发送短信						|sendSms								|√		|	|
-|media媒体			|6.图片预览						|previewPicture							|√		|	|
-|media媒体			|7.扫描二维码					|qrScan									|√		|	|
-|media媒体			|8.语音播放文本					|speakText								|√		|	|
-|media媒体			|9.获取手机通讯录						|	getContacts									|√		|	|
-|media媒体			|10.文件预览					|										|		|	|
-|media媒体			|11.安装apk						|										|		|	|
-|media媒体			|12.文件下载						|										|		|	|
-|notification通知	|1.发送通知						|sendNotification						|√		|	|
-|notification通知	|1.设置桌面小红点				|setBargeCount							|√		|	|
-|share分享			|1.分享文本						|shareText								|√		|	|
-|share分享			|2.分享图片						|shareImage								|√		|	|
-|share分享			|3.分享图文						|shareTextImage							|√		|	|
-|share分享			|4.分享文本给微信好友			|shareToWechatFriend					|√		|	|
-|share分享			|5.分享到微博					|										|		|	|
-|device设备			|1.获取设备mac地址				|getMacAddress							|√		|	|
-|device设备			|2.获取唯一设备id				|getUniqueDeviceId						|√		|	|
-|device设备			|3.判断当前设备是否为平板		|isTablet								|√		|	|
-|device设备			|4.判断当前设备是否为模拟器		|isEmulator								|√		|	|
-|device设备			|5.获取当前设备系统信息			|getDeviceInfo							|√		|	|
-|device设备			|6.判断当前机型品牌		|isBrand							|√		|	|
-|device设备			|7.截图		|screenShot         				|		|	|
-|device设备			|8.设置屏幕横屏或竖屏		|                				|		|	|
-|device设备			|9.判断是否为横屏		|                				|		|	|
-|device设备			|10.获取手机屏幕宽高		|                				|		|	|
-|device设备			|11.获取应用屏幕宽高		|                				|		|	|
-|storage使用		|1.保存数据						|saveStorage									|√		|	|
-|storage使用		|2.读取数据						|getStorage									|√		|	|
-|listener监听		|1. 注册网络断开连接监听		|registerNetworkDisconnectionListener	|√		|	|
-|listener监听		|2. 注册网络成功连接监听		|registerNetworkConnectionListener		|√		|	|
-|listener监听		|3.来电监听						|registerPhoneListener					|√		|	|
-|map地图			|1. 获取当前地址				|startLocation							|√		|	|
-|map地图			|2. 地图显示当前位置			|showLocationInMap						|√		|	|
-|map地图			|3. 路径导航					|										|		|	|
-|map地图			|4. 地图选点					|										|		|	|
-|map地图			|5. 路径规划					|										|		|	|
-|map地图			|6. 位置检索					|										|		|	|
-|map地图			|7. 判断当前位置是否在某区域内					|										|		|	|
-|handware硬件		|1.获取当前电量数值				|getBattery								|√		|	|
-|handware硬件		|2.获取当前网络状态				|getNetworkState						|√		|	|
-|handware硬件		|3.获取媒体最大音量				|getMaxVolume							|√		|	|
-|handware硬件		|3.获取媒体音量					|getVolume								|√		|	|
-|handware硬件		|4.设置媒体音量					|setVolume								|√		|	|
-|handware硬件		|5.获取屏幕亮度					|getBrightness							|√		|	|
-|handware硬件		|6.设置屏幕亮度					|setBrightness							|√		|	|
-|debugger调试		|1.跳转到debugger页面			|goSettingPage							|√		|	|
-|page页面			|1.跳转其他APP页面				|gotoApp								|√		|	|
-|page页面			|2.使用手机外部浏览器打开链接	|openUrlByBrowser						|√		|	|
-|tim				|1.进入登录页					|gotoImLogin							|√		|	|
-|tim				|2.IM登录						|login									|√		|	|
-|tim				|3.IM退出						|logout									|√		|	|
-|tim				|4.获取消息未读数				|getUnreadCount							|√		|	|
 
 ## Module目录及引用说明
-
-
 
 依赖引入（需要添加jitpack仓库源）：
 ```
