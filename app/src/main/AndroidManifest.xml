@@ -57,6 +57,12 @@
             tools:node="replace"
             android:name="SECRETKEY"
             android:value="350bef21480442764c97b739cf2215e94d04ee9a2fc1254871d64046a5c23fcb" />
+
+        <!--百度地图-->
+        <meta-data
+            tools:node="replace"
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="7v4dljw5jf18ow6Ppnx2UWV7A4Vyq42M" /> <!-- 定位服务 -->
     </application>
 
 </manifest>
