@@ -2,7 +2,7 @@
 
 # Android 组件库
 
-[![](https://jitpack.io/v/stars-one/android-component-libray.svg)](https://github.com/stars-one/android-component-libray)
+[![](https://jitpack.io/v/TYKYTeam/swan-android-libray.svg)](https://github.com/TYKYTeam/swan-android-libray)
 ![](https://img.shields.io/badge/java-8-orange)
 ![](https://img.shields.io/badge/androix-8e24aa)
 ![](https://img.shields.io/badge/minSdkVersion-21-blue)
@@ -15,12 +15,12 @@ Android原生组件库，为Html提供Android原生能力，增强H5
 
 依赖引入（需要添加jitpack仓库源）：
 ```
-implementation 'com.github.stars-one.android-component-libray:module名:版本号'
+implementation 'com.github.TYKYTeam.swan-android-libray:module名:版本号'
 ```
 
 例：
 ```
-implementation 'com.github.stars-one.android-component-libray:0.2'
+implementation 'com.github.TYKYTeam.swan-android-libray:0.2'
 ```
 
 **注：以下使用的传参都是需要Json的字符串，需要调用`JSON.stringify()`方法将对象转为字符串**
