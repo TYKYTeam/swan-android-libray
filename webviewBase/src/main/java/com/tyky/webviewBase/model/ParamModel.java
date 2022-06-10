@@ -55,6 +55,35 @@ public class ParamModel {
     private boolean isGotoPage;
     //-------------IM的Module传参字段结束----------
 
+    //---------百度地图poi检索参数---------
+    private String keyword;
+    private String city;
+    private String tags;
+
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
 
     public String getUserId() {
         return userId;
