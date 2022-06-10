@@ -1,5 +1,6 @@
 package com.tyky.map;
 
+import android.os.Build;
 import android.webkit.JavascriptInterface;
 
 import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
@@ -15,6 +16,7 @@ import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.socks.library.KLog;
+import com.tyky.map.bean.MyPoiResult;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.event.IntentEvent;
 import com.tyky.webviewBase.event.JsCallBackEvent;
@@ -24,9 +26,11 @@ import com.yanzhenjie.permission.runtime.Permission;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 @WebViewInterface("map")
 public class MapJsInterface {
@@ -81,6 +85,7 @@ public class MapJsInterface {
         return gson.toJson(ResultModel.success(""));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @JavascriptInterface
     public void poiSearch(String paramStr) {
         ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
@@ -94,7 +99,20 @@ public class MapJsInterface {
         poiSearch.setOnGetPoiSearchResultListener(new OnGetPoiSearchResultListener() {
             @Override
             public void onGetPoiResult(PoiResult poiResult) {
-                EventBus.getDefault().post(new JsCallBackEvent(methodName,poiResult));
+                List<MyPoiResult> myPoiResults = new ArrayList<>();
+                poiResult.getAllPoi().forEach(item->{
+                    MyPoiResult myPoiResult = new MyPoiResult();
+                    myPoiResult.setAddress(item.address);
+                    myPoiResult.setArea(item.area);
+                    myPoiResult.setCity(item.city);
+                    myPoiResult.setProvince(item.province);
+                    myPoiResult.setLatitude(item.getLocation().latitude);
+                    myPoiResult.setLongitude(item.getLocation().longitude);
+                    myPoiResult.setName(item.name);
+                    myPoiResult.setPhoneNum(item.phoneNum);
+                    myPoiResults.add(myPoiResult);
+                });
+                EventBus.getDefault().post(new JsCallBackEvent(methodName,myPoiResults));
             }
 
             @Override
