@@ -78,13 +78,13 @@ public class TimJsInterface {
         V2TIMManagerImpl.getConversationManager().getTotalUnreadMessageCount(new V2TIMValueCallback<Long>() {
             @Override
             public void onSuccess(Long aLong) {
-                EventBus.getDefault().post(new JsCallBackEvent(methodName,ResultModel.success(aLong)));
+                EventBus.getDefault().post(new JsCallBackEvent(methodName,aLong));
             }
 
             @Override
             public void onError(int i, String s) {
                 String text = "会话未读数目错误:" + i + " " + s;
-                EventBus.getDefault().post(new JsCallBackEvent(methodName,ResultModel.errorParam(text)));
+                EventBus.getDefault().post(new JsCallBackEvent(methodName,text));
             }
         });
         return gson.toJson(ResultModel.success(""));

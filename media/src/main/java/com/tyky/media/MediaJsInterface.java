@@ -186,7 +186,7 @@ public class MediaJsInterface {
         if (callbackMethod == null) {
             return gson.toJson(ResultModel.errorParam());
         }
-        EventBus.getDefault().post(new JsCallBackEvent(callbackMethod, ResultModel.success("测试。。")));
+        EventBus.getDefault().post(new JsCallBackEvent(callbackMethod, "测试。。"));
         return gson.toJson(ResultModel.success(""));
     }
 

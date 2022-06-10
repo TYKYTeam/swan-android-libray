@@ -25,7 +25,6 @@ import com.socks.library.KLog;
 import com.tyky.media.R;
 import com.tyky.webviewBase.constants.MediaModuleConstants;
 import com.tyky.webviewBase.event.JsCallBackEvent;
-import com.tyky.webviewBase.model.ResultModel;
 import com.tyky.webviewBase.view.GlideEngine;
 
 import org.greenrobot.eventbus.EventBus;
@@ -123,7 +122,7 @@ public class QrScanActivity extends CaptureActivity {
             } else {
                 //结束当前Activity，EventBus通知页面回调js，将数据传回给前端H5
                 finish();
-                EventBus.getDefault().post(new JsCallBackEvent(methodName, ResultModel.success(text)));
+                EventBus.getDefault().post(new JsCallBackEvent(methodName, text));
             }
         }
     }
