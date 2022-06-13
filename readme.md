@@ -994,6 +994,62 @@ if (window.map) {
     console.log(result)
 }
 ```
+### 3.地图检索
+
+poiSearch
+
+打开地图页面，并展示当前的位置
+
+**传参：**
+```
+{
+    "keyword": "小吃",
+    "city": "深圳市",
+    "tags": "火锅",
+    "callBackMethod": "getLocation"
+}
+```
+
+**返回结果：**
+```
+//成功
+{
+ "code": 200,
+ "desc": "",
+ "result": [
+      {
+           "address": "广东深圳市罗湖区人民路二横街12号负1层",
+           "area": "罗湖区",
+           "city": "深圳市",
+           "name": "东门小吃街",
+           "latitude": 22.552882,
+           "longitude": 114.127109,
+           "phoneNum": "(0755)82221797",
+           "province": "广东省"
+      }
+ ]
+}
+```
+
+
+**H5调用示例：**
+```
+window.getLocation = function(object) {
+    console.log(object);
+    alert(JSON.stringify(object))
+}
+        
+let content = {
+    "keyword": "小吃",
+    "city": "深圳市",
+    "tags": "火锅",
+    "callBackMethod": "getLocation",
+}
+if (window.map) {
+    window.map.poiSearch(JSON.stringify(content))
+} 
+```
+
 
 ### 待完成功能
 
