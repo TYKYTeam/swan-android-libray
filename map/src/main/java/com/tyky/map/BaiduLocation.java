@@ -41,9 +41,9 @@ public class BaiduLocation implements Serializable {
     public class Location {
         private String province;
         private String city;
-        private String district;
+        private String area;
         private String street;
-        private String addrStr;
+        private String address;
 
         public Location() {
         }
@@ -64,12 +64,12 @@ public class BaiduLocation implements Serializable {
             this.city = city;
         }
 
-        public String getDistrict() {
-            return district;
+        public String getArea() {
+            return area;
         }
 
-        public void setDistrict(String district) {
-            this.district = district;
+        public void setArea(String area) {
+            this.area = area;
         }
 
         public String getStreet() {
@@ -80,12 +80,12 @@ public class BaiduLocation implements Serializable {
             this.street = street;
         }
 
-        public String getAddrStr() {
-            return addrStr;
+        public String getAddress() {
+            return address;
         }
 
-        public void setAddrStr(String addrStr) {
-            this.addrStr = addrStr;
+        public void setAddress(String address) {
+            this.address = address;
         }
     }
 }

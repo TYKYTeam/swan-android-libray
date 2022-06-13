@@ -37,9 +37,9 @@ public class BaiduMapUtils {
                 location1 = new BaiduLocation().new Location();
                 location1.setProvince(location.getProvince()); //获取省份
                 location1.setCity(location.getCity());  //获取城市
-                location1.setDistrict(location.getDistrict());//获取区县
+                location1.setArea(location.getDistrict());//获取区县
                 location1.setStreet(location.getStreet());//获取街道信息
-                location1.setAddrStr(location.getAddrStr());//获取详细地址信息
+                location1.setAddress(location.getAddrStr());//获取详细地址信息
 
                 //触发js回调事件
                 EventBus.getDefault().post(new JsCallBackEvent(methodName, location1));
