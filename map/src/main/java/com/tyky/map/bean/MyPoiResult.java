@@ -35,6 +35,19 @@ public class MyPoiResult {
      */
     private String province;
 
+    /**
+     * 街道
+     */
+    private String street = "";
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
     public String getAddress() {
         return address;
     }

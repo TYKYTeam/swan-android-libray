@@ -15,6 +15,7 @@ import com.baidu.mapapi.model.LatLng;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ThreadUtils;
 import com.socks.library.KLog;
+import com.tyky.map.bean.MyPoiResult;
 import com.tyky.webviewBase.event.JsCallBackEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -33,18 +34,18 @@ public class BaiduMapUtils {
         return startBdLocation(new BDAbstractLocationListener() {
             @Override
             public void onReceiveLocation(BDLocation location) {
-                BaiduLocation.Location location1;
-                location1 = new BaiduLocation().new Location();
-                location1.setProvince(location.getProvince()); //获取省份
-                location1.setCity(location.getCity());  //获取城市
-                location1.setArea(location.getDistrict());//获取区县
-                location1.setStreet(location.getStreet());//获取街道信息
-                location1.setAddress(location.getAddrStr());//获取详细地址信息
+                MyPoiResult myPoiResult = new MyPoiResult();
+                myPoiResult.setProvince(location.getProvince());//获取省份
+                myPoiResult.setCity(location.getCity()); //获取城市
+                myPoiResult.setArea(location.getDistrict());//获取区县
+                myPoiResult.setStreet(location.getStreet());//获取街道信息
+                myPoiResult.setAddress(location.getAddrStr());//获取详细地址信息
+                myPoiResult.setLatitude(location.getLatitude());//获取维度
+                myPoiResult.setLongitude(location.getLongitude());//获取经度
 
                 //触发js回调事件
-                EventBus.getDefault().post(new JsCallBackEvent(methodName, location1));
+                EventBus.getDefault().post(new JsCallBackEvent(methodName, myPoiResult));
                 mLocationClient.stop();
-
             }
         });
     }
