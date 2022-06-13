@@ -100,7 +100,7 @@ public class MapJsInterface {
             @Override
             public void onGetPoiResult(PoiResult poiResult) {
                 List<MyPoiResult> myPoiResults = new ArrayList<>();
-                poiResult.getAllPoi().forEach(item->{
+                poiResult.getAllPoi().forEach(item -> {
                     MyPoiResult myPoiResult = new MyPoiResult();
                     myPoiResult.setAddress(item.address);
                     myPoiResult.setArea(item.area);
@@ -109,10 +109,10 @@ public class MapJsInterface {
                     myPoiResult.setLatitude(item.getLocation().latitude);
                     myPoiResult.setLongitude(item.getLocation().longitude);
                     myPoiResult.setName(item.name);
-                    myPoiResult.setPhoneNum(item.phoneNum);
+                    myPoiResult.setPhoneNum(item.phoneNum == null ? "" : item.phoneNum);
                     myPoiResults.add(myPoiResult);
                 });
-                EventBus.getDefault().post(new JsCallBackEvent(methodName,myPoiResults));
+                EventBus.getDefault().post(new JsCallBackEvent(methodName, myPoiResults));
             }
 
             @Override
