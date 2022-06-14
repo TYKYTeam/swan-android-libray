@@ -5,9 +5,13 @@ import android.view.View;
 
 import com.baidu.location.LocationClient;
 import com.baidu.mapapi.map.MapView;
-import com.blankj.utilcode.util.AppUtils;
+import com.baidu.mapapi.search.route.PlanNode;
+import com.baidu.mapapi.search.route.RoutePlanSearch;
+import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.blankj.utilcode.util.ThreadUtils;
-import com.socks.library.KLog;
+import com.blankj.utilcode.util.ToastUtils;
+import com.tyky.map.bean.MapParamModel;
+import com.tyky.map.listener.MyRoutePlanResultListener;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
@@ -18,24 +22,32 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MapActivity extends AppCompatActivity {
     private MapView mMapView = null;
+    /**
+     * 类型：0：显示当前位置 1：步行规划 2：骑行规划 3：驾车规划
+     */
+    private int type;
+    private MapParamModel data;
+    private RoutePlanSearch routePlanSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        KLog.d(AppUtils.getAppPackageName());
+        type = getIntent().getIntExtra("type", 0);
+        data = (MapParamModel) getIntent().getSerializableExtra("data");
+
         //获取地图控件引用
-        mMapView = (MapView) findViewById(R.id.mapView);
+        mMapView = findViewById(R.id.mapView);
 
         String[] permission = {Permission.ACCESS_COARSE_LOCATION, Permission.ACCESS_FINE_LOCATION};
         if (AndPermission.hasPermissions(this, permission)) {
-            startLocationInit();
+            doAction();
         } else {
             AndPermission.with(this).runtime().permission(Permission.ACCESS_COARSE_LOCATION, Permission.ACCESS_FINE_LOCATION).onGranted(new Action<List<String>>() {
                 @Override
                 public void onAction(List<String> data) {
-                    startLocationInit();
+                    doAction();
                 }
             }).start();
         }
@@ -43,6 +55,7 @@ public class MapActivity extends AppCompatActivity {
         findViewById(R.id.ivLocation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (mLocationClient == null) {
                     mLocationClient = BaiduMapUtils.startBdLocation(mMapView);
                 }
@@ -50,20 +63,51 @@ public class MapActivity extends AppCompatActivity {
         });
     }
 
+    private void doAction() {
+        //根据type执行不同操作
+        switch (type) {
+            case 1:
+            case 2:
+                routeSearch();
+                break;
+            default:
+                startLocationInit();
+                break;
+        }
+    }
+
+    /**
+     * 规划
+     */
+    private void routeSearch() {
+        routePlanSearch = RoutePlanSearch.newInstance();
+        routePlanSearch.setOnGetRoutePlanResultListener(new MyRoutePlanResultListener(type,mMapView.getMap()));
+        //根据地点名来构建起点和终点
+        PlanNode stNode = PlanNode.withCityNameAndPlaceName(data.getStartCityName(), data.getStartName());
+        PlanNode enNode = PlanNode.withCityNameAndPlaceName(data.getEndCityName(), data.getEndName());
+        //构建起始点规划参数
+        WalkingRoutePlanOption options = new WalkingRoutePlanOption().from(stNode).to(enNode);
+        routePlanSearch.walkingSearch(options);
+    }
+
+
     LocationClient mLocationClient;
 
     private void startLocationInit() {
+        ToastUtils.showShort("定位中，请稍候");
         ThreadUtils.getIoPool().submit(() -> {
                     try {
                         Thread.sleep(2000);
+                        if (mLocationClient == null) {
+                            mLocationClient = BaiduMapUtils.startBdLocation(mMapView);
+                        }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    if (mLocationClient == null) {
-                        mLocationClient = BaiduMapUtils.startBdLocation(mMapView);
-                    }
                 }
         );
+
+
     }
 
     /*LocationClient mLocationClient;
@@ -139,6 +183,10 @@ public class MapActivity extends AppCompatActivity {
         mMapView.getMap().setMyLocationEnabled(false);
         mMapView.onDestroy();
         mMapView = null;
+
+        if (routePlanSearch != null) {
+            routePlanSearch.destroy();
+        }
         super.onDestroy();
     }
 }
