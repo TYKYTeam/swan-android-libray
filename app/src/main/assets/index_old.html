@@ -159,6 +159,7 @@
                     <button type="default" onclick="startLocation()">获取定位</button>
                     <button type="default" onclick="showLocationInMap()">地图展示当前位置</button>
                     <button type="default" onclick="poiSearch()">poi检索</button>
+                    <button type="default" onclick="walkingRouteSearch()">步行规划</button>
 
                 </div>
             </fieldset>
@@ -273,7 +274,7 @@
             }
             if (window.map) {
                 window.map.poiSearch(JSON.stringify(content))
-            } 
+            }
         }
 
 
@@ -288,6 +289,20 @@
                     "callBackMethod": "getLocation"
                 }
                 let result = window.map.getLocation(JSON.stringify(content))
+                alert(result)
+                console.log(result)
+            }
+        }
+
+        function walkingRouteSearch() {
+            if (window.map) {
+                let content = {
+                    "startName": "腾讯大厦",
+                    "startCityName": "深圳",
+                    "endName": "新一代产业园",
+                    "endCityName": "深圳",
+                }
+                let result = window.map.walkingRouteSearch(JSON.stringify(content))
                 alert(result)
                 console.log(result)
             }
