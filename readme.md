@@ -1049,7 +1049,14 @@ if (window.map) {
     window.map.poiSearch(JSON.stringify(content))
 } 
 ```
+### 4.步行规划
+walkingRouteSearch
 
+### 5.骑行规划
+ridingRouteSearch
+
+### 6.驾车规划
+drivingRouteSearch
 
 ### 待完成功能
 
