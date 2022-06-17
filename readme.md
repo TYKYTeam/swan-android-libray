@@ -1052,12 +1052,117 @@ if (window.map) {
 ### 4.步行规划
 walkingRouteSearch
 
+**传参：**
+```
+{
+    "startName": "腾讯大厦",
+    "startCityName": "深圳",
+    "endName": "新一代产业园",
+    "endCityName": "深圳",
+}
+```
+- `startName` 起点名称
+- `endName` 终点名称
+- `startCityName` 起点所在城市名
+- `endCityName` 终点所在城市名
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+
+**H5调用示例：**
+```
+if (window.map) {
+    let content = {
+        "startName": "腾讯大厦",
+        "startCityName": "深圳",
+        "endName": "新一代产业园",
+        "endCityName": "深圳",
+    }
+    let result = window.map.walkingRouteSearch(JSON.stringify(content))
+    alert(result)
+    console.log(result)
+}
+```
 ### 5.骑行规划
 ridingRouteSearch
 
+**传参：**
+```
+{
+    "startName": "腾讯大厦",
+    "startCityName": "深圳",
+    "endName": "新一代产业园",
+    "endCityName": "深圳",
+}
+```
+- `startName` 起点名称
+- `endName` 终点名称
+- `startCityName` 起点所在城市名
+- `endCityName` 终点所在城市名
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+
+**H5调用示例：**
+```
+if (window.map) {
+    let content = {
+        "startName": "腾讯大厦",
+        "startCityName": "深圳",
+        "endName": "新一代产业园",
+        "endCityName": "深圳",
+    }
+    let result = window.map.ridingRouteSearch(JSON.stringify(content))
+    alert(result)
+    console.log(result)
+}
+```
 ### 6.驾车规划
 drivingRouteSearch
 
+**传参：**
+```
+{
+    "startName": "腾讯大厦",
+    "startCityName": "深圳",
+    "endName": "新一代产业园",
+    "endCityName": "深圳",
+}
+```
+- `startName` 起点名称
+- `endName` 终点名称
+- `startCityName` 起点所在城市名
+- `endCityName` 终点所在城市名
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+
+**H5调用示例：**
+```
+if (window.map) {
+    let content = {
+        "startName": "腾讯大厦",
+        "startCityName": "深圳",
+        "endName": "新一代产业园",
+        "endCityName": "深圳",
+    }
+    let result = window.map.drivingRouteSearch(JSON.stringify(content))
+    alert(result)
+    console.log(result)
+}
+```
 ### 待完成功能
 
 4. 路径导航
