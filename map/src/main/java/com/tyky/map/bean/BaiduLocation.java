@@ -1,4 +1,4 @@
-package com.tyky.map;
+package com.tyky.map.bean;
 
 import java.io.Serializable;
 

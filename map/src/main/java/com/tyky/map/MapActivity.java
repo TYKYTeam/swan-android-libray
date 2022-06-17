@@ -5,6 +5,8 @@ import android.view.View;
 
 import com.baidu.location.LocationClient;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.search.route.BikingRoutePlanOption;
+import com.baidu.mapapi.search.route.DrivingRoutePlanOption;
 import com.baidu.mapapi.search.route.PlanNode;
 import com.baidu.mapapi.search.route.RoutePlanSearch;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
@@ -68,6 +70,7 @@ public class MapActivity extends AppCompatActivity {
         switch (type) {
             case 1:
             case 2:
+            case 3:
                 routeSearch();
                 break;
             default:
@@ -85,9 +88,26 @@ public class MapActivity extends AppCompatActivity {
         //根据地点名来构建起点和终点
         PlanNode stNode = PlanNode.withCityNameAndPlaceName(data.getStartCityName(), data.getStartName());
         PlanNode enNode = PlanNode.withCityNameAndPlaceName(data.getEndCityName(), data.getEndName());
-        //构建起始点规划参数
-        WalkingRoutePlanOption options = new WalkingRoutePlanOption().from(stNode).to(enNode);
-        routePlanSearch.walkingSearch(options);
+        //1:步行 2：骑行 3：驾车
+        switch (type) {
+            case 1:
+                //构建起始点规划参数
+                WalkingRoutePlanOption walkingRoutePlanOption = new WalkingRoutePlanOption().from(stNode).to(enNode);
+                routePlanSearch.walkingSearch(walkingRoutePlanOption);
+                break;
+            case 2:
+                //构建起始点规划参数
+                BikingRoutePlanOption bikingRoutePlanOption = new BikingRoutePlanOption().from(stNode).to(enNode);
+                routePlanSearch.bikingSearch(bikingRoutePlanOption);
+                break;
+            case 3:
+                //构建起始点规划参数
+                DrivingRoutePlanOption drivingRoutePlanOption = new DrivingRoutePlanOption().from(stNode).to(enNode);
+                routePlanSearch.drivingSearch(drivingRoutePlanOption);
+                break;
+            default:break;
+        }
+
     }
 
 

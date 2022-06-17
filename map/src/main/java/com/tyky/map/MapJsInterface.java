@@ -11,7 +11,6 @@ import com.baidu.mapapi.search.poi.PoiDetailSearchResult;
 import com.baidu.mapapi.search.poi.PoiIndoorResult;
 import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
-import com.baidu.mapapi.search.route.RoutePlanSearch;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.PermissionUtils;
@@ -29,8 +28,6 @@ import com.yanzhenjie.permission.runtime.Permission;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -154,11 +151,7 @@ public class MapJsInterface {
     @JavascriptInterface
     public String walkingRouteSearch(String paramStr) {
         MapParamModel paramModel = gson.fromJson(paramStr, MapParamModel.class);
-        Bundle bundle = new Bundle();
-        bundle.putInt("type", 1);
-        bundle.putSerializable("data", paramModel);
-        ActivityUtils.startActivity(bundle,MapActivity.class);
-        return gson.toJson(ResultModel.success(""));
+        return routeSearch(1, paramModel);
     }
 
     /**
@@ -167,12 +160,9 @@ public class MapJsInterface {
      * @param paramStr
      */
     @JavascriptInterface
-    public void ridingRouteSearch(String paramStr) {
+    public String ridingRouteSearch(String paramStr) {
         MapParamModel paramModel = gson.fromJson(paramStr, MapParamModel.class);
-
-
-        RoutePlanSearch routePlanSearch = RoutePlanSearch.newInstance();
-
+        return routeSearch(2, paramModel);
     }
 
     /**
@@ -181,12 +171,9 @@ public class MapJsInterface {
      * @param paramStr
      */
     @JavascriptInterface
-    public void drivingRouteSearch(String paramStr) {
+    public String drivingRouteSearch(String paramStr) {
         MapParamModel paramModel = gson.fromJson(paramStr, MapParamModel.class);
-
-
-        RoutePlanSearch routePlanSearch = RoutePlanSearch.newInstance();
-
+        return routeSearch(3, paramModel);
     }
 
 
@@ -196,25 +183,25 @@ public class MapJsInterface {
      * @return 是否通过验证
      */
     private boolean checkRouteSearchParam(MapParamModel paramModel) {
-        String[] strings = {"startName", "startCityName", "endName", "endCityName", "callBackMethod"};
-        Method[] declaredMethods = paramModel.getClass().getDeclaredMethods();
-        boolean flag = true;
-        for (Method declaredMethod : declaredMethods) {
-            for (String string : strings) {
-                if (declaredMethod.getName().equals(string)) {
-                    try {
-                        String result = (String) declaredMethod.invoke(paramModel, (Object) null);
-                        if (result == null || result.length() == 0) {
-                            flag = false;
-                            break;
-                        }
-                    } catch (IllegalAccessException | InvocationTargetException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+        String startName = paramModel.getStartName();
+        String startCityName = paramModel.getStartCityName();
+        String endCityName = paramModel.getEndCityName();
+        String endName = paramModel.getEndName();
+        return !StringUtils.isEmpty(startName) && !StringUtils.isEmpty(endCityName) && !StringUtils.isEmpty(startCityName) && !StringUtils.isEmpty(endName);
+    }
+
+    private String routeSearch(int type,MapParamModel paramModel) {
+        //验证下参数是否通过
+        if (checkRouteSearchParam(paramModel)) {
+            //传数据到MapActivity，MapActivity画出路径
+            Bundle bundle = new Bundle();
+            bundle.putInt("type", type);
+            bundle.putSerializable("data", paramModel);
+            ActivityUtils.startActivity(bundle, MapActivity.class);
+            return gson.toJson(ResultModel.success(""));
+        } else {
+            return gson.toJson(ResultModel.errorParam());
         }
-        return flag;
     }
 
 }
