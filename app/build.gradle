@@ -58,7 +58,7 @@ dependencies {
     implementation project(path: ':listener')
     implementation project(path: ':hardware')
     implementation project(path: ':debugger')
-    implementation project(path: ':map')
+    implementation project(path: ':map') //5M大小
     implementation project(path: ':page')
     implementation project(path: ':tim')
     testImplementation 'junit:junit:4.+'

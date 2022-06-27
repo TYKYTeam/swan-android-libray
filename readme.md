@@ -11,6 +11,9 @@
 Android原生组件库，为Html提供Android原生能力，增强H5
 
 
+map：5M左右
+tim: 14M左右
+
 ## Module目录及引用说明
 
 依赖引入（需要添加jitpack仓库源）：
