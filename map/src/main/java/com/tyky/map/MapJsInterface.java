@@ -130,6 +130,15 @@ public class MapJsInterface {
         poiSearch.destroy();
     }
 
+    void geo() {
+        //todo 地理编码（地址转坐标）和逆地理编码（坐标转地址）
+        //https://lbsyun.baidu.com/index.php?title=androidsdk/guide/search/geo
+    }
+
+    void isInCircle() {
+        //todo 判断是否在该范围内
+        //https://lbsyun.baidu.com/index.php?title=androidsdk/guide/tool/location
+    }
 
 
 }
