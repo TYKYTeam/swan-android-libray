@@ -6,15 +6,8 @@ import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.MapStatusUpdate;
-import com.baidu.mapapi.map.MapStatusUpdateFactory;
-import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.MyLocationData;
-import com.baidu.mapapi.model.LatLng;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ThreadUtils;
-import com.socks.library.KLog;
 import com.tyky.map.bean.MyPoiResult;
 import com.tyky.webviewBase.event.JsCallBackEvent;
 
@@ -46,51 +39,6 @@ public class BaiduMapUtils {
                 //触发js回调事件
                 EventBus.getDefault().post(new JsCallBackEvent(methodName, myPoiResult));
                 mLocationClient.stop();
-            }
-        });
-    }
-
-    /**
-     * 地图显示当前位置
-     * @param mMapView 地图组件View
-     * @return
-     */
-    public static LocationClient startBdLocation(MapView mMapView) {
-        //设置定位图层
-        BaiduMap map = mMapView.getMap();
-        map.setMyLocationEnabled(true);
-
-        return startBdLocation(new BDAbstractLocationListener() {
-            @Override
-            public void onReceiveLocation(BDLocation location) {
-
-                //mapView 销毁后不在处理新接收的位置
-                if (location == null || mMapView == null) {
-                    return;
-                }
-                KLog.e(location.toString());
-                MyLocationData locData = new MyLocationData.Builder()
-                        .accuracy(location.getRadius())
-                        // 此处设置开发者获取到的方向信息，顺时针0-360
-                        .direction(location.getDirection())
-                        .latitude(location.getLatitude())
-                        .longitude(location.getLongitude()).build();
-                ThreadUtils.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        BaiduMap map = mMapView.getMap();
-                        map.setMyLocationData(locData);
-                        //设置中心点位置，不然没法显示当前位置的地图
-                        //默认18缩放等级
-                        float zoomLevel = 18f;
-                        if (map.getMapStatus().zoom > 12f) {
-                            zoomLevel = map.getMapStatus().zoom;
-                        }
-                        KLog.e("缩放等级："+zoomLevel);
-                        MapStatusUpdate mapStatus = MapStatusUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), zoomLevel);
-                        map.setMapStatus(mapStatus);
-                    }
-                });
             }
         });
     }

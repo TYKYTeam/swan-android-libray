@@ -40,11 +40,13 @@ dependencies {
 
     //  百度地图定位SDK https://lbsyun.baidu.com/index.php?title=android-locsdk/guide/create-project/android-studio
     implementation 'com.baidu.lbsyun:BaiduMapSDK_Location:9.1.8'
+    //下面的只能选其一！！
     //地图组件
 //    implementation 'com.baidu.lbsyun:BaiduMapSDK_Map:7.4.0'
     //步骑行组件（含地图）
-    implementation 'com.baidu.lbsyun:BaiduMapSDK_Map-BWNavi:7.4.0'
+//    implementation 'com.baidu.lbsyun:BaiduMapSDK_Map-BWNavi:7.4.0'
 
+//    implementation 'com.baidu.lbsyun:BaiduMapSDK_Map-AllNavi:7.4.0'
     //检索组件 大小4M左右
     implementation 'com.baidu.lbsyun:BaiduMapSDK_Search:7.4.0'
     implementation 'com.baidu.lbsyun:BaiduMapSDK_Util:7.4.0'

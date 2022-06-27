@@ -18,7 +18,7 @@
 
     <!-- 这个权限用于进行网络定位 -->
     <application>
-        <activity android:name=".MapActivity" />
+
         <!-- 百度地图的AK -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
