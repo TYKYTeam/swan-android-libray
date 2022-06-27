@@ -75,7 +75,10 @@ public class MapJsInterface {
     }
 
 
-
+    /**
+     * 地点检索
+     * @param paramStr
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     @JavascriptInterface
     public void poiSearch(String paramStr) {
