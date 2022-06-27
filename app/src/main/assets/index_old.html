@@ -157,15 +157,19 @@
                 <legend>map 地图</legend>
                 <div class="contentDiv">
                     <button type="default" onclick="startLocation()">获取定位</button>
-                    <button type="default" onclick="showLocationInMap()">地图展示当前位置</button>
                     <button type="default" onclick="poiSearch()">poi检索</button>
+                    
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>mapNav 地图导航</legend>
+                <div class="contentDiv">
+                    <button type="default" onclick="showLocationInMap()">地图展示当前位置</button>
                     <button type="default" onclick="walkingRouteSearch()">步行规划</button>
                     <button type="default" onclick="ridingRouteSearch()">骑行规划</button>
                     <button type="default" onclick="drivingRouteSearch()">驾车规划</button>
-
                 </div>
             </fieldset>
-
             <fieldset>
                 <legend>page 页面</legend>
                 <div class="contentDiv">
@@ -252,20 +256,13 @@
         }
 
         function showLocationInMap() {
-            if (window.map) {
-                let result = window.map.showLocationInMap()
+            if (window.mapNav) {
+                let result = window.mapNav.showLocationInMap()
                 alert(result)
                 console.log(result)
             }
         }
 
-        function showLocationInMap() {
-            if (window.map) {
-                let result = window.map.showLocationInMap()
-                alert(result)
-                console.log(result)
-            }
-        }
 
         function poiSearch() {
             let content = {
@@ -297,75 +294,47 @@
         }
 
         function walkingRouteSearch() {
-            if (window.map) {
+            if (window.mapNav) {
                 let content = {
                     "startName": "腾讯大厦",
                     "startCityName": "深圳",
                     "endName": "新一代产业园",
                     "endCityName": "深圳",
                 }
-                let result = window.map.walkingRouteSearch(JSON.stringify(content))
+                let result = window.mapNav.walkingRouteSearch(JSON.stringify(content))
                 alert(result)
                 console.log(result)
             }
         } 
         
         function ridingRouteSearch() {
-            if (window.map) {
+            if (window.mapNav) {
                 let content = {
                     "startName": "腾讯大厦",
                     "startCityName": "深圳",
                     "endName": "新一代产业园",
                     "endCityName": "深圳",
                 }
-                let result = window.map.ridingRouteSearch(JSON.stringify(content))
+                let result = window.mapNav.ridingRouteSearch(JSON.stringify(content))
                 alert(result)
                 console.log(result)
             }
         }
         
         function drivingRouteSearch() {
-            if (window.map) {
+            if (window.mapNav) {
                 let content = {
                     "startName": "腾讯大厦",
                     "startCityName": "深圳",
                     "endName": "新一代产业园",
                     "endCityName": "深圳",
                 }
-                let result = window.map.drivingRouteSearch(JSON.stringify(content))
+                let result = window.mapNav.drivingRouteSearch(JSON.stringify(content))
                 alert(result)
                 console.log(result)
             }
         } 
         
-        function walkingRouteSearch() {
-            if (window.map) {
-                let content = {
-                    "startName": "腾讯大厦",
-                    "startCityName": "深圳",
-                    "endName": "新一代产业园",
-                    "endCityName": "深圳",
-                }
-                let result = window.map.walkingRouteSearch(JSON.stringify(content))
-                alert(result)
-                console.log(result)
-            }
-        }
-        
-        function walkingRouteSearch() {
-            if (window.map) {
-                let content = {
-                    "startName": "腾讯大厦",
-                    "startCityName": "深圳",
-                    "endName": "新一代产业园",
-                    "endCityName": "深圳",
-                }
-                let result = window.map.walkingRouteSearch(JSON.stringify(content))
-                alert(result)
-                console.log(result)
-            }
-        }
-
         function setBrightness() {
             if (window.hardware) {
                 let content = {
