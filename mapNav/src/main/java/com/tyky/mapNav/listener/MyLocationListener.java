@@ -1,4 +1,4 @@
-package com.tyky.mapNav;
+package com.tyky.mapNav.listener;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;

@@ -1,4 +1,4 @@
-package com.tyky.mapNav;
+package com.tyky.mapNav.activity;
 
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +12,8 @@ import com.baidu.mapapi.search.route.RoutePlanSearch;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.blankj.utilcode.util.ThreadUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.tyky.mapNav.BaiduMapUtils;
+import com.tyky.mapNav.R;
 import com.tyky.mapNav.bean.MapParamModel;
 import com.tyky.mapNav.listener.MyRoutePlanResultListener;
 import com.yanzhenjie.permission.Action;
@@ -57,10 +59,9 @@ public class MapActivity extends AppCompatActivity {
         findViewById(R.id.ivLocation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (mLocationClient == null) {
-                    mLocationClient = BaiduMapUtils.startBdLocation(mMapView);
-                }
+                mLocationClient.stop();
+                mLocationClient = null;
+                mLocationClient = BaiduMapUtils.restartBdLocation(mMapView);
             }
         });
     }

@@ -50,6 +50,16 @@ public class BaiduMapUtils {
         });
     }
 
+    static boolean isSetMyLocation  = false;
+
+    /**
+     * 重新定位
+     */
+    public static  LocationClient restartBdLocation(MapView mMapView) {
+        isSetMyLocation = false;
+        mMapView.getOverlay().clear();
+        return startBdLocation(mMapView);
+    }
     /**
      * 地图显示当前位置
      * @param mMapView 地图组件View
@@ -78,8 +88,12 @@ public class BaiduMapUtils {
                 ThreadUtils.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        if (isSetMyLocation) {
+                            return;
+                        }
                         BaiduMap map = mMapView.getMap();
                         map.setMyLocationData(locData);
+
                         //设置中心点位置，不然没法显示当前位置的地图
                         //默认18缩放等级
                         float zoomLevel = 18f;
@@ -89,6 +103,7 @@ public class BaiduMapUtils {
                         KLog.e("缩放等级："+zoomLevel);
                         MapStatusUpdate mapStatus = MapStatusUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), zoomLevel);
                         map.setMapStatus(mapStatus);
+                        isSetMyLocation = true;
                     }
                 });
             }
