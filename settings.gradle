@@ -1,5 +1,6 @@
 include ':page'
 include ':map'
+include ':mapNav'
 include ':hardware'
 include ':debugger'
 include ':listener'

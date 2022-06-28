@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2016 Baidu, Inc. All Rights Reserved.
+  -->
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.baidu.bikenavi_demo.MainActivity">
+
+    <com.baidu.mapapi.map.MapView
+            android:id="@+id/bmapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"/>
+
+    <Button android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_start_bike_navi"
+            android:text="开始骑行导航"
+            android:textSize="18sp"/>
+
+    <RelativeLayout
+            android:tag="Bike_Navi_Demo_Page_Container_Layout"
+            android:id="@+id/page_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+</RelativeLayout>

@@ -7,6 +7,8 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.google.gson.Gson;
+import com.tyky.mapNav.activity.BNaviMainActivity;
+import com.tyky.mapNav.activity.MapActivity;
 import com.tyky.mapNav.bean.MapParamModel;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.model.ResultModel;
@@ -67,6 +69,18 @@ public class MapNavJsInterface {
 
 
     /**
+     * 步行导航
+     * @param paramStr
+     * @return
+     */
+    @JavascriptInterface
+    public String walkGuide(String paramStr) {
+        MapParamModel paramModel = gson.fromJson(paramStr, MapParamModel.class);
+        ActivityUtils.startActivity(BNaviMainActivity.class);
+        return gson.toJson(ResultModel.success(""));
+    }
+
+    /**
      * 验证规划的参数
      *
      * @return 是否通过验证
@@ -92,5 +106,6 @@ public class MapNavJsInterface {
             return gson.toJson(ResultModel.errorParam());
         }
     }
+
 
 }
