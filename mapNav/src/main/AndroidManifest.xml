@@ -3,13 +3,15 @@
     package="com.tyky.mapNav">
 
     <application>
-        <activity android:name=".activity.MapActivity" /> <!-- 百度地图的AK -->
+        <activity android:name=".activity.MapActivity" />
         <activity android:name=".activity.BNaviMainActivity" />
         <activity android:name=".activity.WNaviGuideActivity" />
         <activity android:name=".activity.BNaviGuideActivity" />
+        <!-- 百度地图的AK -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="7v4dljw5jf18ow6Ppnx2UWV7A4Vyq42M" /> <!-- 定位服务 -->
+            android:value="7v4dljw5jf18ow6Ppnx2UWV7A4Vyq42M" />
+        <!-- 定位服务 -->
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
@@ -29,7 +31,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <!-- 获取访问手机振动器权限，用于导航过程中的震动提示 -->
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
 
 </manifest>
