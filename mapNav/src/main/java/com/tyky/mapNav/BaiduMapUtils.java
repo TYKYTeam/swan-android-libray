@@ -27,6 +27,7 @@ public class BaiduMapUtils {
 
     /**
      * 定位使用的
+     *
      * @param methodName js回调方法名
      * @return
      */
@@ -50,18 +51,20 @@ public class BaiduMapUtils {
         });
     }
 
-    static boolean isSetMyLocation  = false;
+    static boolean isSetMyLocation = false;
 
     /**
      * 重新定位
      */
-    public static  LocationClient restartBdLocation(MapView mMapView) {
+    public static LocationClient restartBdLocation(MapView mMapView) {
         isSetMyLocation = false;
         mMapView.getOverlay().clear();
         return startBdLocation(mMapView);
     }
+
     /**
      * 地图显示当前位置
+     *
      * @param mMapView 地图组件View
      * @return
      */
@@ -100,7 +103,7 @@ public class BaiduMapUtils {
                         if (map.getMapStatus().zoom > 12f) {
                             zoomLevel = map.getMapStatus().zoom;
                         }
-                        KLog.e("缩放等级："+zoomLevel);
+                        KLog.e("缩放等级：" + zoomLevel);
                         MapStatusUpdate mapStatus = MapStatusUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), zoomLevel);
                         map.setMapStatus(mapStatus);
                         isSetMyLocation = true;
@@ -110,6 +113,19 @@ public class BaiduMapUtils {
         });
     }
 
+    /**
+     * 地图显示当前位置
+     *
+     * @param mMapView                   地图组件View
+     * @param bdAbstractLocationListener 定位回调监听
+     * @return
+     */
+    public static LocationClient startBdLocation(MapView mMapView, BDAbstractLocationListener bdAbstractLocationListener) {
+        //设置定位图层
+        BaiduMap map = mMapView.getMap();
+        map.setMyLocationEnabled(true);
+        return startBdLocation(bdAbstractLocationListener);
+    }
 
     private static LocationClient startBdLocation(BDAbstractLocationListener listener) {
         Context applicationContext = ActivityUtils.getTopActivity().getApplicationContext();

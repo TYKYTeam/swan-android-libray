@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.baidu.location.BDAbstractLocationListener;
+import com.baidu.location.BDLocation;
 import com.baidu.mapapi.bikenavi.BikeNavigateHelper;
 import com.baidu.mapapi.bikenavi.adapter.IBEngineInitListener;
 import com.baidu.mapapi.bikenavi.adapter.IBRoutePlanListener;
@@ -31,6 +33,8 @@ import com.baidu.mapapi.walknavi.adapter.IWRoutePlanListener;
 import com.baidu.mapapi.walknavi.model.WalkRoutePlanError;
 import com.baidu.mapapi.walknavi.params.WalkNaviLaunchParam;
 import com.baidu.mapapi.walknavi.params.WalkRouteNodeInfo;
+import com.blankj.utilcode.util.ThreadUtils;
+import com.tyky.mapNav.BaiduMapUtils;
 import com.tyky.mapNav.R;
 
 import java.util.ArrayList;
@@ -59,40 +63,45 @@ public class BNaviMainActivity extends Activity {
     private BitmapDescriptor bdEnd = BitmapDescriptorFactory
             .fromResource(R.drawable.icon_end);
 
+    //类型 0：步行导航 1：骑行导航 2：AR步行导航
+    int type = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide_main);
         requestPermission();
         mMapView = (MapView) findViewById(R.id.mapview);
-        initMapStatus();
 
         /*骑行导航入口*/
-        Button bikeBtn = (Button) findViewById(R.id.btn_bikenavi);
-        bikeBtn.setOnClickListener(new View.OnClickListener() {
+        Button btnStartGuide = (Button) findViewById(R.id.btnStartGuide);
+        switch (type) {
+            case 0:
+                btnStartGuide.setText("开始步行导航");
+                break;
+            case 1:
+                btnStartGuide.setText("开始骑行导航");
+                break;
+            case 2:
+                btnStartGuide.setText("开始AR步行导航");
+                break;
+        }
+        btnStartGuide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startBikeNavi();
-            }
-        });
-
-        /*普通步行导航入口*/
-        Button walkBtn = (Button) findViewById(R.id.btn_walknavi_normal);
-        walkBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                walkParam.extraNaviMode(0);
-                startWalkNavi();
-            }
-        });
-
-        /*AR步行导航入口*/
-        Button arWalkBtn = (Button) findViewById(R.id.btn_walknavi_ar);
-        arWalkBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                walkParam.extraNaviMode(1);
-                startWalkNavi();
+                switch (type) {
+                    case 0:
+                        walkParam.extraNaviMode(0);
+                        startWalkNavi();
+                        break;
+                    case 1://骑行导航
+                        startBikeNavi();
+                        break;
+                    case 2://todo AR步行导航
+                        walkParam.extraNaviMode(1);
+                        startWalkNavi();
+                        break;
+                }
             }
         });
 
@@ -101,33 +110,44 @@ public class BNaviMainActivity extends Activity {
         //
         //startPt = stNode.getLocation();
         //endPt = enNode.getLocation();
-        startPt = new LatLng(22.579058,114.067389);
-        endPt = new LatLng(22.552085, 114.066566);
 
-        /*构造导航起终点参数对象*/
-        BikeRouteNodeInfo bikeStartNode = new BikeRouteNodeInfo();
-        bikeStartNode.setLocation(startPt);
-        BikeRouteNodeInfo bikeEndNode = new BikeRouteNodeInfo();
-        bikeEndNode.setLocation(endPt);
-        bikeParam = new BikeNaviLaunchParam().startNodeInfo(bikeStartNode).endNodeInfo(bikeEndNode);
+        BaiduMapUtils.startBdLocation(mMapView, new BDAbstractLocationListener() {
+            @Override
+            public void onReceiveLocation(BDLocation bdLocation) {
+                startPt = new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude());
 
-        WalkRouteNodeInfo walkStartNode = new WalkRouteNodeInfo();
-        walkStartNode.setLocation(startPt);
-        WalkRouteNodeInfo walkEndNode = new WalkRouteNodeInfo();
-        walkEndNode.setLocation(endPt);
-        walkParam = new WalkNaviLaunchParam().startNodeInfo(walkStartNode).endNodeInfo(walkEndNode);
+                endPt = new LatLng(22.552085, 114.066566);
 
-        /* 初始化起终点Marker */
-        initOverlay();
+                /*构造导航起终点参数对象*/
+                BikeRouteNodeInfo bikeStartNode = new BikeRouteNodeInfo();
+                bikeStartNode.setLocation(startPt);
+                BikeRouteNodeInfo bikeEndNode = new BikeRouteNodeInfo();
+                bikeEndNode.setLocation(endPt);
+                bikeParam = new BikeNaviLaunchParam().startNodeInfo(bikeStartNode).endNodeInfo(bikeEndNode);
+
+                WalkRouteNodeInfo walkStartNode = new WalkRouteNodeInfo();
+                walkStartNode.setLocation(startPt);
+                WalkRouteNodeInfo walkEndNode = new WalkRouteNodeInfo();
+                walkEndNode.setLocation(endPt);
+                walkParam = new WalkNaviLaunchParam().startNodeInfo(walkStartNode).endNodeInfo(walkEndNode);
+
+                ThreadUtils.runOnUiThread(() -> {
+                    initMapStatus();
+                    /* 初始化起终点Marker */
+                    initOverlay();
+                });
+            }
+        });
+
     }
 
     /**
      * 初始化地图状态
      */
-    private void initMapStatus(){
+    private void initMapStatus() {
         mBaiduMap = mMapView.getMap();
         MapStatus.Builder builder = new MapStatus.Builder();
-        builder.target(new LatLng(40.048424, 116.313513)).zoom(15);
+        builder.target(startPt).zoom(15);
         mBaiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
     }
 
@@ -151,9 +171,9 @@ public class BNaviMainActivity extends Activity {
             }
 
             public void onMarkerDragEnd(Marker marker) {
-                if(marker == mStartMarker){
+                if (marker == mStartMarker) {
                     startPt = marker.getPosition();
-                }else if(marker == mEndMarker){
+                } else if (marker == mEndMarker) {
                     endPt = marker.getPosition();
                 }
 
@@ -276,7 +296,7 @@ public class BNaviMainActivity extends Activity {
 
             @Override
             public void onRoutePlanFail(WalkRoutePlanError error) {
-                Log.d(TAG, "WalkNavi onRoutePlanFail"+error.toString());
+                Log.d(TAG, "WalkNavi onRoutePlanFail" + error.toString());
             }
 
         });

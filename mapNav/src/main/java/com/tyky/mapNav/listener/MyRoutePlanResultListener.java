@@ -51,6 +51,10 @@ public class MyRoutePlanResultListener implements OnGetRoutePlanResultListener {
                 LatLng location = walkingRouteLine.getAllStep().get(middle).getEntrance().getLocation();
                 MapStatusUpdate mapStatus = MapStatusUpdateFactory.newLatLngZoom(new LatLng(location.latitude, location.longitude), 12f);
                 baiduMap.setMapStatus(mapStatus);
+
+                //MapStatus.Builder builder = new MapStatus.Builder();
+                //builder.target(walkingRouteLine.getAllStep().get(0).getEntrance().getLocation()).zoom(15);
+                //baiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
             } else {
                 ToastUtils.showShort("未找到对应规划！");
             }
