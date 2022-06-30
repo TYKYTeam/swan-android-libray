@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
+import com.baidu.location.LocationClient;
 import com.baidu.mapapi.bikenavi.BikeNavigateHelper;
 import com.baidu.mapapi.bikenavi.adapter.IBEngineInitListener;
 import com.baidu.mapapi.bikenavi.adapter.IBRoutePlanListener;
@@ -27,6 +28,12 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.geocode.GeoCodeOption;
+import com.baidu.mapapi.search.geocode.GeoCodeResult;
+import com.baidu.mapapi.search.geocode.GeoCoder;
+import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.baidu.mapapi.walknavi.WalkNavigateHelper;
 import com.baidu.mapapi.walknavi.adapter.IWEngineInitListener;
 import com.baidu.mapapi.walknavi.adapter.IWRoutePlanListener;
@@ -34,6 +41,8 @@ import com.baidu.mapapi.walknavi.model.WalkRoutePlanError;
 import com.baidu.mapapi.walknavi.params.WalkNaviLaunchParam;
 import com.baidu.mapapi.walknavi.params.WalkRouteNodeInfo;
 import com.blankj.utilcode.util.ThreadUtils;
+import com.blankj.utilcode.util.ToastUtils;
+import com.socks.library.KLog;
 import com.tyky.mapNav.BaiduMapUtils;
 import com.tyky.mapNav.R;
 
@@ -65,6 +74,9 @@ public class BNaviMainActivity extends Activity {
 
     //类型 0：步行导航 1：骑行导航 2：AR步行导航
     int type = 0;
+    //终点名称
+    String endName = "";
+    private LocationClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +84,10 @@ public class BNaviMainActivity extends Activity {
         setContentView(R.layout.activity_guide_main);
         requestPermission();
         mMapView = (MapView) findViewById(R.id.mapview);
+
+        //接收传递过来的类型和终点名称
+        type = getIntent().getIntExtra("type", 0);
+        endName = getIntent().getStringExtra("endName");
 
         /*骑行导航入口*/
         Button btnStartGuide = (Button) findViewById(R.id.btnStartGuide);
@@ -111,44 +127,87 @@ public class BNaviMainActivity extends Activity {
         //startPt = stNode.getLocation();
         //endPt = enNode.getLocation();
 
-        BaiduMapUtils.startBdLocation(mMapView, new BDAbstractLocationListener() {
+        client = BaiduMapUtils.startBdLocation(mMapView, new BDAbstractLocationListener() {
             @Override
             public void onReceiveLocation(BDLocation bdLocation) {
+                if (isInitMapStatus) {
+                    return;
+                }
                 startPt = new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude());
 
-                endPt = new LatLng(22.552085, 114.066566);
+                //更新地图当前位置
+                ThreadUtils.runOnUiThread(() -> initMapStatus());
 
-                /*构造导航起终点参数对象*/
-                BikeRouteNodeInfo bikeStartNode = new BikeRouteNodeInfo();
-                bikeStartNode.setLocation(startPt);
-                BikeRouteNodeInfo bikeEndNode = new BikeRouteNodeInfo();
-                bikeEndNode.setLocation(endPt);
-                bikeParam = new BikeNaviLaunchParam().startNodeInfo(bikeStartNode).endNodeInfo(bikeEndNode);
+                //调用地址
+                GeoCoder geoCoder = GeoCoder.newInstance();
+                geoCoder.setOnGetGeoCodeResultListener(new OnGetGeoCoderResultListener() {
+                    @Override
+                    public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
+                        if (null != geoCodeResult && null != geoCodeResult.getLocation()) {
+                            if (geoCodeResult == null || geoCodeResult.error != SearchResult.ERRORNO.NO_ERROR) {
+                                //没有检索到结果
+                                ToastUtils.showShort("终点地点检索失败");
+                                finish();
+                            } else {
 
-                WalkRouteNodeInfo walkStartNode = new WalkRouteNodeInfo();
-                walkStartNode.setLocation(startPt);
-                WalkRouteNodeInfo walkEndNode = new WalkRouteNodeInfo();
-                walkEndNode.setLocation(endPt);
-                walkParam = new WalkNaviLaunchParam().startNodeInfo(walkStartNode).endNodeInfo(walkEndNode);
+                                double latitude = geoCodeResult.getLocation().latitude;
+                                double longitude = geoCodeResult.getLocation().longitude;
 
-                ThreadUtils.runOnUiThread(() -> {
-                    initMapStatus();
-                    /* 初始化起终点Marker */
-                    initOverlay();
+                                KLog.d("经纬度：", latitude + "," + longitude);
+                                //endPt = new LatLng(22.552085, 114.066566);
+                                endPt = new LatLng(latitude, longitude);
+
+                                /*构造导航起终点参数对象*/
+                                BikeRouteNodeInfo bikeStartNode = new BikeRouteNodeInfo();
+                                bikeStartNode.setLocation(startPt);
+                                BikeRouteNodeInfo bikeEndNode = new BikeRouteNodeInfo();
+                                bikeEndNode.setLocation(endPt);
+                                bikeParam = new BikeNaviLaunchParam().startNodeInfo(bikeStartNode).endNodeInfo(bikeEndNode);
+
+                                WalkRouteNodeInfo walkStartNode = new WalkRouteNodeInfo();
+                                walkStartNode.setLocation(startPt);
+                                WalkRouteNodeInfo walkEndNode = new WalkRouteNodeInfo();
+                                walkEndNode.setLocation(endPt);
+                                walkParam = new WalkNaviLaunchParam().startNodeInfo(walkStartNode).endNodeInfo(walkEndNode);
+
+                                /* 初始化起终点Marker */
+                                ThreadUtils.runOnUiThread(BNaviMainActivity.this::initOverlay);
+
+                                isInitMapStatus = true;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
+
+                    }
                 });
+
+                KLog.d("终点名称：" + endName);
+                geoCoder.geocode(new GeoCodeOption()
+                        .city(bdLocation.getCity())
+                        .address(endName));
+
+                geoCoder.destroy();
             }
         });
 
+
     }
 
+    boolean isInitMapStatus = false;
     /**
      * 初始化地图状态
      */
     private void initMapStatus() {
+
         mBaiduMap = mMapView.getMap();
         MapStatus.Builder builder = new MapStatus.Builder();
         builder.target(startPt).zoom(15);
         mBaiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+
+
     }
 
     /**
@@ -362,5 +421,6 @@ public class BNaviMainActivity extends Activity {
         mMapView.onDestroy();
         bdStart.recycle();
         bdEnd.recycle();
+        client.stop();
     }
 }

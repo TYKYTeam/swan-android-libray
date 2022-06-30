@@ -168,6 +168,8 @@
                     <button type="default" onclick="walkingRouteSearch()">步行规划</button>
                     <button type="default" onclick="ridingRouteSearch()">骑行规划</button>
                     <button type="default" onclick="drivingRouteSearch()">驾车规划</button>
+                    <button type="default" onclick="walkNavigation()">步行导航</button>
+                    <button type="default" onclick="cycleNavigation()">骑行导航</button>
                 </div>
             </fieldset>
             <fieldset>
@@ -334,6 +336,28 @@
                 console.log(result)
             }
         } 
+        
+        function walkNavigation(){
+            if (window.mapNav) {
+                let content = {
+                    "endName": "东门"
+                }
+                let result = window.mapNav.walkNavigation(JSON.stringify(content))
+                alert(result)
+                console.log(result)
+            }
+        }
+        
+        function cycleNavigation(){
+            if (window.mapNav) {
+                let content = {
+                    "endName": "东门"
+                }
+                let result = window.mapNav.cycleNavigation(JSON.stringify(content))
+                alert(result)
+                console.log(result)
+            }
+        }
         
         function setBrightness() {
             if (window.hardware) {

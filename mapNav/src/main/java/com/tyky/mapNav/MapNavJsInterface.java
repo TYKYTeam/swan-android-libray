@@ -1,6 +1,7 @@
 package com.tyky.mapNav;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.webkit.JavascriptInterface;
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -69,14 +70,42 @@ public class MapNavJsInterface {
 
 
     /**
+     * 骑行导航
+     * @param paramStr
+     * @return
+     */
+    @JavascriptInterface
+    public String cycleNavigation(String paramStr) {
+        MapParamModel paramModel = gson.fromJson(paramStr, MapParamModel.class);
+        String endName = paramModel.getEndName();
+        if ( TextUtils.isEmpty(endName)) {
+            return gson.toJson(ResultModel.errorParam());
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.putString("endName", endName);
+        bundle.putInt("type", 1);
+        ActivityUtils.startActivity(bundle,BNaviMainActivity.class);
+        return gson.toJson(ResultModel.success(""));
+    }
+
+    /**
      * 步行导航
      * @param paramStr
      * @return
      */
     @JavascriptInterface
-    public String walkGuide(String paramStr) {
+    public String walkNavigation(String paramStr) {
         MapParamModel paramModel = gson.fromJson(paramStr, MapParamModel.class);
-        ActivityUtils.startActivity(BNaviMainActivity.class);
+        String endName = paramModel.getEndName();
+        if ( TextUtils.isEmpty(endName)) {
+            return gson.toJson(ResultModel.errorParam());
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.putString("endName", endName);
+        bundle.putInt("type", 0);
+        ActivityUtils.startActivity(bundle,BNaviMainActivity.class);
         return gson.toJson(ResultModel.success(""));
     }
 
