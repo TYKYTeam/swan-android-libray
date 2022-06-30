@@ -973,31 +973,8 @@ function startLocation() {
 }
 ```
 
-### 2.地图显示当前位置
 
-showLocationInMap
-
-打开地图页面，并展示当前的位置
-
-**传参：无需**
-
-
-**返回结果：**
-```
-//成功
-{"code":200,"desc":"","result":""}
-```
-
-
-**H5调用示例：**
-```
-if (window.map) {
-    let result = window.map.showLocationInMap()
-    alert(result)
-    console.log(result)
-}
-```
-### 3.地图检索
+### 2.地图检索
 
 poiSearch
 
@@ -1052,7 +1029,39 @@ if (window.map) {
     window.map.poiSearch(JSON.stringify(content))
 } 
 ```
-### 4.步行规划
+
+### 待完成功能
+
+
+
+
+## mapNav 地图导航
+### 1.地图显示当前位置
+
+showLocationInMap
+
+打开地图页面，并展示当前的位置
+
+**传参：无需**
+
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+
+**H5调用示例：**
+```
+if (window.mapNav) {
+    let result = window.mapNav.showLocationInMap()
+    alert(result)
+    console.log(result)
+}
+```
+
+### 2.步行规划
 walkingRouteSearch
 
 **传参：**
@@ -1078,19 +1087,19 @@ walkingRouteSearch
 
 **H5调用示例：**
 ```
-if (window.map) {
+if (window.mapNav) {
     let content = {
         "startName": "腾讯大厦",
         "startCityName": "深圳",
         "endName": "新一代产业园",
         "endCityName": "深圳",
     }
-    let result = window.map.walkingRouteSearch(JSON.stringify(content))
+    let result = window.mapNav.walkingRouteSearch(JSON.stringify(content))
     alert(result)
     console.log(result)
 }
 ```
-### 5.骑行规划
+### 3.骑行规划
 ridingRouteSearch
 
 **传参：**
@@ -1116,19 +1125,19 @@ ridingRouteSearch
 
 **H5调用示例：**
 ```
-if (window.map) {
+if (window.mapNav) {
     let content = {
         "startName": "腾讯大厦",
         "startCityName": "深圳",
         "endName": "新一代产业园",
         "endCityName": "深圳",
     }
-    let result = window.map.ridingRouteSearch(JSON.stringify(content))
+    let result = window.mapNav.ridingRouteSearch(JSON.stringify(content))
     alert(result)
     console.log(result)
 }
 ```
-### 6.驾车规划
+### 4.驾车规划
 drivingRouteSearch
 
 **传参：**
@@ -1154,23 +1163,86 @@ drivingRouteSearch
 
 **H5调用示例：**
 ```
-if (window.map) {
+if (window.mapNav) {
     let content = {
         "startName": "腾讯大厦",
         "startCityName": "深圳",
         "endName": "新一代产业园",
         "endCityName": "深圳",
     }
-    let result = window.map.drivingRouteSearch(JSON.stringify(content))
+    let result = window.mapNav.drivingRouteSearch(JSON.stringify(content))
     alert(result)
     console.log(result)
 }
 ```
+
+### 5.步行导航
+
+walkNavigation
+
+**传参：**
+```
+{
+    "endName": "新一代产业园",
+}
+```
+
+- `endName` 终点地址名称（限制为当前位置的城市）
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+
+**H5调用示例：**
+```
+if (window.mapNav) {
+    let content = {
+        "endName": "三九花园",
+    }
+    let result = window.mapNav.walkNavigation(JSON.stringify(content))
+    alert(result)
+    console.log(result)
+}
+```
+
+### 6.骑行导航
+
+cycleNavigation
+
+**传参：**
+```
+{
+    "endName": "新一代产业园",
+}
+```
+
+- `endName` 终点地址名称（限制为当前位置的城市）
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+
+**H5调用示例：**
+```
+if (window.mapNav) {
+    let content = {
+        "endName": "三九花园",
+    }
+    let result = window.mapNav.cycleNavigation(JSON.stringify(content))
+    alert(result)
+    console.log(result)
+}
+```
+
 ### 待完成功能
 
-4. 路径导航
-5. 地图选点 
-6. 路径规划
+1. 地图选点 
 
 
 ## handware
