@@ -44,7 +44,12 @@ public class BaiduMapUtils {
     }
 
 
-    private static LocationClient startBdLocation(BDAbstractLocationListener listener) {
+    /**
+     * 发起定位
+     * @param listener
+     * @return
+     */
+    public static LocationClient startBdLocation(BDAbstractLocationListener listener) {
         Context applicationContext = ActivityUtils.getTopActivity().getApplicationContext();
         //声明LocationClient类
         mLocationClient = new LocationClient(applicationContext);
@@ -55,10 +60,17 @@ public class BaiduMapUtils {
         mLocationClient.registerLocationListener(listener);
 
         ThreadUtils.runOnUiThread(() -> mLocationClient.start());
-
         return mLocationClient;
     }
 
+    /**
+     * 停止定位
+     */
+    public static void stopLocation() {
+        if (mLocationClient != null) {
+            mLocationClient.stop();
+        }
+    }
     /**
      * 定位参数初始化
      *

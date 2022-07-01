@@ -158,7 +158,9 @@
                 <div class="contentDiv">
                     <button type="default" onclick="startLocation()">获取定位</button>
                     <button type="default" onclick="poiSearch()">poi检索</button>
-                    
+                    <button type="default" onclick="ptInCircle()">判断是否在某地点范围</button>
+                    <button type="default" onclick="geocode()">地址转坐标</button>
+                    <button type="default" onclick="reverseGeoCode()">坐标转地址</button>
                 </div>
             </fieldset>
             <fieldset>
@@ -295,6 +297,46 @@
             }
         }
 
+        function ptInCircle() {
+            let content = {
+                "latitude": 22.57871696606192,
+                "longitude": 114.06792497377637,
+                "distance": 70,
+                "callBackMethod": "getLocation"
+            }
+            if (window.map) {
+                let result = window.map.ptInCircle(JSON.stringify(content))
+                alert(result)
+                console.log(result)
+            }
+        }
+
+        function reverseGeoCode() {
+            let content = {
+               "latitude": 22.579062,
+               "longitude": 114.067404,
+                "callBackMethod": "getLocation"
+            }
+            if (window.map) {
+                let result = window.map.reverseGeoCode(JSON.stringify(content))
+                alert(result)
+                console.log(result)
+            }
+        }
+        
+        function geocode() {
+            let content = {
+                "endName": "广东省深圳市福田区梅林街道梅都社区中康路136号深圳新一代产业园4栋M层沿街商铺(手扶梯旁)",
+                "city": "深圳",
+                "callBackMethod": "getLocation"
+            }
+            if (window.map) {
+                let result = window.map.geocode(JSON.stringify(content))
+                alert(result)
+                console.log(result)
+            }
+        }
+
         function walkingRouteSearch() {
             if (window.mapNav) {
                 let content = {
@@ -307,8 +349,8 @@
                 alert(result)
                 console.log(result)
             }
-        } 
-        
+        }
+
         function ridingRouteSearch() {
             if (window.mapNav) {
                 let content = {
@@ -322,7 +364,8 @@
                 console.log(result)
             }
         }
-        
+
+
         function drivingRouteSearch() {
             if (window.mapNav) {
                 let content = {
@@ -335,9 +378,9 @@
                 alert(result)
                 console.log(result)
             }
-        } 
-        
-        function walkNavigation(){
+        }
+
+        function walkNavigation() {
             if (window.mapNav) {
                 let content = {
                     "endName": "东门"
@@ -347,8 +390,8 @@
                 console.log(result)
             }
         }
-        
-        function cycleNavigation(){
+
+        function cycleNavigation() {
             if (window.mapNav) {
                 let content = {
                     "endName": "东门"
@@ -358,7 +401,10 @@
                 console.log(result)
             }
         }
-        
+
+
+
+
         function setBrightness() {
             if (window.hardware) {
                 let content = {

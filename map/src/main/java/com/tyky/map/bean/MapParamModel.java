@@ -31,6 +31,44 @@ public class MapParamModel extends ParamModel implements Serializable {
     private String endCityName;
 
 
+    /**
+     * 纬度
+     */
+    private Double latitude;
+    /**
+     * 经度
+     */
+    private Double longitude;
+    /**
+     * 距离
+     */
+    private Integer distance;
+
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Integer getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Integer distance) {
+        this.distance = distance;
+    }
+
     public String getStartName() {
         return startName;
     }
