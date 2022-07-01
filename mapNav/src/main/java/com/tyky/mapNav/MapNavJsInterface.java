@@ -2,6 +2,7 @@ package com.tyky.mapNav;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Pair;
 import android.webkit.JavascriptInterface;
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -13,6 +14,7 @@ import com.tyky.mapNav.activity.MapActivity;
 import com.tyky.mapNav.bean.MapParamModel;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.model.ResultModel;
+import com.tyky.webviewBase.utils.LocationUtil;
 
 @WebViewInterface("mapNav")
 public class MapNavJsInterface {
@@ -29,6 +31,13 @@ public class MapNavJsInterface {
      */
     @JavascriptInterface
     public String showLocationInMap() {
+        //检测gps服务是否打开
+        Pair<Boolean, ResultModel> booleanResultModelPair = LocationUtil.checkLocationService();
+        Boolean flag = booleanResultModelPair.first;
+        if (!flag) {
+            return gson.toJson(booleanResultModelPair.second);
+        }
+
         Bundle bundle = new Bundle();
         bundle.putInt("type", 0);
         ActivityUtils.startActivity(bundle, MapActivity.class);
@@ -82,6 +91,13 @@ public class MapNavJsInterface {
             return gson.toJson(ResultModel.errorParam());
         }
 
+        //检测gps服务是否打开
+        Pair<Boolean, ResultModel> booleanResultModelPair = LocationUtil.checkLocationService();
+        Boolean flag = booleanResultModelPair.first;
+        if (!flag) {
+            return gson.toJson(booleanResultModelPair.second);
+        }
+
         Bundle bundle = new Bundle();
         bundle.putString("endName", endName);
         bundle.putInt("type", 1);
@@ -100,6 +116,13 @@ public class MapNavJsInterface {
         String endName = paramModel.getEndName();
         if ( TextUtils.isEmpty(endName)) {
             return gson.toJson(ResultModel.errorParam());
+        }
+
+        //检测gps服务是否打开
+        Pair<Boolean, ResultModel> booleanResultModelPair = LocationUtil.checkLocationService();
+        Boolean flag = booleanResultModelPair.first;
+        if (!flag) {
+            return gson.toJson(booleanResultModelPair.second);
         }
 
         Bundle bundle = new Bundle();

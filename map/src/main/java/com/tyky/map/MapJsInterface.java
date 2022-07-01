@@ -2,6 +2,7 @@ package com.tyky.map;
 
 import android.os.Build;
 import android.text.TextUtils;
+import android.util.Pair;
 import android.webkit.JavascriptInterface;
 
 import com.baidu.location.BDAbstractLocationListener;
@@ -34,6 +35,7 @@ import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.event.JsCallBackEvent;
 import com.tyky.webviewBase.model.ParamModel;
 import com.tyky.webviewBase.model.ResultModel;
+import com.tyky.webviewBase.utils.LocationUtil;
 import com.yanzhenjie.permission.runtime.Permission;
 
 import org.greenrobot.eventbus.EventBus;
@@ -63,6 +65,13 @@ public class MapJsInterface {
         String methodName = paramModel.getCallBackMethod();
         if (StringUtils.isEmpty(methodName)) {
             return gson.toJson(ResultModel.errorParam());
+        }
+
+        //检测gps服务是否打开
+        Pair<Boolean, ResultModel> booleanResultModelPair = LocationUtil.checkLocationService();
+        Boolean flag = booleanResultModelPair.first;
+        if (!flag) {
+            return gson.toJson(booleanResultModelPair.second);
         }
 
         if (PermissionUtils.isGranted(Permission.ACCESS_FINE_LOCATION)) {
@@ -101,7 +110,7 @@ public class MapJsInterface {
         String city = paramModel.getCity();
         String tags = paramModel.getTags();
 
-        if (TextUtils.isEmpty(methodName)||TextUtils.isEmpty(keyword)||TextUtils.isEmpty(city)||TextUtils.isEmpty(tags)) {
+        if (TextUtils.isEmpty(methodName) || TextUtils.isEmpty(keyword) || TextUtils.isEmpty(city) || TextUtils.isEmpty(tags)) {
             return gson.toJson(ResultModel.errorParam());
         }
 
@@ -155,6 +164,7 @@ public class MapJsInterface {
     /**
      * 计算两点距离
      * 参考文档 https://lbsyun.baidu.com/index.php?title=androidsdk/guide/tool/calculation
+     *
      * @param paramStr
      * @return
      */
@@ -166,6 +176,7 @@ public class MapJsInterface {
 
     /**
      * 坐标转地址
+     *
      * @param paramStr
      * @return
      */
@@ -213,7 +224,7 @@ public class MapJsInterface {
                     myPoiResult.setLatitude(reverseGeoCodeResult.getLocation().latitude);//纬度
                     myPoiResult.setLongitude(reverseGeoCodeResult.getLocation().longitude);//经度
 
-                    EventBus.getDefault().post(new JsCallBackEvent(methodName,myPoiResult));
+                    EventBus.getDefault().post(new JsCallBackEvent(methodName, myPoiResult));
                 }
             }
         });
@@ -232,6 +243,7 @@ public class MapJsInterface {
     /**
      * 地址转坐标
      * 文档参考 https://lbsyun.baidu.com/index.php?title=androidsdk/guide/search/geo
+     *
      * @param paramStr
      * @return
      */
@@ -261,7 +273,7 @@ public class MapJsInterface {
                         MyPoiResult myPoiResult = new MyPoiResult();
                         myPoiResult.setLatitude(latitude);
                         myPoiResult.setLongitude(longitude);
-                        EventBus.getDefault().post(new JsCallBackEvent(methodName,myPoiResult));
+                        EventBus.getDefault().post(new JsCallBackEvent(methodName, myPoiResult));
                     }
                 }
             }
@@ -281,6 +293,7 @@ public class MapJsInterface {
     /**
      * 判断当前位置是否在某点范围内
      * 参考文档  https://lbsyun.baidu.com/index.php?title=androidsdk/guide/tool/location
+     *
      * @param paramStr
      * @return
      */
@@ -303,6 +316,13 @@ public class MapJsInterface {
         }
         if (TextUtils.isEmpty(methodName)) {
             return gson.toJson(ResultModel.errorParam());
+        }
+
+        //检测gps服务是否打开
+        Pair<Boolean, ResultModel> booleanResultModelPair = LocationUtil.checkLocationService();
+        Boolean flag = booleanResultModelPair.first;
+        if (!flag) {
+            return gson.toJson(booleanResultModelPair.second);
         }
 
         LatLng center = new LatLng(latitude, longitude);
