@@ -1029,6 +1029,176 @@ if (window.map) {
     window.map.poiSearch(JSON.stringify(content))
 } 
 ```
+### 3.判断当前是否在某地点附近
+ptInCircle
+
+传入经纬度坐标，转为具体地址信息
+
+**传参：**
+```
+{
+    "latitude": 22.57871696606192,
+    "longitude": 114.06792497377637,
+    "distance": 70,
+    "callBackMethod": "getLocation"
+}
+```
+
+- `latitude` 目标点纬度
+- `longitude` 目标点经度
+- `distance` 目标点范围半径（单位为m）
+
+**返回结果：**
+```
+//成功
+{
+     "code": 200,
+     "desc": "",
+     "result": {
+          "address": "广东省深圳市福田区梅坳三路",
+          "area": "福田区",
+          "city": "深圳市",
+          "latitude": 22.5790620003812,
+          "longitude": 114.06740399999997,
+          "name": null,
+          "phoneNum": null,
+          "province": "广东省",
+          "street": "梅坳三路"
+     }
+}
+```
+
+**H5调用示例：**
+```
+window.getLocation = function(object) {
+    console.log(object);
+    alert(JSON.stringify(object))
+}
+        
+let content = {
+    "latitude": 22.57871696606192,
+    "longitude": 114.06792497377637,
+    "distance": 70,
+    "callBackMethod": "getLocation"
+}
+
+if (window.map) {
+    let result = window.map.ptInCircle(JSON.stringify(content))
+    alert(result)
+    console.log(result)
+}
+```
+
+### 4.地址转坐标
+geocode
+
+传入地址，转为经纬度坐标
+
+**传参：**
+```
+{
+    "endName": "广东省深圳市福田区梅林街道梅都社区中康路136号深圳新一代产业园4栋M层沿街商铺(手扶梯旁)",
+    "city": "深圳",
+    "callBackMethod": "getLocation"
+}
+```
+
+**返回结果：**
+```
+//成功
+{
+     "code": 200,
+     "desc": "",
+     "result": {
+          "address": null,
+          "area": null,
+          "city": null,
+          "latitude": 22.57871696606192,
+          "longitude": 114.06792497377637,
+          "name": null,
+          "phoneNum": null,
+          "province": null,
+          "street": ""
+     }
+}
+```
+
+
+**H5调用示例：**
+```
+window.getLocation = function(object) {
+    console.log(object);
+    alert(JSON.stringify(object))
+}
+        
+let content = {
+    "endName": "广东省深圳市福田区梅林街道梅都社区中康路136号深圳新一代产业园4栋M层沿街商铺(手扶梯旁)",
+    "city": "深圳",
+    "callBackMethod": "getLocation"
+}
+
+if (window.map) {
+    let result = window.map.geocode(JSON.stringify(content))
+    alert(result)
+    console.log(result)
+}
+```
+
+### 5.坐标转地址
+
+reverseGeoCode
+
+传入经纬度坐标，转为具体地址信息
+
+**传参：**
+```
+{
+    "latitude": 22.579062,
+    "longitude": 114.067404,
+    "callBackMethod": "getLocation"
+}
+```
+
+**返回结果：**
+```
+//成功
+{
+     "code": 200,
+     "desc": "",
+     "result": {
+          "address": "广东省深圳市福田区梅坳三路",
+          "area": "福田区",
+          "city": "深圳市",
+          "latitude": 22.5790620003812,
+          "longitude": 114.06740399999997,
+          "name": null,
+          "phoneNum": null,
+          "province": "广东省",
+          "street": "梅坳三路"
+     }
+}
+```
+
+
+**H5调用示例：**
+```
+window.getLocation = function(object) {
+    console.log(object);
+    alert(JSON.stringify(object))
+}
+        
+let content = {
+    "latitude": 22.579062,
+    "longitude": 114.067404,
+    "callBackMethod": "getLocation"
+}
+
+if (window.map) {
+    let result = window.map.reverseGeoCode(JSON.stringify(content))
+    alert(result)
+    console.log(result)
+}
+```
 
 ### 待完成功能
 
