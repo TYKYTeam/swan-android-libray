@@ -44,6 +44,58 @@ public class MapParamModel extends ParamModel implements Serializable {
      */
     private Integer distance;
 
+    /**
+     * -------计算两点距离的起点和终点经纬度---------
+     */
+    /**
+     * 起点纬度
+     */
+    private Double startLatitude;
+    /**
+     * 起点经度
+     */
+    private Double startLongitude;
+
+    /**
+     * 终点纬度
+     */
+    private Double endLatitude;
+    /**
+     * 终点经度
+     */
+    private Double endLongitude;
+
+    public Double getStartLatitude() {
+        return startLatitude;
+    }
+
+    public void setStartLatitude(Double startLatitude) {
+        this.startLatitude = startLatitude;
+    }
+
+    public Double getStartLongitude() {
+        return startLongitude;
+    }
+
+    public void setStartLongitude(Double startLongitude) {
+        this.startLongitude = startLongitude;
+    }
+
+    public Double getEndLatitude() {
+        return endLatitude;
+    }
+
+    public void setEndLatitude(Double endLatitude) {
+        this.endLatitude = endLatitude;
+    }
+
+    public Double getEndLongitude() {
+        return endLongitude;
+    }
+
+    public void setEndLongitude(Double endLongitude) {
+        this.endLongitude = endLongitude;
+    }
 
     public Double getLatitude() {
         return latitude;

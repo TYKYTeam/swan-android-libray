@@ -161,6 +161,7 @@
                     <button type="default" onclick="ptInCircle()">判断是否在某地点范围</button>
                     <button type="default" onclick="geocode()">地址转坐标</button>
                     <button type="default" onclick="reverseGeoCode()">坐标转地址</button>
+                    <button type="default" onclick="getDistance()">计算两点距离</button>
                 </div>
             </fieldset>
             <fieldset>
@@ -306,6 +307,21 @@
             }
             if (window.map) {
                 let result = window.map.ptInCircle(JSON.stringify(content))
+                alert(result)
+                console.log(result)
+            }
+        }
+        
+        function getDistance() {
+            //公司位置和荣耀体验店的距离
+            let content = {
+                "startLatitude": 22.579054,
+                "startLongitude": 114.067389,
+                "endLatitude": 22.57871696606192,
+                "endLongitude": 114.06792497377637
+            }
+            if (window.map) {
+                let result = window.map.getDistance(JSON.stringify(content))
                 alert(result)
                 console.log(result)
             }

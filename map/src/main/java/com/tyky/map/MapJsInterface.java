@@ -22,6 +22,7 @@ import com.baidu.mapapi.search.poi.PoiDetailSearchResult;
 import com.baidu.mapapi.search.poi.PoiIndoorResult;
 import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
+import com.baidu.mapapi.utils.DistanceUtil;
 import com.baidu.mapapi.utils.SpatialRelationUtil;
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.PermissionUtils;
@@ -40,6 +41,7 @@ import com.yanzhenjie.permission.runtime.Permission;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -170,8 +172,23 @@ public class MapJsInterface {
      */
     @JavascriptInterface
     public String getDistance(String paramStr) {
+        MapParamModel mapParamModel = gson.fromJson(paramStr, MapParamModel.class);
+        Double startLatitude = mapParamModel.getStartLatitude();
+        Double startLongitude = mapParamModel.getStartLongitude();
+        Double endLatitude = mapParamModel.getEndLatitude();
+        Double endLongitude = mapParamModel.getEndLongitude();
 
-        return gson.toJson(ResultModel.success(""));
+        if (startLatitude == 0 || startLongitude == 0 || endLatitude == 0 || endLongitude == 0) {
+            return gson.toJson(ResultModel.errorParam());
+        }
+
+        LatLng p1 = new LatLng(startLatitude, startLongitude);
+        LatLng p2 = new LatLng(endLatitude, endLongitude);
+        double distance = DistanceUtil.getDistance(p1, p2);
+        //保留两位小数（四舍五入）
+        BigDecimal bigDecimal = new BigDecimal(distance);
+        distance = bigDecimal.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
+        return gson.toJson(ResultModel.success(distance));
     }
 
     /**
