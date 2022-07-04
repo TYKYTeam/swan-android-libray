@@ -1199,6 +1199,49 @@ if (window.map) {
     console.log(result)
 }
 ```
+### 6.计算两点距离
+
+getDistance
+
+闯入两个点的经纬度，计算两点的距离
+
+**传参：**
+```
+{
+    "startLatitude": 22.579054,
+    "startLongitude": 114.067389,
+    "endLatitude": 22.57871696606192,
+    "endLongitude": 114.06792497377637
+}
+```
+
+- `startLatitude` 起点纬度
+- `startLongitude` 起点经度
+- `endLatitude` 终点纬度
+- `endLongitude` 终点经度
+
+**返回结果：**
+```
+//成功 单位为m
+{"code":200,"desc":"","result":67.15}"
+```
+
+
+**H5调用示例：**
+```
+//公司位置和荣耀体验店的距离
+let content = {
+    "startLatitude": 22.579054,
+    "startLongitude": 114.067389,
+    "endLatitude": 22.57871696606192,
+    "endLongitude": 114.06792497377637
+}
+if (window.map) {
+    let result = window.map.getDistance(JSON.stringify(content))
+    alert(result)
+    console.log(result)
+}
+```
 
 ### 待完成功能
 
