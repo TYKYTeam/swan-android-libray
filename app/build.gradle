@@ -62,6 +62,7 @@ dependencies {
     implementation project(path: ':mapNav')
     implementation project(path: ':page')
     implementation project(path: ':tim')
+    implementation project(path: ':baiduface')
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

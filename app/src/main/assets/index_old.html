@@ -194,6 +194,13 @@
                     <button type="default" onclick="getUnreadCount()">获取消息未读数</button>
                 </div>
             </fieldset>
+            
+            <fieldset>
+                <legend>baiduface 人脸采集</legend>
+                <div class="contentDiv">
+                    <button type="default" onclick="facialRecognite()">人脸采集</button>
+                </div>
+            </fieldset>
         </div>
     </body>
 
@@ -738,6 +745,17 @@
                     content: "11"
                 }
                 let result = window.notification.setBargeCount(JSON.stringify(content))
+                alert(result);
+                console.log(result)
+            }
+        }
+        
+        function facialRecognite() {
+            if (window.baiduface) {
+                let content = {
+                    content: "11"
+                }
+                let result = window.baiduface.facialRecognite(JSON.stringify(content))
                 alert(result);
                 console.log(result)
             }

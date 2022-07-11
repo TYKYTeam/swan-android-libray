@@ -1,3 +1,5 @@
+
+include ':baiduface'
 include ':page'
 include ':map'
 include ':mapNav'
@@ -36,3 +38,9 @@ project(':tuiconversation').projectDir = new File(settingsDir, '/TUIKit/TUIConve
 // 引入群组功能模块
 include ':tuigroup'
 project(':tuigroup').projectDir = new File(settingsDir, '/TUIKit/TUIGroup/tuigroup')
+
+include ':faceplatform-ui'
+project(':faceplatform-ui').projectDir = new File(settingsDir, '/baiduface/faceplatform-ui/')
+
+include ':faceplatform-release'
+project(':faceplatform-release').projectDir = new File(settingsDir, '/baiduface/faceplatform-release/')
