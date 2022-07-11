@@ -1926,6 +1926,32 @@ if (window.tim) {
 }
 ```
 
+## baiduface
+百度人脸采集功能
+
+[证书申请文档](https://ai.baidu.com/ai-doc/FACE/pkd3xtfgn#211-申请license)
+
+### 1.人脸采集
+
+facialRecognite
+
+进入人脸采集页面进行采集图片
+
+**传参：**
+
+暂未定
+
+```
+{
+    "callBackMethod": "loadUnreadCount",
+}
+```
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
 
 ## 关于Module创建
 
