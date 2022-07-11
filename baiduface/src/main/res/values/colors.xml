@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="item_main_color">#ffffff</color>
+    <color name="item_main_color_selected">#63B8FF</color>
+
+    <color name="item_main_text_color">#63B8FF</color>
+    <color name="item_main_text_color_selected">#ffffff</color>
+
+    <color name="divider">#ffd2d2d2</color>
+    
+    <color name="setting_quality_enter">#9EA0A3</color>
+    <color name="setting_quality_grey">#DCDDE0</color>
+    <color name="setting_quality_blue">#00BAF2</color>
+
+</resources>

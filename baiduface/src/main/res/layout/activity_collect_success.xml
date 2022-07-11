@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <ImageView
+        android:id="@+id/image_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="23dp"
+        android:onClick="onFinish"
+        android:visibility="gone"
+        android:src="@drawable/collect_image_close_selector" />
+
+    <RelativeLayout
+        android:id="@+id/relative_suc_head"
+        android:layout_width="97dp"
+        android:layout_height="108dp"
+        android:layout_marginTop="96dp"
+        android:layout_centerHorizontal="true">
+
+        <com.baidu.idl.face.platform.ui.widget.CircleImageView
+            android:id="@+id/circle_head"
+            android:layout_centerInParent="true"
+            android:layout_width="97dp"
+            android:layout_height="97dp" />
+
+        <ImageView
+            android:id="@+id/image_circle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"
+            android:src="@mipmap/icon_mask_success"/>
+
+        <ImageView
+            android:id="@+id/image_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:src="@mipmap/icon_success_star"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="人脸采集成功"
+        android:textSize="22sp"
+        android:layout_centerHorizontal="true"
+        android:textColor="#000000"
+        android:layout_marginTop="23dp"
+        android:layout_below="@+id/relative_suc_head"/>
+
+    <!--底部背景及文字-->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/icon_collect_bottom"
+        android:layout_alignParentBottom="true"/>
+
+    <TextView
+        android:id="@+id/text_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/collect_bottom_txt"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:textSize="@dimen/collect_bottom_font"
+        android:textColor="@color/collect_bottom_color"/>
+
+    <Button
+        android:id="@+id/btn_return_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/text_bottom"
+        android:text="回到首页"
+        android:textColor="#333333"
+        android:textSize="18sp"
+        android:layout_marginBottom="53dp"
+        android:onClick="onReturnHome"
+        android:background="@drawable/success_button_return_selector"/>
+
+    <Button
+        android:id="@+id/btn_recollect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:textSize="18sp"
+        android:text="重新采集"
+        android:textColor="#FFFFFF"
+        android:layout_above="@+id/btn_return_home"
+        android:layout_centerHorizontal="true"
+        android:onClick="onRecollect"
+        android:background="@drawable/success_button_recollect_selector"/>
+</RelativeLayout>

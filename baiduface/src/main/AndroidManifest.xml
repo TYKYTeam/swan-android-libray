@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tyky.baiduface">
+
+    <!-- 权限级别: dangerous -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 权限级别: normal -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- 需要使用Feature -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.front"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.flash"
+        android:required="false" />
+
+    <application>
+        <!-- 主界面 -->
+        <activity
+            android:name="com.baidu.idl.face.example.HomeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme_NoTitle">
+        </activity>
+
+        <!--协议页面-->
+        <activity android:name="com.baidu.idl.face.example.FaceHomeAgreementActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme_NoTitle"/>
+
+        <!--设置相关页面-->
+        <activity android:name="com.baidu.idl.face.example.SettingActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme_NoTitle"
+            android:screenOrientation="portrait" />
+
+        <!--采集成功页面-->
+        <activity android:name="com.baidu.idl.face.example.CollectionSuccessActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme_NoTitle" />
+
+        <!-- 活体图像采集界面 -->
+        <activity
+            android:name="com.baidu.idl.face.example.FaceLivenessExpActivity"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme_NoTitle" />
+
+        <!-- 人脸跟踪采集界面 -->
+        <activity
+            android:name="com.baidu.idl.face.example.FaceDetectExpActivity"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme_NoTitle" />
+
+        <!-- 质量控制设置界面 -->
+        <activity android:name="com.baidu.idl.face.example.QualityControlActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme_NoTitle"
+            android:screenOrientation="portrait" />
+
+        <!-- 质量参数配置界面 -->
+        <activity android:name="com.baidu.idl.face.example.QualityParamsActivity"
+            android:theme="@style/Theme_NoTitle"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+    </application>
+
+</manifest>
