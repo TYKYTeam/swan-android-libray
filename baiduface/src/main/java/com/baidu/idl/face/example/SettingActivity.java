@@ -16,6 +16,7 @@ import com.baidu.idl.face.platform.FaceConfig;
 import com.baidu.idl.face.platform.FaceSDKManager;
 import com.baidu.idl.face.platform.LivenessTypeEnum;
 import com.baidu.idl.face.platform.ui.BaseActivity;
+import com.tyky.baiduface.BaiduFaceModuleInit;
 import com.tyky.baiduface.R;
 
 import java.util.ArrayList;
@@ -142,11 +143,11 @@ public class SettingActivity extends BaseActivity {
 
     private void settingChecked() {
         // 语音播报开关
-        announcementsSwitch.setChecked(ExampleApplication.isOpenSound);
+        announcementsSwitch.setChecked(BaiduFaceModuleInit.isOpenSound);
         // 活体检测开关
-        liveDetectSwitch.setChecked(ExampleApplication.isActionLive);
+        liveDetectSwitch.setChecked(BaiduFaceModuleInit.isActionLive);
         // 动作活体随机开关
-        actionliveSwitch.setChecked(ExampleApplication.isLivenessRandom);
+        actionliveSwitch.setChecked(BaiduFaceModuleInit.isLivenessRandom);
         if (!liveDetectSwitch.isChecked()) {
             relativeActionRandom.setVisibility(View.GONE);
             relativeActionType.setVisibility(View.GONE);
@@ -155,7 +156,7 @@ public class SettingActivity extends BaseActivity {
             relativeActionType.setVisibility(View.VISIBLE);
         }
 
-        List<LivenessTypeEnum> list = ExampleApplication.livenessList;
+        List<LivenessTypeEnum> list = BaiduFaceModuleInit.livenessList;
         if (list != null) {
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i) == LivenessTypeEnum.Eye) {
@@ -516,12 +517,12 @@ public class SettingActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ExampleApplication.livenessList.clear();
+        BaiduFaceModuleInit.livenessList.clear();
         Collections.sort(this.livenessList, new ComparatorValues());
-        ExampleApplication.livenessList = this.livenessList;
-        ExampleApplication.isLivenessRandom = actionliveSwitch.isChecked();
-        ExampleApplication.isOpenSound = announcementsSwitch.isChecked();
-        ExampleApplication.isActionLive = liveDetectSwitch.isChecked();
+        BaiduFaceModuleInit.livenessList = this.livenessList;
+        BaiduFaceModuleInit.isLivenessRandom = actionliveSwitch.isChecked();
+        BaiduFaceModuleInit.isOpenSound = announcementsSwitch.isChecked();
+        BaiduFaceModuleInit.isActionLive = liveDetectSwitch.isChecked();
         setFaceConfig();
     }
 
@@ -542,11 +543,11 @@ public class SettingActivity extends BaseActivity {
         // 设置活体动作，通过设置list，LivenessTypeEunm.Eye, LivenessTypeEunm.Mouth,
         // LivenessTypeEunm.HeadUp, LivenessTypeEunm.HeadDown, LivenessTypeEunm.HeadLeft,
         // LivenessTypeEunm.HeadRight
-        config.setLivenessTypeList(ExampleApplication.livenessList);
+        config.setLivenessTypeList(BaiduFaceModuleInit.livenessList);
         // 设置动作活体是否随机
-        config.setLivenessRandom(ExampleApplication.isLivenessRandom);
+        config.setLivenessRandom(BaiduFaceModuleInit.isLivenessRandom);
         // 设置开启提示音
-        config.setSound(ExampleApplication.isOpenSound);
+        config.setSound(BaiduFaceModuleInit.isOpenSound);
         FaceSDKManager.getInstance().setFaceConfig(config);
     }
 

@@ -21,6 +21,7 @@ import com.baidu.idl.face.platform.FaceSDKManager;
 import com.baidu.idl.face.platform.LivenessTypeEnum;
 import com.baidu.idl.face.platform.listener.IInitCallback;
 import com.baidu.idl.face.platform.ui.BaseActivity;
+import com.tyky.baiduface.BaiduFaceModuleInit;
 import com.tyky.baiduface.R;
 
 /**
@@ -52,10 +53,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     private void addActionLive() {
         // 根据需求添加活体动作
-        ExampleApplication.livenessList.clear();
-        ExampleApplication.livenessList.add(LivenessTypeEnum.Eye);
-        ExampleApplication.livenessList.add(LivenessTypeEnum.Mouth);
-        ExampleApplication.livenessList.add(LivenessTypeEnum.HeadRight);
+        BaiduFaceModuleInit.livenessList.clear();
+        BaiduFaceModuleInit.livenessList.add(LivenessTypeEnum.Eye);
+        BaiduFaceModuleInit.livenessList.add(LivenessTypeEnum.Mouth);
+        BaiduFaceModuleInit.livenessList.add(LivenessTypeEnum.HeadRight);
     }
 
     private void initLicense() {
@@ -121,7 +122,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         SharedPreferencesUtil util = new SharedPreferencesUtil(mContext);
         int qualityLevel = (int) util.getSharedPreference(Const.KEY_QUALITY_LEVEL_SAVE, -1);
         if (qualityLevel == -1) {
-            qualityLevel = ExampleApplication.qualityLevel;
+            qualityLevel = BaiduFaceModuleInit.qualityLevel;
         }
         // 根据质量等级获取相应的质量值（注：第二个参数要与质量等级的set方法参数一致）
         QualityConfigManager manager = QualityConfigManager.getInstance();
@@ -165,11 +166,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         // 设置活体动作，通过设置list，LivenessTypeEunm.Eye, LivenessTypeEunm.Mouth,
         // LivenessTypeEunm.HeadUp, LivenessTypeEunm.HeadDown, LivenessTypeEunm.HeadLeft,
         // LivenessTypeEunm.HeadRight
-        config.setLivenessTypeList(ExampleApplication.livenessList);
+        config.setLivenessTypeList(BaiduFaceModuleInit.livenessList);
         // 设置动作活体是否随机
-        config.setLivenessRandom(ExampleApplication.isLivenessRandom);
+        config.setLivenessRandom(BaiduFaceModuleInit.isLivenessRandom);
         // 设置开启提示音
-        config.setSound(ExampleApplication.isOpenSound);
+        config.setSound(BaiduFaceModuleInit.isOpenSound);
         // 原图缩放系数
         config.setScale(FaceEnvironment.VALUE_SCALE);
         // 抠图宽高的设定，为了保证好的抠图效果，建议高宽比是4：3
@@ -217,7 +218,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     }
 
     public void startCollect() {
-        if (ExampleApplication.isActionLive) {
+        if (BaiduFaceModuleInit.isActionLive) {
             Intent intent = new Intent(mContext, FaceLivenessExpActivity.class);
             startActivity(intent);
         } else {
