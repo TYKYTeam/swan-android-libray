@@ -73,7 +73,7 @@
                     <button type="default" onclick="qrScan()">扫描二维码</button>
                     <button type="default" onclick="speakText()">文字转语音</button>
                     <button type="default" onclick="getContacts()">获取手机通讯录列表</button>
-                    
+
                     <button type="default" onclick="previewPdf()">pdf预览</button>
                     <button type="default" onclick="previewFileUrl()">在线预览</button>
 
@@ -195,7 +195,7 @@
                     <button type="default" onclick="getUnreadCount()">获取消息未读数</button>
                 </div>
             </fieldset>
-            
+
             <fieldset>
                 <legend>baiduface 人脸采集</legend>
                 <div class="contentDiv">
@@ -321,7 +321,7 @@
                 console.log(result)
             }
         }
-        
+
         function getDistance() {
             //公司位置和荣耀体验店的距离
             let content = {
@@ -339,8 +339,8 @@
 
         function reverseGeoCode() {
             let content = {
-               "latitude": 22.579062,
-               "longitude": 114.067404,
+                "latitude": 22.579062,
+                "longitude": 114.067404,
                 "callBackMethod": "getLocation"
             }
             if (window.map) {
@@ -349,7 +349,7 @@
                 console.log(result)
             }
         }
-        
+
         function geocode() {
             let content = {
                 "endName": "广东省深圳市福田区梅林街道梅都社区中康路136号深圳新一代产业园4栋M层沿街商铺(手扶梯旁)",
@@ -672,7 +672,7 @@
                 console.log(result)
             }
         }
-        
+
         function previewPdf() {
             if (window.android_media) {
                 let content = {
@@ -683,6 +683,7 @@
                 console.log(result)
             }
         }
+
         function previewFileUrl() {
             if (window.android_media) {
                 let content = {
@@ -761,11 +762,15 @@
                 console.log(result)
             }
         }
-        
+
         function facialRecognite() {
             if (window.baiduface) {
                 let content = {
-                    content: "11"
+                    "isOpenSound": true,
+                    "qualityLevel": 1,
+                    "isActionLive": true,
+                    "isLivenessRandom": true,
+                    "iivenessAction": [0, 1,2]
                 }
                 let result = window.baiduface.facialRecognite(JSON.stringify(content))
                 alert(result);
