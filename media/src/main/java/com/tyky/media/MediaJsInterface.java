@@ -3,6 +3,7 @@ package com.tyky.media;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
@@ -14,6 +15,7 @@ import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.PhoneUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.google.gson.Gson;
+import com.tyky.media.activity.OnlinePreviewActivity;
 import com.tyky.media.activity.PdfPreviewActivity;
 import com.tyky.media.activity.QrScanActivity;
 import com.tyky.media.bean.MyContacts;
@@ -284,6 +286,26 @@ public class MediaJsInterface {
     @JavascriptInterface
     public String previewPdf(String paramStr) {
         ActivityUtils.startActivity(PdfPreviewActivity.class);
+        return gson.toJson(ResultModel.success(""));
+
+
+    }
+
+    /**
+     * 预览在线文件
+     */
+    @JavascriptInterface
+    public String previewFileUrl(String paramStr) {
+        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        String content = paramModel.getContent();
+        if (StringUtils.isEmpty(content)) {
+            return gson.toJson(ResultModel.errorParam());
+        }
+        //Intent intent = IntentUtils.getComponentIntent("com.tyky.media.activity", "com.tyky.media.activity.OnlinePreviewActivity");
+        //intent.putExtra("url", content);
+        Bundle bundle = new Bundle();
+        bundle.putString("url", content);
+        ActivityUtils.startActivity(bundle,OnlinePreviewActivity.class);
         return gson.toJson(ResultModel.success(""));
 
 
