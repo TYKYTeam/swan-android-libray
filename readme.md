@@ -1931,6 +1931,7 @@ if (window.tim) {
 
 [证书申请文档](https://ai.baidu.com/ai-doc/FACE/pkd3xtfgn#211-申请license)
 
+证书文件路径： `baiduface/src/main/assets/idl-license.face-android`
 ### 1.人脸采集
 
 facialRecognite
