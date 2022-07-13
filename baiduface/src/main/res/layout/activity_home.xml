@@ -34,6 +34,7 @@
 
         <!--设置-->
         <ImageView
+            android:visibility="gone"
             android:id="@+id/but_setting"
             android:layout_width="20dp"
             android:layout_height="18dp"
@@ -316,6 +317,7 @@
 
     <!--百度logo-->
     <TextView
+        android:visibility="invisible"
         android:id="@+id/text_home_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
