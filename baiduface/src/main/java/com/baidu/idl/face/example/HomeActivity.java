@@ -77,7 +77,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                             @Override
                             public void run() {
                                 Log.e(TAG, "初始化成功");
-                                showToast("初始化成功");
+                                //showToast("初始化成功");
                                 mIsInitSuccess = true;
                             }
                         });
