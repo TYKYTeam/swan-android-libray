@@ -1940,19 +1940,53 @@ facialRecognite
 
 **传参：**
 
-暂未定
-
 ```
 {
-    "callBackMethod": "loadUnreadCount",
+    "isOpenSound": true,
+    "qualityLevel": 1,
+    "isActionLive": true,
+    "isLivenessRandom": true,
+    "iivenessAction": [0, 1,2],
+    "callBackMethod":"getImg"
 }
 ```
+
+- `qualityLevel` 质量等级 0：正常、1：宽松、2：严格， 实名认证场景推荐使用『严格』或『正常』模式，人脸比对场景推荐使用『正常』或『宽松』模式
+- `isOpenSound` 语音播报开关
+- `isActionLive` 活体检测开关
+- `isLivenessRandom` 活体动作是否顺序随机
+- `iivenessAction` 数组，可选0:眨眼 1:张嘴 2：向右摇头 3：向左摇头 4：向上抬头 5：向下低头
+- `callBackMethod` 回调方法
 
 **返回结果：**
 ```
 //成功
 {"code":200,"desc":"","result":""}
 ```
+
+**H5调用示例：**
+```
+window.getImg = function(object) {
+    console.log(object);
+}
+
+function facialRecognite() {
+    if (window.baiduface) {
+        let content = {
+            "isOpenSound": true,
+            "qualityLevel": 1,
+            "isActionLive": true,
+            "isLivenessRandom": true,
+            "iivenessAction": [0, 1, 2],
+            "callBackMethod": "getImg"
+        }
+        let result = window.baiduface.facialRecognite(JSON.stringify(content))
+        alert(result);
+        console.log(result)
+    }
+}
+```
+
 
 ## 关于Module创建
 
