@@ -1,8 +1,10 @@
 package com.tyky.bean;
 
+import com.tyky.webviewBase.model.ParamModel;
+
 import java.util.List;
 
-public class FaceParamModel {
+public class FaceParamModel extends ParamModel {
 
     /**
      * isOpenSound

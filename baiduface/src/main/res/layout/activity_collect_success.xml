@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/text_bottom"
-        android:text="回到首页"
+        android:text="完成"
         android:textColor="#333333"
         android:textSize="18sp"
         android:layout_marginBottom="53dp"

@@ -221,6 +221,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         if (BaiduFaceModuleInit.isActionLive) {
             Intent intent = new Intent(mContext, FaceLivenessExpActivity.class);
             startActivity(intent);
+            // 添加至销毁列表
+            BaiduFaceModuleInit.addDestroyActivity(this, "HomeActivity");
         } else {
             Intent intent = new Intent(mContext, FaceDetectExpActivity.class);
             startActivity(intent);

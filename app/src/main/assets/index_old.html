@@ -763,6 +763,10 @@
             }
         }
 
+        window.getImg = function(object) {
+            console.log(object);
+        }
+
         function facialRecognite() {
             if (window.baiduface) {
                 let content = {
@@ -770,7 +774,8 @@
                     "qualityLevel": 1,
                     "isActionLive": true,
                     "isLivenessRandom": true,
-                    "iivenessAction": [0, 1,2]
+                    "iivenessAction": [0, 1, 2],
+                    "callBackMethod": "getImg"
                 }
                 let result = window.baiduface.facialRecognite(JSON.stringify(content))
                 alert(result);

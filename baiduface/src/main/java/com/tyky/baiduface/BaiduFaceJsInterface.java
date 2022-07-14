@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.GsonUtils;
 import com.google.gson.Gson;
 import com.tyky.bean.FaceParamModel;
+import com.tyky.bean.GlobalConstant;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.model.ResultModel;
 
@@ -33,6 +34,9 @@ public class BaiduFaceJsInterface {
     public String facialRecognite(String paramStr) {
         FaceParamModel faceParamModel = gson.fromJson(paramStr, FaceParamModel.class);
 
+        //todo 字段必填验证
+
+        GlobalConstant.methodName = faceParamModel.getCallBackMethod();
         //设置人脸质量
         int qualityLevel = faceParamModel.getQualityLevel();
         if (qualityLevel == Const.QUALITY_NORMAL) {

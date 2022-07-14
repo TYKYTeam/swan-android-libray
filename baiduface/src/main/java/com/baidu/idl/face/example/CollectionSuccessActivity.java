@@ -16,8 +16,14 @@ import com.baidu.idl.face.platform.utils.Base64Utils;
 import com.baidu.idl.face.platform.utils.BitmapUtils;
 import com.baidu.idl.face.platform.utils.DensityUtils;
 import com.baidu.idl.face.platform.utils.FileUtils;
+import com.socks.library.KLog;
 import com.tyky.baiduface.BaiduFaceModuleInit;
 import com.tyky.baiduface.R;
+import com.tyky.bean.GlobalConstant;
+import com.tyky.webviewBase.event.JsCallBackEvent;
+import com.tyky.webviewBase.model.ResultModel;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 
@@ -33,6 +39,7 @@ public class CollectionSuccessActivity extends BaseActivity {
     protected String mDestroyType;
     private ImageView mImageCircle;
     private ImageView mImageStar;
+    private String bmpStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +59,7 @@ public class CollectionSuccessActivity extends BaseActivity {
         Intent intent = getIntent();
         if (intent != null) {
             mDestroyType = intent.getStringExtra("destroyType");
-            String bmpStr = IntentUtils.getInstance().getBitmap();
+            bmpStr = IntentUtils.getInstance().getBitmap();
             if (TextUtils.isEmpty(bmpStr)) {
                 return;
             }
@@ -78,6 +85,7 @@ public class CollectionSuccessActivity extends BaseActivity {
     public void onReturnHome(View v) {
         if ("FaceLivenessExpActivity".equals(mDestroyType)) {
             BaiduFaceModuleInit.destroyActivity("FaceLivenessExpActivity");
+            BaiduFaceModuleInit.destroyActivity("HomeActivity");
         }
         if ("FaceDetectExpActivity".equals(mDestroyType)) {
             BaiduFaceModuleInit.destroyActivity("FaceDetectExpActivity");
@@ -93,6 +101,7 @@ public class CollectionSuccessActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().post(new JsCallBackEvent(GlobalConstant.methodName, ResultModel.success(bmpStr)));
         IntentUtils.getInstance().release();
     }
 
@@ -114,6 +123,7 @@ public class CollectionSuccessActivity extends BaseActivity {
                     }
                     BitmapUtils.saveBitmap(new File(path), bitmap);
                     bitmap.recycle();
+                    KLog.d("人脸识别图片位置：" + path);
                 } catch (Exception e) {
                     System.err.print(e.getMessage());
                 }
