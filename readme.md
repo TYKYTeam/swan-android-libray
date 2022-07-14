@@ -1966,6 +1966,7 @@ facialRecognite
 
 **H5调用示例：**
 ```
+//object.result是图片的base64字符串
 window.getImg = function(object) {
     console.log(object);
 }
