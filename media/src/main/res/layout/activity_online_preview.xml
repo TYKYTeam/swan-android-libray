@@ -8,11 +8,6 @@
     android:layout_height="match_parent"
     tools:context=".activity.OnlinePreviewActivity">
 
-    <Button
-        android:id="@+id/btnTest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
     <com.tyky.webviewBase.view.CustomWebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
