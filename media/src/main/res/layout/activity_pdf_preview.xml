@@ -7,8 +7,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".activity.PdfPreviewActivity">
+
     <com.github.barteksc.pdfviewer.PDFView
-        android:visibility="gone"
         android:id="@+id/pdfView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

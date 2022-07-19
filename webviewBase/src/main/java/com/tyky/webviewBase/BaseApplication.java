@@ -2,6 +2,7 @@ package com.tyky.webviewBase;
 
 import android.app.Application;
 
+import com.kongzue.dialogx.DialogX;
 import com.tyky.webviewBase.annotation.ApplicationInit;
 import com.tyky.webviewBase.utils.ReflectUtil;
 
@@ -29,6 +30,9 @@ public class BaseApplication extends Application {
                 }
             }
         }
+
+        //初始化dialog
+        DialogX.init(this);
 
     }
 }
