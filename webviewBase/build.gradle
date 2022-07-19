@@ -54,7 +54,7 @@ dependencies {
     api 'org.greenrobot:eventbus:3.0.0'
     implementation 'androidx.multidex:multidex:2.0.0'
 
-    def dialogx_version = "0.0.45.beta12"
-    implementation "com.github.kongzue.DialogX:DialogX:${dialogx_version}"
+    def dialogx_version = "0.0.45"
+    api "com.github.kongzue.DialogX:DialogX:${dialogx_version}"
 
 }
