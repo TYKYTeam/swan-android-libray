@@ -682,11 +682,11 @@
         }
 
         function previewPdf() {
-            if (window.android_media) {
+            if (window.filePreview) {
                 let content = {
-                    callBackMethod: "myContacts"
+                    content:"https://down.wss.show/lyxttjh/8/ub/8ubglyxttjh?cdn_sign=1658285364-45-0-de4aa017d38d8c9202042c11d67b9dfe&exp=240&response-content-disposition=attachment%3B%20filename%3D%22Android%20%E7%BB%84%E4%BB%B6%E5%BA%93.pdf%22%3B%20filename%2A%3Dutf-8%27%27Android%2520%25E7%25BB%2584%25E4%25BB%25B6%25E5%25BA%2593.pdf"
                 }
-                let result = window.android_media.previewPdf(JSON.stringify(content))
+                let result = window.filePreview.previewPdf(JSON.stringify(content))
                 alert(result);
                 console.log(result)
             }
