@@ -752,10 +752,11 @@
             if (window.notification) {
                 let content = {
                     content: "测试内容11111",
-                    title: "测试标题"
+                    title: "测试标题",
+                    url: "https://stars-one.site"
                 }
                 let result = window.notification.sendNotification(JSON.stringify(content))
-                alert(result);
+                // alert(result);
                 console.log(result)
             }
         }

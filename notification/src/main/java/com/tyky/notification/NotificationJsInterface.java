@@ -7,6 +7,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.google.gson.Gson;
+import com.tyky.notification.bean.NotificationParamModel;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.model.ParamModel;
 import com.tyky.webviewBase.model.ResultModel;
@@ -24,13 +25,14 @@ public class NotificationJsInterface {
      */
     @JavascriptInterface
     public String sendNotification(String paramStr) {
-        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        NotificationParamModel paramModel = gson.fromJson(paramStr, NotificationParamModel.class);
         String content = paramModel.getContent();
         String title = paramModel.getTitle();
-        if (StringUtils.isEmpty(content) || StringUtils.isEmpty(title)) {
+        String url = paramModel.getUrl();
+        if (StringUtils.isEmpty(content) || StringUtils.isEmpty(title) || StringUtils.isEmpty(url)) {
             return gson.toJson(ResultModel.errorParam());
         }
-        NotifyUtil.sendNotification(title,content);
+        NotifyUtil.sendNotification(title,content,url);
         return gson.toJson(ResultModel.success(""));
     }
 

@@ -1,15 +1,18 @@
 package com.tyky.notification;
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ResourceUtils;
+import com.tyky.notification.activity.H5WebviewActivity;
 
 import androidx.core.app.NotificationCompat;
 
@@ -39,6 +42,26 @@ public class NotifyUtil {
         }else{
             notificationManager = (NotificationManager) ActivityUtils.getTopActivity().getSystemService(Context.NOTIFICATION_SERVICE);
         }
+    }
+
+    public static void sendNotification(String title,String text,String url){
+        createNotificationChannel();
+
+        Activity topActivity = ActivityUtils.getTopActivity();
+        Intent intent = new Intent(topActivity, H5WebviewActivity.class);
+        intent.putExtra("url", url);
+        PendingIntent pendingIntent = PendingIntent.getActivity(topActivity, 0, intent, 0);
+        Notification notification = new NotificationCompat.Builder(topActivity,channel_id)
+                .setContentTitle(title)
+                .setContentText(text)
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(ResourceUtils.getDrawableIdByName("ic_launcher"))
+                .setLargeIcon(BitmapFactory.decodeResource(topActivity.getResources(),ResourceUtils.getDrawableIdByName("ic_launcher")))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .build();
+
+        notificationManager.notify(notifyId++,notification);
     }
 
     public static void sendNotification(String title,String text){
