@@ -1,4 +1,4 @@
-package com.tyky.media.activity;
+package com.tyky.filepreview.activity;
 
 import android.os.Bundle;
 
@@ -7,7 +7,7 @@ import com.blankj.utilcode.util.ResourceUtils;
 import com.blankj.utilcode.util.ThreadUtils;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.kongzue.dialogx.dialogs.WaitDialog;
-import com.tyky.media.R;
+import com.tyky.filepreview.R;
 
 import java.io.File;
 

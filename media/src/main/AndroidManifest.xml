@@ -6,7 +6,7 @@
         <activity android:name=".activity.OnlinePreviewActivity" >
 
         </activity>
-        <activity android:name=".activity.PdfPreviewActivity" />
+
         <activity
             android:name=".activity.QrScanActivity"
             android:label="扫一扫" />

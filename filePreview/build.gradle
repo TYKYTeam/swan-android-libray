@@ -32,6 +32,8 @@ android {
 }
 
 dependencies {
+    compileOnly 'androidx.appcompat:appcompat:1.1.0'
+    compileOnly 'com.google.android.material:material:1.1.0'
     //pdf预览 https://github.com/barteksc/AndroidPdfViewer
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
 

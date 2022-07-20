@@ -16,7 +16,6 @@ import com.blankj.utilcode.util.PhoneUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.google.gson.Gson;
 import com.tyky.media.activity.OnlinePreviewActivity;
-import com.tyky.media.activity.PdfPreviewActivity;
 import com.tyky.media.activity.QrScanActivity;
 import com.tyky.media.bean.MyContacts;
 import com.tyky.webviewBase.annotation.WebViewInterface;
@@ -280,16 +279,6 @@ public class MediaJsInterface {
 
     }
 
-    /**
-     * 预览文件（不包含图片）
-     */
-    @JavascriptInterface
-    public String previewPdf(String paramStr) {
-        ActivityUtils.startActivity(PdfPreviewActivity.class);
-        return gson.toJson(ResultModel.success(""));
-
-
-    }
 
     /**
      * 预览在线文件
