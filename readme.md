@@ -43,6 +43,41 @@ implementation 'com.github.TYKYTeam.swan-android-libray:0.2'
 
 包含拍照，选择相册图片，录制视频，选择本地视频文件，录音，选择本地音频文件，和选择其他文件
 
+## filePreview 文件预览
+此模块由于依赖的pdf库较大（15M） 所以单独出来
+
+### 1.pdf文件预览
+
+`previewPdf()`
+
+传递pdf文件的下载链接或base64，实现预览
+
+**传参：**
+```
+{
+    content:"https://down.wss.show/lyxttjh/8/ub/8ubglyxttjh?cdn_sign=1658285364-45-0-de4aa017d38d8c9202042c11d67b9dfe&exp=240&response-content-disposition=attachment%3B%20filename%3D%22Android%20%E7%BB%84%E4%BB%B6%E5%BA%93.pdf%22%3B%20filename%2A%3Dutf-8%27%27Android%2520%25E7%25BB%2584%25E4%25BB%25B6%25E5%25BA%2593.pdf"
+}
+```
+
+content传下载地址，上面示例的下载链接可能已经过期，测试的时候记得更改
+
+**返回结果：**
+```
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.filePreview) {
+    let content = {
+        content:"https://down.wss.show/lyxttjh/8/ub/8ubglyxttjh?cdn_sign=1658285364-45-0-de4aa017d38d8c9202042c11d67b9dfe&exp=240&response-content-disposition=attachment%3B%20filename%3D%22Android%20%E7%BB%84%E4%BB%B6%E5%BA%93.pdf%22%3B%20filename%2A%3Dutf-8%27%27Android%2520%25E7%25BB%2584%25E4%25BB%25B6%25E5%25BA%2593.pdf"
+    }
+    let result = window.filePreview.previewPdf(JSON.stringify(content))
+    alert(result);
+    console.log(result)
+}
+```
+
 ## media使用
 
 ### 1.获取剪切板内容
