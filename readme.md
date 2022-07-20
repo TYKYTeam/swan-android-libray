@@ -59,7 +59,7 @@ implementation 'com.github.TYKYTeam.swan-android-libray:0.2'
 }
 ```
 
-content传下载地址，上面示例的下载链接可能已经过期，测试的时候记得更改
+content传下载地址或base64字符串（base64不需要逗号），上面示例的下载链接可能已经过期，测试的时候记得更改
 
 **返回结果：**
 ```
