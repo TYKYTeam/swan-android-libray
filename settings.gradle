@@ -1,4 +1,4 @@
-
+include ':filePreview'
 include ':baiduface'
 include ':page'
 include ':map'
