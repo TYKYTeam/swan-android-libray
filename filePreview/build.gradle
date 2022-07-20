@@ -32,6 +32,8 @@ android {
 }
 
 dependencies {
+    //pdf预览 https://github.com/barteksc/AndroidPdfViewer
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
 
     compileOnly 'org.apache.commons:commons-lang3:3.9'
 
