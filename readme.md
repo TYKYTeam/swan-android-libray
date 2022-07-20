@@ -366,9 +366,12 @@ sendNotification 状态栏显示一条新通知
 ```
 {
     content: "测试内容11111",
-    title:"测试标题"
+    title:"测试标题"，
+    url: "https://stars-one.site"
 }
 ```
+
+可传入url，点击之后会新开页面加载url
 
 **返回结果：**
 ```
@@ -381,7 +384,8 @@ sendNotification 状态栏显示一条新通知
 if (window.notification) {
     let content = {
         content: "测试内容11111",
-        title:"测试标题"
+        title:"测试标题"，
+        url: "https://stars-one.site"
     }
     let result = window.notification.sendNotification(JSON.stringify(content))
     console.log(result)
