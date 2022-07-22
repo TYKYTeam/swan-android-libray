@@ -24,6 +24,7 @@ android {
             minifyEnabled false
 
         }
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -38,4 +39,5 @@ dependencies {
     compileOnly 'com.github.zhaokaiqiang.klog:library:1.6.0'
 
     compileOnly project(path: ':webviewBase')
+    debugImplementation 'com.guolindev.glance:glance:1.1.0'
 }
