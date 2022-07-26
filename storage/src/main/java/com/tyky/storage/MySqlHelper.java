@@ -77,10 +77,12 @@ public class MySqlHelper extends SQLiteOpenHelper {
         //使用API执行sql语句
 
         writableDatabase.beginTransaction();
-        writableDatabase.execSQL(sql);
-        writableDatabase.setTransactionSuccessful();
-        writableDatabase.endTransaction();
-
+        try {
+            writableDatabase.execSQL(sql);
+            writableDatabase.setTransactionSuccessful();
+        } finally {
+            writableDatabase.endTransaction();
+        }
     }
 
     /**
@@ -107,13 +109,15 @@ public class MySqlHelper extends SQLiteOpenHelper {
                 contentValues.put(column, value);
             }
             //数据库的读写操作
-
             writableDatabase.beginTransaction();
-            //影响的行数，之后返回结果
-            long row = writableDatabase.insert(tableName, null, contentValues);
-            writableDatabase.setTransactionSuccessful();
-            writableDatabase.endTransaction();
-
+            long row;
+            try {
+                writableDatabase.setTransactionSuccessful();
+                //影响的行数，之后返回结果
+                row = writableDatabase.insert(tableName, null, contentValues);
+            } finally {
+                writableDatabase.endTransaction();
+            }
             return (int) row;
         } catch (Exception e) {
             return 0;
@@ -148,14 +152,14 @@ public class MySqlHelper extends SQLiteOpenHelper {
             }
             //数据库的读写操作
             writableDatabase.beginTransaction();
-            //影响的行数，之后返回结果
-
-            long row = writableDatabase.update(tableName, contentValues, where, whereValueArr);
-
-            writableDatabase.setTransactionSuccessful();
-            writableDatabase.endTransaction();
-
-
+            long row;
+            try {
+                //影响的行数，之后返回结果
+                row = writableDatabase.update(tableName, contentValues, where, whereValueArr);
+                writableDatabase.setTransactionSuccessful();
+            } finally {
+                writableDatabase.endTransaction();
+            }
             return (int) row;
         } catch (Exception e) {
             return 0;
@@ -195,7 +199,7 @@ public class MySqlHelper extends SQLiteOpenHelper {
         //开启事务
         writableDatabase.beginTransaction();
         try {
-            Cursor cursor = writableDatabase.query(tableName, columnArr, where, whereValueArr, groupBy,having,orderBy,limit);
+            Cursor cursor = writableDatabase.query(tableName, columnArr, where, whereValueArr, groupBy, having, orderBy, limit);
             //Cursor cursor = writableDatabase.query(tableName, columnArr, where, whereValueArr, groupBy, having, orderBy, limit);
             //遍历游标，取得所有数据
             while (cursor.moveToNext()) {
@@ -223,56 +227,38 @@ public class MySqlHelper extends SQLiteOpenHelper {
     public void excuteSql(String sql) {
 
         writableDatabase.beginTransaction();
-        writableDatabase.execSQL(sql);
-        writableDatabase.setTransactionSuccessful();
-        writableDatabase.endTransaction();
-
-
+        try {
+            writableDatabase.execSQL(sql);
+            writableDatabase.setTransactionSuccessful();
+        } finally {
+            writableDatabase.endTransaction();
+        }
     }
 
     public List<Map> query(String sql) {
-
         writableDatabase.beginTransaction();
-
-        Cursor cursor = writableDatabase.rawQuery(sql, null);
         List<Map> list = new ArrayList<>();
-        while (cursor.moveToNext()) {
-            Map<String, Object> map = new HashMap<>();
+        try {
+            Cursor cursor = writableDatabase.rawQuery(sql, null);
+            while (cursor.moveToNext()) {
+                Map<String, Object> map = new HashMap<>();
 
-            int columnCount = cursor.getColumnCount();
-            for (int i = 0; i < columnCount; i++) {
-                String columnName = cursor.getColumnName(i);
-                String value = cursor.getString(i);
-                map.put(columnName, value);
+                int columnCount = cursor.getColumnCount();
+                for (int i = 0; i < columnCount; i++) {
+                    String columnName = cursor.getColumnName(i);
+                    String value = cursor.getString(i);
+                    map.put(columnName, value);
+                }
+                list.add(map);
             }
-            list.add(map);
+
+            cursor.close();
+            writableDatabase.setTransactionSuccessful();
+        } finally {
+            writableDatabase.endTransaction();
         }
 
-        cursor.close();
-        writableDatabase.setTransactionSuccessful();
-        writableDatabase.endTransaction();
-
         return list;
-    }
-
-
-    /**
-     * 插入数据
-     *
-     * @return
-     */
-    public int insert(SqlParamModel sqlParamModel) {
-        String tableName = sqlParamModel.getTableName();
-
-        writableDatabase.beginTransaction();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("name", "name-value");
-
-        long rows = writableDatabase.insert("tableName", null, contentValues);
-        writableDatabase.setTransactionSuccessful();
-        writableDatabase.endTransaction();
-
-        return (int) rows;
     }
 
     /**
@@ -301,7 +287,7 @@ public class MySqlHelper extends SQLiteOpenHelper {
             writableDatabase.setTransactionSuccessful();
         } catch (Exception e) {
 
-        }finally {
+        } finally {
             writableDatabase.endTransaction();
         }
         return result;
