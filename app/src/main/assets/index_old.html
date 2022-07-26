@@ -138,6 +138,7 @@
                     <button type="default" onclick="queryAllTable()">数据库查询全部数据</button>
                     <button type="default" onclick="queryTable()">数据库条件查询数据</button>
                     <button type="default" onclick="deleteRecord()">数据库删除数据</button>
+                    <button type="default" onclick="isTableExists()">数据库表是否存在</button>
                 </div>
             </fieldset>
 
@@ -661,12 +662,12 @@
             }
         }
         
-        function query() {
+        function isTableExists() {
             if (window.storage) {
                 let content = {
-                    content: "select * from student"
+                    tableName:"student"
                 }
-                let result = window.storage.query(JSON.stringify(content))
+                let result = window.storage.isTableExists(JSON.stringify(content))
                 alert(result);
                 console.log(result)
             }

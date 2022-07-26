@@ -150,7 +150,7 @@ public class StorageJsInterface {
     }
 
     /**
-     * 更新数据
+     * 删除数据
      *
      * @param paramStr
      * @return
@@ -172,6 +172,30 @@ public class StorageJsInterface {
     }
 
     /**
+     * 判断表是否存在
+     *
+     * @param paramStr
+     * @return
+     */
+    @JavascriptInterface
+    public String isTableExists(String paramStr) {
+        SqlParamModel sqlParamModel = gson.fromJson(paramStr, SqlParamModel.class);
+        String tableName = sqlParamModel.getTableName();
+
+        if (StringUtils.isTrimEmpty(tableName)) {
+            return gson.toJson(ResultModel.errorParam());
+        }
+        if (mySqlHelper.tableIsExist(tableName)) {
+            boolean b = mySqlHelper.tableIsExist(sqlParamModel.getTableName());
+            return gson.toJson(ResultModel.success(b));
+        } else {
+            return gson.toJson(ResultModel.errorParam(tableName + "表不存在,请先执行创表操作！"));
+        }
+    }
+
+
+
+    /**
      * 原生查询（sql）
      *
      * @param paramStr
@@ -189,25 +213,4 @@ public class StorageJsInterface {
         KLog.e(result);
         return gson.toJson(ResultModel.success(""));
     }
-
-    /**
-     * 查询(按照规则来的)
-     *
-     * @param paramStr
-     * @return
-     */
-    @JavascriptInterface
-    public String query(String paramStr) {
-        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
-        String content = paramModel.getContent();
-        if (StringUtils.isTrimEmpty(content)) {
-            return gson.toJson(ResultModel.errorParam());
-        }
-
-        List<Map> result = mySqlHelper.query(content);
-        KLog.e(result);
-        return gson.toJson(ResultModel.success(result));
-    }
-
-
 }
