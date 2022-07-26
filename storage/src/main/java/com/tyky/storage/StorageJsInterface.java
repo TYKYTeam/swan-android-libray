@@ -19,6 +19,7 @@ import java.util.Map;
 public class StorageJsInterface {
     Gson gson = GsonUtils.getGson();
 
+    MySqlHelper mySqlHelper = new MySqlHelper();
 
     /**
      * 保存数据
@@ -72,7 +73,6 @@ public class StorageJsInterface {
         if (StringUtils.isTrimEmpty(tableName) || StringUtils.isTrimEmpty(columns) || StringUtils.isTrimEmpty(columnTypes)) {
             return gson.toJson(ResultModel.errorParam());
         }
-        MySqlHelper mySqlHelper = new MySqlHelper();
         mySqlHelper.createTable(sqlParamModel);
         return gson.toJson(ResultModel.success(""));
     }
@@ -92,11 +92,40 @@ public class StorageJsInterface {
         if (StringUtils.isTrimEmpty(tableName) || StringUtils.isTrimEmpty(columns) || StringUtils.isTrimEmpty(values)) {
             return gson.toJson(ResultModel.errorParam());
         }
-        MySqlHelper mySqlHelper = new MySqlHelper();
-        int row = mySqlHelper.insertTable(sqlParamModel);
-        return gson.toJson(ResultModel.success(row));
+        if (mySqlHelper.tableIsExist(tableName)) {
+            int row = mySqlHelper.insertTable(sqlParamModel);
+            return gson.toJson(ResultModel.success(row));
+        } else {
+            return gson.toJson(ResultModel.errorParam(tableName + "表不存在，请先执行创表操作！"));
+        }
+
     }
 
+    /**
+     * 更新数据
+     *
+     * @param paramStr
+     * @return
+     */
+    @JavascriptInterface
+    public String updateTable(String paramStr) {
+        SqlParamModel sqlParamModel = gson.fromJson(paramStr, SqlParamModel.class);
+        String tableName = sqlParamModel.getTableName();
+        String columns = sqlParamModel.getColumns();
+        String values = sqlParamModel.getValues();
+        String where = sqlParamModel.getWhere();
+        String whereValues = sqlParamModel.getWhereValues();
+
+        if (StringUtils.isTrimEmpty(tableName) || StringUtils.isTrimEmpty(columns) || StringUtils.isTrimEmpty(values) || StringUtils.isTrimEmpty(where) || StringUtils.isTrimEmpty(whereValues)) {
+            return gson.toJson(ResultModel.errorParam());
+        }
+        if (mySqlHelper.tableIsExist(tableName)) {
+            int row = mySqlHelper.updateTable(sqlParamModel);
+            return gson.toJson(ResultModel.success(row));
+        } else {
+            return gson.toJson(ResultModel.errorParam(tableName + "表不存在,请先执行创表操作！"));
+        }
+    }
 
     /**
      * 原生查询（sql）
@@ -130,6 +159,7 @@ public class StorageJsInterface {
         if (StringUtils.isTrimEmpty(content)) {
             return gson.toJson(ResultModel.errorParam());
         }
+
         MySqlHelper mySqlHelper = new MySqlHelper();
         List<Map> result = mySqlHelper.query(content);
         KLog.e(result);

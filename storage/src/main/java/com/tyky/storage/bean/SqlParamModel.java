@@ -9,7 +9,24 @@ public class SqlParamModel  extends ParamModel {
 
     private String values;
 
+    private String where;
+    private String whereValues;
 
+    public String getWhereValues() {
+        return whereValues;
+    }
+
+    public void setWhereValues(String whereValues) {
+        this.whereValues = whereValues;
+    }
+
+    public String getWhere() {
+        return where;
+    }
+
+    public void setWhere(String where) {
+        this.where = where;
+    }
 
     public String getValues() {
         return values;

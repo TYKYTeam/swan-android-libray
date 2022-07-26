@@ -82,30 +82,77 @@ public class MySqlHelper extends SQLiteOpenHelper {
      * @param sqlParamModel
      */
     public int insertTable(SqlParamModel sqlParamModel) {
-        //参数的获取
-        String tableName = sqlParamModel.getTableName();
-        String columns = sqlParamModel.getColumns();
-        String values = sqlParamModel.getValues();
-        //切割获取数据
-        String[] columnArr = columns.split(",");
-        String[] columnTypeArr = values.split(",");
+        try {
+            //参数的获取
+            String tableName = sqlParamModel.getTableName();
+            String columns = sqlParamModel.getColumns();
+            String values = sqlParamModel.getValues();
 
-        ContentValues contentValues = new ContentValues();
-        //拼接数据的数值
-        for (int i = 0; i < columnArr.length; i++) {
-            String column = columnArr[i];
-            String value = columnTypeArr[i];
-            contentValues.put(column,value);
+            //切割获取数据
+            String[] columnArr = columns.split(",");
+            String[] columnTypeArr = values.split(",");
+
+            ContentValues contentValues = new ContentValues();
+            //拼接数据的数值
+            for (int i = 0; i < columnArr.length; i++) {
+                String column = columnArr[i];
+                String value = columnTypeArr[i];
+                contentValues.put(column, value);
+            }
+            //数据库的读写操作
+            SQLiteDatabase writableDatabase = getWritableDatabase();
+            writableDatabase.beginTransaction();
+            //影响的行数，之后返回结果
+            long row = writableDatabase.insert(tableName, null, contentValues);
+            writableDatabase.setTransactionSuccessful();
+            writableDatabase.endTransaction();
+            writableDatabase.close();
+            return (int) row;
+        } catch (Exception e) {
+            return 0;
         }
-        //数据库的读写操作
-        SQLiteDatabase writableDatabase = getWritableDatabase();
-        writableDatabase.beginTransaction();
-        //影响的行数，之后返回结果
-        long row = writableDatabase.insert(tableName, null, contentValues);
-        writableDatabase.setTransactionSuccessful();
-        writableDatabase.endTransaction();
-        writableDatabase.close();
-        return (int) row;
+
+    }
+
+    /**
+     * 更新数据
+     *
+     * @param sqlParamModel
+     */
+    public int updateTable(SqlParamModel sqlParamModel) {
+        try {
+            //参数的获取
+            String tableName = sqlParamModel.getTableName();
+            String columns = sqlParamModel.getColumns();
+            String values = sqlParamModel.getValues();
+            String where = sqlParamModel.getWhere();
+            String whereValues = sqlParamModel.getWhereValues();
+            String[] whereValueArr = whereValues.split(",");
+            //切割获取数据
+            String[] columnArr = columns.split(",");
+            String[] columnTypeArr = values.split(",");
+
+            ContentValues contentValues = new ContentValues();
+            //拼接数据的数值
+            for (int i = 0; i < columnArr.length; i++) {
+                String column = columnArr[i];
+                String value = columnTypeArr[i];
+                contentValues.put(column, value);
+            }
+            //数据库的读写操作
+            SQLiteDatabase writableDatabase = getWritableDatabase();
+            writableDatabase.beginTransaction();
+            //影响的行数，之后返回结果
+
+            long row = writableDatabase.update(tableName, contentValues, where, whereValueArr);
+
+            writableDatabase.setTransactionSuccessful();
+            writableDatabase.endTransaction();
+            writableDatabase.close();
+            return (int) row;
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     /**
@@ -152,7 +199,6 @@ public class MySqlHelper extends SQLiteOpenHelper {
     /**
      * 插入数据
      *
-     *
      * @return
      */
     public int insert(SqlParamModel sqlParamModel) {
@@ -167,6 +213,36 @@ public class MySqlHelper extends SQLiteOpenHelper {
         writableDatabase.endTransaction();
         writableDatabase.close();
         return (int) rows;
+    }
+
+    /**
+     * 表是否存在
+     *
+     * @param tabName
+     * @return
+     */
+    public boolean tableIsExist(String tabName) {
+        boolean result = false;
+        if (tabName == null) {
+            return false;
+        }
+        SQLiteDatabase writableDatabase = getWritableDatabase();
+        writableDatabase.beginTransaction();
+        Cursor cursor = null;
+        try {
+            String sql = "select count(1) as c from sqlite_master where type ='table' and name ='" + tabName.trim() + "' ";
+            cursor = writableDatabase.rawQuery(sql, null);
+            if (cursor.moveToNext()) {
+                int count = cursor.getInt(0);
+                if (count > 0) {
+                    result = true;
+                }
+            }
+
+        } catch (Exception e) {
+
+        }
+        return result;
     }
 
 }

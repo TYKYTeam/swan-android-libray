@@ -134,6 +134,7 @@
                     <button type="default" onclick="get()">读取Sp数据</button>
                     <button type="default" onclick="createTable()">数据库创表</button>
                     <button type="default" onclick="insertTable()">数据库插入数据</button>
+                    <button type="default" onclick="updateTable()">数据库更新数据</button>
                     <button type="default" onclick="query()">执行查询</button>
                     <button type="default" onclick="createTable()">websql</button>
                 </div>
@@ -603,10 +604,24 @@
                 console.log(result)
             }
         }
+        function updateTable() {
+            if (window.storage) {
+                let content = {
+                    tableName:"student",
+                    columns:"name,age",
+                    values:"'张三',19",
+                    where:"id = ?",
+                    whereValues:"1"
+                }
+                let result = window.storage.updateTable(JSON.stringify(content))
+                alert(result);
+                console.log(result)
+            }
+        }
         function query() {
             if (window.storage) {
                 let content = {
-                    content: "select * from person"
+                    content: "select * from student"
                 }
                 let result = window.storage.query(JSON.stringify(content))
                 alert(result);
