@@ -1060,9 +1060,9 @@ if (window.storage) {
 
 ### 7.数据库删除数据
 
-queryTable
+deleteRecord
 
-查询数据库指定表数据
+删除数据库指定表的数据
 
 **传参：**
 
@@ -1076,12 +1076,12 @@ queryTable
 
 - `tableName` 表名
 - `where` 查询条件
-- `whereValues` 条件数值数组（主要与where里出现的？号顺序对应）
+- `whereValues` 条件数值数组（主要与where里出现的?号顺序对应）
 
 上面示例相当于以下sql：
 
 ```sql
-delete student where age ==19
+delete student where age = 19
 ```
 
 **返回结果：**
@@ -1103,8 +1103,47 @@ if (window.storage) {
    console.log(result)
 }
 ```
-### 8.数据库执行sql
+### 8.数据库判断表是否存在
 
+isTableExists
+
+数据库判断表是否存在
+
+**传参：**
+
+```js
+{
+    tableName:"student"
+}
+```
+
+- `tableName` 表名
+
+上面示例相当于以下sql：
+
+```sql
+delete student where age = 19
+```
+
+**返回结果：**
+```js
+//成功 result返回表是否存在的boolean
+{"code":200,"desc":"","result":true}
+```
+
+**H5调用示例：**
+```js
+if (window.storage) {
+    let content = {
+        tableName:"student"
+    }
+    let result = window.storage.isTableExists(JSON.stringify(content))
+    alert(result);
+    console.log(result)
+}
+```
+### 9.数据库执行sql
+rowQuery
 ## listener使用
 ### 1. 注册网络断开连接监听
 
