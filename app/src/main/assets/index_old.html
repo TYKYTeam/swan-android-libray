@@ -135,8 +135,9 @@
                     <button type="default" onclick="createTable()">数据库创表</button>
                     <button type="default" onclick="insertTable()">数据库插入数据</button>
                     <button type="default" onclick="updateTable()">数据库更新数据</button>
-                    <button type="default" onclick="queryTable()">执行查询</button>
-                    <button type="default" onclick="createTable()">websql</button>
+                    <button type="default" onclick="queryAllTable()">数据库查询全部数据</button>
+                    <button type="default" onclick="queryTable()">数据库条件查询数据</button>
+                    <button type="default" onclick="deleteRecord()">数据库删除数据</button>
                 </div>
             </fieldset>
 
@@ -618,6 +619,18 @@
                 console.log(result)
             }
         }
+        
+        function queryAllTable() {
+            if (window.storage) {
+                let content = {
+                    tableName:"student"
+                }
+                let result = window.storage.queryTable(JSON.stringify(content))
+                alert(result);
+                console.log(result)
+            }
+        }
+        
         function queryTable() {
             if (window.storage) {
                 let content = {
@@ -630,6 +643,19 @@
                     limit:"1"
                 }
                 let result = window.storage.queryTable(JSON.stringify(content))
+                alert(result);
+                console.log(result)
+            }
+        }
+        
+        function deleteRecord() {
+            if (window.storage) {
+                let content = {
+                    tableName:"student",
+                    where:"age = ?",
+                    whereValues:"19"
+                }
+                let result = window.storage.deleteRecord(JSON.stringify(content))
                 alert(result);
                 console.log(result)
             }

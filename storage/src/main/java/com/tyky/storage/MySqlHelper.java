@@ -220,6 +220,33 @@ public class MySqlHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * 删除数据
+     * @param sqlParamModel
+     * @return 删除记录行数
+     */
+    public int deleteRecord(SqlParamModel sqlParamModel) {
+        String tableName = sqlParamModel.getTableName();
+        String where = sqlParamModel.getWhere();
+        String whereValues = sqlParamModel.getWhereValues();
+        String[] whereValueArr = null;
+        if (!TextUtils.isEmpty(whereValues)) {
+            whereValueArr = whereValues.split(",");
+        }
+
+        writableDatabase.beginTransaction();
+        int row;
+        try {
+            row = writableDatabase.delete(tableName, where, whereValueArr);
+            writableDatabase.setTransactionSuccessful();
+
+        } finally {
+            //事务结束
+            writableDatabase.endTransaction();
+        }
+        return row;
+    }
+
+    /**
      * 执行sql语句（一般是创表语句）
      *
      * @param sql
