@@ -1,12 +1,15 @@
 package com.tyky.storage;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.TextUtils;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.socks.library.KLog;
 import com.tyky.storage.bean.SqlParamModel;
 
@@ -77,7 +80,7 @@ public class MySqlHelper extends SQLiteOpenHelper {
         writableDatabase.execSQL(sql);
         writableDatabase.setTransactionSuccessful();
         writableDatabase.endTransaction();
-        
+
     }
 
     /**
@@ -110,7 +113,7 @@ public class MySqlHelper extends SQLiteOpenHelper {
             long row = writableDatabase.insert(tableName, null, contentValues);
             writableDatabase.setTransactionSuccessful();
             writableDatabase.endTransaction();
-            
+
             return (int) row;
         } catch (Exception e) {
             return 0;
@@ -151,12 +154,65 @@ public class MySqlHelper extends SQLiteOpenHelper {
 
             writableDatabase.setTransactionSuccessful();
             writableDatabase.endTransaction();
-            
+
 
             return (int) row;
         } catch (Exception e) {
             return 0;
         }
+    }
+
+    /**
+     * 查询数据
+     *
+     * @param sqlParamModel
+     * @return
+     */
+    @SuppressLint("Recycle")
+    public List<Map> queryTable(SqlParamModel sqlParamModel) {
+        //参数的获取
+        String tableName = sqlParamModel.getTableName();
+        String where = sqlParamModel.getWhere();
+        String columns = sqlParamModel.getColumns();
+
+        String[] columnArr = null;
+        if (!StringUtils.isEmpty(columns)) {
+            columnArr = columns.split(",");
+        }
+
+        //获取前端传来的参数
+        String whereValues = sqlParamModel.getWhereValues();
+        String groupBy = sqlParamModel.getGroupBy();
+        String having = sqlParamModel.getHaving();
+        String orderBy = sqlParamModel.getOrderBy();
+        String limit = sqlParamModel.getLimit();
+        String[] whereValueArr = null;
+        if (!TextUtils.isEmpty(whereValues)) {
+            whereValueArr = whereValues.split(",");
+        }
+
+        List<Map> list = new ArrayList<>();
+        //开启事务
+        writableDatabase.beginTransaction();
+        try {
+            Cursor cursor = writableDatabase.query(tableName, columnArr, where, whereValueArr, groupBy,having,orderBy,limit);
+            //Cursor cursor = writableDatabase.query(tableName, columnArr, where, whereValueArr, groupBy, having, orderBy, limit);
+            //遍历游标，取得所有数据
+            while (cursor.moveToNext()) {
+                Map<String, Object> map = new HashMap<>();
+                int columnCount = cursor.getColumnCount();
+                for (int i = 0; i < columnCount; i++) {
+                    String columnName = cursor.getColumnName(i);
+                    String value = cursor.getString(i);
+                    map.put(columnName, value);
+                }
+                list.add(map);
+            }
+        } finally {
+            //事务结束
+            writableDatabase.endTransaction();
+        }
+        return list;
     }
 
     /**
@@ -170,7 +226,7 @@ public class MySqlHelper extends SQLiteOpenHelper {
         writableDatabase.execSQL(sql);
         writableDatabase.setTransactionSuccessful();
         writableDatabase.endTransaction();
-        
+
 
     }
 
@@ -195,7 +251,7 @@ public class MySqlHelper extends SQLiteOpenHelper {
         cursor.close();
         writableDatabase.setTransactionSuccessful();
         writableDatabase.endTransaction();
-        
+
         return list;
     }
 
@@ -215,7 +271,7 @@ public class MySqlHelper extends SQLiteOpenHelper {
         long rows = writableDatabase.insert("tableName", null, contentValues);
         writableDatabase.setTransactionSuccessful();
         writableDatabase.endTransaction();
-        
+
         return (int) rows;
     }
 
@@ -242,9 +298,11 @@ public class MySqlHelper extends SQLiteOpenHelper {
                     result = true;
                 }
             }
-
+            writableDatabase.setTransactionSuccessful();
         } catch (Exception e) {
 
+        }finally {
+            writableDatabase.endTransaction();
         }
         return result;
     }

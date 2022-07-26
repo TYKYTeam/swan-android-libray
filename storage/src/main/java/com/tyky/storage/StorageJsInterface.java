@@ -128,6 +128,28 @@ public class StorageJsInterface {
     }
 
     /**
+     * 更新数据
+     *
+     * @param paramStr
+     * @return
+     */
+    @JavascriptInterface
+    public String queryTable(String paramStr) {
+        SqlParamModel sqlParamModel = gson.fromJson(paramStr, SqlParamModel.class);
+        String tableName = sqlParamModel.getTableName();
+
+        if (StringUtils.isTrimEmpty(tableName) ) {
+            return gson.toJson(ResultModel.errorParam());
+        }
+        if (mySqlHelper.tableIsExist(tableName)) {
+            List<Map> maps = mySqlHelper.queryTable(sqlParamModel);
+            return gson.toJson(ResultModel.success(maps));
+        } else {
+            return gson.toJson(ResultModel.errorParam(tableName + "表不存在,请先执行创表操作！"));
+        }
+    }
+
+    /**
      * 原生查询（sql）
      *
      * @param paramStr
