@@ -858,6 +858,253 @@ if (window.storage) {
 }
 ```
 
+### 3.数据库创表
+
+createTable
+
+数据库创表操作,如果表已存在，不会再次创表表
+
+如果需要使用到数据库功能，建议在JS每次初始化前调用一次此方法
+
+**传参：**
+
+```js
+{
+    tableName:"student",
+    columns:"id,name,age",
+    columnTypes:"int,varcahr(10),int",
+}
+```
+- `tableName` 表名
+- `columns` 字段数组
+- `columnTypes` 字段类型数组
+
+> **PS：字段数据要与字段类型一一对应**
+
+上面示例相当于以下sql：
+```sql
+create table if not exists student(id int,name varchar(10),age int)
+```
+
+**返回结果：**
+```js
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```js
+if (window.storage) {
+    let content = {
+        tableName:"student",
+        columns:"id,name,age",
+        columnTypes:"int,varcahr(10),int",
+    }
+    let result = window.storage.createTable(JSON.stringify(content))
+    alert(result);
+    console.log(result)
+}
+```
+### 4.数据库插入数据
+insertTable
+
+往数据库指定表插入数据操作
+
+**传参：**
+
+```js
+{
+    tableName:"student",
+    columns:"id,name,age",
+    values:"1,'张三',18",
+}
+```
+- `tableName` 表名
+- `columns` 字段数组
+- `values` 字段数值数组
+
+> **PS：字段数据要与字段数值数组一一对应**
+
+上面示例相当于以下sql：
+```sql
+insert into student(id,name,age) values(1,'张三',18)
+```
+
+**返回结果：**
+```js
+//成功 result返回插入数据成功后表中存在数据记录条数
+{"code":200,"desc":"","result":8}
+```
+
+**H5调用示例：**
+```js
+if (window.storage) {
+    let content = {
+        tableName:"student",
+        columns:"id,name,age",
+        values:"1,'张三',18",
+    }
+    let result = window.storage.insertTable(JSON.stringify(content))
+    alert(result);
+    console.log(result)
+}
+```
+
+### 5.数据库更新数据
+updateTable
+
+往数据库指定表更新数据操作
+
+**传参：**
+
+```js
+{
+   tableName:"student",
+   columns:"name,age",
+   values:"'张三',23",
+   where:"id = ? and age < ?",
+   whereValues:"1,22"
+}
+```
+
+- `tableName` 表名
+- `columns` 字段数组
+- `values` 字段更新数值数组
+- `where` 查询条件
+- `whereValues` 条件数值数组（主要与where里出现的？号顺序对应）
+
+上面示例相当于以下sql：
+
+```sql
+update student set name='张三',age=23 where id = 1 and age = 22
+```
+
+**返回结果：**
+```js
+//成功 result返回成功插入数据条数
+{"code":200,"desc":"","result":1}
+```
+
+**H5调用示例：**
+```js
+if (window.storage) {
+   let content = {
+       tableName:"student",
+       columns:"name,age",
+       values:"'张三',23",
+       where:"id = ? and age < ?",
+       whereValues:"1,22"
+   }
+   let result = window.storage.updateTable(JSON.stringify(content))
+   alert(result);
+   console.log(result)
+}
+```
+
+### 6.数据库查询数据
+
+queryTable
+
+查询数据库指定表数据
+
+**传参：**
+
+```js
+{
+   tableName:"student",
+   columns："",
+   where:"age <= ?",
+   whereValues:"28",
+   orderBy:"age desc",
+   groupBy:"",
+   having:"",
+   limit:"1"
+}
+```
+
+- `tableName` 表名
+- `columns` 字段数组(不传则是返回表的所有列)
+- `values` 字段更新数值数组
+- `where` 查询条件
+- `whereValues` 条件数值数组（主要与where里出现的？号顺序对应）
+
+上面示例相当于以下sql：
+
+```sql
+select * from student where age <=28 order by age desc limit 1
+```
+
+**返回结果：**
+```js
+//成功 result返回列表数据
+{"code":200,"desc":"","result":[{"name":"'张三'","id":"1","age":"19"}]}
+```
+
+**H5调用示例：**
+```js
+if (window.storage) {
+   let content = {
+       tableName:"student",
+       where:"age <= ?",
+       whereValues:"28",
+       orderBy:"age desc",
+       groupBy:"",
+       having:"",
+       limit:"1"
+   }
+   let result = window.storage.queryTable(JSON.stringify(content))
+   alert(result);
+   console.log(result)
+}
+```
+
+### 7.数据库删除数据
+
+queryTable
+
+查询数据库指定表数据
+
+**传参：**
+
+```js
+{
+   tableName:"student",
+   where:"age = ?",
+   whereValues:"19"
+}
+```
+
+- `tableName` 表名
+- `where` 查询条件
+- `whereValues` 条件数值数组（主要与where里出现的？号顺序对应）
+
+上面示例相当于以下sql：
+
+```sql
+delete student where age ==19
+```
+
+**返回结果：**
+```js
+//成功 result返回删除的条数
+{"code":200,"desc":"","result":2}
+```
+
+**H5调用示例：**
+```js
+if (window.storage) {
+    let content = {
+       tableName:"student",
+       where:"age = ?",
+       whereValues:"19"
+   }
+   let result = window.storage.deleteRecord(JSON.stringify(content))
+   alert(result);
+   console.log(result)
+}
+```
+### 8.数据库执行sql
+
 ## listener使用
 ### 1. 注册网络断开连接监听
 
