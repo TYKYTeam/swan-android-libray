@@ -18,8 +18,12 @@ import java.util.Map;
 import androidx.annotation.Nullable;
 
 public class MySqlHelper extends SQLiteOpenHelper {
+
+    private SQLiteDatabase writableDatabase;
+
     public MySqlHelper() {
         super(ActivityUtils.getTopActivity(), "tyky.db", null, 1);
+        writableDatabase = getWritableDatabase();
     }
 
     public MySqlHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
@@ -68,12 +72,12 @@ public class MySqlHelper extends SQLiteOpenHelper {
         String sql = stringBuffer.toString();
         KLog.d("执行sql：" + sql);
         //使用API执行sql语句
-        SQLiteDatabase writableDatabase = getWritableDatabase();
+
         writableDatabase.beginTransaction();
         writableDatabase.execSQL(sql);
         writableDatabase.setTransactionSuccessful();
         writableDatabase.endTransaction();
-        writableDatabase.close();
+        
     }
 
     /**
@@ -100,13 +104,13 @@ public class MySqlHelper extends SQLiteOpenHelper {
                 contentValues.put(column, value);
             }
             //数据库的读写操作
-            SQLiteDatabase writableDatabase = getWritableDatabase();
+
             writableDatabase.beginTransaction();
             //影响的行数，之后返回结果
             long row = writableDatabase.insert(tableName, null, contentValues);
             writableDatabase.setTransactionSuccessful();
             writableDatabase.endTransaction();
-            writableDatabase.close();
+            
             return (int) row;
         } catch (Exception e) {
             return 0;
@@ -140,7 +144,6 @@ public class MySqlHelper extends SQLiteOpenHelper {
                 contentValues.put(column, value);
             }
             //数据库的读写操作
-            SQLiteDatabase writableDatabase = getWritableDatabase();
             writableDatabase.beginTransaction();
             //影响的行数，之后返回结果
 
@@ -148,7 +151,8 @@ public class MySqlHelper extends SQLiteOpenHelper {
 
             writableDatabase.setTransactionSuccessful();
             writableDatabase.endTransaction();
-            writableDatabase.close();
+            
+
             return (int) row;
         } catch (Exception e) {
             return 0;
@@ -161,17 +165,17 @@ public class MySqlHelper extends SQLiteOpenHelper {
      * @param sql
      */
     public void excuteSql(String sql) {
-        SQLiteDatabase writableDatabase = getWritableDatabase();
+
         writableDatabase.beginTransaction();
         writableDatabase.execSQL(sql);
         writableDatabase.setTransactionSuccessful();
         writableDatabase.endTransaction();
-        writableDatabase.close();
+        
 
     }
 
     public List<Map> query(String sql) {
-        SQLiteDatabase writableDatabase = getWritableDatabase();
+
         writableDatabase.beginTransaction();
 
         Cursor cursor = writableDatabase.rawQuery(sql, null);
@@ -191,7 +195,7 @@ public class MySqlHelper extends SQLiteOpenHelper {
         cursor.close();
         writableDatabase.setTransactionSuccessful();
         writableDatabase.endTransaction();
-        writableDatabase.close();
+        
         return list;
     }
 
@@ -203,7 +207,7 @@ public class MySqlHelper extends SQLiteOpenHelper {
      */
     public int insert(SqlParamModel sqlParamModel) {
         String tableName = sqlParamModel.getTableName();
-        SQLiteDatabase writableDatabase = getWritableDatabase();
+
         writableDatabase.beginTransaction();
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", "name-value");
@@ -211,7 +215,7 @@ public class MySqlHelper extends SQLiteOpenHelper {
         long rows = writableDatabase.insert("tableName", null, contentValues);
         writableDatabase.setTransactionSuccessful();
         writableDatabase.endTransaction();
-        writableDatabase.close();
+        
         return (int) rows;
     }
 
@@ -226,7 +230,7 @@ public class MySqlHelper extends SQLiteOpenHelper {
         if (tabName == null) {
             return false;
         }
-        SQLiteDatabase writableDatabase = getWritableDatabase();
+
         writableDatabase.beginTransaction();
         Cursor cursor = null;
         try {

@@ -140,7 +140,7 @@ public class StorageJsInterface {
         if (StringUtils.isTrimEmpty(content)) {
             return gson.toJson(ResultModel.errorParam());
         }
-        MySqlHelper mySqlHelper = new MySqlHelper();
+
         List<Map> result = mySqlHelper.query(content);
         KLog.e(result);
         return gson.toJson(ResultModel.success(""));
@@ -160,7 +160,6 @@ public class StorageJsInterface {
             return gson.toJson(ResultModel.errorParam());
         }
 
-        MySqlHelper mySqlHelper = new MySqlHelper();
         List<Map> result = mySqlHelper.query(content);
         KLog.e(result);
         return gson.toJson(ResultModel.success(result));
