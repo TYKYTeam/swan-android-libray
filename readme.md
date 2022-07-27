@@ -1144,6 +1144,42 @@ if (window.storage) {
 ```
 ### 9.数据库执行sql
 rowQuery
+
+执行原生的sql语句，不限于增删改查操作，创表语句也可以
+
+**传参：**
+
+```js
+{
+    content:"select * from student"
+}
+```
+
+**content传sql语句即可**
+
+
+**返回结果：**
+```js
+//成功 
+{"code":200,"desc":"","result":""}
+```
+
+如果是增删改查的sql语句，result返回数据可参考上面4-7的接口返回数据
+
+如果是创表等sql语句，只返回一个空白字符串
+
+**H5调用示例：**
+```js
+if (window.storage) {
+    let content = {
+        content:"select * from student"
+    }
+    let result = window.storage.rowQuery(JSON.stringify(content))
+    alert(result);
+    console.log(result)
+}
+```
+
 ## listener使用
 ### 1. 注册网络断开连接监听
 
