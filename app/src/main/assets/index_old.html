@@ -137,6 +137,7 @@
                     <button type="default" onclick="updateTable()">数据库更新数据</button>
                     <button type="default" onclick="queryAllTable()">数据库查询全部数据</button>
                     <button type="default" onclick="queryTable()">数据库条件查询数据</button>
+                    <button type="default" onclick="rowQuery()">数据库执行sql</button>
                     <button type="default" onclick="deleteRecord()">数据库删除数据</button>
                     <button type="default" onclick="isTableExists()">数据库表是否存在</button>
                 </div>
@@ -631,6 +632,18 @@
                 console.log(result)
             }
         }
+        
+        function rowQuery() {
+            if (window.storage) {
+                let content = {
+                    content:"select * from student"
+                }
+                let result = window.storage.rowQuery(JSON.stringify(content))
+                alert(result);
+                console.log(result)
+            }
+        }
+        
         
         function queryTable() {
             if (window.storage) {

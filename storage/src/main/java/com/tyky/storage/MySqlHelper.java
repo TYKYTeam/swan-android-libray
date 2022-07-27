@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 import android.text.TextUtils;
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -247,21 +248,10 @@ public class MySqlHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * 执行sql语句（一般是创表语句）
-     *
+     * 原生查询
      * @param sql
+     * @return
      */
-    public void excuteSql(String sql) {
-
-        writableDatabase.beginTransaction();
-        try {
-            writableDatabase.execSQL(sql);
-            writableDatabase.setTransactionSuccessful();
-        } finally {
-            writableDatabase.endTransaction();
-        }
-    }
-
     public List<Map> query(String sql) {
         writableDatabase.beginTransaction();
         List<Map> list = new ArrayList<>();
@@ -287,6 +277,61 @@ public class MySqlHelper extends SQLiteOpenHelper {
 
         return list;
     }
+
+    /**
+     * sql
+     * @param sql sql语句不是select update insert delete
+     * @return
+     */
+    public void executeSql(String sql) {
+        writableDatabase.beginTransaction();
+        try {
+            SQLiteStatement sqLiteStatement = writableDatabase.compileStatement(sql);
+            sqLiteStatement.execute();
+            writableDatabase.setTransactionSuccessful();
+        } finally {
+            writableDatabase.endTransaction();
+        }
+    }
+
+    /**
+     * 原生更新
+     * @param sql
+     * @return 影响行数
+     */
+    public int executeUpdateDelete(String sql) {
+        writableDatabase.beginTransaction();
+        int row;
+        try {
+            SQLiteStatement sqLiteStatement = writableDatabase.compileStatement(sql);
+            row = sqLiteStatement.executeUpdateDelete();
+            writableDatabase.setTransactionSuccessful();
+        } finally {
+            writableDatabase.endTransaction();
+        }
+
+        return row;
+    }
+
+    /**
+     * 原生插入数据
+     * @param sql
+     * @return 影响行数
+     */
+    public int insert(String sql) {
+        writableDatabase.beginTransaction();
+        int row;
+        try {
+            SQLiteStatement sqLiteStatement = writableDatabase.compileStatement(sql);
+            row = (int) sqLiteStatement.executeInsert();
+            writableDatabase.setTransactionSuccessful();
+        } finally {
+            writableDatabase.endTransaction();
+        }
+
+        return row;
+    }
+
 
     /**
      * 表是否存在

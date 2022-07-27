@@ -6,7 +6,6 @@ import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.google.gson.Gson;
-import com.socks.library.KLog;
 import com.tyky.storage.bean.SqlParamModel;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.model.ParamModel;
@@ -194,7 +193,6 @@ public class StorageJsInterface {
     }
 
 
-
     /**
      * 原生查询（sql）
      *
@@ -208,9 +206,21 @@ public class StorageJsInterface {
         if (StringUtils.isTrimEmpty(content)) {
             return gson.toJson(ResultModel.errorParam());
         }
+        if (content.startsWith("select")) {
+            List<Map> result = mySqlHelper.query(content);
+            return gson.toJson(ResultModel.success(result));
+        }
+        if (content.startsWith("update") || content.startsWith("delete")) {
+            int row = mySqlHelper.executeUpdateDelete(content);
+            return gson.toJson(ResultModel.success(row));
+        }
+        if (content.startsWith("insert")) {
+            int row = mySqlHelper.insert(content);
+            return gson.toJson(ResultModel.success(row));
+        } else {
+            mySqlHelper.executeSql(content);
+            return gson.toJson(ResultModel.success(""));
+        }
 
-        List<Map> result = mySqlHelper.query(content);
-        KLog.e(result);
-        return gson.toJson(ResultModel.success(""));
     }
 }
