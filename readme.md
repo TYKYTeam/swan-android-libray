@@ -2287,6 +2287,7 @@ if (window.tim) {
 }
 ```
 
+
 ## baiduface
 百度人脸采集功能
 
@@ -2349,6 +2350,107 @@ function facialRecognite() {
 }
 ```
 
+## auth
+### 1.设置手势解锁
+setGesture
+
+设置手势解锁
+
+**传参：**
+
+```
+{
+    errorColor:"#dd001b",
+    errorWidth:5,
+    InsideCircleColor:"#3b5cf0",
+    InsideCircleWidth:5,
+    circleColor:"#aaaa7f",
+    circleWidth:5
+}
+```
+
+- `errorColor` 错误展示的颜色
+- `errorWidth` 错误展示的宽度
+- `InsideCircleColor` 内圆心和连线的颜色
+- `InsideCircleWidth` 内圆心和连线的宽度
+- `circleColor` 圆形颜色
+- `circleWidth` 圆形宽度
+
+上述参数字段都为可选配置，可以依照需求传递
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.auth) {
+    let content = {
+        errorColor:"#dd001b",
+        errorWidth:5,
+        InsideCircleColor:"#3b5cf0",
+        InsideCircleWidth:5,
+        circleColor:"#aaaa7f",
+        circleWidth:5
+    }
+    let result = window.auth.setGesture(JSON.stringify(content))
+    alert(result);
+    console.log(result)
+}
+```
+
+### 2.手势解锁
+gestureUnlocking
+
+手势解锁,需要设置了手势解锁才能打开页面
+
+**传参：**
+
+```
+{
+    errorColor:"#dd001b",
+    errorWidth:5,
+    InsideCircleColor:"#3b5cf0",
+    InsideCircleWidth:5,
+    circleColor:"#aaaa7f",
+    circleWidth:5
+}
+```
+
+- `errorColor` 错误展示的颜色
+- `errorWidth` 错误展示的宽度
+- `InsideCircleColor` 内圆心和连线的颜色
+- `InsideCircleWidth` 内圆心和连线的宽度
+- `circleColor` 圆形颜色
+- `circleWidth` 圆形宽度
+
+上述参数字段都为可选配置，可以依照需求传递
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```js
+if (window.auth) {
+    let content = {
+       errorColor:"#dd001b",
+       errorWidth:5,
+       InsideCircleColor:"#3b5cf0",
+       InsideCircleWidth:5,
+       circleColor:"#aaaa7f",
+       circleWidth:5
+    }
+    let result = window.auth.gestureUnlocking(JSON.stringify(content))
+    alert(result);
+    console.log(result)
+}
+```
+### 3.电子签名
 
 ## 关于Module创建
 
