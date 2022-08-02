@@ -99,6 +99,39 @@ public class GestureUnlockView extends View implements View.OnTouchListener {
         setOnTouchListener(this);
     }
 
+    /**
+     * 设置外面圆形的颜色和粗细
+     * @param color 16进制颜色
+     * @param width 宽度
+     */
+    public void setCircle(String color,int width) {
+        borderPaint.setStrokeWidth(width);
+        borderPaint.setColor(Color.parseColor(color));
+        invalidate();
+    }
+
+    /**
+     * 设置内圈圆形
+     * @param color 16进制颜色
+     * @param width 宽度
+     */
+    public void setInsideCircle(String color,int width) {
+        centerPaint.setStrokeWidth(width);
+        centerPaint.setColor(Color.parseColor(color));
+        invalidate();
+    }
+
+    /**
+     * 设置错误的颜色
+     * @param color 16进制颜色
+     * @param width 宽度
+     */
+    public void setErrorPaint(String color,int width) {
+        errorPaint.setStrokeWidth(width);
+        errorPaint.setColor(Color.parseColor(color));
+        invalidate();
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -110,14 +143,10 @@ public class GestureUnlockView extends View implements View.OnTouchListener {
             KLog.d("宽度：" + width);
             KLog.d("高度：" + height);
 
-
             int min = Math.min(width, height);
             //判断最短边能够被3整除
             int d = min / 3;
             double r = d / 2.0;
-            if (min % 3 != 0) {
-                min = d * 3;
-            }
 
             //按行循环（改y）
             for (int i = 0; i < 3; i++) {

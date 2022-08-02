@@ -895,7 +895,12 @@
         function setGesture() {
             if (window.auth) {
                 let content = {
-                    content: "11"
+                    errorColor:"#dd001b",
+                    errorWidth:5,
+                    InsideCircleColor:"#3b5cf0",
+                    InsideCircleWidth:5,
+                    circleColor:"#aaaa7f",
+                    circleWidth:5
                 }
                 let result = window.auth.setGesture(JSON.stringify(content))
                 alert(result);
@@ -906,7 +911,12 @@
         function gestureUnlocking() {
             if (window.auth) {
                 let content = {
-                    content: "11"
+                   errorColor:"#dd001b",
+                   errorWidth:5,
+                   InsideCircleColor:"#3b5cf0",
+                   InsideCircleWidth:5,
+                   circleColor:"#aaaa7f",
+                   circleWidth:5
                 }
                 let result = window.auth.gestureUnlocking(JSON.stringify(content))
                 alert(result);

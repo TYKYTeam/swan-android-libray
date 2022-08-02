@@ -2,10 +2,14 @@ package com.tyky.auth;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.socks.library.KLog;
+import com.tyky.auth.bean.ColorParamModel;
 import com.tyky.auth.view.GestureUnlockView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +18,7 @@ public class UnLockActivity extends AppCompatActivity {
 
     private TextView tvTip;
     private TextView tvTitle;
+    private GestureUnlockView gestureUnlockView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +27,7 @@ public class UnLockActivity extends AppCompatActivity {
         tvTip = findViewById(R.id.tvTip);
         tvTitle = findViewById(R.id.tvTitle);
 
-        GestureUnlockView gestureUnlockView = findViewById(R.id.gestureUnlockView);
+        gestureUnlockView = findViewById(R.id.gestureUnlockView);
         GestureUnlockView.OnVertifyListener listener = new GestureUnlockView.OnVertifyListener() {
 
             @Override
@@ -45,6 +50,7 @@ public class UnLockActivity extends AppCompatActivity {
             public void onSetSuccess(String pwd) {
                 //ToastUtils.showShort("手势设置成功,密码为" + pwd);
                 ToastUtils.showShort("手势设置成功");
+                SPUtils.getInstance().put("lockPwd", pwd);
                 finish();
             }
 
@@ -57,8 +63,8 @@ public class UnLockActivity extends AppCompatActivity {
         int type = getIntent().getIntExtra("type", 1);
         if (type == 1) {
             //解锁模式
-            String pwd = "0,1,2,5";
-            gestureUnlockView.setUnlockMode(pwd);
+            String lockPwd = SPUtils.getInstance().getString("lockPwd");
+            gestureUnlockView.setUnlockMode(lockPwd);
             tvTitle.setText("手势解锁");
             showTip("绘制图案进行手势解锁");
         } else {
@@ -66,7 +72,46 @@ public class UnLockActivity extends AppCompatActivity {
             gestureUnlockView.setConfigLockMode();
             tvTitle.setText("设置手势密码");
         }
+
+        initColor(getIntent().getStringExtra("colorParam"));
         gestureUnlockView.setOnVertifyListener(listener);
+
+
+    }
+
+    private void initColor(String colorParam) {
+        ColorParamModel colorParamModel = GsonUtils.getGson().fromJson(colorParam, ColorParamModel.class);
+        String circleColor = colorParamModel.getCircleColor();
+        if (TextUtils.isEmpty(circleColor)) {
+            circleColor = "grey";
+        }
+        Integer circleWidth = colorParamModel.getCircleWidth();
+        if (circleWidth == null || circleWidth <=0) {
+            circleWidth = 5;
+        }
+
+        String insideCircleColor = colorParamModel.getInsideCircleColor();
+        if (TextUtils.isEmpty(insideCircleColor)) {
+            insideCircleColor = "blue";
+        }
+        Integer insideCircleWidth = colorParamModel.getInsideCircleWidth();
+        if (insideCircleWidth == null || insideCircleWidth <=0) {
+            insideCircleWidth = 5;
+        }
+
+        String errorColor = colorParamModel.getErrorColor();
+        if (TextUtils.isEmpty(errorColor)) {
+            errorColor = "red";
+        }
+        Integer errorWidth = colorParamModel.getErrorWidth();
+        if (errorWidth == null || errorWidth <=0) {
+            errorWidth = 5;
+        }
+
+        gestureUnlockView.setErrorPaint(errorColor,errorWidth);
+        gestureUnlockView.setCircle(circleColor,circleWidth);
+        gestureUnlockView.setInsideCircle(insideCircleColor,insideCircleWidth);
+
     }
 
     private void showTip(String msg) {
