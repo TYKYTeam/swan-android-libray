@@ -11,7 +11,7 @@ public class MainActivity extends CustomWebViewActivity {
         super.onCreate(savedInstanceState);
         loadUrl("/index_old.html");
 
-        //loadUrl("http://101.43.17.174:10003/#/");
+        //loadUrl("http://183.62.130.45:35603/mobile/cli/");
         //loadUrl("https://www.bingtuanbdc.com.cn/mobile-jsbt/#/home");
 
         /*showTestBtn(new View.OnClickListener() {

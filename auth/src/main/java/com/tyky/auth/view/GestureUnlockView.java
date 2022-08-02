@@ -9,7 +9,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.socks.library.KLog;
 import com.tyky.auth.bean.Piece;
 
@@ -197,6 +196,12 @@ public class GestureUnlockView extends View implements View.OnTouchListener {
         isUnlockMode = unlockMode;
     }
 
+    private OnVertifyListener listener;
+
+    public void setOnVertifyListener(OnVertifyListener listener) {
+        this.listener = listener;
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -250,19 +255,28 @@ public class GestureUnlockView extends View implements View.OnTouchListener {
                         if (currentSize >= minPiece) {
                             //至少要划四个点
                             tempPositionList.addAll(positionList);
-                            ToastUtils.showShort("请再次确认你的手势");
+                            if (listener != null) {
+                                listener.onConfirmSuccess("请再次确认你的手势");
+                            }
                         } else {
                             //没有四个点，提示错误
                             showError();
-                            ToastUtils.showShort("至少需要连接" + minPiece + "个点，请重试");
+                            if (listener != null) {
+                                listener.onError("至少需要连接" + minPiece + "个点，请重试");
+                            }
                         }
                     } else {
                         //必须要画四个点
                         String temp = StringUtils.join(tempPositionList, ",");
                         if (temp.equals(result)) {
-                            ToastUtils.showShort("手势确认成功");
+                            if (listener != null) {
+                                //手势设置成功
+                                listener.onSetSuccess();
+                            }
                         } else {
-                            ToastUtils.showShort("两次手势不一致！");
+                            if (listener != null) {
+                                listener.onError("两次手势不一致，请重试！");
+                            }
                             showError();
                         }
                     }
@@ -305,10 +319,32 @@ public class GestureUnlockView extends View implements View.OnTouchListener {
     /**
      * 监听器
      */
-    interface OnVertifyListener {
-        void onSuccess();
+    public interface OnVertifyListener {
+        /**
+         * 解锁成功
+         */
+        void onUnlockSuccess();
 
+        /**
+         * 解锁失败
+         */
+        void onUnlockError();
+
+        /**
+         * 手势第一次确认成功
+         * @param msg 信息
+         */
+        void onConfirmSuccess(String msg);
+
+        /**
+         * 手势设置成功
+         */
+        void onSetSuccess();
+
+        /**
+         * 错误信息提示
+         * @param error
+         */
         void onError(String error);
-
     }
 }
