@@ -10,7 +10,7 @@ import com.tyky.auth.view.GestureUnlockView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class TestActivity extends AppCompatActivity {
+public class UnLockActivity extends AppCompatActivity {
 
     private TextView tvTip;
     private TextView tvTitle;
@@ -18,7 +18,7 @@ public class TestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
+        setContentView(R.layout.activity_unlock);
         tvTip = findViewById(R.id.tvTip);
         tvTitle = findViewById(R.id.tvTitle);
 
