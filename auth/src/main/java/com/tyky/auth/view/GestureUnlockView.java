@@ -62,6 +62,11 @@ public class GestureUnlockView extends View implements View.OnTouchListener {
      */
     private Point point;
 
+    /**
+     * 密码
+     */
+    private String pwd;
+
     public GestureUnlockView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
@@ -192,8 +197,13 @@ public class GestureUnlockView extends View implements View.OnTouchListener {
         return isUnlockMode;
     }
 
-    public void setUnlockMode(boolean unlockMode) {
-        isUnlockMode = unlockMode;
+    public void setUnlockMode(String pwd) {
+        isUnlockMode = true;
+        this.pwd = pwd;
+    }
+
+    public void setConfigLockMode() {
+        isUnlockMode = false;
     }
 
     private OnVertifyListener listener;
@@ -246,7 +256,16 @@ public class GestureUnlockView extends View implements View.OnTouchListener {
                 KLog.d("结果:" + result);
                 //判断
                 if (isUnlockMode) {
-
+                    if (result.equals(pwd)) {
+                        //判断密码是否相同
+                        if (listener != null) {
+                            listener.onUnlockSuccess();
+                        }
+                    } else {
+                        if (listener != null) {
+                            listener.onUnlockError();
+                        }
+                    }
                 } else {
                     //手势设置
                     int size = tempPositionList.size();
@@ -271,7 +290,7 @@ public class GestureUnlockView extends View implements View.OnTouchListener {
                         if (temp.equals(result)) {
                             if (listener != null) {
                                 //手势设置成功
-                                listener.onSetSuccess();
+                                listener.onSetSuccess(temp);
                             }
                         } else {
                             if (listener != null) {
@@ -332,17 +351,21 @@ public class GestureUnlockView extends View implements View.OnTouchListener {
 
         /**
          * 手势第一次确认成功
+         *
          * @param msg 信息
          */
         void onConfirmSuccess(String msg);
 
         /**
          * 手势设置成功
+         *
+         * @param pwd 密码
          */
-        void onSetSuccess();
+        void onSetSuccess(String pwd);
 
         /**
          * 错误信息提示
+         *
          * @param error
          */
         void onError(String error);

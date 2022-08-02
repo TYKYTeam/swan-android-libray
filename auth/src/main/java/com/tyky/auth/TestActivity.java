@@ -23,42 +23,46 @@ public class TestActivity extends AppCompatActivity {
         tvTitle = findViewById(R.id.tvTitle);
 
         GestureUnlockView gestureUnlockView = findViewById(R.id.gestureUnlockView);
+        GestureUnlockView.OnVertifyListener listener = new GestureUnlockView.OnVertifyListener() {
 
-        int type = getIntent().getIntExtra("type", 2);
+            @Override
+            public void onUnlockSuccess() {
+                ToastUtils.showShort("解锁成功");
+                //finish();
+            }
+
+            @Override
+            public void onUnlockError() {
+                showError("手势错误，请重试");
+            }
+
+            @Override
+            public void onConfirmSuccess(String msg) {
+                showTip(msg);
+            }
+
+            @Override
+            public void onSetSuccess(String pwd) {
+                ToastUtils.showShort("手势设置成功,密码为"+pwd);
+                //finish();
+            }
+
+            @Override
+            public void onError(String error) {
+                KLog.d(error);
+                showError(error);
+            }
+        };
+        int type = getIntent().getIntExtra("type", 1);
         if (type == 1) {
             //解锁模式
+            String pwd = "0,1,2,5";
+            gestureUnlockView.setUnlockMode(pwd);
         } else {
             //设置手势密码模式
-            gestureUnlockView.setOnVertifyListener(new GestureUnlockView.OnVertifyListener() {
-
-                @Override
-                public void onUnlockSuccess() {
-                    //finish();
-                }
-
-                @Override
-                public void onUnlockError() {
-                    showError("手势错误，请重试");
-                }
-
-                @Override
-                public void onConfirmSuccess(String msg) {
-                    showTip(msg);
-                }
-
-                @Override
-                public void onSetSuccess() {
-                    ToastUtils.showShort("手势设置成功");
-                    //finish();
-                }
-
-                @Override
-                public void onError(String error) {
-                    KLog.d(error);
-                    showError(error);
-                }
-            });
+            gestureUnlockView.setConfigLockMode();
         }
+        gestureUnlockView.setOnVertifyListener(listener);
     }
 
     private void showTip(String msg) {
