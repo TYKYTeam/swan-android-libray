@@ -218,6 +218,14 @@
                     <button type="default" onclick="facialRecognite()">人脸采集</button>
                 </div>
             </fieldset>
+
+            <fieldset>
+                <legend>auth 授权</legend>
+                <div class="contentDiv">
+                    <button type="default" onclick="gestureUnlocking()">手势解锁</button>
+                    <button type="default" onclick="setGesture()">设置手势解锁</button>
+                </div>
+            </fieldset>
         </div>
     </body>
 
@@ -585,100 +593,101 @@
         function createTable() {
             if (window.storage) {
                 let content = {
-                    tableName:"student",
-                    columns:"id,name,age",
-                    columnTypes:"int,varcahr(10),int",
+                    tableName: "student",
+                    columns: "id,name,age",
+                    columnTypes: "int,varcahr(10),int",
                 }
                 let result = window.storage.createTable(JSON.stringify(content))
                 alert(result);
                 console.log(result)
             }
         }
-        
+
         function insertTable() {
             if (window.storage) {
                 let content = {
-                    tableName:"student",
-                    columns:"id,name,age",
-                    values:"1,'张三',18",
+                    tableName: "student",
+                    columns: "id,name,age",
+                    values: "1,'张三',18",
                 }
                 let result = window.storage.insertTable(JSON.stringify(content))
                 alert(result);
                 console.log(result)
             }
         }
+
         function updateTable() {
             if (window.storage) {
                 let content = {
-                    tableName:"student",
-                    columns:"name,age",
-                    values:"'张三',23",
-                    where:"id = ? and age < ?",
-                    whereValues:"1,22"
+                    tableName: "student",
+                    columns: "name,age",
+                    values: "'张三',23",
+                    where: "id = ? and age < ?",
+                    whereValues: "1,22"
                 }
                 let result = window.storage.updateTable(JSON.stringify(content))
                 alert(result);
                 console.log(result)
             }
         }
-        
+
         function queryAllTable() {
             if (window.storage) {
                 let content = {
-                    tableName:"student"
+                    tableName: "student"
                 }
                 let result = window.storage.queryTable(JSON.stringify(content))
                 alert(result);
                 console.log(result)
             }
         }
-        
+
         function rowQuery() {
             if (window.storage) {
                 let content = {
-                    content:"select * from student"
+                    content: "select * from student"
                 }
                 let result = window.storage.rowQuery(JSON.stringify(content))
                 alert(result);
                 console.log(result)
             }
         }
-        
-        
+
+
         function queryTable() {
             if (window.storage) {
                 let content = {
-                    tableName:"student",
-                    where:"age <= ?",
-                    whereValues:"28",
-                    orderBy:"age desc",
-                    groupBy:"",
-                    having:"",
-                    limit:"1"
+                    tableName: "student",
+                    where: "age <= ?",
+                    whereValues: "28",
+                    orderBy: "age desc",
+                    groupBy: "",
+                    having: "",
+                    limit: "1"
                 }
                 let result = window.storage.queryTable(JSON.stringify(content))
                 alert(result);
                 console.log(result)
             }
         }
-        
+
         function deleteRecord() {
             if (window.storage) {
                 let content = {
-                    tableName:"student",
-                    where:"age = ?",
-                    whereValues:"19"
+                    tableName: "student",
+                    where: "age = ?",
+                    whereValues: "19"
                 }
                 let result = window.storage.deleteRecord(JSON.stringify(content))
                 alert(result);
                 console.log(result)
             }
         }
-        
+
         function isTableExists() {
             if (window.storage) {
                 let content = {
-                    tableName:"student"
+                    tableName: "student"
                 }
                 let result = window.storage.isTableExists(JSON.stringify(content))
                 alert(result);
@@ -878,6 +887,28 @@
                     content: "11"
                 }
                 let result = window.notification.setBargeCount(JSON.stringify(content))
+                alert(result);
+                console.log(result)
+            }
+        }
+
+        function setGesture() {
+            if (window.auth) {
+                let content = {
+                    content: "11"
+                }
+                let result = window.auth.setGesture(JSON.stringify(content))
+                alert(result);
+                console.log(result)
+            }
+        }
+        
+        function gestureUnlocking() {
+            if (window.auth) {
+                let content = {
+                    content: "11"
+                }
+                let result = window.auth.gestureUnlocking(JSON.stringify(content))
                 alert(result);
                 console.log(result)
             }

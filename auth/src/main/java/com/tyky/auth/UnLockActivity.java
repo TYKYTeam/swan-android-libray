@@ -28,7 +28,7 @@ public class UnLockActivity extends AppCompatActivity {
             @Override
             public void onUnlockSuccess() {
                 ToastUtils.showShort("解锁成功");
-                //finish();
+                finish();
             }
 
             @Override
@@ -43,8 +43,9 @@ public class UnLockActivity extends AppCompatActivity {
 
             @Override
             public void onSetSuccess(String pwd) {
-                ToastUtils.showShort("手势设置成功,密码为"+pwd);
-                //finish();
+                //ToastUtils.showShort("手势设置成功,密码为" + pwd);
+                ToastUtils.showShort("手势设置成功");
+                finish();
             }
 
             @Override
@@ -58,9 +59,12 @@ public class UnLockActivity extends AppCompatActivity {
             //解锁模式
             String pwd = "0,1,2,5";
             gestureUnlockView.setUnlockMode(pwd);
+            tvTitle.setText("手势解锁");
+            showTip("绘制图案进行手势解锁");
         } else {
             //设置手势密码模式
             gestureUnlockView.setConfigLockMode();
+            tvTitle.setText("设置手势密码");
         }
         gestureUnlockView.setOnVertifyListener(listener);
     }
