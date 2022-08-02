@@ -1,3 +1,4 @@
+include ':auth'
 include ':filePreview'
 include ':baiduface'
 include ':page'
