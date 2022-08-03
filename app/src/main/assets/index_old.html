@@ -224,6 +224,7 @@
                 <div class="contentDiv">
                     <button type="default" onclick="gestureUnlocking()">手势解锁</button>
                     <button type="default" onclick="setGesture()">设置手势解锁</button>
+                    <button type="default" onclick="signature()">电子签名</button>
                 </div>
             </fieldset>
         </div>
@@ -903,6 +904,20 @@
                     circleWidth:5
                 }
                 let result = window.auth.setGesture(JSON.stringify(content))
+                alert(result);
+                console.log(result)
+            }
+        }
+        window.getSignature = function(res){
+             console.log("签名图片",res)
+        }
+        
+        function signature() {
+            if (window.auth) {
+                let content = {
+                    callBackMethod:"getSignature"
+                }
+                let result = window.auth.signature(JSON.stringify(content))
                 alert(result);
                 console.log(result)
             }

@@ -3,9 +3,8 @@
     package="com.tyky.auth">
 
     <application>
-        <activity android:name=".UnLockActivity">
-
-        </activity>
+        <activity android:name=".SignatureActivity" android:screenOrientation="landscape"/>
+        <activity android:name=".UnLockActivity" />
     </application>
 
 </manifest>
