@@ -2452,6 +2452,41 @@ if (window.auth) {
 ```
 ### 3.电子签名
 
+signature
+
+打开电子签名页面进行手写签名
+
+**传参：**
+
+```
+{
+    callBackMethod:"getSignature"
+}
+```
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```js
+window.getSignature = function(res){
+    //res.result为签名图片的base64字符串
+    console.log("签名图片",res)
+}
+
+if (window.auth) {
+    let content = {
+        callBackMethod:"getSignature"
+    }
+    let result = window.auth.signature(JSON.stringify(content))
+    alert(result);
+    console.log(result)
+}
+```
+
 ## 关于Module创建
 
 
