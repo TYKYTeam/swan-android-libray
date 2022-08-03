@@ -8,7 +8,6 @@ import com.blankj.utilcode.util.EncodeUtils;
 import com.blankj.utilcode.util.ImageUtils;
 import com.tyky.auth.view.PaintView;
 import com.tyky.webviewBase.event.JsCallBackEvent;
-import com.tyky.webviewBase.model.ResultModel;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -38,7 +37,7 @@ public class SignatureActivity extends AppCompatActivity {
             cachebBitmap.recycle();
             cachebBitmap = null;
             //回调js的方法
-            EventBus.getDefault().post(new JsCallBackEvent(callBackMethod, ResultModel.success(base64)));
+            EventBus.getDefault().post(new JsCallBackEvent(callBackMethod, base64));
             finish();
         });
     }
