@@ -30,6 +30,7 @@ import com.tyky.webviewBase.event.JsCallBackEvent;
 import com.tyky.webviewBase.event.TakeScreenshotEvent;
 import com.tyky.webviewBase.event.UrlLoadEvent;
 import com.tyky.webviewBase.event.UrlLoadFinishEvent;
+import com.tyky.webviewBase.event.WebviewEvent;
 import com.tyky.webviewBase.model.ResultModel;
 import com.tyky.webviewBase.utils.SpeechService;
 import com.tyky.webviewBase.view.CustomWebView;
@@ -211,6 +212,19 @@ public class CustomWebViewActivity extends AppCompatActivity {
     }
 
     Gson gson = GsonUtils.getGson();
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void dealWebViewEvent(WebviewEvent event) {
+        int type = event.getType();
+        if (type == 1) {
+            //清除webview缓存等信息
+            customWebView.clearAllData();
+        }
+        if (type == 2) {
+            //重新加载首页地址
+            customWebView.loadUrl(url);
+        }
+    }
 
     /**
      * 回调页面的Js

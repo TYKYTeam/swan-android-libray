@@ -2,11 +2,18 @@ package com.tyky.webviewBase.view;
 
 import android.webkit.JavascriptInterface;
 
+import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.google.gson.Gson;
 import com.tyky.webviewBase.annotation.WebViewInterface;
+import com.tyky.webviewBase.event.WebviewEvent;
+import com.tyky.webviewBase.model.ResultModel;
 
-@WebViewInterface("android_base")
+import org.greenrobot.eventbus.EventBus;
+
+@WebViewInterface("webviewBase")
 public class WebViewJavaScript {
+    Gson gson = GsonUtils.getGson();
     /**
      * 设置视频文件录制的大小
      * @param videoSize
@@ -31,4 +38,22 @@ public class WebViewJavaScript {
         return "这是android返回结果";
     }
 
+    /**
+     * 清除webview的数据
+     * @return
+     */
+    @JavascriptInterface
+    public String clearWebviewData() {
+        EventBus.getDefault().post(new WebviewEvent(1));
+        return gson.toJson(ResultModel.success(""));
+    }
+
+    /**
+     * webview重载当前页面
+     */
+    @JavascriptInterface
+    public String reloadWebview() {
+        EventBus.getDefault().post(new WebviewEvent(2));
+        return gson.toJson(ResultModel.success(""));
+    }
 }

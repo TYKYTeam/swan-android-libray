@@ -3,7 +3,9 @@ package com.tyky.webviewBase.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.webkit.CookieManager;
 import android.webkit.WebSettings;
+import android.webkit.WebStorage;
 import android.webkit.WebView;
 
 import com.socks.library.KLog;
@@ -93,6 +95,22 @@ public class CustomWebView extends WebView {
         setDownloadListener(new WebviewDownloader(getContext()));
     }
 
+    /**
+     * 清除webview缓存，localstorage，历史记录和cookies
+     */
+    public void clearAllData() {
+        //清除缓存
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.removeSessionCookies(null);
+        cookieManager.removeAllCookies(value -> KLog.d("清除缓存是否成功： "+value));
+        cookieManager.flush();
+        //清除保存在本地的所有内容（清空WebView的localStorage）
+        WebStorage.getInstance().deleteAllData();
+        //清除历史记录
+        clearHistory();
+        //清除缓存的数据
+        clearCache(true);
+    }
     public CustomWebViewChrome getCustomWebViewChrome() {
         return customWebViewChrome;
     }

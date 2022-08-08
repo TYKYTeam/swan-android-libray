@@ -31,7 +31,7 @@
     <body>
         <div>
             <fieldset>
-                <legend>文件上传</legend>
+                <legend>webviewBase 模块</legend>
                 <div>
                     照片选择<input type="file" accept="image/*" />
                 </div>
@@ -45,9 +45,9 @@
                     文件选择<input type="file" accept="file/*" />
                 </div>
 
+                 <button type="default" onclick="clearWebviewData()">清除webview数据</button>
+                 <button type="default" onclick="reloadWebview()">webview重载首页</button>
                 <div>
-
-
                     <button
                         onclick="downloadImage('https://img2022.cnblogs.com/blog/1210268/202205/1210268-20220523164528070-228215774.jpg','测试')">a标签下载</button>
                 </div>
@@ -232,6 +232,18 @@
     </body>
 
     <script>
+        function clearWebviewData(){
+            let result = window.webviewBase.clearWebviewData()
+            alert(result)
+            console.log(result)
+        }
+        
+        function reloadWebview(){
+            let result = window.webviewBase.reloadWebview()
+            // alert(result)
+            console.log(result)
+        }
+        
         window.loadUnreadCount = function(object) {
             alert(JSON.stringify(object))
         }
