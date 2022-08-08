@@ -86,7 +86,26 @@ if (window.webviewBase) {
     console.log(result)
 }
 ```
+### 3.获取APP信息
+`getAppInfo()`
 
+获取当前APP相关版本号等信息
+
+**传参：无需传参**
+
+**返回结果：**
+```
+"{"code":200,"desc":"","result":{"appName":"天鹅基座","pkgName":"com.tyky.acl","versionName":"1.0","versionCode":1}}"
+```
+
+**H5调用示例：**
+```
+if (window.webviewBase) {
+    let result = window.webviewBase.getAppInfo()
+    alert(result)
+    console.log(result)
+}
+```
 ## filePreview 文件预览
 此模块由于依赖的pdf库较大（15M） 所以单独出来
 
