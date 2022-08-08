@@ -199,6 +199,7 @@
                 <div class="contentDiv">
                     <button type="default" onclick="gotoApp()">跳转其他APP的某一页面</button>
                     <button type="default" onclick="openUrlByBrowser()">使用浏览器打开链接</button>
+                    <button type="default" onclick="restartApp()">重启APP</button>
                 </div>
             </fieldset>
 
@@ -279,6 +280,13 @@
                     "content": "https://www.baidu.com/",
                 }
                 let result = window.page.openUrlByBrowser(JSON.stringify(content))
+                console.log(result)
+            }
+        }
+        
+        function restartApp() {
+            if (window.page) {
+                let result = window.page.restartApp()
                 console.log(result)
             }
         }

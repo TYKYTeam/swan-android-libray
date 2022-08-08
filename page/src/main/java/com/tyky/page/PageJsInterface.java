@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.webkit.JavascriptInterface;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.google.gson.Gson;
@@ -61,5 +62,17 @@ public class PageJsInterface {
         ActivityUtils.getTopActivity().startActivity(intent);
         return gson.toJson(ResultModel.success(""));
     }
+
+    /**
+     * 重启APP
+     * @return
+     */
+    @JavascriptInterface
+    public String restartApp() {
+        AppUtils.relaunchApp(true);
+        return gson.toJson(ResultModel.success(""));
+    }
+
+
 
 }
