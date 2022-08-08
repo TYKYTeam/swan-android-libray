@@ -43,6 +43,50 @@ implementation 'com.github.TYKYTeam.swan-android-libray:0.2'
 
 包含拍照，选择相册图片，录制视频，选择本地视频文件，录音，选择本地音频文件，和选择其他文件
 
+### 1.清除缓存等数据
+
+`clearWebviewData()`
+
+清除webview缓存，localstorage，历史记录和cookies
+
+**传参：无需传参**
+
+**返回结果：**
+```
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.webviewBase) {
+    let result = window.webviewBase.clearWebviewData()
+    alert(result)
+    console.log(result)
+}
+```
+
+### 2.webview重载
+
+`reloadWebview()`
+
+webview重新加载首页
+
+**传参：无需传参**
+
+**返回结果：**
+```
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.webviewBase) {
+    let result = window.webviewBase.reloadWebview()
+    alert(result)
+    console.log(result)
+}
+```
+
 ## filePreview 文件预览
 此模块由于依赖的pdf库较大（15M） 所以单独出来
 
