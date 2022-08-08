@@ -2170,6 +2170,28 @@ if (window.page) {
     console.log(result)
 }
 ```
+### 3.重启APP
+restartApp
+
+重启APP
+
+**传参：无**
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+
+```
+if (window.page) {
+    let result = window.page.restartApp()
+    console.log(result)
+}
+```
+
 ## tim
 腾讯云IM模块
 
