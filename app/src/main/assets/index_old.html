@@ -47,6 +47,7 @@
 
                  <button type="default" onclick="clearWebviewData()">清除webview数据</button>
                  <button type="default" onclick="reloadWebview()">webview重载首页</button>
+                 <button type="default" onclick="getAppInfo()">获取APP信息</button>
                 <div>
                     <button
                         onclick="downloadImage('https://img2022.cnblogs.com/blog/1210268/202205/1210268-20220523164528070-228215774.jpg','测试')">a标签下载</button>
@@ -241,6 +242,12 @@
         function reloadWebview(){
             let result = window.webviewBase.reloadWebview()
             // alert(result)
+            console.log(result)
+        }
+        
+        function getAppInfo(){
+            let result = window.webviewBase.getAppInfo()
+            alert(result)
             console.log(result)
         }
         

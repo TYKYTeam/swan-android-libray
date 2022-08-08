@@ -2,6 +2,7 @@ package com.tyky.webviewBase.view;
 
 import android.webkit.JavascriptInterface;
 
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
@@ -10,6 +11,9 @@ import com.tyky.webviewBase.event.WebviewEvent;
 import com.tyky.webviewBase.model.ResultModel;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @WebViewInterface("webviewBase")
 public class WebViewJavaScript {
@@ -55,5 +59,19 @@ public class WebViewJavaScript {
     public String reloadWebview() {
         EventBus.getDefault().post(new WebviewEvent(2));
         return gson.toJson(ResultModel.success(""));
+    }
+
+    /**
+     * 获取APP应用信息
+     */
+    @JavascriptInterface
+    public String getAppInfo() {
+        AppUtils.AppInfo appInfo = AppUtils.getAppInfo();
+        Map<String,Object> map = new HashMap();
+        map.put("appName", appInfo.getName());
+        map.put("pkgName", appInfo.getPackageName());
+        map.put("versionName", appInfo.getVersionName());
+        map.put("versionCode", appInfo.getVersionCode());
+        return gson.toJson(ResultModel.success(map));
     }
 }
