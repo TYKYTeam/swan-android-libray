@@ -45,9 +45,9 @@
                     文件选择<input type="file" accept="file/*" />
                 </div>
 
-                 <button type="default" onclick="clearWebviewData()">清除webview数据</button>
-                 <button type="default" onclick="reloadWebview()">webview重载首页</button>
-                 <button type="default" onclick="getAppInfo()">获取APP信息</button>
+                <button type="default" onclick="clearWebviewData()">清除webview数据</button>
+                <button type="default" onclick="reloadWebview()">webview重载首页</button>
+                <button type="default" onclick="getAppInfo()">获取APP信息</button>
                 <div>
                     <button
                         onclick="downloadImage('https://img2022.cnblogs.com/blog/1210268/202205/1210268-20220523164528070-228215774.jpg','测试')">a标签下载</button>
@@ -233,24 +233,30 @@
     </body>
 
     <script>
-        function clearWebviewData(){
-            let result = window.webviewBase.clearWebviewData()
-            alert(result)
-            console.log(result)
+        function clearWebviewData() {
+            if (window.webviewBase) {
+                let result = window.webviewBase.clearWebviewData()
+                alert(result)
+                console.log(result)
+            }
         }
-        
-        function reloadWebview(){
-            let result = window.webviewBase.reloadWebview()
-            // alert(result)
-            console.log(result)
+
+        function reloadWebview() {
+            if (window.webviewBase) {
+                let result = window.webviewBase.reloadWebview()
+                // alert(result)
+                console.log(result)
+            }
         }
-        
-        function getAppInfo(){
-            let result = window.webviewBase.getAppInfo()
-            alert(result)
-            console.log(result)
+
+        function getAppInfo() {
+            if (window.webviewBase) {
+                let result = window.webviewBase.getAppInfo()
+                alert(result)
+                console.log(result)
+            }
         }
-        
+
         window.loadUnreadCount = function(object) {
             alert(JSON.stringify(object))
         }
@@ -302,7 +308,7 @@
                 console.log(result)
             }
         }
-        
+
         function restartApp() {
             if (window.page) {
                 let result = window.page.restartApp()
@@ -923,42 +929,42 @@
         function setGesture() {
             if (window.auth) {
                 let content = {
-                    errorColor:"#dd001b",
-                    errorWidth:5,
-                    InsideCircleColor:"#3b5cf0",
-                    InsideCircleWidth:5,
-                    circleColor:"#aaaa7f",
-                    circleWidth:5
+                    errorColor: "#dd001b",
+                    errorWidth: 5,
+                    InsideCircleColor: "#3b5cf0",
+                    InsideCircleWidth: 5,
+                    circleColor: "#aaaa7f",
+                    circleWidth: 5
                 }
                 let result = window.auth.setGesture(JSON.stringify(content))
                 alert(result);
                 console.log(result)
             }
         }
-        window.getSignature = function(res){
-             console.log("签名图片",res)
+        window.getSignature = function(res) {
+            console.log("签名图片", res)
         }
-        
+
         function signature() {
             if (window.auth) {
                 let content = {
-                    callBackMethod:"getSignature"
+                    callBackMethod: "getSignature"
                 }
                 let result = window.auth.signature(JSON.stringify(content))
                 alert(result);
                 console.log(result)
             }
         }
-        
+
         function gestureUnlocking() {
             if (window.auth) {
                 let content = {
-                   errorColor:"#dd001b",
-                   errorWidth:5,
-                   InsideCircleColor:"#3b5cf0",
-                   InsideCircleWidth:5,
-                   circleColor:"#aaaa7f",
-                   circleWidth:5
+                    errorColor: "#dd001b",
+                    errorWidth: 5,
+                    InsideCircleColor: "#3b5cf0",
+                    InsideCircleWidth: 5,
+                    circleColor: "#aaaa7f",
+                    circleWidth: 5
                 }
                 let result = window.auth.gestureUnlocking(JSON.stringify(content))
                 alert(result);
