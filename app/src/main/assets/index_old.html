@@ -97,6 +97,12 @@
                 </div>
             </fieldset>
 
+            <fieldset>
+                <legend>update 更新</legend>
+                <div class="contentDiv">
+                    <button type="default" onclick="checkVersion()">检测版本更新</button>
+                </div>
+            </fieldset>
 
             <fieldset>
                 <legend>share 分享</legend>
@@ -179,7 +185,7 @@
                     <button type="default" onclick="startLocation()">获取定位</button>
                     <button type="default" onclick="poiSearch()">poi检索</button>
                     <button type="default" onclick="ptInCircle()">判断是否在某地点范围</button>
-                    <button type="default" onclick="geocode()">地址转坐标</button>
+                    <button type="default" onclick="geoCode()">地址转坐标</button>
                     <button type="default" onclick="reverseGeoCode()">坐标转地址</button>
                     <button type="default" onclick="getDistance()">计算两点距离</button>
                 </div>
@@ -408,14 +414,14 @@
             }
         }
 
-        function geocode() {
+        function geoCode() {
             let content = {
                 "endName": "广东省深圳市福田区梅林街道梅都社区中康路136号深圳新一代产业园4栋M层沿街商铺(手扶梯旁)",
                 "city": "深圳",
                 "callBackMethod": "getLocation"
             }
             if (window.map) {
-                let result = window.map.geocode(JSON.stringify(content))
+                let result = window.map.geoCode(JSON.stringify(content))
                 alert(result)
                 console.log(result)
             }
@@ -887,6 +893,24 @@
                 }
                 let result = window.share.shareTextImage(JSON.stringify(content))
                 alert(result);
+                console.log(result)
+            }
+        }
+
+        function checkVersion() {
+            if (window.update) {
+                let content = {
+                    "downloadUrl": "https://down.wss.show/3dyl80b/9/0d/90do3dyl80b?cdn_sign=1660120096-5-0-bcca8f1d079bc819fefda02d5acb3d9f&exp=240&response-content-disposition=attachment%3B%20filename%3D%22%E6%B5%8B%E8%AF%95111_1.0.1.apk%22%3B%20filename%2A%3Dutf-8%27%27%25E6%25B5%258B%25E8%25AF%2595111_1.0.1.apk",
+                    "forceUpdate": false,
+                    "h5VersionCode": 1,
+                    "needTip": true,
+                    "type": 2,
+                    "updateContent": "1.更新了\n2.测试内容113",
+                    "versionCode": 12,
+                    "versionName": "v1.0"
+                }
+                let result = window.update.checkVersion(JSON.stringify(content))
+                // alert(result);
                 console.log(result)
             }
         }

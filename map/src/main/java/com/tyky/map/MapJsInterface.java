@@ -265,7 +265,7 @@ public class MapJsInterface {
      * @return
      */
     @JavascriptInterface
-    public String geocode(String paramStr) {
+    public String geoCode(String paramStr) {
         MapParamModel paramModel = gson.fromJson(paramStr, MapParamModel.class);
         String city = paramModel.getCity();
         String endName = paramModel.getEndName();
