@@ -1514,7 +1514,7 @@ if (window.map) {
 ```
 
 ### 4.地址转坐标
-geocode
+`geoCode`
 
 传入地址，转为经纬度坐标
 
@@ -1562,7 +1562,7 @@ let content = {
 }
 
 if (window.map) {
-    let result = window.map.geocode(JSON.stringify(content))
+    let result = window.map.geoCode(JSON.stringify(content))
     alert(result)
     console.log(result)
 }
