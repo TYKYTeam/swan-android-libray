@@ -50,20 +50,20 @@ dependencies {
     implementation 'com.tencent.tinker:tinker-android-lib:1.9.9'
 
     implementation 'org.greenrobot:eventbus:3.0.0'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'com.google.android.material:material:1.1.0'
+    compileOnly 'androidx.appcompat:appcompat:1.1.0'
+    compileOnly 'com.google.android.material:material:1.1.0'
     //图片,视频,音频选择 https://github.com/LuckSiege/PictureSelector
     compileOnly 'io.github.lucksiege:pictureselector:v2.7.3-rc02'
     compileOnly 'org.apache.commons:commons-lang3:3.9'
 
     // Android的工具类   https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
     compileOnly 'com.blankj:utilcodex:1.30.6'
-
+    //流式布局    https://github.com/nex3z/FlowLayout
+    implementation 'com.nex3z:flow-layout:1.3.3'
     //日志输出    https://github.com/ZhaoKaiQiang/KLog
     compileOnly 'com.github.zhaokaiqiang.klog:library:1.6.0'
 
     compileOnly 'androidx.constraintlayout:constraintlayout:2.1.2'
-
     compileOnly project(path: ':webviewBase')
     implementation project(path: ':media')
 }
