@@ -63,6 +63,17 @@
             tools:node="replace"
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="7v4dljw5jf18ow6Ppnx2UWV7A4Vyq42M" /> <!-- 定位服务 -->
+
+        <!--基座版本依赖模块信息-->
+        <meta-data
+            tools:node="replace"
+            android:name="base_library_dependency"
+            android:value="filePreview,baiduface,tim,baidumap,debugger,page,hardware,listener,storage,device,share,notification,media,update" />
+        <!--基座版本信息-->
+        <meta-data
+            tools:node="replace"
+            android:name="base_library_version"
+            android:value="beta版本" />
     </application>
 
 </manifest>
