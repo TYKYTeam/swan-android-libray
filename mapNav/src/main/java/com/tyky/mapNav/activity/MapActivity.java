@@ -198,9 +198,7 @@ public class MapActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
-        if (mLocationClient != null) {
-            mLocationClient.stop();
-        }
+        BaiduMapUtils.releaseLocationClient();
         mMapView.getMap().setMyLocationEnabled(false);
         mMapView.onDestroy();
         mMapView = null;
@@ -208,6 +206,7 @@ public class MapActivity extends AppCompatActivity {
         if (routePlanSearch != null) {
             routePlanSearch.destroy();
         }
+
         super.onDestroy();
     }
 }

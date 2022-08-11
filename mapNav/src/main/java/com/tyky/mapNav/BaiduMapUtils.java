@@ -88,26 +88,24 @@ public class BaiduMapUtils {
                         .direction(location.getDirection())
                         .latitude(location.getLatitude())
                         .longitude(location.getLongitude()).build();
-                ThreadUtils.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (isSetMyLocation) {
-                            return;
-                        }
-                        BaiduMap map = mMapView.getMap();
-                        map.setMyLocationData(locData);
-
-                        //设置中心点位置，不然没法显示当前位置的地图
-                        //默认18缩放等级
-                        float zoomLevel = 18f;
-                        if (map.getMapStatus().zoom > 12f) {
-                            zoomLevel = map.getMapStatus().zoom;
-                        }
-                        KLog.e("缩放等级：" + zoomLevel);
-                        MapStatusUpdate mapStatus = MapStatusUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), zoomLevel);
-                        map.setMapStatus(mapStatus);
-                        isSetMyLocation = true;
+                ThreadUtils.runOnUiThread(() -> {
+                    KLog.d("isSetMyLocation:" + isSetMyLocation);
+                    if (isSetMyLocation) {
+                        return;
                     }
+                    BaiduMap map1 = mMapView.getMap();
+                    map1.setMyLocationData(locData);
+
+                    //设置中心点位置，不然没法显示当前位置的地图
+                    //默认18缩放等级
+                    float zoomLevel = 18f;
+                    if (map1.getMapStatus().zoom > 12f) {
+                        zoomLevel = map1.getMapStatus().zoom;
+                    }
+                    KLog.e("缩放等级：" + zoomLevel);
+                    MapStatusUpdate mapStatus = MapStatusUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), zoomLevel);
+                    map1.setMapStatus(mapStatus);
+                    isSetMyLocation = true;
                 });
             }
         });
@@ -167,6 +165,14 @@ public class BaiduMapUtils {
         mOption.setOpenGps(true);
 
         return mOption;
+    }
+
+    public static void releaseLocationClient() {
+        if (mLocationClient != null) {
+            mLocationClient.stop();
+            //重置状态，避免第二次进来页面无法定位到当前位置
+            isSetMyLocation = false;
+        }
     }
 
 }
