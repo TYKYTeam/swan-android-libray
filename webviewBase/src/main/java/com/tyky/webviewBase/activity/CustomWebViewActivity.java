@@ -12,10 +12,13 @@ import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.EncodeUtils;
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ImageUtils;
+import com.blankj.utilcode.util.MetaDataUtils;
 import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.PathUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
@@ -45,6 +48,9 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -123,6 +129,30 @@ public class CustomWebViewActivity extends AppCompatActivity {
      */
     public void loadUrl(String url) {
         if (url.startsWith("/")) {
+            String dependency = MetaDataUtils.getMetaDataInApp("base_library_dependency");
+            //如果有更新模块，走热更新加载逻辑
+            if (dependency.contains("update")) {
+                int appVersionCode = AppUtils.getAppVersionCode();
+                File dir = new File(PathUtils.getExternalAppFilesPath()+"/h5Assets/" + appVersionCode);
+                if (dir.exists()) {
+                    File[] files = dir.listFiles();
+                    if (files != null && files.length > 0) {
+                        List<Integer> h5VersionCodeList = new ArrayList<>();
+                        for (File file : files) {
+                            String name = file.getName();
+                            int h5VersionCode = Integer.parseInt(name);
+                            h5VersionCodeList.add(h5VersionCode);
+                        }
+
+                        Collections.sort(h5VersionCodeList);
+                        Integer newH5VersionCode = h5VersionCodeList.get(h5VersionCodeList.size() - 1);
+                        File file = new File(dir, newH5VersionCode + "/index.html");
+                        String localH5Url = file.toURI().toString();
+                        customWebView.loadUrl(localH5Url);
+                        return;
+                    }
+                }
+            }
             loadLocalUrl(url);
         } else {
             loadWebUrl(url);
@@ -139,7 +169,7 @@ public class CustomWebViewActivity extends AppCompatActivity {
         String url = event.getUrl();
         //清除缓存，加载数据
         customWebView.clearCache(true);
-        loadUrl(url);
+        customWebView.loadUrl(url);
     }
 
     /**
@@ -302,9 +332,9 @@ public class CustomWebViewActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void takeScreenshot(TakeScreenshotEvent event) {
         String callBackMethod = event.getCallBackMethod();
-        Bitmap bitmap = ScreenUtils.screenShot(this,false);
+        Bitmap bitmap = ScreenUtils.screenShot(this, false);
         File file = ImageUtils.save2Album(bitmap, Bitmap.CompressFormat.JPEG);
-        EventBus.getDefault().post(new JsCallBackEvent(callBackMethod,file.getPath()));
+        EventBus.getDefault().post(new JsCallBackEvent(callBackMethod, file.getPath()));
     }
 
 

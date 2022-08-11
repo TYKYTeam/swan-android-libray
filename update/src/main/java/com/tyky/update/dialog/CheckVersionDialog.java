@@ -90,7 +90,7 @@ public class CheckVersionDialog {
                         public void onDownloadSuccess(File file) {
                             if (file.length() > 0) {
                                 // 解压操作
-                                File dir = new File(PathUtils.getExternalAppFilesPath(), "h5assetes/" + versionCode + "/" + h5VersionCode);
+                                File dir = new File(PathUtils.getExternalAppFilesPath(), "h5Assets/" + versionCode + "/" + h5VersionCode);
                                 if (!dir.exists()) {
                                     dir.mkdirs();
                                 }
