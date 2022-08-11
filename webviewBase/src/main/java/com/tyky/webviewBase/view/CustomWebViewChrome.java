@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
+import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -204,4 +205,8 @@ public class CustomWebViewChrome extends WebChromeClient {
         }
     }
 
+    @Override
+    public void onPermissionRequest(PermissionRequest request) {
+        request.grant(request.getResources());
+    }
 }
