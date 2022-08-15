@@ -30,14 +30,10 @@ public class CheckVersionDialog {
         String updateContent = paramModel.getUpdateContent();
         String downloadUrl = paramModel.getDownloadUrl();
 
-        /*if (currentVersionCode < versionCode) {
-            //需要更新
-
-        }*/
-
         if (type == 1) {
+            //热更新经过讨论不实现！！ 2022年8月15日14:17:47
             //热更新，直接静默下载，不给提示
-            downloadFile(paramModel);
+            //downloadFile(paramModel);
         } else {
 
             if (forceUpdate) {

@@ -129,7 +129,7 @@ public class CustomWebViewActivity extends AppCompatActivity {
      */
     public void loadUrl(String url) {
         if (url.startsWith("/")) {
-            String dependency = MetaDataUtils.getMetaDataInApp("base_library_dependency");
+            /*String dependency = MetaDataUtils.getMetaDataInApp("base_library_dependency");
             //如果有更新模块，走热更新加载逻辑
             if (dependency.contains("update")) {
                 int appVersionCode = AppUtils.getAppVersionCode();
@@ -152,7 +152,7 @@ public class CustomWebViewActivity extends AppCompatActivity {
                         return;
                     }
                 }
-            }
+            }*/
             loadLocalUrl(url);
         } else {
             loadWebUrl(url + "?" + System.currentTimeMillis());
