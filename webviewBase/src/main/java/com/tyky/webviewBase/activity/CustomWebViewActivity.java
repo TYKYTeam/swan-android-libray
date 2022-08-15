@@ -155,7 +155,7 @@ public class CustomWebViewActivity extends AppCompatActivity {
             }
             loadLocalUrl(url);
         } else {
-            loadWebUrl(url);
+            loadWebUrl(url + "?" + System.currentTimeMillis());
         }
     }
 
