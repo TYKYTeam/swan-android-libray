@@ -899,9 +899,9 @@
 
         function checkVersion() {
             //全量更新
-            /*if (window.update) {
+            if (window.update) {
                 let content = {
-                    "downloadUrl": "https://down.wss.show/3dyl80b/9/0d/90do3dyl80b?cdn_sign=1660129809-3-0-11e39967c51b4b5ae0de13df80231428&exp=240&response-content-disposition=attachment%3B%20filename%3D%22%E6%B5%8B%E8%AF%95111_1.0.1.apk%22%3B%20filename%2A%3Dutf-8%27%27%25E6%25B5%258B%25E8%25AF%2595111_1.0.1.apk",
+                    "downloadUrl": "http://10.232.107.44:9060/swan-business/file/download",
                     "forceUpdate": false,
                     "h5VersionCode": 1,
                     "needTip": true,
@@ -913,23 +913,8 @@
                 let result = window.update.checkVersion(JSON.stringify(content))
                 // alert(result);
                 console.log(result)
-            }*/
-            //热更新
-            if (window.update) {
-                let content = {
-                    "downloadUrl": "https://down.wss.show/ecf4l3g/9/0n/90nzecf4l3g?cdn_sign=1660209699-54-0-182563805da46b0c76f6e5d4d333bbb6&exp=240&response-content-disposition=attachment%3B%20filename%3D%22index.zip%22%3B%20filename%2A%3Dutf-8%27%27index.zip",
-                    "forceUpdate": false,
-                    "h5VersionCode": 1,
-                    "needTip": true,
-                    "type": 1,
-                    "updateContent": "1.更新了\n2.测试内容113",
-                    "versionCode": 1,
-                    "versionName": "v1.0"
-                }
-                let result = window.update.checkVersion(JSON.stringify(content))
-                // alert(result);
-                console.log(result)
             }
+            
         }
 
         function shareText() {

@@ -1,10 +1,12 @@
 package com.tyky.update.dialog;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.view.View;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.PathUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.ZipUtils;
@@ -14,6 +16,7 @@ import com.kongzue.dialogx.dialogs.MessageDialog;
 import com.kongzue.dialogx.interfaces.OnDialogButtonClickListener;
 import com.socks.library.KLog;
 import com.tyky.update.bean.UpdateParamModel;
+import com.tyky.update.utils.FileDownloadUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,10 +38,9 @@ public class CheckVersionDialog {
             //热更新，直接静默下载，不给提示
             //downloadFile(paramModel);
         } else {
-
+            //全量更新
             if (forceUpdate) {
                 //是强制更新
-                //全量更新
                 MessageDialog.show("新版本更新", updateContent, "确定升级")
                         .setOkButtonClickListener(new OnDialogButtonClickListener<MessageDialog>() {
                             @Override
@@ -59,6 +61,7 @@ public class CheckVersionDialog {
                         .setCancelButtonClickListener(new OnDialogButtonClickListener<MessageDialog>() {
                             @Override
                             public boolean onClick(MessageDialog baseDialog, View v) {
+                                downloadFileBackground(paramModel);
                                 return false;
                             }
                         });
@@ -67,6 +70,40 @@ public class CheckVersionDialog {
         }
 
 
+    }
+
+    /**
+     * wifi情况下，后台静默下载
+     */
+    public static void downloadFileBackground(UpdateParamModel updateParamModel) {
+        //如果是处于wifi情况，后台下载apk文件
+        if (NetworkUtils.isWifiConnected()) {
+            String downloadUrl = updateParamModel.getDownloadUrl();
+            int versionCode = updateParamModel.getVersionCode();
+
+            File file = new File(PathUtils.getExternalAppFilesPath(), "temp_" + versionCode + ".apk");
+
+            Activity context = ActivityUtils.getTopActivity();
+
+            FileDownloadUtil.download(downloadUrl, file, new FileDownloadUtil.OnDownloadListener() {
+                @Override
+                public void onProgress(double progress) {
+                    KLog.d("下载进度: " + progress);
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    KLog.e("下载错误: " + e.getMessage());
+                }
+
+                @Override
+                public void onSuccess(File outputFile) {
+                    KLog.d("下载成功");
+                }
+            });
+
+
+        }
     }
 
     public static void downloadFile(UpdateParamModel updateParamModel) {
@@ -106,7 +143,7 @@ public class CheckVersionDialog {
                                     }
 
                                 } catch (IOException e) {
-                                    KLog.e("解压失败"+e.getMessage());
+                                    KLog.e("解压失败" + e.getMessage());
                                 }
 
                             } else {
