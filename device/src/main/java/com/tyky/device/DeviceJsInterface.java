@@ -118,7 +118,8 @@ public class DeviceJsInterface {
             return gson.toJson(ResultModel.errorParam("类型传值失败，请参考文档说明"));
         }
         try {
-            Boolean flag = (Boolean) methods.get(type - 1).invoke(null, (Object) null);
+            Method method = methods.get(type - 1);
+            Boolean flag = (Boolean) method.invoke(null);
             return gson.toJson(ResultModel.success(flag));
         } catch (IllegalAccessException | InvocationTargetException e) {
             return gson.toJson(ResultModel.errorParam(e.getMessage()));
