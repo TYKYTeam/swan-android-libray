@@ -1,16 +1,42 @@
 package com.tyky.webviewBase.view;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.blankj.utilcode.util.PhoneUtils;
+import com.socks.library.KLog;
+import com.tyky.webviewBase.event.UrlLoadFinishEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import androidx.annotation.RequiresApi;
 
 public class CustomWebViewClient extends WebViewClient {
+
+    @Override
+    public void onPageFinished(WebView view, String url) {
+        super.onPageFinished(view, url);
+        KLog.d("页面加载结束");
+        EventBus.getDefault().post(new UrlLoadFinishEvent());
+    }
+
+    @Override
+    public void onPageStarted(WebView view, String url, Bitmap favicon) {
+        super.onPageStarted(view, url, favicon);
+        KLog.d("页面开始加载");
+    }
+
+    @Override
+    public void onPageCommitVisible(WebView view, String url) {
+        super.onPageCommitVisible(view, url);
+        KLog.d("页面onPageCommitVisible");
+
+    }
+
     /**
      * 重写方法,避免跳转到系统自带浏览器打开网址
      */

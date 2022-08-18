@@ -1,8 +1,10 @@
 package com.tyky.webviewBase.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -12,13 +14,12 @@ import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.EncodeUtils;
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ImageUtils;
-import com.blankj.utilcode.util.MetaDataUtils;
 import com.blankj.utilcode.util.NetworkUtils;
-import com.blankj.utilcode.util.PathUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
@@ -48,13 +49,13 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.palette.graphics.Palette;
 
 public class CustomWebViewActivity extends AppCompatActivity {
 
@@ -98,8 +99,66 @@ public class CustomWebViewActivity extends AppCompatActivity {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         builder.detectFileUriExposure();
-
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @SuppressLint("ResourceAsColor")
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void setStatusBar(UrlLoadFinishEvent event) {
+
+        Bitmap drawingCache = ScreenUtils.screenShot(this);
+        Palette.from(drawingCache)
+                .setRegion(0, 0, drawingCache.getWidth(), 400)
+                .maximumColorCount(5)
+                .generate(new Palette.PaletteAsyncListener() {
+                    @SuppressLint("ResourceAsColor")
+                    @Override
+                    public void onGenerated(@Nullable Palette palette) {
+                        List<Palette.Swatch> swatches = palette.getSwatches();
+                        Palette.Swatch mostSwatch = null;
+                        if (!swatches.isEmpty()) {
+                            for (Palette.Swatch swatch : swatches) {
+                                if (mostSwatch == null) {
+                                    mostSwatch = swatch;
+                                } else {
+                                    if (mostSwatch.getPopulation()< swatch.getPopulation()) {
+                                        mostSwatch = swatch;
+                                    }
+                                }
+                            }
+                        }
+
+                        int color = mostSwatch.getRgb();
+                        //int color = Color.parseColor("#eb1c63");
+                        BarUtils.setStatusBarColor(CustomWebViewActivity.this, color, true);
+                        BarUtils.setStatusBarLightMode(CustomWebViewActivity.this, ColorUtils.isLightColor(color));
+
+                        drawingCache.recycle();
+
+                        /*double luminance = ColorUtils.calculateLuminance(color);
+                        BarUtils.setStatusBarColor(CustomWebViewActivity.this, color);
+                        if (luminance < 0.5) {
+                            BarUtils.setStatusBarLightMode(CustomWebViewActivity.this,false);
+                        } else {
+                            BarUtils.setStatusBarLightMode(CustomWebViewActivity.this,true);
+                        }*/
+                    }
+                });
+    }
+
+   /* @RequiresApi(api = Build.VERSION_CODES.M)
+    private void setLightStatusBar() {
+        View decorView = getWindow().getDecorView();
+        int flags = decorView.getSystemUiVisibility();
+        decorView.setSystemUiVisibility(flags | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void setDarkStatusBar() {
+        View decorView = getWindow().getDecorView();
+        int flags = decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+        decorView.setSystemUiVisibility(flags ^ View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
