@@ -2,14 +2,6 @@ package com.tyky.update.bean;
 
 public class UpdateParamModel {
     /**
-     * 更新类型，1为热更新包，2为全量更新（apk）
-     */
-    private int type;
-    /**
-     * H5版本号
-     */
-    private int h5VersionCode;
-    /**
      * 版本号
      */
     private int versionCode;
@@ -30,25 +22,14 @@ public class UpdateParamModel {
      */
     private boolean forceUpdate;
     /**
-     * 热更新包下载解压后，是否要提示对话框
+     * 发布时间
      */
-    private boolean needTip;
+    private String updateTime;
 
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public int getH5VersionCode() {
-        return h5VersionCode;
-    }
-
-    public void setH5VersionCode(int h5VersionCode) {
-        this.h5VersionCode = h5VersionCode;
-    }
+    /**
+     * apk文件大小
+     */
+    private String fileSize;
 
     public int getVersionCode() {
         return versionCode;
@@ -66,15 +47,31 @@ public class UpdateParamModel {
         this.versionName = versionName;
     }
 
-    public UpdateParamModel(int type, int h5VersionCode, int versionCode, String versionName, String updateContent, String downloadUrl, boolean forceUpdate, boolean needTip) {
-        this.type = type;
-        this.h5VersionCode = h5VersionCode;
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getFileSize() {
+        return fileSize;
+    }
+
+    public void setFileSize(String fileSize) {
+        this.fileSize = fileSize;
+    }
+
+    public UpdateParamModel() {
+    }
+
+    public UpdateParamModel(int versionCode, String versionName, String updateContent, String downloadUrl, boolean forceUpdate) {
         this.versionCode = versionCode;
         this.versionName = versionName;
         this.updateContent = updateContent;
         this.downloadUrl = downloadUrl;
         this.forceUpdate = forceUpdate;
-        this.needTip = needTip;
     }
 
     public String getDownloadUrl() {
@@ -91,14 +88,6 @@ public class UpdateParamModel {
 
     public void setForceUpdate(boolean forceUpdate) {
         this.forceUpdate = forceUpdate;
-    }
-
-    public boolean isNeedTip() {
-        return needTip;
-    }
-
-    public void setNeedTip(boolean needTip) {
-        this.needTip = needTip;
     }
 
     public String getUpdateContent() {

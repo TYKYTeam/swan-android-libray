@@ -901,20 +901,19 @@
             //全量更新
             if (window.update) {
                 let content = {
-                    "downloadUrl": "http://10.232.107.44:9060/swan-business/file/download",
-                    "forceUpdate": false,
-                    "h5VersionCode": 1,
-                    "needTip": true,
-                    "type": 2,
-                    "updateContent": "1.更新了\n2.测试内容113",
-                    "versionCode": 12,
-                    "versionName": "v1.0"
+                    "versionCode": 2,
+                    "versionName": "1.1",
+                    "updateContent": "这是更新的内容\n1.更新了xx功能",
+                    "downloadUrl": "878797",
+                    "forceUpdate": true,
+                    "updateTime": "2022-08-18 19:12",
+                    "fileSize": "85.8MB"
                 }
                 let result = window.update.checkVersion(JSON.stringify(content))
                 // alert(result);
                 console.log(result)
             }
-            
+
         }
 
         function shareText() {

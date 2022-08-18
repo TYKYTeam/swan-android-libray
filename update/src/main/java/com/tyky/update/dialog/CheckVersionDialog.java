@@ -9,7 +9,6 @@ import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.PathUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.blankj.utilcode.util.ZipUtils;
 import com.kongzue.baseokhttp.HttpRequest;
 import com.kongzue.baseokhttp.listener.OnDownloadListener;
 import com.kongzue.dialogx.dialogs.MessageDialog;
@@ -19,20 +18,14 @@ import com.tyky.update.bean.UpdateParamModel;
 import com.tyky.update.utils.FileDownloadUtil;
 
 import java.io.File;
-import java.io.IOException;
 
 public class CheckVersionDialog {
 
     public static void show(UpdateParamModel paramModel) {
 
-        int versionCode = paramModel.getVersionCode();
-        int h5VersionCode = paramModel.getH5VersionCode();
-        int type = paramModel.getType();
         boolean forceUpdate = paramModel.isForceUpdate();
-        boolean needTip = paramModel.isNeedTip();
         String updateContent = paramModel.getUpdateContent();
-        String downloadUrl = paramModel.getDownloadUrl();
-
+        int type = 0;
         if (type == 1) {
             //热更新经过讨论不实现！！ 2022年8月15日14:17:47
             //热更新，直接静默下载，不给提示
@@ -42,6 +35,7 @@ public class CheckVersionDialog {
             if (forceUpdate) {
                 //是强制更新
                 MessageDialog.show("新版本更新", updateContent, "确定升级")
+                        .setCancelable(false)
                         .setOkButtonClickListener(new OnDialogButtonClickListener<MessageDialog>() {
                             @Override
                             public boolean onClick(MessageDialog baseDialog, View v) {
@@ -108,13 +102,12 @@ public class CheckVersionDialog {
 
     public static void downloadFile(UpdateParamModel updateParamModel) {
         String downloadUrl = updateParamModel.getDownloadUrl();
-        int type = updateParamModel.getType();
         int versionCode = updateParamModel.getVersionCode();
-        int h5VersionCode = updateParamModel.getH5VersionCode();
+        int type = 0;
 
         if (type == 1) {
             //下载h5资源包
-            File file = new File(PathUtils.getExternalAppFilesPath(), "temp_" + h5VersionCode + ".zip");
+            /*File file = new File(PathUtils.getExternalAppFilesPath(), "temp_" + h5VersionCode + ".zip");
             HttpRequest.DOWNLOAD(
                     ActivityUtils.getTopActivity(), downloadUrl,
                     file,
@@ -161,7 +154,7 @@ public class CheckVersionDialog {
                             ToastUtils.showShort("下载失败，原因：" + e.getMessage());
                         }
                     }
-            );
+            );*/
 
         } else {
             File file = new File(PathUtils.getExternalAppFilesPath(), "temp_" + versionCode + ".apk");
