@@ -135,6 +135,8 @@ public class CustomWebViewActivity extends AppCompatActivity {
                             //int color = Color.parseColor("#eb1c63");
                             BarUtils.setStatusBarColor(CustomWebViewActivity.this, color, true);
                             BarUtils.setStatusBarLightMode(CustomWebViewActivity.this, ColorUtils.isLightColor(color));
+                            //设置导航条颜色
+                            BarUtils.setNavBarColor(CustomWebViewActivity.this, color);
 
                             drawingCache.recycle();
 
@@ -152,6 +154,8 @@ public class CustomWebViewActivity extends AppCompatActivity {
             //int color = Color.parseColor("#eb1c63");
             BarUtils.setStatusBarColor(CustomWebViewActivity.this, color, true);
             BarUtils.setStatusBarLightMode(CustomWebViewActivity.this, ColorUtils.isLightColor(color));
+            //设置导航条颜色
+            BarUtils.setNavBarColor(CustomWebViewActivity.this, color);
         }
     }
 
