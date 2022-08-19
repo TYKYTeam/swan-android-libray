@@ -3,6 +3,7 @@ package com.tyky.webviewBase.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ import com.tyky.webviewBase.constants.RequestCodeConstants;
 import com.tyky.webviewBase.event.ImagePreviewEvent;
 import com.tyky.webviewBase.event.IntentEvent;
 import com.tyky.webviewBase.event.JsCallBackEvent;
+import com.tyky.webviewBase.event.StatusBarEvent;
 import com.tyky.webviewBase.event.TakeScreenshotEvent;
 import com.tyky.webviewBase.event.UrlLoadEvent;
 import com.tyky.webviewBase.event.UrlLoadFinishEvent;
@@ -104,36 +106,37 @@ public class CustomWebViewActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.M)
     @SuppressLint("ResourceAsColor")
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void setStatusBar(UrlLoadFinishEvent event) {
-
-        Bitmap drawingCache = ScreenUtils.screenShot(this);
-        Palette.from(drawingCache)
-                .setRegion(0, 0, drawingCache.getWidth(), 400)
-                .maximumColorCount(5)
-                .generate(new Palette.PaletteAsyncListener() {
-                    @SuppressLint("ResourceAsColor")
-                    @Override
-                    public void onGenerated(@Nullable Palette palette) {
-                        List<Palette.Swatch> swatches = palette.getSwatches();
-                        Palette.Swatch mostSwatch = null;
-                        if (!swatches.isEmpty()) {
-                            for (Palette.Swatch swatch : swatches) {
-                                if (mostSwatch == null) {
-                                    mostSwatch = swatch;
-                                } else {
-                                    if (mostSwatch.getPopulation()< swatch.getPopulation()) {
+    public void setStatusBar(StatusBarEvent event) {
+        int type = event.getType();
+        if (type == 1) {
+            Bitmap drawingCache = ScreenUtils.screenShot(this);
+            Palette.from(drawingCache)
+                    .setRegion(0, 0, drawingCache.getWidth(), 400)
+                    .maximumColorCount(5)
+                    .generate(new Palette.PaletteAsyncListener() {
+                        @SuppressLint("ResourceAsColor")
+                        @Override
+                        public void onGenerated(@Nullable Palette palette) {
+                            List<Palette.Swatch> swatches = palette.getSwatches();
+                            Palette.Swatch mostSwatch = null;
+                            if (!swatches.isEmpty()) {
+                                for (Palette.Swatch swatch : swatches) {
+                                    if (mostSwatch == null) {
                                         mostSwatch = swatch;
+                                    } else {
+                                        if (mostSwatch.getPopulation() < swatch.getPopulation()) {
+                                            mostSwatch = swatch;
+                                        }
                                     }
                                 }
                             }
-                        }
 
-                        int color = mostSwatch.getRgb();
-                        //int color = Color.parseColor("#eb1c63");
-                        BarUtils.setStatusBarColor(CustomWebViewActivity.this, color, true);
-                        BarUtils.setStatusBarLightMode(CustomWebViewActivity.this, ColorUtils.isLightColor(color));
+                            int color = mostSwatch.getRgb();
+                            //int color = Color.parseColor("#eb1c63");
+                            BarUtils.setStatusBarColor(CustomWebViewActivity.this, color, true);
+                            BarUtils.setStatusBarLightMode(CustomWebViewActivity.this, ColorUtils.isLightColor(color));
 
-                        drawingCache.recycle();
+                            drawingCache.recycle();
 
                         /*double luminance = ColorUtils.calculateLuminance(color);
                         BarUtils.setStatusBarColor(CustomWebViewActivity.this, color);
@@ -142,8 +145,14 @@ public class CustomWebViewActivity extends AppCompatActivity {
                         } else {
                             BarUtils.setStatusBarLightMode(CustomWebViewActivity.this,true);
                         }*/
-                    }
-                });
+                        }
+                    });
+        } else {
+            int color = Color.parseColor(event.getStatusColor());
+            //int color = Color.parseColor("#eb1c63");
+            BarUtils.setStatusBarColor(CustomWebViewActivity.this, color, true);
+            BarUtils.setStatusBarLightMode(CustomWebViewActivity.this, ColorUtils.isLightColor(color));
+        }
     }
 
    /* @RequiresApi(api = Build.VERSION_CODES.M)
@@ -261,6 +270,9 @@ public class CustomWebViewActivity extends AppCompatActivity {
             clLoading.startAnimation(alphaAnimation);
         }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            setStatusBar(new StatusBarEvent());
+        }
     }
 
     /**
