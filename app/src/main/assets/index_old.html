@@ -207,6 +207,7 @@
                     <button type="default" onclick="gotoApp()">跳转其他APP的某一页面</button>
                     <button type="default" onclick="openUrlByBrowser()">使用浏览器打开链接</button>
                     <button type="default" onclick="restartApp()">重启APP</button>
+                    <button type="default" onclick="changeStatusBar()">更改状态栏颜色</button>
                 </div>
             </fieldset>
 
@@ -311,6 +312,18 @@
                     "content": "https://www.baidu.com/",
                 }
                 let result = window.page.openUrlByBrowser(JSON.stringify(content))
+                console.log(result)
+            }
+        }
+        
+        function changeStatusBar() {
+            if (window.page) {
+                //下面这里是进入设置页面
+                let content = {
+                    "type":"2",
+                    "content": "#4283f2",
+                }
+                let result = window.page.changeStatusBar(JSON.stringify(content))
                 console.log(result)
             }
         }

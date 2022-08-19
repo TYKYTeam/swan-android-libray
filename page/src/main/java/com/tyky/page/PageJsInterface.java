@@ -11,8 +11,11 @@ import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.google.gson.Gson;
 import com.tyky.webviewBase.annotation.WebViewInterface;
+import com.tyky.webviewBase.event.StatusBarEvent;
 import com.tyky.webviewBase.model.ParamModel;
 import com.tyky.webviewBase.model.ResultModel;
+
+import org.greenrobot.eventbus.EventBus;
 
 @WebViewInterface("page")
 public class PageJsInterface {
@@ -21,6 +24,7 @@ public class PageJsInterface {
 
     /**
      * 跳转指定APP的指定Activity页面
+     *
      * @param paramStr
      * @return
      */
@@ -32,9 +36,9 @@ public class PageJsInterface {
         if (StringUtils.isEmpty(packageName) || StringUtils.isEmpty(activityName)) {
             return gson.toJson(ResultModel.errorParam());
         }
-        
+
         Intent intent = new Intent();
-        ComponentName cmp = new ComponentName(packageName,activityName);
+        ComponentName cmp = new ComponentName(packageName, activityName);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setComponent(cmp);
@@ -46,6 +50,7 @@ public class PageJsInterface {
 
     /**
      * 使用浏览器打开H5链接
+     *
      * @param paramStr
      * @return
      */
@@ -65,6 +70,7 @@ public class PageJsInterface {
 
     /**
      * 重启APP
+     *
      * @return
      */
     @JavascriptInterface
@@ -73,6 +79,28 @@ public class PageJsInterface {
         return gson.toJson(ResultModel.success(""));
     }
 
+    /**
+     * 更改状态栏颜色
+     * @param paramStr
+     * @return
+     */
+    @JavascriptInterface
+    public String changeStatusBar(String paramStr) {
+        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        Integer type = paramModel.getType();
+        if (type == null || type == 0) {
+            return gson.toJson(ResultModel.errorParam());
+        }
+        //构建事件，通过EventBus发送
+        String content = paramModel.getContent();
+        StatusBarEvent statusBarEvent = new StatusBarEvent();
+        statusBarEvent.setType(type);
+        if (type == 2) {
+            statusBarEvent.setStatusColor(content);
+        }
+        EventBus.getDefault().post(statusBarEvent);
+        return gson.toJson(ResultModel.success(""));
+    }
 
 
 }
