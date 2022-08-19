@@ -2,18 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:gravity="center"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <TextView
-        tools:text="模块1"
-        android:padding="5dp"
+        android:layout_margin="12dp"
+        tools:text="模块1模块1模块1"
         android:id="@+id/tvModule"
-        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:textSize="15sp"
+        android:layout_width="170dp"
+        android:ellipsize="end"
+        android:paddingVertical="14dp"
+        android:paddingHorizontal="15dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="12dp"
-        android:layout_marginVertical="5dp"
         android:background="@drawable/module_shape" />
 
 </LinearLayout>

@@ -3,16 +3,15 @@ package com.tyky.debugger;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.MetaDataUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
-import com.nex3z.flowlayout.FlowLayout;
+import com.tyky.debugger.adapter.RvModuleAdapter;
 import com.tyky.media.activity.QrScanActivity;
 import com.tyky.webviewBase.constants.MediaModuleConstants;
 import com.tyky.webviewBase.event.UrlLoadEvent;
@@ -21,11 +20,13 @@ import org.greenrobot.eventbus.EventBus;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class SettingActivity extends AppCompatActivity {
 
     EditText mEturl;
-    Button mBtnscan;
+    ImageView mBtnscan;
     Button mBtnvisit;
 
 
@@ -51,6 +52,10 @@ public class SettingActivity extends AppCompatActivity {
         mEturl.setText(settingUrl);
 
         showCurrentBaseLibraryInfo();
+
+        //int color = Color.parseColor("white");
+        //BarUtils.setStatusBarLightMode(this, ColorUtils.isLightColor(color));
+        //BarUtils.setStatusBarColor(this, color, true);
     }
 
     /**
@@ -66,19 +71,16 @@ public class SettingActivity extends AppCompatActivity {
 
         TextView tvModuleTip = (TextView) findViewById(R.id.tvModuleTip);
         //动态假如itemView
-        FlowLayout flowLayout = findViewById(R.id.flowLayout);
+        RecyclerView rvModule = findViewById(R.id.rvModule);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        rvModule.setLayoutManager(gridLayoutManager);
 
         if (!TextUtils.isEmpty(baseLibraryDependency)) {
             String[] split = baseLibraryDependency.split(",");
-            tvModuleTip.setText("当前所含模块（" + split.length + "个)：");
-            for (String module : split) {
-                View view = LayoutInflater.from(this).inflate(R.layout.item_layout, null);
-                TextView tvModule = (TextView) view.findViewById(R.id.tvModule);
-                tvModule.setText(module + "模块");
-                flowLayout.addView(view);
-            }
+            rvModule.setAdapter(new RvModuleAdapter(split));
+            tvModuleTip.setText("当前所含模块（" + split.length + ")");
         } else {
-            tvModuleTip.setText("当前所含模块（0个）");
+            tvModuleTip.setText("当前所含模块（0）");
         }
     }
 
