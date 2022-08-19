@@ -2,7 +2,10 @@ package com.tyky.update.dialog;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.AppUtils;
@@ -11,9 +14,10 @@ import com.blankj.utilcode.util.PathUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.kongzue.baseokhttp.HttpRequest;
 import com.kongzue.baseokhttp.listener.OnDownloadListener;
-import com.kongzue.dialogx.dialogs.MessageDialog;
-import com.kongzue.dialogx.interfaces.OnDialogButtonClickListener;
+import com.kongzue.dialogx.dialogs.CustomDialog;
+import com.kongzue.dialogx.interfaces.OnBindView;
 import com.socks.library.KLog;
+import com.tyky.update.R;
 import com.tyky.update.bean.UpdateParamModel;
 import com.tyky.update.utils.FileDownloadUtil;
 
@@ -34,31 +38,53 @@ public class CheckVersionDialog {
             //全量更新
             if (forceUpdate) {
                 //是强制更新
-                MessageDialog.show("新版本更新", updateContent, "确定升级")
-                        .setCancelable(false)
-                        .setOkButtonClickListener(new OnDialogButtonClickListener<MessageDialog>() {
+                CustomDialog customDialog = CustomDialog.build()
+                        .setCustomView(new OnBindView<CustomDialog>(R.layout.layout_dialog_update) {
                             @Override
-                            public boolean onClick(MessageDialog baseDialog, View v) {
-                                downloadFile(paramModel);
-                                return false;
-                            }
-                        });
-            } else {
-                MessageDialog.show("新版本更新", updateContent, "确定升级", "暂不升级")
-                        .setOkButtonClickListener(new OnDialogButtonClickListener<MessageDialog>() {
-                            @Override
-                            public boolean onClick(MessageDialog baseDialog, View v) {
-                                downloadFile(paramModel);
-                                return false;
+                            public void onBind(final CustomDialog dialog, View v) {
+                                TextView tvUpdateContent = v.findViewById(R.id.tvUpdateContent);
+                                TextView tvVersion = v.findViewById(R.id.tvVersion);
+                                Button btnConfirm = v.findViewById(R.id.btnConfirm);
+                                Button btnCancel = v.findViewById(R.id.btnCancel);
+                                //隐藏取消按钮
+                                btnCancel.setVisibility(View.GONE);
+                                tvUpdateContent.setText(updateContent);
+                                tvVersion.setText(paramModel.getVersionName());
+                                btnCancel.setOnClickListener(v1 -> dialog.dismiss());
+                                btnConfirm.setOnClickListener(v12 -> {
+                                    dialog.dismiss();
+                                    downloadFile(paramModel);
+                                });
                             }
                         })
-                        .setCancelButtonClickListener(new OnDialogButtonClickListener<MessageDialog>() {
+                        .setAlign(CustomDialog.ALIGN.CENTER)
+                        .setCancelable(false)
+                        .setMaskColor(Color.parseColor("#80666666"));
+
+                customDialog.show();
+            } else {
+                CustomDialog.build()
+                        .setCustomView(new OnBindView<CustomDialog>(R.layout.layout_dialog_update) {
                             @Override
-                            public boolean onClick(MessageDialog baseDialog, View v) {
-                                downloadFileBackground(paramModel);
-                                return false;
+                            public void onBind(final CustomDialog dialog, View v) {
+                                TextView tvUpdateContent = v.findViewById(R.id.tvUpdateContent);
+                                TextView tvVersion = v.findViewById(R.id.tvVersion);
+                                Button btnConfirm = v.findViewById(R.id.btnConfirm);
+                                Button btnCancel = v.findViewById(R.id.btnCancel);
+
+                                tvUpdateContent.setText(updateContent);
+                                tvVersion.setText(paramModel.getVersionName());
+                                btnCancel.setOnClickListener(v1 -> dialog.dismiss());
+                                btnConfirm.setOnClickListener(v12 -> {
+                                    dialog.dismiss();
+                                    downloadFile(paramModel);
+                                });
                             }
-                        });
+                        })
+                        .setAlign(CustomDialog.ALIGN.CENTER)
+                        .setCancelable(false)
+                        .setMaskColor(Color.parseColor("#80666666"))
+                        .show();
             }
 
         }

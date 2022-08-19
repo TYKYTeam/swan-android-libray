@@ -46,4 +46,5 @@ dependencies {
     //BaseOkHttp V3 网络请求库 https://github.com/kongzue/BaseOkHttpV3
     implementation 'com.github.kongzue:BaseOkHttpV3:3.2.4.2'
     compileOnly project(path: ':webviewBase')
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
 }
