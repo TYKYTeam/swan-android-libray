@@ -2255,6 +2255,43 @@ if (window.page) {
 }
 ```
 
+### 4.更改状态栏颜色
+
+changeStatusBar
+
+将状态栏设置为沉浸式状态栏，同时设置状态栏和底部导航条的颜色
+
+**传参：**
+
+```
+{
+    "type":"2",
+    "content": "#4283f2",
+}
+```
+
+- `type` 1:自动取色 2:设置状态栏颜色
+- `content` 当type=2，传颜色值；type=1，传值无效
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+
+```
+if (window.page) {
+    let content = {
+        "type":"2",
+        "content": "#4283f2",
+    }
+    let result = window.page.changeStatusBar(JSON.stringify(content))
+    console.log(result)
+}
+```
+
 ## tim
 腾讯云IM模块
 
