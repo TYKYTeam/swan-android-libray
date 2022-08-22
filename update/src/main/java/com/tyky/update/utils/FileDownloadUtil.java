@@ -67,7 +67,7 @@ public class FileDownloadUtil {
                             // 将缓冲区中的数据写入通道
                             foschannel.write(byteBuffer);
 
-                            final double progress = (foschannel.size() + startSize / length);
+                            final double progress = ((foschannel.size() + startSize) / length);
                             BigDecimal two = new BigDecimal(progress);
                             double result = two.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
                             //计算进度，回调
