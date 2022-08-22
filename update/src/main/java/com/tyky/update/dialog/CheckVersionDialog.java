@@ -1,27 +1,26 @@
 package com.tyky.update.dialog;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.PathUtils;
+import com.blankj.utilcode.util.ThreadUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.kongzue.baseokhttp.HttpRequest;
-import com.kongzue.baseokhttp.listener.OnDownloadListener;
 import com.kongzue.dialogx.dialogs.CustomDialog;
+import com.kongzue.dialogx.interfaces.DialogLifecycleCallback;
 import com.kongzue.dialogx.interfaces.OnBindView;
 import com.socks.library.KLog;
 import com.tyky.update.R;
 import com.tyky.update.bean.UpdateParamModel;
 import com.tyky.update.utils.FileDownloadUtil;
+import com.tyky.update.view.CircleProgressBar;
 
 import java.io.File;
+import java.util.concurrent.Future;
 
 public class CheckVersionDialog {
 
@@ -74,7 +73,11 @@ public class CheckVersionDialog {
 
                                 tvUpdateContent.setText(updateContent);
                                 tvVersion.setText(paramModel.getVersionName());
-                                btnCancel.setOnClickListener(v1 -> dialog.dismiss());
+                                btnCancel.setOnClickListener(v1 -> {
+                                    dialog.dismiss();
+                                    //不是强制更新，点了取消后在wifi环境自动下载apk文件
+                                    downloadFileBackground(paramModel);
+                                });
                                 btnConfirm.setOnClickListener(v12 -> {
                                     dialog.dismiss();
                                     downloadFile(paramModel);
@@ -102,8 +105,6 @@ public class CheckVersionDialog {
             int versionCode = updateParamModel.getVersionCode();
 
             File file = new File(PathUtils.getExternalAppFilesPath(), "temp_" + versionCode + ".apk");
-
-            Activity context = ActivityUtils.getTopActivity();
 
             FileDownloadUtil.download(downloadUrl, file, new FileDownloadUtil.OnDownloadListener() {
                 @Override
@@ -185,42 +186,79 @@ public class CheckVersionDialog {
         } else {
             File file = new File(PathUtils.getExternalAppFilesPath(), "temp_" + versionCode + ".apk");
 
-            ProgressDialog progressDialog = new ProgressDialog(ActivityUtils.getTopActivity());
-            progressDialog.setTitle("更新版本");
-            progressDialog.setMessage("正在下载中");
-            progressDialog.setMax(100);
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            progressDialog.setProgress(0);
-            progressDialog.show();
-
-            HttpRequest.DOWNLOAD(
-                    ActivityUtils.getTopActivity(), downloadUrl,
-                    file,
-                    new OnDownloadListener() {
+            CustomDialog customDialog = CustomDialog.build()
+                    .setCustomView(new OnBindView<CustomDialog>(R.layout.layout_dialog_download) {
                         @Override
-                        public void onDownloadSuccess(File file) {
-                            progressDialog.dismiss();
-                            if (file.length() > 0) {
-                                //下载完毕后安装apk文件
-                                AppUtils.installApp(file);
-                            } else {
-                                ToastUtils.showShort("apk文件大小为0KB，更新失败！");
-                            }
+                        public void onBind(final CustomDialog dialog, View v) {
+
+                            CircleProgressBar circleProgressBar = v.findViewById(R.id.circleProgressBar);
+                            Button btnCancel = v.findViewById(R.id.btnCancelDownload);
+                            btnCancel.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                }
+
+                            });
+
+                            Future<?> feature = FileDownloadUtil.download(downloadUrl, file, new FileDownloadUtil.OnDownloadListener() {
+                                @Override
+                                public void onProgress(double progress) {
+                                    KLog.d("下载进度: " + progress);
+                                    ThreadUtils.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            int progressInt = Double.valueOf(progress * 100).intValue();
+                                            circleProgressBar.setProgress(progressInt);
+                                        }
+                                    });
+                                }
+
+                                @Override
+                                public void onError(Exception e) {
+                                    KLog.e("下载错误: " + e.getMessage());
+                                    dialog.dismiss();
+                                    ToastUtils.showShort("下载失败,原因为" + e.getMessage());
+                                }
+
+                                @Override
+                                public void onSuccess(File outputFile) {
+                                    dialog.dismiss();
+                                    AppUtils.installApp(outputFile);
+                                }
+                            });
+
+                            dialog.setDialogLifecycleCallback(new DialogLifecycleCallback<CustomDialog>() {
+                                @Override
+                                public void onDismiss(CustomDialog dialog) {
+                                    super.onDismiss(dialog);
+                                    feature.cancel(true);
+                                }
+                            });
+                            dialog.setOnBackPressedListener(() -> {
+                                feature.cancel(true);
+                                return false;
+                            });
+                        }
+                    })
+                    .setAlign(CustomDialog.ALIGN.CENTER)
+                    .setCancelable(false)
+                    .setMaskColor(Color.parseColor("#80666666"))
+                    .setDialogLifecycleCallback(new DialogLifecycleCallback<CustomDialog>() {
+                        @Override
+                        public void onShow(CustomDialog dialog) {
+                            super.onShow(dialog);
+
                         }
 
                         @Override
-                        public void onDownloading(int progress) {
-                            KLog.d("下载进度：" + progress);
-                            //更新进度
-                            progressDialog.setProgress(progress);
+                        public void onDismiss(CustomDialog dialog) {
+                            super.onDismiss(dialog);
                         }
 
-                        @Override
-                        public void onDownloadFailed(Exception e) {
-                            ToastUtils.showShort("下载失败，原因：" + e.getMessage());
-                        }
-                    }
-            );
+                    });
+
+            customDialog.show();
         }
     }
 }

@@ -52,7 +52,6 @@ public class FileDownloadUtil {
                         RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
                         //从上次未完成的位置开始下载
                         randomAccessFile.seek(startSize);
-                        randomAccessFile.getChannel();
                         foschannel = randomAccessFile.getChannel();
                         InputStream fis = resp.body().byteStream();
                         ReadableByteChannel fisChannel = Channels.newChannel(fis);
@@ -66,8 +65,9 @@ public class FileDownloadUtil {
                             byteBuffer.flip();  // 切换成读数据模式
                             // 将缓冲区中的数据写入通道
                             foschannel.write(byteBuffer);
+                            //fixme 断点下载进度会出现问题
+                            double progress = (foschannel.size() / length);
 
-                            final double progress = ((foschannel.size() + startSize) / length);
                             BigDecimal two = new BigDecimal(progress);
                             double result = two.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
                             //计算进度，回调
