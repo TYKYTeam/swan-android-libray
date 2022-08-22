@@ -14,6 +14,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
+import java.util.concurrent.Future;
 
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
@@ -22,11 +23,11 @@ import okhttp3.Response;
 
 public class FileDownloadUtil {
 
-    public static void download(String url, File file, OnDownloadListener listener) {
+    public static Future<?> download(String url, File file, OnDownloadListener listener) {
 
         //http://10.232.107.44:9060/swan-business/file/download
         // 利用通道完成文件的复制(非直接缓冲区)
-        ThreadUtils.getIoPool().submit(new Runnable() {
+        Future<?> feature = ThreadUtils.getIoPool().submit(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -44,7 +45,7 @@ public class FileDownloadUtil {
                     Response resp = call.execute();
 
                     double length = Long.parseLong(resp.header("Content-Length")) * 1.0;
-                    FileChannel foschannel ;
+                    FileChannel foschannel;
 
                     if (!TextUtils.isEmpty(resp.header("Content-Range"))) {
                         //断点继续下载
@@ -66,9 +67,9 @@ public class FileDownloadUtil {
                             // 将缓冲区中的数据写入通道
                             foschannel.write(byteBuffer);
 
-                            final double progress = (foschannel.size() / length);
+                            final double progress = (foschannel.size() + startSize / length);
                             BigDecimal two = new BigDecimal(progress);
-                            double result = two.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
+                            double result = two.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
                             //计算进度，回调
                             if (listener != null) {
                                 listener.onProgress(result);
@@ -102,7 +103,7 @@ public class FileDownloadUtil {
 
                             final double progress = (foschannel.size() / length);
                             BigDecimal two = new BigDecimal(progress);
-                            double result = two.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
+                            double result = two.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
                             //计算进度，回调
                             if (listener != null) {
                                 listener.onProgress(result);
@@ -126,6 +127,7 @@ public class FileDownloadUtil {
                 }
             }
         });
+        return feature;
 
 
     }
