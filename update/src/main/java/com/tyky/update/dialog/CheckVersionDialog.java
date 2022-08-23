@@ -217,14 +217,18 @@ public class CheckVersionDialog {
                                 @Override
                                 public void onError(Exception e) {
                                     KLog.e("下载错误: " + e.getMessage());
-                                    dialog.dismiss();
-                                    ToastUtils.showShort("下载失败,原因为" + e.getMessage());
+                                    ThreadUtils.runOnUiThread(() -> {
+                                        dialog.dismiss();
+                                        ToastUtils.showShort("下载失败,原因为" + e.getMessage());
+                                    });
                                 }
 
                                 @Override
                                 public void onSuccess(File outputFile) {
-                                    dialog.dismiss();
-                                    AppUtils.installApp(outputFile);
+                                    ThreadUtils.runOnUiThread(() -> {
+                                        dialog.dismiss();
+                                        AppUtils.installApp(outputFile);
+                                    });
                                 }
                             });
 
@@ -234,10 +238,6 @@ public class CheckVersionDialog {
                                     super.onDismiss(dialog);
                                     feature.cancel(true);
                                 }
-                            });
-                            dialog.setOnBackPressedListener(() -> {
-                                feature.cancel(true);
-                                return false;
                             });
                         }
                     })
