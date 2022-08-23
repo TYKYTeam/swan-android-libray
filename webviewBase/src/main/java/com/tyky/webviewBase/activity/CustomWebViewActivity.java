@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
@@ -111,6 +112,7 @@ public class CustomWebViewActivity extends AppCompatActivity {
     public void setStatusBar(StatusBarEvent event) {
         int type = event.getType();
         if (type == 1) {
+            //自动取色
             Bitmap drawingCache = ScreenUtils.screenShot(this);
             Palette.from(drawingCache)
                     .setRegion(0, 0, drawingCache.getWidth(), 400)
@@ -135,20 +137,13 @@ public class CustomWebViewActivity extends AppCompatActivity {
 
                             int color = mostSwatch.getRgb();
                             //int color = Color.parseColor("#eb1c63");
+
                             BarUtils.setStatusBarColor(CustomWebViewActivity.this, color, true);
                             BarUtils.setStatusBarLightMode(CustomWebViewActivity.this, ColorUtils.isLightColor(color));
                             //设置导航条颜色
                             BarUtils.setNavBarColor(CustomWebViewActivity.this, color);
 
                             drawingCache.recycle();
-
-                        /*double luminance = ColorUtils.calculateLuminance(color);
-                        BarUtils.setStatusBarColor(CustomWebViewActivity.this, color);
-                        if (luminance < 0.5) {
-                            BarUtils.setStatusBarLightMode(CustomWebViewActivity.this,false);
-                        } else {
-                            BarUtils.setStatusBarLightMode(CustomWebViewActivity.this,true);
-                        }*/
                         }
                     });
         } else {
@@ -159,6 +154,10 @@ public class CustomWebViewActivity extends AppCompatActivity {
             //设置导航条颜色
             BarUtils.setNavBarColor(CustomWebViewActivity.this, color);
         }
+
+        //修复Android10及以上版本出现状态栏遮挡页面问题
+        ViewGroup contentParent = CustomWebViewActivity.this.findViewById(android.R.id.content);
+        contentParent.getChildAt(0).setFitsSystemWindows(true);
     }
 
    /* @RequiresApi(api = Build.VERSION_CODES.M)
