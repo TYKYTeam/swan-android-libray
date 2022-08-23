@@ -78,14 +78,16 @@ public class CustomWebViewActivity extends AppCompatActivity {
         //语音初始化
         SpeechService.init(this);
 
-        AndPermission.with(this).runtime()
-                .permission(Permission.WRITE_EXTERNAL_STORAGE)
-                .onGranted(permissions -> {
+        if (!AndPermission.hasPermissions(this, Permission.WRITE_EXTERNAL_STORAGE)) {
+            AndPermission.with(this).runtime()
+                    .permission(Permission.WRITE_EXTERNAL_STORAGE)
+                    .onGranted(permissions -> {
 
-                })
-                .onDenied(permission -> {
+                    })
+                    .onDenied(permission -> {
 
-                }).start();
+                    }).start();
+        }
 
 
         customWebView = findViewById(R.id.webview);
