@@ -43,16 +43,23 @@ public class FileDownloadUtil {
                             .get().build();
                     Call call = okHttpClient.newCall(request);
                     Response resp = call.execute();
-
                     double length = Long.parseLong(resp.header("Content-Length")) * 1.0;
+                    //文件总大小
+                    double fileAllLength = length;
+                    if (startSize > 0) {
+                        //如果是断点续传，响应头的Content-Length不是文件的总长度
+                        fileAllLength = startSize + length;
+                    }
                     FileChannel foschannel;
 
                     if (!TextUtils.isEmpty(resp.header("Content-Range"))) {
+
                         //断点继续下载
                         RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
                         //从上次未完成的位置开始下载
                         randomAccessFile.seek(startSize);
                         foschannel = randomAccessFile.getChannel();
+
                         InputStream fis = resp.body().byteStream();
                         ReadableByteChannel fisChannel = Channels.newChannel(fis);
 
@@ -65,8 +72,7 @@ public class FileDownloadUtil {
                             byteBuffer.flip();  // 切换成读数据模式
                             // 将缓冲区中的数据写入通道
                             foschannel.write(byteBuffer);
-                            //fixme 断点下载进度会出现问题
-                            double progress = (foschannel.size() / length);
+                            double progress = (foschannel.size() / fileAllLength);;
 
                             BigDecimal two = new BigDecimal(progress);
                             double result = two.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
@@ -80,9 +86,6 @@ public class FileDownloadUtil {
                         fisChannel.close();
                         randomAccessFile.close();
 
-                        if (listener != null) {
-                            listener.onSuccess(file);
-                        }
                     } else {
                         //走重新下载的逻辑
                         FileOutputStream fileOutputStream = new FileOutputStream(file);
@@ -114,9 +117,9 @@ public class FileDownloadUtil {
                         fisChannel.close();
                         fileOutputStream.close();
 
-                        if (listener != null) {
-                            listener.onSuccess(file);
-                        }
+                    }
+                    if (listener != null) {
+                        listener.onSuccess(file);
                     }
 
                 } catch (IOException e) {
