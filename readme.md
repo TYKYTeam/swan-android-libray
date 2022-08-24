@@ -2160,9 +2160,138 @@ if (window.debugger) {
 
 ## update使用
 
-更新后台的部署操作，及更新
+### 1.弹出更新提示框
+`showUpdateDialog`
 
-考虑几套更新策略
+弹出更新版本的提示框
+
+如果是强制更新，则不会显示取消按钮
+
+**传参：**
+
+```js
+{
+    "versionCode": 2,
+    "versionName": "1.1",
+    "updateContent": "1.基阿斯蒂设置桌面小红点基阿斯蒂设置桌面小红点基阿斯蒂设置桌面小红点基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点1.基阿斯蒂设置桌面小红点基阿斯蒂设置桌面小红点基阿斯蒂设置桌面小红点基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点",
+    "downloadUrl": "http://10.232.107.44:9060/swan-business/file/testDownload",
+    "forceUpdate": false,
+    "updateTime": "2022-08-18 19:12",
+    "fileSize": "85.8MB"
+}
+```
+
+- `updateContent` 更新内容
+- `downloadUrl` 下载地址
+- `forceUpdate` 是否强制更新
+- `updateTime` 更新时间
+- `fileSize` 文件大小
+
+> 如果是使用我们的移动后台系统进行的更新，实际上是JS调用完接口后，接口返回的数据。如果是自定义的，需要自己调整下字段即可
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+
+```java
+if (window.update) {
+    let content = {
+        "versionCode": 2,
+        "versionName": "1.1",
+        "updateContent": "1.基阿斯蒂设置桌面小红点基阿斯蒂设置桌面小红点基阿斯蒂设置桌面小红点基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点1.基阿斯蒂设置桌面小红点基阿斯蒂设置桌面小红点基阿斯蒂设置桌面小红点基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点",
+        "downloadUrl": "http://10.232.107.44:9060/swan-business/file/testDownload",
+        "forceUpdate": false,
+        "updateTime": "2022-08-18 19:12",
+        "fileSize": "85.8MB"
+    }
+    let result = window.update.showUpdateDialog(JSON.stringify(content))
+    // alert(result);
+    console.log(result)
+}
+```
+### 2.下载文件并显示下载进度框
+`showDownloadDialog`
+
+下载文件并显示一个对话框，用来真实下载进度条，下载完文件会进入apk安装的页面
+
+> 主要考虑到前端H5有自定义更新提示框的需求，这个时候H5点击了下载，即可调用此方法来下载apk更新文件
+
+**传参：**
+
+```js
+{
+    "downloadUrl": "http://10.232.107.44:9060/swan-business/file/testDownload",
+    "forceUpdate": false,
+}
+```
+
+- `downloadUrl` 下载地址
+- `forceUpdate` 是否强制更新
+
+> 如果是使用我们的移动后台系统进行的更新，实际上是JS调用完接口后，接口返回的数据。如果是自定义的，需要自己调整下字段即可
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+
+```java
+if (window.update) {
+    let content = {
+        "downloadUrl": "http://10.232.107.44:9060/swan-business/file/testDownload",
+        "forceUpdate": false
+    }
+    let result = window.update.showDownloadDialog(JSON.stringify(content))
+    // alert(result);
+    console.log(result)
+}
+```
+
+### 3.静默下载apk文件
+`downloadFileBackground`
+
+在Wifi环境下静默下载apk文件，不会有任何的提示
+
+**传参：**
+
+```js
+{
+    "downloadUrl": "http://10.232.107.44:9060/swan-business/file/testDownload",
+    "forceUpdate": false,
+}
+```
+
+- `downloadUrl` 下载地址
+- `forceUpdate` 是否强制更新
+
+> 如果是使用我们的移动后台系统进行的更新，实际上是JS调用完接口后，接口返回的数据。如果是自定义的，需要自己调整下字段即可
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+
+```java
+if (window.update) {
+    let content = {
+        "downloadUrl": "http://10.232.107.44:9060/swan-business/file/testDownload",
+        "forceUpdate": false
+    }
+    let result = window.update.downloadFileBackground(JSON.stringify(content))
+    // alert(result);
+    console.log(result)
+}
+```
 
 ## page
 ### 1.跳转其他APP页面
@@ -2257,7 +2386,7 @@ if (window.page) {
 
 ### 4.更改状态栏颜色
 
-changeStatusBar
+`changeStatusBar`
 
 将状态栏设置为沉浸式状态栏，同时设置状态栏和底部导航条的颜色
 
