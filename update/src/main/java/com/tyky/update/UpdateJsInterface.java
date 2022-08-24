@@ -1,5 +1,7 @@
 package com.tyky.update;
 
+import android.webkit.JavascriptInterface;
+
 import com.blankj.utilcode.util.GsonUtils;
 import com.google.gson.Gson;
 import com.tyky.update.bean.UpdateParamModel;
@@ -14,6 +16,7 @@ public class UpdateJsInterface {
     /**
      * 弹出更新提示框
      */
+    @JavascriptInterface
     public String showUpdateDialog(String paramStr) {
         UpdateParamModel updateParamModel = gson.fromJson(paramStr, UpdateParamModel.class);
         CheckVersionDialog.show(updateParamModel);
@@ -24,6 +27,7 @@ public class UpdateJsInterface {
     /**
      * 下载文件并显示下载进度框
      */
+    @JavascriptInterface
     public String showDownloadDialog(String paramStr) {
         UpdateParamModel updateParamModel = gson.fromJson(paramStr, UpdateParamModel.class);
         CheckVersionDialog.downloadFile(updateParamModel,updateParamModel.isForceUpdate());
@@ -33,6 +37,7 @@ public class UpdateJsInterface {
     /**
      * 静默下载apk文件
      */
+    @JavascriptInterface
     public String downloadFileBackground(String paramStr) {
         UpdateParamModel updateParamModel = gson.fromJson(paramStr, UpdateParamModel.class);
         CheckVersionDialog.downloadFileBackground(updateParamModel);

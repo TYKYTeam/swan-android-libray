@@ -100,7 +100,9 @@
             <fieldset>
                 <legend>update 更新</legend>
                 <div class="contentDiv">
-                    <button type="default" onclick="checkVersion()">检测版本更新</button>
+                    <button type="default" onclick="showUpdateDialog()">弹出更新提示框</button>
+                    <button type="default" onclick="showUpdateDialog()">下载文件并显示下载进度框</button>
+                    <button type="default" onclick="showUpdateDialog()">静默下载apk文件</button>
                 </div>
             </fieldset>
 
@@ -910,7 +912,7 @@
         }
 
 
-        function checkVersion() {
+        function showUpdateDialog() {
             //全量更新
             if (window.update) {
                 let content = {
@@ -918,11 +920,39 @@
                     "versionName": "1.1",
                     "updateContent": "1.基阿斯蒂设置桌面小红点基阿斯蒂设置桌面小红点基阿斯蒂设置桌面小红点基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点1.基阿斯蒂设置桌面小红点基阿斯蒂设置桌面小红点基阿斯蒂设置桌面小红点基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点\n2.基阿斯蒂设置桌面小红点",
                     "downloadUrl": "http://10.232.107.44:9060/swan-business/file/testDownload",
-                    "forceUpdate": true,
+                    "forceUpdate": false,
                     "updateTime": "2022-08-18 19:12",
                     "fileSize": "85.8MB"
                 }
-                let result = window.update.checkVersion(JSON.stringify(content))
+                let result = window.update.showUpdateDialog(JSON.stringify(content))
+                // alert(result);
+                console.log(result)
+            }
+
+        }
+        
+        function showDownloadDialog() {
+            //全量更新
+            if (window.update) {
+                let content = {
+                    "downloadUrl": "http://10.232.107.44:9060/swan-business/file/testDownload",
+                    "forceUpdate": false
+                }
+                let result = window.update.showDownloadDialog(JSON.stringify(content))
+                // alert(result);
+                console.log(result)
+            }
+
+        }
+        
+        function downloadFileBackground() {
+            //全量更新
+            if (window.update) {
+                let content = {
+                    "downloadUrl": "http://10.232.107.44:9060/swan-business/file/testDownload",
+                    "forceUpdate": false
+                }
+                let result = window.update.downloadFileBackground(JSON.stringify(content))
                 // alert(result);
                 console.log(result)
             }
