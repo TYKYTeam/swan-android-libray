@@ -1,10 +1,5 @@
 package com.tyky.update;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.webkit.JavascriptInterface;
-
-import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.GsonUtils;
 import com.google.gson.Gson;
 import com.tyky.update.bean.UpdateParamModel;
@@ -17,33 +12,32 @@ public class UpdateJsInterface {
     Gson gson = GsonUtils.getGson();
 
     /**
-     * 检测更新
-     *
-     * @return
+     * 弹出更新提示框
      */
-    @JavascriptInterface
-    public String checkVersion(String paramStr) {
+    public String showUpdateDialog(String paramStr) {
         UpdateParamModel updateParamModel = gson.fromJson(paramStr, UpdateParamModel.class);
         CheckVersionDialog.show(updateParamModel);
         return gson.toJson(ResultModel.success(""));
     }
 
-    private void showDownloadDialog() {
-        Activity topActivity = ActivityUtils.getTopActivity();
 
-        ProgressDialog.show(topActivity, "版本下载", "下载中");
-        /*new AlertDialog.Builder(topActivity).setTitle("新版本更新")
-                .setMessage("更新内容：\n1.内容111\n2.内容222")
-                .setPositiveButton("确定升级", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                }).setNegativeButton("暂不升级", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });*/
+    /**
+     * 下载文件并显示下载进度框
+     */
+    public String showDownloadDialog(String paramStr) {
+        UpdateParamModel updateParamModel = gson.fromJson(paramStr, UpdateParamModel.class);
+        CheckVersionDialog.downloadFile(updateParamModel,updateParamModel.isForceUpdate());
+        return gson.toJson(ResultModel.success(""));
     }
+
+    /**
+     * 静默下载apk文件
+     */
+    public String downloadFileBackground(String paramStr) {
+        UpdateParamModel updateParamModel = gson.fromJson(paramStr, UpdateParamModel.class);
+        CheckVersionDialog.downloadFileBackground(updateParamModel);
+        return gson.toJson(ResultModel.success(""));
+    }
+
+
 }
