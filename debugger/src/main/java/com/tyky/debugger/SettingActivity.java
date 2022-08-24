@@ -1,6 +1,8 @@
 package com.tyky.debugger;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
@@ -8,19 +10,27 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.MetaDataUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
+import com.tyky.debugger.adapter.RvHistoryInfoAdapter;
 import com.tyky.debugger.adapter.RvModuleAdapter;
+import com.tyky.debugger.bean.HistoryUrlInfo;
 import com.tyky.media.activity.QrScanActivity;
 import com.tyky.webviewBase.constants.MediaModuleConstants;
 import com.tyky.webviewBase.event.UrlLoadEvent;
 
 import org.greenrobot.eventbus.EventBus;
+import org.litepal.LitePal;
+
+import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class SettingActivity extends AppCompatActivity {
@@ -53,9 +63,23 @@ public class SettingActivity extends AppCompatActivity {
 
         showCurrentBaseLibraryInfo();
 
-        //int color = Color.parseColor("white");
-        //BarUtils.setStatusBarLightMode(this, ColorUtils.isLightColor(color));
-        //BarUtils.setStatusBarColor(this, color, true);
+
+        int color = Color.parseColor("white");
+        BarUtils.setStatusBarLightMode(this, ColorUtils.isLightColor(color));
+        BarUtils.setStatusBarColor(this, color, true);
+
+        LitePal.initialize(this);
+        showHistory();
+    }
+
+    private void showHistory() {
+        List<HistoryUrlInfo> all = LitePal.findAll(HistoryUrlInfo.class);
+        RvHistoryInfoAdapter rvHistoryInfoAdapter = new RvHistoryInfoAdapter(all);
+        RecyclerView rvHistory = (RecyclerView) findViewById(R.id.rvHistory);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        rvHistory.setLayoutManager(linearLayoutManager);
+        rvHistory.setAdapter(rvHistoryInfoAdapter);
     }
 
     /**
@@ -73,6 +97,7 @@ public class SettingActivity extends AppCompatActivity {
         //动态假如itemView
         RecyclerView rvModule = findViewById(R.id.rvModule);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+
         rvModule.setLayoutManager(gridLayoutManager);
 
         if (!TextUtils.isEmpty(baseLibraryDependency)) {
@@ -87,6 +112,14 @@ public class SettingActivity extends AppCompatActivity {
     private void saveAndVisit() {
         String url = mEturl.getText().toString();
         SPUtils.getInstance().put("settingUrl", url, true);
+        //初始化数据库
+        SQLiteDatabase db = LitePal.getDatabase();
+
+        List<HistoryUrlInfo> historyUrlInfos = LitePal.where("url =?", url).find(HistoryUrlInfo.class);
+        if (historyUrlInfos.isEmpty()) {
+            HistoryUrlInfo historyUrlInfo = new HistoryUrlInfo(url);
+            historyUrlInfo.save();
+        }
         EventBus.getDefault().post(new UrlLoadEvent(url));
         finish();
     }

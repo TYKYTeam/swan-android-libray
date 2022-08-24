@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     android:background="@color/white"
     tools:context=".SettingActivity">
 
@@ -40,14 +41,17 @@
     </LinearLayout>
 
     <ImageView
+        android:background="@drawable/shape_ripple"
         android:id="@+id/btnScan"
         app:layout_constraintTop_toTopOf="@id/llTitle"
         app:layout_constraintStart_toEndOf="@id/llTitle"
-       app:layout_constraintBottom_toBottomOf="@id/llTitle"
+        app:layout_constraintBottom_toBottomOf="@id/llTitle"
         android:layout_marginStart="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:scaleType="fitXY"
+        android:padding="6dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginEnd="20dp"
         android:src="@drawable/scan"/>
 
@@ -65,13 +69,35 @@
         android:layout_height="wrap_content"
         android:background="@drawable/btn_bg_shape"
         android:textColor="@color/white"
-        android:text="保存并访问"/>
+        android:text="访问"/>
+
+    <TextView
+        app:layout_constraintTop_toBottomOf="@id/btnVisit"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:id="@+id/tvHistoryTip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:text="历史访问记录: "/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        app:layout_constraintTop_toBottomOf="@id/tvHistoryTip"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/rvHistory"
+        tools:listitem="@layout/rv_item_history"
+        tools:itemCount="5"
+        android:layout_marginStart="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
 
     <TextView
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:id="@+id/tvLibraryVersionTip"
-        app:layout_constraintTop_toBottomOf="@id/btnVisit"
+        app:layout_constraintTop_toBottomOf="@id/rvHistory"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -106,11 +132,12 @@
         android:id="@+id/rvModule"
         app:layout_constraintTop_toBottomOf="@id/tvModuleTip"
         app:layout_constraintStart_toStartOf="@id/tvModuleTip"
+        app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/rv_item_module"
         app:spanCount="2"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="0dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

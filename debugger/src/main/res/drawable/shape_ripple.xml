@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:color="@color/picture_color_grey_3e"
+    tools:targetApi="lollipop">
+    <!--上面的是涟漪（水波纹）的颜色-->
+    <!--下面的则是背景色-->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/white" />
+            <corners android:radius="18dp" />
+        </shape>
+    </item>
+</ripple>

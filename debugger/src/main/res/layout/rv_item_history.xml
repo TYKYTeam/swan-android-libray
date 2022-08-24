@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_margin="5dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:paddingVertical="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ivArrow"
+        tools:text="模块1模块1模块1模块1模块1模块1模块1模块1模块1"
+        android:id="@+id/tvUrl"
+        android:textSize="12sp"
+        android:maxLines="1"
+        android:layout_width="0dp"
+        android:ellipsize="end"
+        android:textColor="@color/picture_color_grey"
+        android:layout_height="wrap_content"
+       />
+
+    <ImageView
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvUrl"
+        android:id="@+id/ivArrow"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:scaleType="fitXY"
+        android:layout_margin="10dp"
+        app:tint="@color/picture_color_grey"
+        android:tint="@color/picture_color_grey"
+        android:src="@drawable/icon_clear"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

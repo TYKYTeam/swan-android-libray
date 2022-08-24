@@ -63,6 +63,8 @@ dependencies {
     //日志输出    https://github.com/ZhaoKaiQiang/KLog
     compileOnly 'com.github.zhaokaiqiang.klog:library:1.6.0'
 
+    implementation 'org.litepal.android:core:2.0.0'
+
     compileOnly 'androidx.constraintlayout:constraintlayout:2.1.2'
     compileOnly project(path: ':webviewBase')
     implementation project(path: ':media')
