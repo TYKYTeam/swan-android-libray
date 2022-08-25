@@ -8,7 +8,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebStorage;
 import android.webkit.WebView;
 
-import com.blankj.utilcode.util.ThreadUtils;
 import com.socks.library.KLog;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.utils.ReflectUtil;
@@ -61,7 +60,7 @@ public class CustomWebView extends WebView {
         webSettings.setSupportZoom(false);//支持缩放
         requestFocusFromTouch();
 
-        ThreadUtils.getCpuPool().execute(() -> {
+       /* ThreadUtils.getCpuPool().execute(() -> {
             //遍历循环，筛选指定包名下含有指定注解的类，之后统一追加到webview中去
             List<Class<?>> classes = ReflectUtil.scanClassListByAnnotation(getContext(), "com.tyky", WebViewInterface.class);
             Map<Object, String> moduleObjectList = new HashMap<>();
@@ -70,11 +69,13 @@ public class CustomWebView extends WebView {
                 String value = aClass.getAnnotation(WebViewInterface.class).value();
                 try {
                     Object o = aClass.newInstance();
-                    moduleObjectList.put(o, value);
+                    addJavascriptInterface(o, value);
+                    //moduleObjectList.put(o, value);
                 } catch (IllegalAccessException | InstantiationException e) {
                     e.printStackTrace();
                 }
             }
+            KLog.d("模块长度："+moduleObjectList.size());
 
             //注入注解，需要在UI线程进行操作
             ThreadUtils.runOnUiThread(() -> {
@@ -82,10 +83,26 @@ public class CustomWebView extends WebView {
                     Object key = objectStringEntry.getKey();
                     String value = objectStringEntry.getValue();
                     addJavascriptInterface(key, value);
+                    KLog.d("模块："+value);
                 }
             });
-        });
+        });*/
 
+        //遍历循环，筛选指定包名下含有指定注解的类，之后统一追加到webview中去
+        List<Class<?>> classes = ReflectUtil.scanClassListByAnnotation(getContext(), "com.tyky", WebViewInterface.class);
+        Map<Object, String> moduleObjectList = new HashMap<>();
+
+        for (Class<?> aClass : classes) {
+            String value = aClass.getAnnotation(WebViewInterface.class).value();
+            try {
+                Object o = aClass.newInstance();
+                addJavascriptInterface(o, value);
+                //moduleObjectList.put(o, value);
+            } catch (IllegalAccessException | InstantiationException e) {
+                e.printStackTrace();
+            }
+        }
+        KLog.d("模块长度："+moduleObjectList.size());
         //跨域取消
         try {
             Class<?> clazz = getSettings().getClass();
