@@ -30,46 +30,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:visibility="gone"
         android:id="@+id/clLoading"
-        android:background="@color/ucrop_color_white"
+        android:background="@drawable/splash_screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ImageView
-            android:id="@+id/ivLogo"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/ic_launcher" />
-        <TextView
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/ivLogo"
-            android:text="@string/app_name" />
-        <ProgressBar
-            android:id="@+id/pb"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/ivLogo"
-            app:layout_constraintEnd_toEndOf="@id/ivLogo"
-            android:layout_marginBottom="36dp"
-            android:layout_gravity="bottom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-            <TextView
-                app:layout_constraintTop_toBottomOf="@id/pb"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textColor="@color/picture_color_grey"
-                android:text="加载中"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
