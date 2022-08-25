@@ -8,13 +8,16 @@ import android.webkit.WebSettings;
 import android.webkit.WebStorage;
 import android.webkit.WebView;
 
+import com.blankj.utilcode.util.ThreadUtils;
 import com.socks.library.KLog;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.utils.ReflectUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -58,19 +61,31 @@ public class CustomWebView extends WebView {
         webSettings.setSupportZoom(false);//支持缩放
         requestFocusFromTouch();
 
-        //遍历循环，筛选指定包名下含有指定注解的类，之后统一追加到webview中去
-        List<Class<?>> classes = ReflectUtil.scanClassListByAnnotation(getContext(), "com.tyky", WebViewInterface.class);
+        ThreadUtils.getCpuPool().execute(() -> {
+            //遍历循环，筛选指定包名下含有指定注解的类，之后统一追加到webview中去
+            List<Class<?>> classes = ReflectUtil.scanClassListByAnnotation(getContext(), "com.tyky", WebViewInterface.class);
+            Map<Object, String> moduleObjectList = new HashMap<>();
 
-        for (Class<?> aClass : classes) {
-            String value = aClass.getAnnotation(WebViewInterface.class).value();
-            Object o = null;
-            try {
-                o = aClass.newInstance();
-                addJavascriptInterface(o, value);
-            } catch (IllegalAccessException | InstantiationException e) {
-                e.printStackTrace();
+            for (Class<?> aClass : classes) {
+                String value = aClass.getAnnotation(WebViewInterface.class).value();
+                try {
+                    Object o = aClass.newInstance();
+                    moduleObjectList.put(o, value);
+                } catch (IllegalAccessException | InstantiationException e) {
+                    e.printStackTrace();
+                }
             }
-        }
+
+            //注入注解，需要在UI线程进行操作
+            ThreadUtils.runOnUiThread(() -> {
+                for (Map.Entry<Object, String> objectStringEntry : moduleObjectList.entrySet()) {
+                    Object key = objectStringEntry.getKey();
+                    String value = objectStringEntry.getValue();
+                    addJavascriptInterface(key, value);
+                }
+            });
+        });
+
         //跨域取消
         try {
             Class<?> clazz = getSettings().getClass();
@@ -102,7 +117,7 @@ public class CustomWebView extends WebView {
         //清除缓存
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.removeSessionCookies(null);
-        cookieManager.removeAllCookies(value -> KLog.d("清除缓存是否成功： "+value));
+        cookieManager.removeAllCookies(value -> KLog.d("清除缓存是否成功： " + value));
         cookieManager.flush();
         //清除保存在本地的所有内容（清空WebView的localStorage）
         WebStorage.getInstance().deleteAllData();
@@ -111,6 +126,7 @@ public class CustomWebView extends WebView {
         //清除缓存的数据
         clearCache(true);
     }
+
     public CustomWebViewChrome getCustomWebViewChrome() {
         return customWebViewChrome;
     }
