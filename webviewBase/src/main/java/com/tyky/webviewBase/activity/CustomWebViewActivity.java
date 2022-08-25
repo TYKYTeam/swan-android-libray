@@ -275,9 +275,10 @@ public class CustomWebViewActivity extends AppCompatActivity {
             clLoading.startAnimation(alphaAnimation);
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            setStatusBar(new StatusBarEvent());
-        }
+        //暂时取消网页加载完自动取色功能
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        //    setStatusBar(new StatusBarEvent());
+        //}
     }
 
     /**
