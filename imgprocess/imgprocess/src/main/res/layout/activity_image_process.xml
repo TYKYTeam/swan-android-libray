@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D3423F3F"
+    tools:context=".ImageProcessActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="350dp"
+        android:id="@+id/srcimg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/srcimg"
+        android:id="@+id/recyclerview"
+        android:layout_marginBottom="50dp"
+        />
+
+    <TextView
+        android:id="@+id/label_liang"
+        app:layout_constraintTop_toBottomOf="@id/recyclerview"
+        app:layout_constraintBottom_toBottomOf="@id/seekbar1"
+        app:layout_constraintRight_toRightOf="@id/label_liang2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:textSize="16sp"
+        android:text="亮度"/>
+
+    <SeekBar
+        app:layout_constraintTop_toTopOf="@id/label_liang"
+        app:layout_constraintLeft_toRightOf="@id/label_liang"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="4dp"
+        android:id="@+id/seekbar1"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_percent="0.7"
+        android:layout_height="wrap_content"
+        android:max="255"
+        android:progress="100" />
+
+    <TextView
+        android:id="@+id/label_liang2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_liang"
+        app:layout_constraintBottom_toBottomOf="@id/seekbar2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:textSize="16sp"
+        android:text="饱和度"/>
+
+    <SeekBar
+        app:layout_constraintTop_toTopOf="@id/label_liang2"
+        app:layout_constraintLeft_toRightOf="@id/label_liang2"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="4dp"
+        android:id="@+id/seekbar2"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_percent="0.7"
+        android:layout_height="wrap_content"
+        android:max="255"
+        android:progress="100" />
+
+
+    <TextView
+        android:id="@+id/label_liang3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_liang2"
+        app:layout_constraintBottom_toBottomOf="@id/seekbar3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:textSize="16sp"
+        android:text="对比度"/>
+
+    <SeekBar
+        app:layout_constraintTop_toTopOf="@id/label_liang3"
+        app:layout_constraintLeft_toRightOf="@id/label_liang3"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="4dp"
+        android:id="@+id/seekbar3"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_percent="0.7"
+        android:layout_height="wrap_content"
+        android:max="255"
+        android:progress="100" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/saves"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="20dp"
+        android:textSize="20sp"
+        android:text="保存"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

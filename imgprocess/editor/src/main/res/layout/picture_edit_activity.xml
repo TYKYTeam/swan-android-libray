@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.vachel.editor.ui.PictureEditView
+        android:id="@+id/image_canvas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#D1CFCF" />
+
+    <ViewSwitcher
+        android:id="@+id/vs_op"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inAnimation="@anim/anim_fade_in"
+        android:outAnimation="@anim/anim_fade_out">
+
+        <include layout="@layout/edit_opt_layout" />
+
+<!--        这个布局是用来设置裁剪功能布局的-->
+        <include layout="@layout/edit_clip_layout" />
+
+    </ViewSwitcher>
+
+
+</FrameLayout>

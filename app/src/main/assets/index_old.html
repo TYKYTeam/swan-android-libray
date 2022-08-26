@@ -238,10 +238,31 @@
                     <button type="default" onclick="signature()">电子签名</button>
                 </div>
             </fieldset>
+
+
+            <fieldset>
+                <legend>图片处理</legend>
+                <div class="contentDiv">
+                    <button type="default" onclick="openimgprocess()">拍摄图片</button>
+                </div>
+            </fieldset>
         </div>
     </body>
 
     <script>
+
+
+       function openimgprocess() {
+            if (window.imgprocess) {
+                let result = window.imgprocess.setImgProcess()
+                // alert(result)
+                console.log("被执行了一次")
+            }
+        }
+
+
+
+
         function clearWebviewData() {
             if (window.webviewBase) {
                 let result = window.webviewBase.clearWebviewData()

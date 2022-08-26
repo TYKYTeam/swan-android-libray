@@ -1,0 +1,152 @@
+<RelativeLayout android:id="@+id/image_process_bottom"
+    android:layout_width="match_parent"
+    android:layout_height="195dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    android:background="#000000"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:id="@+id/camera_tuya_1"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="文本颜色"-->
+<!--            android:textColor="#ffffff"-->
+<!--            android:layout_gravity="center"/>-->
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/camera_tuya_1"
+        android:id="@+id/camera_tuya_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"/>-->
+
+<!--        <ImageView-->
+<!--            android:layout_marginRight="38dp"-->
+<!--            android:layout_width="23dp"-->
+<!--            android:layout_height="23dp"-->
+<!--            android:src="@drawable/design_edit_cuti"-->
+<!--            />-->
+
+<!--        <ImageView-->
+<!--            android:layout_gravity="center_vertical"-->
+<!--            android:layout_width="15dp"-->
+<!--            android:layout_height="15dp"-->
+<!--            android:src="@drawable/design_edit_xiezi"/>-->
+
+<!--        <ImageView-->
+<!--            android:layout_marginLeft="38dp"-->
+<!--            android:layout_width="23dp"-->
+<!--            android:layout_height="23dp"-->
+<!--            android:src="@drawable/design_edit_ziti"/>-->
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"/>-->
+
+        <TextView
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="添加文字"
+            android:id="@+id/add_one_text"/>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/camera_tuya_2"
+        android:id="@+id/camera_tuya_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.vachel.editor.ui.CustomColorGroup
+            android:visibility="gone"
+            android:id="@+id/cg_colors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            app:hasExtraType="true"
+            android:orientation="horizontal"/>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="25dp"
+        android:id="@+id/camera_tuya_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/item3_page_cancel"
+            android:layout_marginLeft="23dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/design_edit_bianji_back"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tuyalable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="标注"
+            android:textColor="#ffffff"
+            android:src="@drawable/design_edit_biaoqian"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/item3_page_ok"
+            android:layout_marginRight="23dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/design_edit_biaozhusure"/>
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+</RelativeLayout>
