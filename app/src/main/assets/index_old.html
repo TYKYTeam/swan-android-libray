@@ -254,9 +254,12 @@
 
        function openimgprocess() {
             if (window.imgprocess) {
-                let result = window.imgprocess.setImgProcess()
-                // alert(result)
-                console.log("被执行了一次")
+                let content = {
+                    "callBackMethod": "getLocation",
+                    "type":1
+                }
+                let result = window.imgprocess.setImgProcess(JSON.stringify(content))
+                console.log(result)
             }
         }
 

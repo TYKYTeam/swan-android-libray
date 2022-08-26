@@ -2651,7 +2651,6 @@ if (window.auth) {
     console.log(result)
 }
 ```
-
 ### 2.手势解锁
 gestureUnlocking
 
@@ -2737,6 +2736,57 @@ if (window.auth) {
     console.log(result)
 }
 ```
+
+
+## imgprocess  图片处理库
+### 1. 
+setImgProcess
+
+跳转到拍照和图片处理页面
+
+**传参：**
+
+```
+{
+    "callBackMethod": "getLocation",
+    "type":1  
+}
+```
+
+- `type` 当type=1，返回处理后的图片文件路径，当type=2，返回处理后的图片路径和图片base64数据。如果不传type，默认为1
+
+
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":{path:"",base64:""}}
+
+
+```
+
+- `path`  图片文件路径
+- `base64`  图片base64数据
+
+**H5调用示例：**
+```
+if (window.imgprocess) {
+    let content = {
+        "callBackMethod": "getLocation",
+        "type":1
+    }
+    let result = window.imgprocess.setImgProcess(JSON.stringify(content))
+    console.log(result)
+}
+
+
+window.getLocation = function(object) {
+    console.log(object);
+    alert(JSON.stringify(object))
+}
+
+```
+
 
 ## 关于Module创建
 

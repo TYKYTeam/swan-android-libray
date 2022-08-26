@@ -33,17 +33,21 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ColorUtils;
+import com.blankj.utilcode.util.EncodeUtils;
 import com.blankj.utilcode.util.ImageUtils;
 import com.blankj.utilcode.util.PhoneUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.ToastUtils;
 
 
+import com.huantansheng.easyphotos.utils.bitmap.BitmapUtils;
 import com.tyky.imagecrop.addimgmark.ImageObject;
 import com.tyky.imagecrop.addimgmark.OperateUtils;
 import com.tyky.imagecrop.addimgmark.OperateView;
 import com.tyky.imagecrop.camera.TestActivity;
 import com.tyky.imagecrop.imgprocess.PhotoUtils;
+import com.tyky.webviewBase.event.JsCallBackEvent;
 import com.vachel.editor.EditMode;
 import com.vachel.editor.IEditSave;
 import com.vachel.editor.MyAddTextListener;
@@ -51,10 +55,16 @@ import com.vachel.editor.bean.StickerText;
 import com.vachel.editor.ui.CustomColorGroup;
 import com.vachel.editor.ui.PictureEditView;
 import com.vachel.editor.ui.sticker.ImageStickerView;
+import com.vachel.editor.util.BitmapUtil;
 
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.File;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 import me.pqpo.smartcropperlib.SmartCropper;
@@ -713,9 +723,27 @@ public class ImageCropActivity extends AppCompatActivity implements View.OnClick
             getPictureFromPhoto();
             // 这个是从相册里面选择图片
         } else if (viewid == R.id.edit_save) {
-            ImageUtils.save2Album(imagebitmap, Bitmap.CompressFormat.JPEG);
+
+
+            File receivefile=ImageUtils.save2Album(imagebitmap, Bitmap.CompressFormat.JPEG);
+//            EventBus.getDefault().post(new JsCallBackEvent());
+            String methodimg=SPUtils.getInstance().getString("method_img");
+            int type=SPUtils.getInstance().getInt("method_imgtype",1);
+            Map<String,String> map=new HashMap<>();
+            map.put("path",receivefile.getPath());
+            if (type==2){
+                String base64 = EncodeUtils.base64Encode2String(ImageUtils.bitmap2Bytes(imagebitmap));
+                map.put("base64",base64);
+            }
+            EventBus.getDefault().post(new JsCallBackEvent(methodimg,map));
+
             ToastUtils.showShort("成功保存到相册");
+
+            imagebitmap.recycle();
             finish();
+
+
+
         }
 
 
