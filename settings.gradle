@@ -45,3 +45,9 @@ project(':faceplatform-ui').projectDir = new File(settingsDir, '/baiduface/facep
 
 include ':faceplatform-release'
 project(':faceplatform-release').projectDir = new File(settingsDir, '/baiduface/faceplatform-release/')
+
+include ':imgprocess'
+project(':imgprocess').projectDir=new File(settingsDir,'/imgprocess/imgprocess/')
+
+include ':editor'
+project(':editor').projectDir=new File(settingsDir,'/imgprocess/editor/')

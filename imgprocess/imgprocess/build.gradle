@@ -1,0 +1,66 @@
+plugins {
+    id 'com.android.library'
+    id 'com.github.dcendents.android-maven'
+}
+
+group = 'com.github.stars-one'
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion '28.0.3'
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 32
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+        ndk {
+            // 设置支持的 SO 库构架，注意这里要根据你的实际情况来设置
+            //armeabi-v7a：32位 arm64-v8a：64位
+            abiFilters 'armeabi-v7a','arm64-v8a'//'armeabi''armeabi-v7a' 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    aaptOptions {
+        noCompress "tflite"
+        noCompress "lite"
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation project(path: ':editor')
+    implementation project(path: ':webviewBase')
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    implementation 'com.github.pqpo:SmartCropper:v2.1.3'
+
+    implementation 'com.blankj:utilcodex:1.31.0'
+
+    implementation 'com.github.HuanTanSheng:EasyPhotos:3.1.5'
+
+//    implementation 'com.quickbirdstudios:opencv:3.4.5'
+
+    implementation 'me.jessyan:autosize:1.2.1'
+
+}

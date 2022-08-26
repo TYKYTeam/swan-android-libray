@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".ImageFinalProcessActivity">
+
+    <RelativeLayout
+        android:id="@+id/camera_process_top"
+        android:gravity="center_vertical"
+        android:background="#504A4A"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:clickable="true"
+            android:background="@drawable/camera_ripple_back"
+            android:layout_alignTop="@+id/camera_process_title"
+            android:layout_alignBottom="@id/camera_process_title"
+            android:layout_marginLeft="15dp"
+            android:id="@+id/camera_process_back"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/camera_edit_back"/>
+        
+        
+        <TextView
+            android:maxWidth="300dp"
+            android:id="@+id/camera_process_title"
+            android:layout_marginLeft="18dp"
+            android:textSize="20sp"
+            android:layout_toRightOf="@+id/camera_process_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="图片处理"
+            android:textColor="#ffffff"/>
+
+    </RelativeLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/camera_bottom_container"
+        android:background="#090909"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+            <HorizontalScrollView
+                android:id="@+id/camera_horizontail"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintWidth_percent="0.7"
+                >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+
+                    <RelativeLayout
+                        android:id="@+id/camera_final_1"
+                        android:clickable="true"
+                        android:background="@drawable/camera_edit_button"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/camera_left"
+                            android:id="@+id/camera_1_img"
+                            />
+
+                        <TextView
+                            android:textSize="10sp"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="左转"
+                            android:layout_below="@id/camera_1_img"
+                            android:textColor="#ffffff"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/camera_final_2"
+                        android:clickable="true"
+                        android:background="@drawable/camera_edit_button"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <ImageView
+                            android:layout_alignLeft="@id/tempid_two"
+                            android:layout_alignRight="@id/tempid_two"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/camera_process_draw"
+                            android:id="@+id/camera_2_img"
+                            />
+
+                        <TextView
+                            android:id="@+id/tempid_two"
+                            android:textSize="10sp"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="标注"
+                            android:layout_below="@id/camera_2_img"
+                            android:textColor="#ffffff"/>
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/camera_final_3"
+                        android:clickable="true"
+                        android:background="@drawable/camera_edit_button"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/camera_water"
+                            android:id="@+id/camera_3_img"
+                            />
+
+                        <TextView
+                            android:textSize="10sp"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="水印"
+                            android:layout_below="@id/camera_3_img"
+                            android:textColor="#ffffff"/>
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/camera_final_4"
+                        android:clickable="true"
+                        android:background="@drawable/camera_edit_button"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <ImageView
+                            android:layout_alignLeft="@id/process_level"
+                            android:layout_alignRight="@id/process_level"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/camera_leave_picture"
+                            android:id="@+id/camera_4_img"
+                            />
+
+                        <TextView
+                            android:id="@+id/process_level"
+                            android:textSize="10sp"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="水平镜像"
+                            android:layout_below="@id/camera_4_img"
+                            android:textColor="#ffffff"/>
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/camera_final_5"
+                        android:clickable="true"
+                        android:background="@drawable/camera_edit_button"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <ImageView
+                            android:layout_alignRight="@id/process_topbottom"
+                            android:layout_alignLeft="@id/process_topbottom"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/camera_topbottom_picture"
+                            android:id="@+id/camera_5_img"
+                            />
+
+                        <TextView
+                            android:id="@+id/process_topbottom"
+                            android:textSize="10sp"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="上下镜像"
+                            android:layout_below="@id/camera_5_img"
+                            android:textColor="#ffffff"/>
+
+                    </RelativeLayout>
+
+
+
+                </LinearLayout>
+
+
+            </HorizontalScrollView>
+
+        <ImageView
+            android:layout_marginTop="3dp"
+            android:clickable="true"
+            android:background="@drawable/camera_ensureok"
+            android:id="@+id/camera_save"
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            app:layout_constraintLeft_toRightOf="@id/camera_horizontail"
+            android:src="@drawable/camera_ensure_save"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <HorizontalScrollView
+        android:id="@+id/camera_process_bottom"
+        android:background="#000000"
+        app:layout_constraintBottom_toTopOf="@id/camera_bottom_container"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/camera_relative_one"
+                android:layout_marginLeft="8dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp">
+
+                <ImageView
+                    android:id="@+id/camera_original_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"/>
+
+                <TextView
+                    android:background="#86171616"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="原图"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:textColor="#ffffff"
+                    android:textSize="8sp"
+                    android:gravity="center"
+                    android:layout_alignParentBottom="true"
+                    />
+
+                <ImageView
+                    android:id="@+id/camera_original_2"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/camera_process_drawable"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/camera_relative_two"
+                android:layout_marginLeft="8dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp">
+
+                <ImageView
+                    android:id="@+id/camera_ruihua_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"/>
+
+                <TextView
+                    android:background="#86171616"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="增强锐化"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:textColor="#ffffff"
+                    android:textSize="8sp"
+                    android:gravity="center"
+                    android:layout_alignParentBottom="true"
+                    />
+
+                <ImageView
+                    android:id="@+id/camera_ruihua_2"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/camera_process_drawable"/>
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+
+
+
+    </HorizontalScrollView>
+
+
+    <RelativeLayout
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="#000000"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/camera_process_bottom"
+        app:layout_constraintTop_toBottomOf="@id/camera_process_top"
+        >
+
+        <ImageView
+            android:id="@+id/camera_process_showimg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

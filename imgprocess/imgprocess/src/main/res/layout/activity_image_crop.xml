@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context=".ImageCropActivity">
+
+    <LinearLayout
+        android:id="@+id/image_process_top"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="104dp"
+        android:orientation="horizontal"
+        android:background="#000000"
+        >
+
+            <ImageView
+                android:id="@+id/edit_back"
+                android:clickable="true"
+                android:background="@drawable/camera_ripple_back"
+                android:layout_marginLeft="25dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/design_edit_back"
+                android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:visibility="invisible"
+            android:id="@+id/edit_prestep"
+            android:clickable="true"
+            android:background="@drawable/camera_ripple_back"
+            android:layout_marginRight="20dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/design_edit_prestep"
+            android:layout_gravity="center_vertical"/>
+
+        <ImageView
+            android:visibility="invisible"
+            android:id="@+id/edit_nextstep"
+            android:clickable="true"
+            android:background="@drawable/camera_ripple_back"
+            android:layout_marginRight="20dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/design_edit_nextsetp"
+            android:layout_gravity="center_vertical"/>
+
+        <ImageView
+            android:id="@+id/edit_save"
+            android:clickable="true"
+            android:background="@drawable/camera_ripple_back"
+            android:layout_marginRight="31dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/design_edit_save"
+            android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+
+        android:id="@+id/container_img_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/image_process_top"
+        app:layout_constraintBottom_toTopOf="@id/image_process_bottom">
+
+<!--        中间这个框框也是可以随时更换的-->
+
+
+
+    </LinearLayout>
+    
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/edit_okorrefresh"
+        android:layout_width="0dp"
+        android:layout_height="34dp"
+        android:orientation="horizontal"
+        android:background="@drawable/design_edit_okorrecycle"
+        app:layout_constraintWidth_percent="0.3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/container_img_view"
+        android:gravity="center_vertical"
+        >
+
+            <ImageView
+                android:id="@+id/edit_editrefresh"
+                android:paddingLeft="10dp"
+                android:layout_weight="1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/design_edit_editefresh"
+                />
+
+            <ImageView
+                android:id="@+id/edit_editok"
+                android:paddingRight="10dp"
+                android:layout_weight="1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/design_edit_editchoose"/>
+
+
+
+
+
+    </LinearLayout>
+    
+    
+    
+
+
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/image_process_bottom"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="195dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent">-->
+
+<!--        -->
+
+<!--    </RelativeLayout>-->
+
+<!--    <include layout="@layout/item_page1"/>-->
+
+        <FrameLayout
+            android:id="@+id/image_process_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="195dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+
+
+        </FrameLayout>
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
