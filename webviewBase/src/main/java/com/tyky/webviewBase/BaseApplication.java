@@ -3,19 +3,13 @@ package com.tyky.webviewBase;
 import android.app.Application;
 
 import com.kongzue.dialogx.DialogX;
-import com.tyky.webviewBase.annotation.ApplicationInit;
-import com.tyky.webviewBase.utils.ReflectUtil;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.List;
 
 public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
 
-        List<Class<?>> classes = ReflectUtil.scanClassListByAnnotation(BaseApplication.this, "com.tyky", ApplicationInit.class);
+        /*List<Class<?>> classes = ReflectUtil.scanClassListByAnnotation(BaseApplication.this, "com.tyky", ApplicationInit.class);
 
         for (Class<?> aClass : classes) {
             Method[] declaredMethods = aClass.getDeclaredMethods();
@@ -30,7 +24,7 @@ public class BaseApplication extends Application {
                     }
                 }
             }
-        }
+        }*/
 
         //初始化dialog
         DialogX.init(BaseApplication.this);

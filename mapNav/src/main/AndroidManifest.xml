@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.tyky.mapNav">
 
     <application>
@@ -16,7 +17,15 @@
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
-
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="com.tyky.mapNav.MapNavInitializer"
+                android:value="androidx.startup" />
+        </provider>
     </application>
     <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
