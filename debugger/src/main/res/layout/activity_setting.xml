@@ -83,21 +83,37 @@
         android:textColor="@color/black"
         android:text="历史访问记录: "/>
 
-    <androidx.recyclerview.widget.RecyclerView
+    <FrameLayout
+        android:id="@+id/framelayout"
         app:layout_constraintTop_toBottomOf="@id/tvHistoryTip"
         app:layout_constraintStart_toStartOf="parent"
-        android:id="@+id/rvHistory"
-        tools:listitem="@layout/rv_item_history"
-        tools:itemCount="5"
         android:layout_marginStart="20dp"
         android:layout_width="match_parent"
-        android:layout_height="200dp"/>
+        android:layout_height="200dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvHistory"
+            tools:listitem="@layout/rv_item_history"
+            tools:itemCount="5"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+        <TextView
+            android:id="@+id/tvNodata"
+            android:visibility="gone"
+            android:textColor="@color/picture_color_light_grey"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂无数据"/>
+    </FrameLayout>
+
 
     <TextView
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:id="@+id/tvLibraryVersionTip"
-        app:layout_constraintTop_toBottomOf="@id/rvHistory"
+        app:layout_constraintTop_toBottomOf="@id/framelayout"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -7,7 +7,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tyky.debugger.R;
+import com.tyky.debugger.SettingActivity;
 import com.tyky.debugger.bean.HistoryUrlInfo;
+import com.tyky.webviewBase.event.UrlLoadEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +23,14 @@ public class RvHistoryInfoAdapter extends RecyclerView.Adapter<RvHistoryInfoAdap
 
     List<HistoryUrlInfo> historyUrlInfoList = new ArrayList<>();
 
-    public RvHistoryInfoAdapter( List<HistoryUrlInfo> infos) {
+    private View nodataView;
+    private SettingActivity settingActivity;
+    public RvHistoryInfoAdapter( List<HistoryUrlInfo> infos,View view,SettingActivity settingActivity) {
         historyUrlInfoList.addAll(infos);
+        nodataView = view;
+        this.settingActivity = settingActivity;
     }
 
-
-    public void setTextOnClickListener(View.OnClickListener listener) {
-
-    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,15 +41,40 @@ public class RvHistoryInfoAdapter extends RecyclerView.Adapter<RvHistoryInfoAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        showOrHideNoDataView();
+
         if (holder instanceof ViewHolder) {
             ViewHolder viewHolder = (ViewHolder) holder;
             HistoryUrlInfo info = historyUrlInfoList.get(position);
-            viewHolder.tvUrl.setText(info.getUrl());
+            String url = info.getUrl();
+            viewHolder.tvUrl.setText(url);
+            viewHolder.tvUrl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EventBus.getDefault().post(new UrlLoadEvent(url));
+                    settingActivity.finish();
+                }
+            });
+
             viewHolder.ivArrow.setOnClickListener(v -> {
                 info.delete();
-                historyUrlInfoList.remove(position);
-                notifyItemRemoved(position);
+                int index = historyUrlInfoList.indexOf(info);
+                historyUrlInfoList.remove(info);
+                notifyItemRemoved(index);
+                //删除完数据，显示对应的view
+                showOrHideNoDataView();
             });
+        }
+    }
+
+    private void showOrHideNoDataView() {
+        if (getItemCount() > 0) {
+            //有数据，不显示暂无数据
+            nodataView.setVisibility(View.GONE);
+        }else {
+            if (nodataView.getVisibility() == View.GONE) {
+                nodataView.setVisibility(View.VISIBLE);
+            }
         }
     }
 

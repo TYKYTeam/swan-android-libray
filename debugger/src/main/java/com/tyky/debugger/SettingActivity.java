@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -74,7 +75,8 @@ public class SettingActivity extends AppCompatActivity {
 
     private void showHistory() {
         List<HistoryUrlInfo> all = LitePal.findAll(HistoryUrlInfo.class);
-        RvHistoryInfoAdapter rvHistoryInfoAdapter = new RvHistoryInfoAdapter(all);
+        View tvNodata = findViewById(R.id.tvNodata);
+        RvHistoryInfoAdapter rvHistoryInfoAdapter = new RvHistoryInfoAdapter(all,tvNodata,this);
         RecyclerView rvHistory = (RecyclerView) findViewById(R.id.rvHistory);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
