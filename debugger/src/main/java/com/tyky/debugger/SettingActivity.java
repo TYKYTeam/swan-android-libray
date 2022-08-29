@@ -40,7 +40,6 @@ public class SettingActivity extends AppCompatActivity {
     ImageView mBtnscan;
     Button mBtnvisit;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,12 +63,10 @@ public class SettingActivity extends AppCompatActivity {
 
         showCurrentBaseLibraryInfo();
 
-
         int color = Color.parseColor("white");
         BarUtils.setStatusBarLightMode(this, ColorUtils.isLightColor(color));
         BarUtils.setStatusBarColor(this, color, true);
 
-        LitePal.initialize(this);
         showHistory();
     }
 

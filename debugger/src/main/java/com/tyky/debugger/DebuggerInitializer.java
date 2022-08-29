@@ -5,6 +5,8 @@ import android.content.Context;
 import com.blankj.utilcode.util.MetaDataUtils;
 import com.tencent.bugly.Bugly;
 
+import org.litepal.LitePal;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,8 @@ import androidx.startup.Initializer;
         String appId = MetaDataUtils.getMetaDataInApp("BUGLY_APPID");
         //最后的参数代表是否开启debuger模式
         Bugly.init(context,appId,true);
+        //初始化Litepal的ORM框架
+        LitePal.initialize(context);
         return null;
     }
 
