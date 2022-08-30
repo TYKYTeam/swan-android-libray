@@ -2420,6 +2420,44 @@ if (window.page) {
     console.log(result)
 }
 ```
+### 5.跳转微信小程序
+`gotoWeixinMiniProgress`
+
+将状态栏设置为沉浸式状态栏，同时设置状态栏和底部导航条的颜色
+
+**传参：**
+
+```js
+{
+    "appId":"",
+    "progressId": "gh_xxx",
+    "progressType": 1
+}
+```
+
+- `appId` 在微信开放平台申请的appID
+- `progressId` 小程序的源id，格式是gh开头的
+- `progressType` 小程序类型 0正式版 1开发版 2体验版
+
+**返回结果：**
+```js
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+
+```js
+if (window.page) {
+    let content = {
+        "appId":"",
+        "progressId": "gh_xxx",
+        "progressType": 1
+    }
+    let result = window.page.gotoWeixinMiniProgress(JSON.stringify(content))
+    console.log(result)
+}
+```
 
 ## tim
 腾讯云IM模块
