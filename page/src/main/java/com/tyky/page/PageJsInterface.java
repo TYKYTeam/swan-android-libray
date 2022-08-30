@@ -114,7 +114,7 @@ public class PageJsInterface {
      * @return
      */
     @JavascriptInterface
-    public String launchWeixinMiniProgress(String param) {
+    public String gotoWeixinMiniProgress(String param) {
         WxParamModel wxParamModel = gson.fromJson(param, WxParamModel.class);
         //参数判空验证
         String appId = wxParamModel.getAppId();
