@@ -3,13 +3,16 @@ package com.tyky.page;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.webkit.JavascriptInterface;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
+import com.tyky.page.utils.WXLaunchMiniUtil;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.event.StatusBarEvent;
 import com.tyky.webviewBase.model.ParamModel;
@@ -81,6 +84,7 @@ public class PageJsInterface {
 
     /**
      * 更改状态栏颜色
+     *
      * @param paramStr
      * @return
      */
@@ -102,5 +106,37 @@ public class PageJsInterface {
         return gson.toJson(ResultModel.success(""));
     }
 
+
+    /**
+     * 跳转微信小程序
+     *
+     * @param param
+     * @return
+     */
+    @JavascriptInterface
+    public String launchWeixinMiniProgress(String param) {
+        WxParamModel wxParamModel = gson.fromJson(param, WxParamModel.class);
+        //参数判空验证
+        String appId = wxParamModel.getAppId();
+        String progressId = wxParamModel.getProgressId();
+        int progressType = wxParamModel.getProgressType();
+        if (TextUtils.isEmpty(appId) || TextUtils.isEmpty(progressId)) {
+            return gson.toJson(ResultModel.errorParam());
+        }
+        //判断是否安装微信
+        if (!AppUtils.isAppInstalled("com.tencent.mm")) {
+            ToastUtils.showShort("微信未安装，跳转微信小程序失败！");
+            return gson.toJson(ResultModel.errorParam("微信未安装"));
+        }
+        //跳转微信小程序
+        WXLaunchMiniUtil miniUtil = new WXLaunchMiniUtil();
+        miniUtil.appId = appId;
+        miniUtil.userName = progressId;
+        //miniUtil.path = "pages/index/index";
+        miniUtil.miniprogramType = "" + progressType;
+        miniUtil.sendReq();
+
+        return gson.toJson(ResultModel.success(""));
+    }
 
 }
