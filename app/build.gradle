@@ -19,7 +19,14 @@ android {
         manifestPlaceholders = [
                 // TPNS 推送服务 accessId、accessKey
                 XG_ACCESS_ID : "",
-                XG_ACCESS_KEY: ""
+                XG_ACCESS_KEY: "",
+
+                //选择在AndroidManifest中写上
+                JPUSH_PKGNAME : applicationId,
+                //JPush 上注册的包名对应的 Appkey.
+                JPUSH_APPKEY : "e6d1598cff079379d74bb53c",
+                //暂时填写默认值即可.
+                JPUSH_CHANNEL : "developer-default"
         ]
     }
 
@@ -67,6 +74,7 @@ dependencies {
     implementation project(path: ':filePreview')
     implementation project(path: ':update')
     implementation project(path: ':imgprocess')
+    implementation project(path: ':jgpush')
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

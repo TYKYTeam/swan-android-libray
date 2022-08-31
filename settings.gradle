@@ -1,3 +1,4 @@
+include ':jgpush'
 include ':auth'
 include ':filePreview'
 include ':baiduface'
