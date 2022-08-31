@@ -1882,7 +1882,7 @@ if (window.mapNav) {
 1. 地图选点 
 
 
-## handware
+## handware 硬件
 ### 1.获取当前电量数值
 
 getBattery
@@ -2086,7 +2086,7 @@ if (window.hardware) {
 2. 指纹识别
 3. 人脸识别（包含活体检测）
 
-## debugger
+## debugger 调试
 
 > 注意：由于配置页面中需要扫一扫的功能，目前是复用了media的Module中的扫一扫页面，导致**使用此模块需要前提引入media的模块**
 
@@ -2158,7 +2158,7 @@ if (window.debugger) {
 3. h5是否也要做成可配置的方式，来实现更换接口地址（优先读storege里的数据），入口设计思路为**依次按下音量键`+`和`-`次**
 4. 360加固快捷打包
 
-## update使用
+## update 更新
 
 ### 1.弹出更新提示框
 `showUpdateDialog`
@@ -2293,7 +2293,7 @@ if (window.update) {
 }
 ```
 
-## page
+## page 页面
 ### 1.跳转其他APP页面
 
 gotoApp
@@ -2824,6 +2824,10 @@ window.getLocation = function(object) {
 }
 
 ```
+
+## jgpush 极光推送
+
+目前极光推送并没有对应的JS接口，目前只是对接SDK，并且手机上能够收到极光平台上推送的消息
 
 
 ## 关于Module创建
