@@ -2935,6 +2935,9 @@ public class DebuggerInitializer implements Initializer<Void> {
 比较好的方式就是卸载对应Js方法里,用到就声明
 
 #### ParamModel实体类字段：
+
+接收前端js传递过来的数据并转为对应的实体类对象，ParamModel就是一个数据类的封装，字段有以下（可能后面更新不及时，建议直接查看项目源码）：
+
 ```
 /**
  * 电话号码
@@ -2954,7 +2957,7 @@ private String content;
  */
 private Integer type;
 /**
- * 回调方法，多个用逗号隔开
+ * 回调方法
  */
 private String callBackMethod;
 
@@ -2963,7 +2966,151 @@ private String callBackMethod;
  */
 private String key;
 private String value;
+
+/**
+ * 应用包名
+ */
+private String packageName;
+/**
+ * activity全类名
+ */
+private String activityName;
+
+//-------------IM的Module传参字段开始----------
+/**
+ * 登录userId
+ */
+private String userId;
+/**
+ * 登录签名
+ */
+private String userSig;
+/**
+ * 登录成功胡是否跳转IM首页
+ */
+private boolean isGotoPage;
+//-------------IM的Module传参字段结束----------
 ```
+
+**考虑到后期字段会变多，所以目前已经采用继承的方式去扩展类的字段**
+
+在新建的Module中如果需要使用到新字段，可以直接新建一个实体类，之后继承与此类`ParamModel`即可
+## 关于一键打包脚本说明
+
+目前gradle脚本是处于[基座模板项目](https://git.linewellcloud.com/TJYR/TJ000003/SZYDYYYF/product/swan/android/swan-android-template.git)里
+
+主要思路如下：
+
+执行`assemRelease`的Gradle命令，Gradle脚本中通过读取`configure.json`文件，来获取对应的APP信息，之后即可动态依赖指定的基座版本和模块，并带上对应SDK的配置参数（appkey等信息）进行编译
+
+首先，介绍一下`configure.json`的格式：
+
+```json
+{
+     "versionCode": 1,
+     "versionName": "1.0.1",
+     "applicationClass": "com.tyky.webviewBase.BaseApplication",
+     "appName": "测试44",
+     "baseLibraryVersion": "1.4",
+     "iconName": "ic_launcher.png",
+     "dependencyConfig": {
+          "debugger": {
+               "appVersion": "1.0",
+               "enableDebug": true,
+               "appChannel": "44",
+               "appId": "255"
+          },
+          "listener": {},
+          "storage": {},
+          "media": {},
+          "hasDependencieNames": [
+               "storage",
+               "notification",
+               "device",
+               "hardware",
+               "debugger",
+               "share",
+               "media",
+               "page",
+               "listener"
+          ],
+          "notification": {},
+          "allDependencieNames": [
+               "media",
+               "notification",
+               "share",
+               "device",
+               "storage",
+               "listener",
+               "hardware",
+               "page",
+               "debugger",
+               "baidumap",
+               "tim",
+               "baiduface",
+               "filePreview",
+               "auth",
+               "imgprocess"
+          ],
+          "hasDependencies": [
+               5,
+               2,
+               4,
+               7,
+               9,
+               3,
+               1,
+               8,
+               6
+          ],
+          "share": {},
+          "page": {},
+          "device": {},
+          "hardware": {},
+          "manifestPlaceholders": {
+               "JPUSH_PKGNAME": "com.tyky.acl",
+               "JPUSH_APPKEY": "e6d1598cff079379d74bb53c",
+               "JPUSH_CHANNEL": "developer-default"
+          }
+     }
+}
+```
+- `versionCode` APP版本号
+- `versionName` APP版本名
+- `appName` app应用名称
+- `iconName` 图标名，与后台编译系统联用（gradle脚本不会拿此字段）
+- `applicationClass` application的类名，因为项目中有腾讯IM的模块，其中含有一个Application，所以，如果打包的时候含有腾讯IM的模块，此类名会变更
+- `baseLibraryVersion` Jitpack上的基座版本名
+- `dependencyConfig` 依赖模块的相关配置信息
+
+这里详细补充讲解`dependencyConfig`这个字段里的信息,这里的相关数据，均是由后台编译系统处理生成的，比较重点的属性如下：
+
+- `hasDependencieNames` 当前APP包含的依赖模块名
+- `hasDependencies` 当前APP包含的依赖模块的id
+- `allDependencieNames` 基座版本包含所有模块
+- `manifestPlaceholders` 额外的SDK配置信息
+
+其余的属性，都是存放着相关的模块的配置信息，如hasDependencieNames含有debugger这个模块，则会有debugger字段，里面则是存放着配置信息
+
+因为之前是在gradle脚本固定死了模块配置项信息，所以会导致每次新加一个module，若是有配置信息的话，就得同步修改调整gradle的代码，十分麻烦
+
+所以目前已做了调整，后续新增的SDK模块（从极光推送模块开始）只需要通过**后台编译系统进行配置key**，即可通过gradle的`manifestPlaceholders`进行数据注入到`AndroidManifest`文件中
+
+如极光推送的模块
+
+后台系统中的数据截图：
+![](https://img2022.cnblogs.com/blog/1210268/202209/1210268-20220901170852517-49786432.png)
+
+最终会变为
+```
+"manifestPlaceholders": {
+   "JPUSH_PKGNAME": "com.tyky.acl",
+   "JPUSH_APPKEY": "e6d1598cff079379d74bb53c",
+   "JPUSH_CHANNEL": "developer-default"
+}
+```
+
+当然，后续`manifestPlaceholders`里字段还会增多，但我们已经不需要去调整gradle脚本
 
 # 功能清单
 
