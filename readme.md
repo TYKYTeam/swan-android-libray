@@ -2091,7 +2091,7 @@ if (window.hardware) {
 > 注意：由于配置页面中需要扫一扫的功能，目前是复用了media的Module中的扫一扫页面，导致**使用此模块需要前提引入media的模块**
 
 ### 1.跳转到debugger页面
-goSettingPage
+`goSettingPage`
 
 跳转到debugger页面，可输入一个在线地址用来测试页面功能（也含有扫一扫功能）
 
@@ -2880,23 +2880,45 @@ PS：之后使用不要忘记了依赖自己新建的module哦！！
 ### 补充
 #### 需要Application进行初始化操作
 
-目前是使用了注解+反射方式，实现了Application的初始化，下面介绍一下步骤：
+原本是使用的`@ApplicationInit`注解进行标明,但是由于造成APP启动较慢，已调整使用App Startup库来进行初始化
 
-1.新建类，标明注解`@ApplicationInit`
-2.实现接口`ModuleInit`
+当你模块依赖于webviewBase模块，已经默认依赖App Startup库
 
-```
-@ApplicationInit
-public class UpdateModuleInit implements ModuleInit {
+编写你的初始化逻辑类，如下代码所示：
+```java
+public class DebuggerInitializer implements Initializer<Void> {
 
+    @NonNull
     @Override
-    public void init(Application application) {
-        //写你的初始化操作
+    public Void create(@NonNull Context context) {
+        //这里进行你的初始化操作
+        return null;
+    }
+
+    @NonNull
+    @Override
+    public List<Class<? extends Initializer<?>>> dependencies() {
+        return new ArrayList<>();
     }
 }
 ```
 
-> PS：由于采用的包名扫描方式，**需要注意包名得在`com.tyky`下**
+之后，在`AndroidMainfest.xml`中声明`provider`
+
+```xml
+<provider
+    android:name="androidx.startup.InitializationProvider"
+    android:authorities="${applicationId}.androidx-startup"
+    android:exported="false"
+    tools:node="merge">
+    <meta-data
+        android:name="com.tyky.debugger.DebuggerInitializer"
+        android:value="androidx.startup" />
+</provider>
+```
+
+具体代码示例看参考`DebuggerInitializer`这个类,App Startup库的详细使用可参考[Jetpack架构组件学习(4)——APP Startup库的使用 - Stars-one - 博客园](https://www.cnblogs.com/stars-one/p/16635750.html)
+
 #### 清单文件怎么写？
 
 如果需求是要在module新建页面或者其他四大组件，可以在AndroidManifest文件中这样写对应的声明:
