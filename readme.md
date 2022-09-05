@@ -834,14 +834,14 @@ if (window.device) {
 ```
 ### 9.获取屏幕分辨率
 
-getScreenWH
+`getScreenWH`
 
 **传参：无需**
 
 **返回结果：**
 
-```
-"{"code":200,"desc":"","result":{"width":1080,"height":1920}}"
+```js
+{"code":200,"desc":"","result":{"width":1080,"height":1920}}
 ```
 
 **H5调用示例：**
@@ -851,6 +851,30 @@ if (window.device) {
     let result = window.device.getScreenWH()
     console.log(result);
     alert(result);
+}
+```
+
+### 10.获取ip地址
+
+`getIpAddress`
+
+获取本机当前的ip地址
+
+**传参：无需**
+
+**返回结果：**
+
+```js
+{"code":200,"desc":"","result":"10.232.12.22"}
+```
+
+**H5调用示例：**
+
+```
+if (window.device) {
+    let result = window.device.getIpAddress()
+    alert(result)
+    console.log(result)
 }
 ```
 
