@@ -132,6 +132,7 @@
                     <button type="default" onclick="takeScreenshot()">截屏</button>
                     <button type="default" onclick="getScreenOrientation()">获取当前屏幕方向状态</button>
                     <button type="default" onclick="getScreenWH()">获取当前屏幕分辨率</button>
+                    <button type="default" onclick="getIpAddress()">获取ip地址</button>
                 </div>
             </fieldset>
 
@@ -542,9 +543,14 @@
             }
         }
 
-
-
-
+        function getIpAddress() {
+            if (window.device) {
+                let result = window.device.getIpAddress()
+                alert(result)
+                console.log(result)
+            }
+        } 
+        
         function setBrightness() {
             if (window.hardware) {
                 let content = {
