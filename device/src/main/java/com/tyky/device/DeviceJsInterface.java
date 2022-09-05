@@ -173,4 +173,14 @@ public class DeviceJsInterface {
         map.put("height", appScreenHeight);
         return gson.toJson(ResultModel.success(map));
     }
+
+    /**
+     * 获取ip地址
+     * @return
+     */
+    @JavascriptInterface
+    public String getIpAddress() {
+        String result = IpAddressUtil.getIpAddress();
+        return gson.toJson(ResultModel.success(result));
+    }
 }
