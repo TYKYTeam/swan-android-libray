@@ -21,6 +21,8 @@ import com.tyky.mapNav.overlayutil.BikingRouteOverlay;
 import com.tyky.mapNav.overlayutil.DrivingRouteOverlay;
 import com.tyky.mapNav.overlayutil.WalkingRouteOverlay;
 
+import java.util.List;
+
 
 public class MyRoutePlanResultListener implements OnGetRoutePlanResultListener {
 
@@ -34,30 +36,35 @@ public class MyRoutePlanResultListener implements OnGetRoutePlanResultListener {
 
     @Override
     public void onGetWalkingRouteResult(WalkingRouteResult walkingRouteResult) {
-            KLog.d("数量：" + walkingRouteResult.getRouteLines().size());
+        List<WalkingRouteLine> routeLines = walkingRouteResult.getRouteLines();
+        if (routeLines==null || routeLines.isEmpty()) {
+            ToastUtils.showShort("未找到对应规划！");
+            return;
+        }
 
-            //创建WalkingRouteOverlay实例
-            WalkingRouteOverlay overlay = new WalkingRouteOverlay(baiduMap);
-            if (walkingRouteResult.getRouteLines().size() > 0) {
-                //获取路径规划数据,(以返回的第一条数据为例)
-                //为WalkingRouteOverlay实例设置路径数据
-                WalkingRouteLine walkingRouteLine = walkingRouteResult.getRouteLines().get(0);
-                overlay.setData(walkingRouteLine);
-                //在地图上绘制WalkingRouteOverlay
-                overlay.addToMap();
+        KLog.d("数量：" + routeLines.size());
+        //创建WalkingRouteOverlay实例
+        WalkingRouteOverlay overlay = new WalkingRouteOverlay(baiduMap);
+        if (routeLines.size() > 0) {
+            //获取路径规划数据,(以返回的第一条数据为例)
+            //为WalkingRouteOverlay实例设置路径数据
+            WalkingRouteLine walkingRouteLine = routeLines.get(0);
+            overlay.setData(walkingRouteLine);
+            //在地图上绘制WalkingRouteOverlay
+            overlay.addToMap();
 
-                //设置地图中心点
-                int middle = walkingRouteLine.getAllStep().size() / 2;
-                LatLng location = walkingRouteLine.getAllStep().get(middle).getEntrance().getLocation();
-                MapStatusUpdate mapStatus = MapStatusUpdateFactory.newLatLngZoom(new LatLng(location.latitude, location.longitude), 12f);
-                baiduMap.setMapStatus(mapStatus);
+            //设置地图中心点
+            int middle = walkingRouteLine.getAllStep().size() / 2;
+            LatLng location = walkingRouteLine.getAllStep().get(middle).getEntrance().getLocation();
+            MapStatusUpdate mapStatus = MapStatusUpdateFactory.newLatLngZoom(new LatLng(location.latitude, location.longitude), 12f);
+            baiduMap.setMapStatus(mapStatus);
 
-                //MapStatus.Builder builder = new MapStatus.Builder();
-                //builder.target(walkingRouteLine.getAllStep().get(0).getEntrance().getLocation()).zoom(15);
-                //baiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
-            } else {
-                ToastUtils.showShort("未找到对应规划！");
-            }
+            //MapStatus.Builder builder = new MapStatus.Builder();
+            //builder.target(walkingRouteLine.getAllStep().get(0).getEntrance().getLocation()).zoom(15);
+            //baiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+        } else {
+            ToastUtils.showShort("未找到对应规划！");
+        }
     }
 
     @Override
@@ -72,15 +79,19 @@ public class MyRoutePlanResultListener implements OnGetRoutePlanResultListener {
 
     @Override
     public void onGetDrivingRouteResult(DrivingRouteResult drivingRouteResult) {
-
-        KLog.d("数量：" + drivingRouteResult.getRouteLines().size());
+        List<DrivingRouteLine> routeLines = drivingRouteResult.getRouteLines();
+        if (routeLines ==null || routeLines.isEmpty()) {
+            ToastUtils.showShort("未找到对应规划！");
+            return;
+        }
+        KLog.d("数量：" + routeLines.size());
 
         //创建WalkingRouteOverlay实例
         DrivingRouteOverlay overlay = new DrivingRouteOverlay(baiduMap);
-        if (drivingRouteResult.getRouteLines().size() > 0) {
+        if (routeLines.size() > 0) {
             //获取路径规划数据,(以返回的第一条数据为例)
             //为WalkingRouteOverlay实例设置路径数据
-            DrivingRouteLine drivingRouteLine = drivingRouteResult.getRouteLines().get(0);
+            DrivingRouteLine drivingRouteLine = routeLines.get(0);
             overlay.setData(drivingRouteLine);
             //在地图上绘制WalkingRouteOverlay
             overlay.addToMap();
@@ -103,14 +114,19 @@ public class MyRoutePlanResultListener implements OnGetRoutePlanResultListener {
 
     @Override
     public void onGetBikingRouteResult(BikingRouteResult bikingRouteResult) {
-        KLog.d("数量：" + bikingRouteResult.getRouteLines().size());
+        List<BikingRouteLine> routeLines = bikingRouteResult.getRouteLines();
+        if (routeLines ==null || routeLines.isEmpty()) {
+            ToastUtils.showShort("未找到对应规划！");
+            return;
+        }
+        KLog.d("数量：" + routeLines.size());
 
         //创建WalkingRouteOverlay实例
         BikingRouteOverlay overlay = new BikingRouteOverlay(baiduMap);
-        if (bikingRouteResult.getRouteLines().size() > 0) {
+        if (routeLines.size() > 0) {
             //获取路径规划数据,(以返回的第一条数据为例)
             //为WalkingRouteOverlay实例设置路径数据
-            BikingRouteLine bikingRouteLine = bikingRouteResult.getRouteLines().get(0);
+            BikingRouteLine bikingRouteLine = routeLines.get(0);
             overlay.setData(bikingRouteLine);
             //在地图上绘制WalkingRouteOverlay
             overlay.addToMap();
