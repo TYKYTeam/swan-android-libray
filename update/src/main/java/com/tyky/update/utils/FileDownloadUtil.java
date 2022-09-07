@@ -96,7 +96,13 @@ public class FileDownloadUtil {
                         length = Long.parseLong(resp.header("Content-Length")) * 1.0;
                         //文件总大小
                         fileAllLength = length;
-
+                        if (startSize==fileAllLength) {
+                            //判断文件已下载完，直接安装
+                            if (listener != null) {
+                                listener.onSuccess(file);
+                            }
+                            return;
+                        }
                         //走重新下载的逻辑
                         FileOutputStream fileOutputStream = new FileOutputStream(file);
                         foschannel = fileOutputStream.getChannel();
