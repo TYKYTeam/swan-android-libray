@@ -124,12 +124,12 @@ public class CheckVersionDialog {
     }
 
     /**
-     *
      * @param updateParamModel
-     * @param isForce 是否为强制更新
+     * @param isForce          是否为强制更新
      */
-    public static void downloadFile(UpdateParamModel updateParamModel,boolean isForce) {
+    public static void downloadFile(UpdateParamModel updateParamModel, boolean isForce) {
         String downloadUrl = updateParamModel.getDownloadUrl();
+        KLog.d("文件下载更新地址："+downloadUrl);
         int versionCode = updateParamModel.getVersionCode();
 
         File file = new File(PathUtils.getExternalAppFilesPath(), "temp_" + versionCode + ".apk");
@@ -189,7 +189,11 @@ public class CheckVersionDialog {
                             @Override
                             public void onDismiss(CustomDialog dialog) {
                                 super.onDismiss(dialog);
-                                feature.cancel(true);
+                                try {
+                                    feature.cancel(true);
+                                } catch (IllegalStateException e) {
+                                    KLog.e(e.getMessage());
+                                }
                             }
                         });
                     }

@@ -52,7 +52,8 @@ public class FileDownloadUtil {
                     }
                     FileChannel foschannel;
 
-                    if (!TextUtils.isEmpty(resp.header("Content-Range"))) {
+
+                    if (!TextUtils.isEmpty(resp.header("Content-Range")) && resp.code() != 416) {
 
                         //断点继续下载
                         RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
@@ -72,7 +73,8 @@ public class FileDownloadUtil {
                             byteBuffer.flip();  // 切换成读数据模式
                             // 将缓冲区中的数据写入通道
                             foschannel.write(byteBuffer);
-                            double progress = (foschannel.size() / fileAllLength);;
+                            double progress = (foschannel.size() / fileAllLength);
+
 
                             BigDecimal two = new BigDecimal(progress);
                             double result = two.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
@@ -87,6 +89,14 @@ public class FileDownloadUtil {
                         randomAccessFile.close();
 
                     } else {
+                        request = new Request.Builder().url(url)
+                                .get().build();
+                        call = okHttpClient.newCall(request);
+                        resp = call.execute();
+                        length = Long.parseLong(resp.header("Content-Length")) * 1.0;
+                        //文件总大小
+                        fileAllLength = length;
+
                         //走重新下载的逻辑
                         FileOutputStream fileOutputStream = new FileOutputStream(file);
                         foschannel = fileOutputStream.getChannel();
