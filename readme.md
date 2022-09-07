@@ -2288,12 +2288,12 @@ if (window.update) {
 ```js
 {
     "downloadUrl": "http://10.232.107.44:9060/swan-business/file/testDownload",
-    "forceUpdate": false,
+    "versionCode": 12
 }
 ```
 
 - `downloadUrl` 下载地址
-- `forceUpdate` 是否强制更新
+- `versionCode` APP更新的版本号
 
 > 如果是使用我们的移动后台系统进行的更新，实际上是JS调用完接口后，接口返回的数据。如果是自定义的，需要自己调整下字段即可
 
