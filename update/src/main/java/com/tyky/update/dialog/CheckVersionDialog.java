@@ -142,9 +142,9 @@ public class CheckVersionDialog {
                         CircleProgressBar circleProgressBar = v.findViewById(R.id.circleProgressBar);
                         Button btnCancel = v.findViewById(R.id.btnCancelDownload);
                         if (isForce) {
-                            v.setVisibility(View.GONE);
+                            btnCancel.setVisibility(View.GONE);
                         } else {
-                            v.setVisibility(View.VISIBLE);
+                            btnCancel.setVisibility(View.VISIBLE);
                         }
                         btnCancel.setOnClickListener(new View.OnClickListener() {
                             @Override
