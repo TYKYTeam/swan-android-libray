@@ -169,10 +169,15 @@ public class CheckVersionDialog {
 
                             @Override
                             public void onError(Exception e) {
-                                KLog.e("下载错误: " + e.getMessage());
+                                String message = e.getMessage();
+                                KLog.e("下载错误: " + message);
                                 ThreadUtils.runOnUiThread(() -> {
                                     dialog.dismiss();
-                                    ToastUtils.showShort("下载失败,原因为" + e.getMessage());
+                                    if (message == null) {
+                                        ToastUtils.showShort("下载已取消");
+                                    } else {
+                                        ToastUtils.showShort("下载失败,原因为" + message);
+                                    }
                                 });
                             }
 
@@ -191,7 +196,7 @@ public class CheckVersionDialog {
                                 super.onDismiss(dialog);
                                 try {
                                     feature.cancel(true);
-                                } catch (IllegalStateException e) {
+                                } catch (Exception e) {
                                     KLog.e(e.getMessage());
                                 }
                             }
