@@ -125,6 +125,10 @@ public class ImageCropActivity extends AppCompatActivity implements View.OnClick
     private static final int PHOTO_PICKED_WITH_DATA = 3021;
     private String photoPath = null;
 
+    private boolean isfirstpage=true;
+
+    private ImageView editSvar=null;
+
 
     // 需要一种机制，能够在页面切换的时候还能够保证能够对选择的按钮有所记忆，那就设置一种吧
 
@@ -156,13 +160,24 @@ public class ImageCropActivity extends AppCompatActivity implements View.OnClick
          editeditok.setOnClickListener(this);
          editeditrefresh.setOnClickListener(this);
 
-         ImageView editSvar=findViewById(R.id.edit_save);
+         editSvar=findViewById(R.id.edit_save);
          editSvar.setOnClickListener(this);
 
     }
 
+    private void setSaveIsVisibly(boolean isVisibly){
+        if (isVisibly){
+            editSvar.setVisibility(View.VISIBLE);
+        }else {
+            editSvar.setVisibility(View.GONE);
+        }
+    }
 
+    private Bitmap fangdaBitmap(Bitmap bitmap){
+        Log.d("MyTest","  执行一次 ："+bitmap.getWidth()+"    "+bitmap.getHeight());
 
+        return null;
+    }
 
 
 
@@ -192,7 +207,6 @@ public class ImageCropActivity extends AppCompatActivity implements View.OnClick
         cropImageView.setImageToCrop(imagebitmap);
 
         editcontainerokor.setVisibility(View.VISIBLE);
-
 
 
     }
@@ -357,6 +371,8 @@ public class ImageCropActivity extends AppCompatActivity implements View.OnClick
 
         if (position==6){
 
+            setSaveIsVisibly(true);
+
             item1rel6img.setImageResource(R.drawable.design_edit_edit_select);
             item1rel6text.setTextColor(Color.parseColor("#628ef7"));
 
@@ -372,6 +388,8 @@ public class ImageCropActivity extends AppCompatActivity implements View.OnClick
 
 
         }else if (position==7){
+
+            setSaveIsVisibly(true);
 
             item1rel6img.setImageResource(R.drawable.design_edit_edit_noselect);
             item1rel6text.setTextColor(Color.parseColor("#ffffff"));
@@ -389,6 +407,8 @@ public class ImageCropActivity extends AppCompatActivity implements View.OnClick
 
         }else if (position==8){
 
+            setSaveIsVisibly(true);
+
             item1rel6img.setImageResource(R.drawable.design_edit_edit_noselect);
             item1rel6text.setTextColor(Color.parseColor("#ffffff"));
 
@@ -404,6 +424,8 @@ public class ImageCropActivity extends AppCompatActivity implements View.OnClick
 
 
         }else if (position==9){
+
+            setSaveIsVisibly(false);
 
             item1rel6img.setImageResource(R.drawable.design_edit_edit_noselect);
             item1rel6text.setTextColor(Color.parseColor("#ffffff"));
@@ -427,6 +449,8 @@ public class ImageCropActivity extends AppCompatActivity implements View.OnClick
 
         if (position==1){
 
+            setSaveIsVisibly(true);
+
             item1rel1img.setImageResource(R.drawable.design_edit_srcimg_select);
             item1rel1text.setTextColor(Color.parseColor("#628ef7"));
 
@@ -443,6 +467,8 @@ public class ImageCropActivity extends AppCompatActivity implements View.OnClick
             item1rel5text.setTextColor(Color.parseColor("#ffffff"));
 
         }else if (position==2){
+
+            setSaveIsVisibly(true);
 
             item1rel1img.setImageResource(R.drawable.design_edit_srcimg);
             item1rel1text.setTextColor(Color.parseColor("#ffffff"));
@@ -462,6 +488,8 @@ public class ImageCropActivity extends AppCompatActivity implements View.OnClick
 
         }else if (position==3){
 
+            setSaveIsVisibly(true);
+
             item1rel1img.setImageResource(R.drawable.design_edit_srcimg);
             item1rel1text.setTextColor(Color.parseColor("#ffffff"));
 
@@ -479,6 +507,8 @@ public class ImageCropActivity extends AppCompatActivity implements View.OnClick
 
         }else if (position==4){
 
+            setSaveIsVisibly(true);
+
             item1rel1img.setImageResource(R.drawable.design_edit_srcimg);
             item1rel1text.setTextColor(Color.parseColor("#ffffff"));
 
@@ -495,6 +525,8 @@ public class ImageCropActivity extends AppCompatActivity implements View.OnClick
             item1rel5text.setTextColor(Color.parseColor("#ffffff"));
 
         }else if (position==5){
+
+            setSaveIsVisibly(false);
 
             item1rel1img.setImageResource(R.drawable.design_edit_srcimg);
             item1rel1text.setTextColor(Color.parseColor("#ffffff"));
@@ -515,6 +547,7 @@ public class ImageCropActivity extends AppCompatActivity implements View.OnClick
 
 
         if (position!=5){
+
             setEditContainerGone();
 
         }
@@ -657,9 +690,11 @@ public class ImageCropActivity extends AppCompatActivity implements View.OnClick
             addShuiYinView();
         } else if (viewid == R.id.item2_rel_1) {
             Log.d("MyTest", "标签点击一次");
+            setSaveIsVisibly(false);
             initBiaoQianView();
             addBiaoQianView();
         } else if (viewid == R.id.item2_rel_2) {
+            setSaveIsVisibly(false);
             initTuYaView();
             addTuYaView();
             new Handler(Looper.myLooper()).postDelayed(new Runnable() {
@@ -704,8 +739,20 @@ public class ImageCropActivity extends AppCompatActivity implements View.OnClick
         } else if (viewid == R.id.edit_editok) {
             setEditContainerGone();
             if (cropImageView != null) {
-                imagebitmap = cropImageView.crop();
-                addImageView();
+//                imagebitmap = cropImageView.crop();
+//                addImageView();
+                Bitmap newbitmap=cropImageView.crop();
+                if (newbitmap.getWidth()<400){
+                    Log.d("MyTest","图片缩放执行一次");
+                    //在这里进行图片缩放：
+                    imagebitmap=ImageUtils.scale(newbitmap,2.5f,2.5f);
+                    addImageView();
+                }else {
+                    Log.d("MyTest","图片没有执行缩放");
+                    imagebitmap = newbitmap;
+                    addImageView();
+                }
+
             }
         } else if (viewid == R.id.edit_editrefresh) {
             if (cropImageView != null) {
@@ -724,7 +771,6 @@ public class ImageCropActivity extends AppCompatActivity implements View.OnClick
             // 这个是从相册里面选择图片
         } else if (viewid == R.id.edit_save) {
 
-
             File receivefile=ImageUtils.save2Album(imagebitmap, Bitmap.CompressFormat.JPEG);
 //            EventBus.getDefault().post(new JsCallBackEvent());
             String methodimg=SPUtils.getInstance().getString("method_img");
@@ -741,7 +787,6 @@ public class ImageCropActivity extends AppCompatActivity implements View.OnClick
 
             imagebitmap.recycle();
             finish();
-
 
 
         }
@@ -908,10 +953,6 @@ public class ImageCropActivity extends AppCompatActivity implements View.OnClick
 
         customColorGroup.setVisibility(View.VISIBLE);
         customColorGroup.setCheckColor(ColorUtils.getColor(R.color.image_color_red));
-
-
-
-
 
 
     }
