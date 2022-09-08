@@ -202,33 +202,14 @@ public class CustomWebViewActivity extends AppCompatActivity {
      */
     public void loadUrl(String url) {
         if (url.startsWith("/")) {
-            /*String dependency = MetaDataUtils.getMetaDataInApp("base_library_dependency");
-            //如果有更新模块，走热更新加载逻辑
-            if (dependency.contains("update")) {
-                int appVersionCode = AppUtils.getAppVersionCode();
-                File dir = new File(PathUtils.getExternalAppFilesPath()+"/h5Assets/" + appVersionCode);
-                if (dir.exists()) {
-                    File[] files = dir.listFiles();
-                    if (files != null && files.length > 0) {
-                        List<Integer> h5VersionCodeList = new ArrayList<>();
-                        for (File file : files) {
-                            String name = file.getName();
-                            int h5VersionCode = Integer.parseInt(name);
-                            h5VersionCodeList.add(h5VersionCode);
-                        }
-
-                        Collections.sort(h5VersionCodeList);
-                        Integer newH5VersionCode = h5VersionCodeList.get(h5VersionCodeList.size() - 1);
-                        File file = new File(dir, newH5VersionCode + "/index.html");
-                        String localH5Url = file.toURI().toString();
-                        customWebView.loadUrl(localH5Url);
-                        return;
-                    }
-                }
-            }*/
+            //加载本地地址
             loadLocalUrl(url);
         } else {
-            loadWebUrl(url + "?v=" + System.currentTimeMillis());
+            if (url.contains("?")) {
+                loadWebUrl(url + "&tykyTime=" + System.currentTimeMillis());
+            } else {
+                loadWebUrl(url + "?tykyTime=" + System.currentTimeMillis());
+            }
         }
     }
 
