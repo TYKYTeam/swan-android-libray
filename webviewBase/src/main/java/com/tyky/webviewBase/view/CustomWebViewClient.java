@@ -2,7 +2,9 @@ package com.tyky.webviewBase.view;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
+import android.net.http.SslError;
 import android.os.Build;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -70,6 +72,14 @@ public class CustomWebViewClient extends WebViewClient {
             PhoneUtils.sendSms(phone, "");
         } else {
             view.loadUrl(url);
+        }
+    }
+
+    @Override
+    public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+        //取消ssl证书验证，避免加载白屏
+        if (handler != null) {
+            handler.proceed();
         }
     }
 }
