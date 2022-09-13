@@ -18,6 +18,7 @@ import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.VolumeUtils;
 import com.google.gson.Gson;
 import com.socks.library.KLog;
+import com.tyky.handware.bluetooth.BlueToothUtils;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.model.ParamModel;
 import com.tyky.webviewBase.model.ResultModel;
@@ -160,6 +161,18 @@ public class HardwareJsInterface {
             return gson.toJson(ResultModel.errorPermission("未授予权限，设置亮度失败"));
         }
         return gson.toJson(ResultModel.success(""));
+
+    }
+
+    @JavascriptInterface
+    public String bluetoothConnect() {
+
+        boolean open = BlueToothUtils.open();
+        if (open) {
+            return gson.toJson(ResultModel.success(""));
+        } else {
+            return gson.toJson(ResultModel.errorParam("蓝牙服务打开失败!"));
+        }
 
     }
 }
