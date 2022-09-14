@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.tyky.autostart">
+
+    <application>
+        <meta-data android:name="mainPage" android:value="com.tyky.acl.MainActivity"/>
+        <meta-data android:name="mainPkgName" android:value="com.tyky.acl"/>
+        <meta-data android:name="openAutoStart" android:value="true"/>
+
+        <!--开机自启广播-->
+        <receiver
+            android:name=".AutoStartReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <action android:name="RestartSerivcesForSystemEventReceiver" />
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="com.tyky.autostart.AutoStartInitializer"
+                android:value="androidx.startup" />
+        </provider>
+
+    </application>
+
+    <!--    开机监听-->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!--    悬浮窗-->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+</manifest>
