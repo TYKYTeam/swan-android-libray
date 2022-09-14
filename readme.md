@@ -2801,7 +2801,7 @@ if (window.auth) {
 
 
 ## imgprocess  图片处理库
-### 1. 
+### 1. 处理摄像头和本地图片
 setImgProcess
 
 跳转到拍照和图片处理页面
