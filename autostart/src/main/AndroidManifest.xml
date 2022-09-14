@@ -4,9 +4,9 @@
     package="com.tyky.autostart">
 
     <application>
-        <meta-data android:name="mainPage" android:value="com.tyky.acl.MainActivity"/>
-        <meta-data android:name="mainPkgName" android:value="com.tyky.acl"/>
-        <meta-data android:name="openAutoStart" android:value="true"/>
+        <meta-data android:name="mainPage" android:value="${MAIN_PAGE}"/>
+        <meta-data android:name="mainPkgName" android:value="${MAIN_PKG_NAME}"/>
+        <meta-data android:name="openAutoStart" android:value="${OPEN_AUTO_START}"/>
 
         <!--开机自启广播-->
         <receiver

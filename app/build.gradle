@@ -26,7 +26,15 @@ android {
                 //JPush 上注册的包名对应的 Appkey.
                 JPUSH_APPKEY : "e6d1598cff079379d74bb53c",
                 //暂时填写默认值即可.
-                JPUSH_CHANNEL : "developer-default"
+                JPUSH_CHANNEL : "developer-default",
+
+                //开机自启的参数
+                //主页面
+                MAIN_PAGE : "com.tyky.acl.MainActivity",
+                //包名
+                MAIN_PKG_NAME : "com.tyky.acl",
+                //是否开启开机自启
+                OPEN_AUTO_START : "true"
         ]
     }
 
