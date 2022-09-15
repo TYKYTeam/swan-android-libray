@@ -4,9 +4,14 @@
     package="com.tyky.autostart">
 
     <application>
+        <!-- 首页全类名       -->
         <meta-data android:name="mainPage" android:value="${MAIN_PAGE}"/>
+        <!-- 首页包名       -->
         <meta-data android:name="mainPkgName" android:value="${MAIN_PKG_NAME}"/>
+        <!-- 是否开启开机自启       -->
         <meta-data android:name="openAutoStart" android:value="${OPEN_AUTO_START}"/>
+        <!-- 首页打开是否设置为横屏       -->
+        <meta-data android:name="isLandscape" android:value="${IS_LANDSCAPE}"/>
 
         <!--开机自启广播-->
         <receiver

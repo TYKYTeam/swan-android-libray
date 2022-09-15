@@ -2,6 +2,7 @@ package com.tyky.webviewBase.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -104,6 +105,16 @@ public class CustomWebViewActivity extends AppCompatActivity {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         builder.detectFileUriExposure();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //判断是否设置为横屏
+        boolean isLandscape = getIntent().getBooleanExtra("isLandscape", false);
+        if (isLandscape) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)

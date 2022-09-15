@@ -26,7 +26,13 @@ public class AutoStartReceiver extends BroadcastReceiver {
 
                 String mainPkgName = MetaDataUtils.getMetaDataInApp("mainPkgName");
                 String mainPage = MetaDataUtils.getMetaDataInApp("mainPage");
+
                 Intent thisIntent = IntentUtils.getComponentIntent(mainPkgName, mainPage, true);
+
+                //是否为横屏
+                boolean isLandscape = Boolean.parseBoolean(MetaDataUtils.getMetaDataInApp("isLandscape"));
+                thisIntent.putExtra("isLandscape", isLandscape);
+
                 thisIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 thisIntent.setAction("android.intent.action.MAIN");
                 thisIntent.addCategory("android.intent.category.LAUNCHER");

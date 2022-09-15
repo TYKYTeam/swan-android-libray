@@ -34,7 +34,9 @@ android {
                 //包名
                 MAIN_PKG_NAME : "com.tyky.acl",
                 //是否开启开机自启
-                OPEN_AUTO_START : "true"
+                OPEN_AUTO_START : "true",
+                //首页是否为横屏
+                IS_LANDSCAPE : "true"
         ]
     }
 
