@@ -1669,14 +1669,14 @@ getDistance
 - `endLongitude` 终点经度
 
 **返回结果：**
-```
+```js
 //成功 单位为m
-{"code":200,"desc":"","result":67.15}"
+{"code":200,"desc":"","result":67.15}
 ```
 
 
 **H5调用示例：**
-```
+```js
 //公司位置和荣耀体验店的距离
 let content = {
     "startLatitude": 22.579054,
@@ -1702,6 +1702,40 @@ if (window.map) {
 以下是坐标系简单介绍：
 - WGS84：一种大地坐标系，也是目前广泛使用的GPS全球卫星定位系统使用的坐标系。
 - GCJ02：由中国国家测绘局制订的地理信息系统的坐标系统，是由WGS84坐标系经过加密后的坐标系。
+
+**传参：**
+```
+{
+    "latitude": 31.178513,
+    "longitude": 121.494612,
+    "title":"世博大道"
+}
+```
+
+- `latitude` 起点纬度
+- `longitude` 起点经度
+- `title` 终点名称
+
+**返回结果：**
+```js
+//成功 单位为m
+{"code":200,"desc":"","result":""}
+```
+
+
+**H5调用示例：**
+```js
+//上海市的世博大道
+let content = {
+    "latitude": "31.178513",
+    "longitude": "121.494612",
+    "title":"世博大道"
+}
+if (window.map) {
+    let result = window.map.callSDKMap(JSON.stringify(content))
+    console.log(result)
+}
+```
 
 ### 待完成功能
 
