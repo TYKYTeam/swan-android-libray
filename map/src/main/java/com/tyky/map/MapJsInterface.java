@@ -383,6 +383,19 @@ public class MapJsInterface {
         Double latitude = mapParamModel.getLatitude();
         String title = mapParamModel.getTitle();
 
+        //验证
+        if (longitude == null || longitude == 0) {
+            return gson.toJson(ResultModel.errorParam());
+        }
+
+        if (latitude == null || latitude == 0) {
+            return gson.toJson(ResultModel.errorParam());
+        }
+
+        if (TextUtils.isEmpty(title)) {
+            return gson.toJson(ResultModel.errorParam());
+        }
+
         //当前已安装的地图APP
         List<Integer> currentInstallApp = new ArrayList<>();
 
