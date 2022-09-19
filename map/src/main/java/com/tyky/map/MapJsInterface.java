@@ -1,9 +1,13 @@
 package com.tyky.map;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Pair;
+import android.view.View;
 import android.webkit.JavascriptInterface;
+import android.widget.TextView;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
@@ -24,11 +28,15 @@ import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
 import com.baidu.mapapi.utils.DistanceUtil;
 import com.baidu.mapapi.utils.SpatialRelationUtil;
+import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
+import com.kongzue.dialogx.dialogs.BottomDialog;
+import com.kongzue.dialogx.interfaces.OnBindView;
 import com.socks.library.KLog;
 import com.tyky.map.bean.MapParamModel;
 import com.tyky.map.bean.MyPoiResult;
@@ -187,7 +195,7 @@ public class MapJsInterface {
         double distance = DistanceUtil.getDistance(p1, p2);
         //保留两位小数（四舍五入）
         BigDecimal bigDecimal = new BigDecimal(distance);
-        distance = bigDecimal.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
+        distance = bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
         return gson.toJson(ResultModel.success(distance));
     }
 
@@ -362,4 +370,120 @@ public class MapJsInterface {
         return gson.toJson(ResultModel.success(""));
     }
 
+    /**
+     * 唤起地图
+     *
+     * @param param
+     * @return
+     */
+    @JavascriptInterface
+    public String callSDKMap(String param) {
+        MapParamModel mapParamModel = gson.fromJson(param, MapParamModel.class);
+        Double longitude = mapParamModel.getLongitude();
+        Double latitude = mapParamModel.getLatitude();
+        String title = mapParamModel.getTitle();
+
+        //当前已安装的地图APP
+        List<Integer> currentInstallApp = new ArrayList<>();
+
+        //地图APP的包名
+        String[] pkgNameArr = {"com.baidu.BaiduMap", "com.autonavi.minimap", "com.tencent.map"};
+
+        for (int i = 0; i < pkgNameArr.length; i++) {
+            String s = pkgNameArr[i];
+            if (AppUtils.isAppInstalled(s)) {
+                currentInstallApp.add(i);
+            }
+        }
+
+        if (currentInstallApp.isEmpty()) {
+            String tip = "手机未安装任何的地图应用，唤起地图失败！";
+            ToastUtils.showShort(tip);
+            return gson.toJson(ResultModel.errorParam(tip));
+        }
+
+        //弹出底部选择对话框
+        BottomDialog.show(new OnBindView<BottomDialog>(R.layout.layout_map_choice_list) {
+            @Override
+            public void onBind(BottomDialog dialog, View v) {
+                TextView tvBaidu = v.findViewById(R.id.tvBaidu);
+                TextView tvGaode = v.findViewById(R.id.tvGaode);
+                TextView tvTengxu = v.findViewById(R.id.tvTengxu);
+
+                TextView[] textViewArr = {tvBaidu, tvGaode, tvTengxu};
+                for (Integer integer : currentInstallApp) {
+                    TextView textView = textViewArr[integer];
+                    textView.setVisibility(View.VISIBLE);
+                    textView.setOnClickListener(v12 -> {
+                        startMapActivity(integer + 1, title, longitude, latitude);
+                        dialog.dismiss();
+                    });
+                }
+
+                TextView tvCancel = v.findViewById(R.id.tvCancel);
+                tvCancel.setOnClickListener(v1 -> {
+                    dialog.dismiss();
+                });
+            }
+        });
+
+
+        return gson.toJson(ResultModel.success(""));
+    }
+
+    private void startMapActivity(int type, String title, Double longitude, Double latitude) {
+        Intent intent = new Intent();
+        StringBuffer stringBuffer = new StringBuffer();
+
+        switch (type) {
+            case 1:
+                //唤起百度地图 协议详情请查看 https://lbsyun.baidu.com/index.php?title=uri/api/android#service-page-anchor9的2.3.2节
+                stringBuffer.append("baidumap://map/direction?");
+                stringBuffer.append("origin=我的位置");
+                stringBuffer.append("&");
+                stringBuffer.append("coord_type=gcj02");
+                stringBuffer.append("&");
+
+                String destinationParam = "destination=" + "name:" + title + "|" + "latlng:" + longitude + "," + latitude;
+                stringBuffer.append(destinationParam);
+                stringBuffer.append("&");
+                stringBuffer.append("src=andr.").append(AppUtils.getAppPackageName());
+
+                break;
+            case 2:
+                //唤起高德地图，协议详情请访问 https://lbs.amap.com/api/amap-mobile/guide/android/route
+                stringBuffer.append("amapuri://route/plan/?");
+                stringBuffer.append("dlat=").append(latitude);
+                stringBuffer.append("&");
+                stringBuffer.append("dlon=").append(longitude);
+                stringBuffer.append("&");
+                stringBuffer.append("dname=").append(title);
+                stringBuffer.append("&");
+                stringBuffer.append("dev=0");
+                stringBuffer.append("&");
+                stringBuffer.append("t=0");
+                stringBuffer.append("&");
+                stringBuffer.append("sourceApplication=").append(AppUtils.getAppPackageName());
+
+                //唤起高德地图
+                break;
+            case 3:
+                //唤起腾讯地图 https://lbs.qq.com/webApi/uriV1/uriGuide/uriMobileRoute
+                stringBuffer.append("qqmap://map/routeplan?");
+                stringBuffer.append("from=我的位置");
+                stringBuffer.append("&");
+                stringBuffer.append("type=drive");
+                stringBuffer.append("&");
+                stringBuffer.append("tocoord=").append(latitude).append(",").append(longitude);
+                stringBuffer.append("&");
+                stringBuffer.append("to=").append(title);
+                stringBuffer.append("&");
+                stringBuffer.append("referer=").append(AppUtils.getAppPackageName());
+                break;
+        }
+        String schemaUrl = stringBuffer.toString();
+        KLog.d("唤起地图的协议地址：" + schemaUrl);
+        intent.setData(Uri.parse(schemaUrl));
+        ActivityUtils.startActivity(intent);
+    }
 }

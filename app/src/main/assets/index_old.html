@@ -191,6 +191,7 @@
                     <button type="default" onclick="geoCode()">地址转坐标</button>
                     <button type="default" onclick="reverseGeoCode()">坐标转地址</button>
                     <button type="default" onclick="getDistance()">计算两点距离</button>
+                    <button type="default" onclick="callSDKMap()">唤起其他第三方地图</button>
                 </div>
             </fieldset>
             <fieldset>
@@ -252,13 +253,11 @@
     </body>
 
     <script>
-
-
-       function openimgprocess() {
+        function openimgprocess() {
             if (window.imgprocess) {
                 let content = {
                     "callBackMethod": "getLocation",
-                    "type":1
+                    "type": 1
                 }
                 let result = window.imgprocess.setImgProcess(JSON.stringify(content))
                 console.log(result)
@@ -343,21 +342,22 @@
                 console.log(result)
             }
         }
-        
+
         function changeStatusBar() {
             if (window.page) {
                 let content = {
-                    "type":"2",
+                    "type": "2",
                     "content": "#4283f2",
                 }
                 let result = window.page.changeStatusBar(JSON.stringify(content))
                 console.log(result)
             }
         }
+
         function gotoWeixinMiniProgress() {
             if (window.page) {
                 let content = {
-                    "appId":"",
+                    "appId": "",
                     "progressId": "gh_xxx",
                     "progressType": 1
                 }
@@ -452,6 +452,20 @@
             }
         }
 
+        function callSDKMap() {
+            let content = {
+                "latitude": "31.178513",
+                "longitude": "121.494612",
+                "title":"世博大道"
+            }
+            if (window.map) {
+                let result = window.map.callSDKMap(JSON.stringify(content))
+                // alert(result)
+                console.log(result)
+            }
+        }
+
+
         function reverseGeoCode() {
             let content = {
                 "latitude": 22.579062,
@@ -480,10 +494,11 @@
 
         function walkingRouteSearch() {
             if (window.mapNav) {
+
                 let content = {
-                    "startName": "腾讯大厦",
+                    "startName": "新一代产业园",
                     "startCityName": "深圳",
-                    "endName": "新一代产业园",
+                    "endName": "东门",
                     "endCityName": "深圳",
                 }
                 let result = window.mapNav.walkingRouteSearch(JSON.stringify(content))
@@ -549,8 +564,8 @@
                 alert(result)
                 console.log(result)
             }
-        } 
-        
+        }
+
         function setBrightness() {
             if (window.hardware) {
                 let content = {
@@ -972,7 +987,7 @@
             }
 
         }
-        
+
         function showDownloadDialog() {
             //全量更新
             if (window.update) {
@@ -986,7 +1001,7 @@
             }
 
         }
-        
+
         function downloadFileBackground() {
             //全量更新
             if (window.update) {
