@@ -6,10 +6,10 @@ import android.webkit.JavascriptInterface;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.ThreadUtils;
 import com.google.gson.Gson;
 import com.tyky.debugger.utils.DoKitUtil;
 import com.tyky.webviewBase.annotation.WebViewInterface;
-import com.tyky.webviewBase.model.ParamModel;
 import com.tyky.webviewBase.model.ResultModel;
 
 @WebViewInterface("debugger")
@@ -30,15 +30,22 @@ public class DebuggerJsInterface {
     }
 
     /**
-     * 是否开启调试模式
-     * @param param
+     * 开启调试悬浮球功能
      * @return
      */
     @JavascriptInterface
-    public String openDebuggerMode(String param) {
-        ParamModel paramModel = gson.fromJson(param, ParamModel.class);
-        Integer type = paramModel.getType();
-        DoKitUtil.setOpenOption(type==1);
+    public String openDebuggerMode() {
+        ThreadUtils.runOnUiThread(() -> DoKitUtil.setOpenOption(true));
+        return gson.toJson(ResultModel.success(""));
+    }
+
+    /**
+     * 关闭调试悬浮球功能
+     * @return
+     */
+    @JavascriptInterface
+    public String closeDebuggerMode() {
+        ThreadUtils.runOnUiThread(() -> DoKitUtil.setOpenOption(false));
         return gson.toJson(ResultModel.success(""));
     }
 }
