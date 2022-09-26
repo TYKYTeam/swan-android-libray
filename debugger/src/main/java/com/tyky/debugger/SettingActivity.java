@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.BarUtils;
@@ -19,6 +20,7 @@ import com.blankj.utilcode.util.StringUtils;
 import com.tyky.debugger.adapter.RvHistoryInfoAdapter;
 import com.tyky.debugger.adapter.RvModuleAdapter;
 import com.tyky.debugger.bean.HistoryUrlInfo;
+import com.tyky.debugger.utils.DoKitUtil;
 import com.tyky.media.activity.QrScanActivity;
 import com.tyky.webviewBase.constants.MediaModuleConstants;
 import com.tyky.webviewBase.event.UrlLoadEvent;
@@ -39,7 +41,7 @@ public class SettingActivity extends AppCompatActivity {
     EditText mEturl;
     ImageView mBtnscan;
     Button mBtnvisit;
-
+    Switch mSwitch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +50,7 @@ public class SettingActivity extends AppCompatActivity {
         mEturl = findViewById(R.id.etUrl);
         mBtnscan = findViewById(R.id.btnScan);
         mBtnvisit = findViewById(R.id.btnVisit);
+        mSwitch = findViewById(R.id.switch_btn);
 
         mBtnscan.setOnClickListener(view -> {
             Intent intent = new Intent(view.getContext(), QrScanActivity.class);
@@ -56,6 +59,11 @@ public class SettingActivity extends AppCompatActivity {
 
         mBtnvisit.setOnClickListener(view -> {
             saveAndVisit();
+        });
+
+        mSwitch.setChecked(DoKitUtil.getOpenOption());
+        mSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            DoKitUtil.setOpenOption(isChecked);
         });
 
         String settingUrl = SPUtils.getInstance().getString("settingUrl", "");
@@ -95,6 +103,8 @@ public class SettingActivity extends AppCompatActivity {
         TextView tvModuleTip = (TextView) findViewById(R.id.tvModuleTip);
         //动态假如itemView
         RecyclerView rvModule = findViewById(R.id.rvModule);
+        rvModule.setNestedScrollingEnabled(false);
+        rvModule.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
 
         rvModule.setLayoutManager(gridLayoutManager);

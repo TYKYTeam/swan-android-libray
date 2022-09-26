@@ -68,4 +68,9 @@ dependencies {
     compileOnly 'androidx.constraintlayout:constraintlayout:2.1.2'
     compileOnly project(path: ':webviewBase')
     implementation project(path: ':media')
+
+    def dokitVersion = "3.5.0.1"
+    implementation "io.github.didi.dokit:dokitx:${dokitVersion}"
+//    debugImplementation "io.github.didi.dokit:dokitx:${dokitVersion}"
+//    releaseImplementation "io.github.didi.dokit:dokitx-no-op:${dokitVersion}"
 }

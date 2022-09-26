@@ -1,9 +1,12 @@
 package com.tyky.debugger;
 
+import android.app.Application;
 import android.content.Context;
 
 import com.blankj.utilcode.util.MetaDataUtils;
+import com.didichuxing.doraemonkit.DoKit;
 import com.tencent.bugly.Bugly;
+import com.tyky.debugger.utils.DoKitUtil;
 
 import org.litepal.LitePal;
 
@@ -24,6 +27,16 @@ import androidx.startup.Initializer;
         Bugly.init(context,appId,true);
         //初始化Litepal的ORM框架
         LitePal.initialize(context);
+
+        new DoKit.Builder((Application)(context))
+                .build();
+
+        //获取本地sp保存的数据
+        boolean flag = DoKitUtil.getOpenOption();
+        if (!flag) {
+            DoKit.hide();
+        }
+
         return null;
     }
 
