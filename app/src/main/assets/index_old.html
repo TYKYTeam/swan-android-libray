@@ -179,6 +179,8 @@
                 <legend>debugger 调试</legend>
                 <div class="contentDiv">
                     <button type="default" onclick="goSettingPage()">进调试设置页</button>
+                    <button type="default" onclick="openDebuggerMode()">开启调试悬浮球</button>
+                    <button type="default" onclick="closeDebuggerMode()">关闭调试悬浮球</button>
                 </div>
             </fieldset>
 
@@ -631,6 +633,20 @@
         function goSettingPage() {
             if (window.debugger) {
                 let result = window.debugger.goSettingPage()
+                console.log(result)
+            }
+        }
+        
+        function openDebuggerMode() {
+            if (window.debugger) {
+                let result = window.debugger.openDebuggerMode()
+                console.log(result)
+            }
+        }
+        
+        function closeDebuggerMode() {
+            if (window.debugger) {
+                let result = window.debugger.closeDebuggerMode()
                 console.log(result)
             }
         }
