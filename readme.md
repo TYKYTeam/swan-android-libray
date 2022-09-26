@@ -2181,8 +2181,52 @@ if (window.debugger) {
     console.log(result)
 }
 ```
+### 2.开启调试悬浮球
 
-### 2.Bugly配置
+`openDebuggerMode`
+
+页面会显示一个悬浮球，可用来调试测试APP相关功能(如内存占用，CPU占用，帧率等)
+
+**传参：无需**
+
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.debugger) {
+    let result = window.debugger.openDebuggerMode()
+    console.log(result)
+}
+```
+### 3.关闭悬浮球调试功能
+
+`closeDebuggerMode`
+
+页面会将悬浮球给隐藏
+
+**传参：无需**
+
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.debugger) {
+    let result = window.debugger.closeDebuggerMode()
+    console.log(result)
+}
+```
+
+### Bugly配置说明
 目前引入了Bugly对接，**注意公司的网络环境对Bugly有限制，无法测试，建议使用移动网络**
 
 **使用步骤：**
