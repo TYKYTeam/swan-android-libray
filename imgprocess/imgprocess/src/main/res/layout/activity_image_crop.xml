@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
     tools:context=".ImageCropActivity">
 
     <LinearLayout
@@ -12,143 +12,212 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="104dp"
+        android:layout_height="60dp"
         android:orientation="horizontal"
-        android:background="#000000"
+        android:background="@color/tab_bar_color"
         >
 
             <ImageView
                 android:id="@+id/edit_back"
                 android:clickable="true"
                 android:background="@drawable/camera_ripple_back"
-                android:layout_marginLeft="25dp"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/design_edit_back"
+                android:layout_marginLeft="20dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/camera_edit_back"
                 android:layout_gravity="center_vertical"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-
-        <ImageView
-            android:visibility="invisible"
-            android:id="@+id/edit_prestep"
-            android:clickable="true"
-            android:background="@drawable/camera_ripple_back"
-            android:layout_marginRight="20dp"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/design_edit_prestep"
-            android:layout_gravity="center_vertical"/>
-
-        <ImageView
-            android:visibility="invisible"
-            android:id="@+id/edit_nextstep"
-            android:clickable="true"
-            android:background="@drawable/camera_ripple_back"
-            android:layout_marginRight="20dp"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/design_edit_nextsetp"
-            android:layout_gravity="center_vertical"/>
-
-        <ImageView
-            android:id="@+id/edit_save"
-            android:clickable="true"
-            android:background="@drawable/camera_ripple_back"
-            android:layout_marginRight="31dp"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/design_edit_save"
-            android:layout_gravity="center_vertical"/>
 
     </LinearLayout>
 
 
     <LinearLayout
+        android:id="@+id/image_process_bottom"
+        android:background="@color/tab_bar_color"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal">
 
-        android:id="@+id/container_img_view"
+         <RelativeLayout
+             android:id="@+id/edit_left_rotation"
+             android:clickable="true"
+             android:background="@drawable/camera_edit_button"
+             android:gravity="center"
+             android:layout_weight="1"
+             android:layout_marginLeft="10dp"
+             android:layout_gravity="bottom"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             >
+
+             <ImageView
+                 android:layout_width="25dp"
+                 android:layout_height="25dp"
+                 android:src="@drawable/camera_left"
+                 android:id="@+id/camera_letf_img"
+                 />
+
+             <TextView
+                 android:textSize="12sp"
+                 android:layout_marginTop="8dp"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="左转"
+                 android:layout_below="@id/camera_letf_img"
+                 android:textColor="#ffffff"/>
+
+         </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/edit_right_rotation"
+            android:clickable="true"
+            android:background="@drawable/camera_edit_button"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/camera_right"
+                android:id="@+id/camera_right_img"
+                />
+
+            <TextView
+                android:textSize="12sp"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="右转"
+                android:layout_below="@id/camera_right_img"
+                android:textColor="#ffffff"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/camera_take_again"
+            android:clickable="true"
+            android:background="@drawable/camera_edit_button"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:layout_alignLeft="@id/take_photo_aggin"
+                android:layout_alignRight="@id/take_photo_aggin"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/camera_camera"
+                android:id="@+id/camera_camera_img"
+                />
+
+            <TextView
+                android:textSize="12sp"
+                android:id="@+id/take_photo_aggin"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="再拍一张"
+                android:layout_below="@id/camera_camera_img"
+                android:textColor="#ffffff"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/camera_full"
+            android:clickable="true"
+            android:background="@drawable/camera_edit_button"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/camera_big"
+                android:id="@+id/camera_big_img"
+                />
+
+            <TextView
+                android:textSize="12sp"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="全部"
+                android:layout_below="@id/camera_big_img"
+                android:textColor="#ffffff"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/edti_next"
+            android:clickable="true"
+            android:background="@drawable/camera_edit_button"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:layout_marginTop="3dp"
+                android:layout_alignLeft="@id/nextstep"
+                android:layout_alignRight="@id/nextstep"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/camera_next"
+                android:id="@+id/camera_next_img"
+                />
+
+            <TextView
+                android:textSize="12sp"
+                android:id="@+id/nextstep"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="下一步"
+                android:layout_below="@id/camera_next_img"
+                android:textColor="#ffffff"/>
+
+        </RelativeLayout>
+
+
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:gravity="center"
+        android:background="#000000"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/image_process_top"
         app:layout_constraintBottom_toTopOf="@id/image_process_bottom">
 
-<!--        中间这个框框也是可以随时更换的-->
-
-
-
-    </LinearLayout>
-    
-    <LinearLayout
-        android:visibility="gone"
-        android:id="@+id/edit_okorrefresh"
-        android:layout_width="0dp"
-        android:layout_height="34dp"
-        android:orientation="horizontal"
-        android:background="@drawable/design_edit_okorrecycle"
-        app:layout_constraintWidth_percent="0.3"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/container_img_view"
-        android:gravity="center_vertical"
-        >
-
-            <ImageView
-                android:id="@+id/edit_editrefresh"
-                android:paddingLeft="10dp"
-                android:layout_weight="1"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/design_edit_editefresh"
-                />
-
-            <ImageView
-                android:id="@+id/edit_editok"
-                android:paddingRight="10dp"
-                android:layout_weight="1"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/design_edit_editchoose"/>
-
-
-
-
-
-    </LinearLayout>
-    
-    
-    
-
-
-<!--    <RelativeLayout-->
-<!--        android:id="@+id/image_process_bottom"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="195dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent">-->
-
-<!--        -->
-
-<!--    </RelativeLayout>-->
-
-<!--    <include layout="@layout/item_page1"/>-->
-
-        <FrameLayout
-            android:id="@+id/image_process_bottom"
+        <me.pqpo.smartcropperlib.view.CropImageView
+            android:padding="30dp"
             android:layout_width="match_parent"
-            android:layout_height="195dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            >
+            android:layout_height="match_parent"
+            android:id="@+id/image_cropimg"
+            />
 
-
-
-        </FrameLayout>
-
-
+    </RelativeLayout>
 
 
 

@@ -4,12 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +15,6 @@ import android.widget.SeekBar;
 
 import com.blankj.utilcode.util.ImageUtils;
 import com.blankj.utilcode.util.IntentUtils;
-
 import com.tyky.imagecrop.camera.TestActivity;
 
 
@@ -32,12 +29,7 @@ public class MainActivity extends AppCompatActivity{
         SmartCropper.buildImageDetector(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        checkPermission();
-
-        Log.d("MyTest", getResources().getDisplayMetrics().density+"    density  ");
-
-
-
+//        checkPermission();
 
         Button button=findViewById(R.id.addtext);
         button.setOnClickListener(new View.OnClickListener() {
@@ -46,8 +38,6 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(new Intent(MainActivity.this, TestActivity.class));
 
 //                startActivity(new Intent(MainActivity.this,ImageFinalProcessActivity.class));
-
-
 
             }
         });
@@ -59,13 +49,7 @@ public class MainActivity extends AppCompatActivity{
 
 
     private void checkPermission() {
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE},12);
-
-    }
-
-    public static int px2dip(Context context, float pxValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (pxValue / scale + 0.5f);
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},12);
 
     }
 

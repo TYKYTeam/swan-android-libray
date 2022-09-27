@@ -38,7 +38,7 @@
         <TextView
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
-            android:textColor="#0AE428"
+            android:textColor="#ffffff"
             android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

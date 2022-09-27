@@ -21,6 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ScreenUtils;
+
 
 import com.huantansheng.easyphotos.EasyPhotos;
 import com.tyky.imagecrop.R;
@@ -58,15 +60,22 @@ public class AddWatermarkActivity extends Activity  {
 
         linearLayout=findViewById(R.id.linearlayout);
 
+        linearLayout.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
+
+            }
+        });
+
+
+        operateUtils=new OperateUtils(AddWatermarkActivity.this);
+        fillContent();
+
         selectpicture=findViewById(R.id.selectpictue);
 
         btn_ok=findViewById(R.id.btn_ok);
 
         btn_cancel=findViewById(R.id.btn_cancel);
-
-        fillContent();
-
-        operateUtils=new OperateUtils(this);
 
 
         selectpicture.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +100,13 @@ public class AddWatermarkActivity extends Activity  {
             }
         });
 
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
 
     }
@@ -133,11 +149,32 @@ public class AddWatermarkActivity extends Activity  {
     private void fillContent()
     {
         operateView = new OperateView(AddWatermarkActivity.this, srcbitmap);
+
+
+        int width=0,height=0;
+
+
+        if (srcbitmap.getWidth()>linearLayout.getWidth()){
+            width= ScreenUtils.getAppScreenWidth() -50;
+            height=srcbitmap.getHeight()*width/srcbitmap.getWidth();
+        }else {
+            width=srcbitmap.getWidth();
+            height=srcbitmap.getHeight();
+        }
+
+        Log.d("MyTest","width :"+srcbitmap.getWidth()+"    height "+srcbitmap.getHeight());
+        Log.d("MyTest","width :"+linearLayout.getWidth()+"    height "+linearLayout.getHeight());
+        Log.d("MyTest","width :"+width+"    height "+height);
+        Log.d("MyTest","getAppScreenWidth : "+ScreenUtils.getAppScreenWidth());
+
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                srcbitmap.getWidth(), srcbitmap.getHeight());   // 这个view的宽高是 背景图片的宽高
+                width, height);   // 这个view的宽高是 背景图片的宽高
         operateView.setLayoutParams(layoutParams);
+
         linearLayout.addView(operateView);
         operateView.setMultiAdd(true); // 设置此参数，可以添加多个图片
+
+
     }
 
     public static void setBitmap(Bitmap bitmap, Activity activity, MyAddTextListener listener){
@@ -176,6 +213,8 @@ public class AddWatermarkActivity extends Activity  {
                 photoPath = c.getString(columnIndex);
                 c.close();
                 addpic(photoPath);
+
+
                 break;
 //                Bitmap resultBitmap = BitmapFactory.decodeFile(resultPath);
 //                break;

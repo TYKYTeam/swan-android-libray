@@ -132,7 +132,7 @@ public class JTCameraView extends TextureView {
              */
             @Override
             public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-                setupSizeCache(width, height);
+                setupSizeCache((int)(width*2.5), (int)(height*2.5));
                 Log.d("MyTest","  width : "+width+"    height :"+height);
                 startPreview();
             }
@@ -142,7 +142,7 @@ public class JTCameraView extends TextureView {
              **/
             @Override
             public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-                setupSizeCache(width, height);
+                setupSizeCache((int)(width*2.5), (int)(height*2.5));
                 startPreview();
             }
 
@@ -407,12 +407,8 @@ public class JTCameraView extends TextureView {
      * 调整相机参数
      */
     private void adjustCameraParameters() {
-
-
         this.mPreviewSize = chooseOptimalSize(mCameraParameters.getSupportedPreviewSizes(), mSize.getWidth(), mSize.getHeight());
         this.mPictureSize = chooseOptimalSize(mCameraParameters.getSupportedPictureSizes(), mSize.getWidth(), mSize.getHeight());
-        Log.d("MyTest",this.mPreviewSize.height+"    width: "+this.mPreviewSize.width);
-        Log.d("MyTest",this.mPictureSize.height+"    width: "+this.mPictureSize.width);
         mCameraParameters.setPreviewSize(mPreviewSize.width, mPreviewSize.height);
         mCameraParameters.setPictureSize(mPictureSize.width, mPictureSize.height);
         mCameraParameters.setRotation(calcCameraRotation(mDisplayOrientation));
@@ -420,7 +416,6 @@ public class JTCameraView extends TextureView {
         setFlashInternal(mFlash);
         mCamera.setParameters(mCameraParameters);
         mCamera.setDisplayOrientation(calcDisplayOrientation(mDisplayOrientation));
-
     }
 
     /**
@@ -548,9 +543,7 @@ public class JTCameraView extends TextureView {
             displayWidth = height;
             displayHeight = width;
         }
-
-        Log.d("MyTest","displayWidth "+displayWidth+"   displayHeight "+displayHeight);
-        CameraSizeComparator comparator = new CameraSizeComparator(displayWidth, displayHeight);  //比较器中存储的是布局中的surfaceview宽度和高度
+        CameraSizeComparator comparator = new CameraSizeComparator(displayWidth, displayHeight);
 
 //        Log.d(TAG, "chooseOptimalSizes: \n");
         StringBuffer sb = new StringBuffer();
@@ -560,53 +553,6 @@ public class JTCameraView extends TextureView {
 //        Log.d(TAG, "chooseOptimalSize: \n" + sb.toString());
         return Collections.max(list, comparator);
     }
-
-
-    private Camera.Size chooseBestSize(List<Camera.Size> sizeList, int width, int height){
-
-        if (sizeList == null || width <= 0) {
-            return null;
-        }
-        ArrayList<Camera.Size> list = new ArrayList<>(10);
-        //去除长款相等的尺寸，这种尺寸容易引起图片倒伏
-        for (Camera.Size size : sizeList) {
-            if (size.height != size.width) {
-                list.add(size);
-            }
-        }
-        int displayWidth = width;
-        int displayHeight = height;
-        if (mPreviewOrientation - mDisplayOrientation > 0) {
-            displayWidth = height;
-            displayHeight = width;
-        }
-
-        Camera.Size tempsize=list.get(0);
-        float minsum=Math.abs(tempsize.width-width)+Math.abs(tempsize.height-height);
-
-        for (int i=0;i<list.size();i++){
-
-            float difwidth=Math.abs(list.get(i).width-width);
-            float difheight=Math.abs(list.get(i).height-height);
-            float tempsum=difwidth+difheight;
-            if (tempsum<minsum){
-                minsum=tempsum;
-                tempsize=list.get(i);
-            }
-
-        }
-
-        return tempsize;
-
-    }
-
-
-
-
-
-
-
-
 
     /**
      * 计算长宽比
@@ -642,7 +588,7 @@ public class JTCameraView extends TextureView {
         Log.d("MyTest","mCameraId: "+mCameraId);
         openCamera(mCameraId);
         adjustCameraParameters();
-        //configureTransform();
+//        configureTransform();
         try {
             mCamera.setPreviewCallback(new Camera.PreviewCallback() {
                 @Override
@@ -845,8 +791,7 @@ public class JTCameraView extends TextureView {
                     e.printStackTrace();
                 }
                 if (mListener != null) {
-                    Log.d("MyTest","  "+mSize.getWidth()+"   "+mSize.getHeight());
-                    mListener.onCupture(resizeBitmap(mSize.getWidth(),mSize.getHeight(),rawBitmap));
+                    mListener.onCupture(rawBitmap);
                 }
                 camera.cancelAutoFocus();
                 camera.startPreview();
@@ -854,19 +799,6 @@ public class JTCameraView extends TextureView {
             }
         });
     }
-
-    public Bitmap resizeBitmap(float newWidth, float newHeight, Bitmap bitmap) {
-
-        Matrix matrix = new Matrix();
-        matrix.postScale(newWidth / bitmap.getWidth(),
-
-                newHeight / bitmap.getHeight());
-        Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
-                bitmap.getHeight(), matrix, true);
-
-        return newBitmap;
-    }
-
 
     /**
      * 截取预览帧图像
@@ -954,8 +886,6 @@ public class JTCameraView extends TextureView {
             float heightDiffer2 = Math.abs(mHeight - o2.height);
             float widthDiffer1 = Math.abs(mWdith - o1.width);
             float widthDiffer2 = Math.abs(mWdith - o2.width);
-//            Log.d("MyTest","heightDiffer1 :"+heightDiffer1+"   heightDiffer2 :"+heightDiffer2 +"widthDiffer1 :"+widthDiffer1+"  widthDiffer2: "+widthDiffer2);
-
             if (heightDiffer1 < heightDiffer2 && widthDiffer1 < widthDiffer2) {
                 return 1;
             } else {
