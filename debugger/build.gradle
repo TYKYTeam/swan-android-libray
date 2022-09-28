@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'com.github.dcendents.android-maven'
-
+    id 'com.didi.dokit'
 }
 
 group = 'com.github.stars-one'
@@ -43,8 +43,10 @@ dependencies {
     //implementation 'com.tencent.bugly:crashreport:3.4.4'
 
     //Bugly的SDK接入（含更新,异常捕获） https://bugly.qq.com/docs/user-guide/instruction-manual-android-upgrade/?v=1.0.0#_1
-    implementation 'com.tencent.bugly:crashreport_upgrade:1.5.23'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
-    implementation 'com.tencent.bugly:nativecrashreport:3.9.2' //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
+    implementation 'com.tencent.bugly:crashreport_upgrade:1.5.23'
+//其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
+    implementation 'com.tencent.bugly:nativecrashreport:3.9.2'
+    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
     //Bugly热更新
     implementation 'com.tencent.tinker:tinker-android-lib:1.9.9'
@@ -69,7 +71,7 @@ dependencies {
     compileOnly project(path: ':webviewBase')
     implementation project(path: ':media')
 
-    def dokitVersion = "3.5.0.1"
+    def dokitVersion = "3.7.0.1"
     implementation "io.github.didi.dokit:dokitx:${dokitVersion}"
 //    debugImplementation "io.github.didi.dokit:dokitx:${dokitVersion}"
 //    releaseImplementation "io.github.didi.dokit:dokitx-no-op:${dokitVersion}"
