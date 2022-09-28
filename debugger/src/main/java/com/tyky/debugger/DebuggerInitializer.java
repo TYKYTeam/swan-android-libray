@@ -34,10 +34,8 @@ public class DebuggerInitializer implements Initializer<Void> {
         //map.put("太极", list);
         new DoKit.Builder((Application) (context))
                 //.customKits(map)
+                .alwaysShowMainIcon(false)
                 .build();
-
-        //每次开始不显示
-        DoKit.hide();
 
         return null;
     }
