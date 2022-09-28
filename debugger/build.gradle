@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.library'
     id 'com.github.dcendents.android-maven'
-    id 'com.didi.dokit'
 }
 
 group = 'com.github.stars-one'

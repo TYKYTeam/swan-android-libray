@@ -6,7 +6,6 @@ import android.content.Context;
 import com.blankj.utilcode.util.MetaDataUtils;
 import com.didichuxing.doraemonkit.DoKit;
 import com.tencent.bugly.Bugly;
-import com.tyky.debugger.utils.DoKitUtil;
 
 import org.litepal.LitePal;
 
@@ -37,11 +36,8 @@ public class DebuggerInitializer implements Initializer<Void> {
                 //.customKits(map)
                 .build();
 
-        //获取本地sp保存的数据
-        boolean flag = DoKitUtil.getOpenOption();
-        if (!flag) {
-            DoKit.hide();
-        }
+        //每次开始不显示
+        DoKit.hide();
 
         return null;
     }
