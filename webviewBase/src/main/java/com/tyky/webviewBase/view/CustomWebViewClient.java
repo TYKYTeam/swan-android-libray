@@ -22,20 +22,20 @@ public class CustomWebViewClient extends WebViewClient {
     @Override
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
-        KLog.d("页面加载结束");
+        KLog.d("页面加载结束", url);
         EventBus.getDefault().post(new UrlLoadFinishEvent());
     }
 
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
-        KLog.d("页面开始加载");
+        KLog.d("页面开始加载", url);
     }
 
     @Override
     public void onPageCommitVisible(WebView view, String url) {
         super.onPageCommitVisible(view, url);
-        KLog.d("页面onPageCommitVisible");
+        KLog.d("页面onPageCommitVisible",url);
 
     }
 
