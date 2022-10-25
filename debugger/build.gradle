@@ -54,7 +54,7 @@ dependencies {
     compileOnly 'androidx.appcompat:appcompat:1.1.0'
     compileOnly 'com.google.android.material:material:1.1.0'
     //图片,视频,音频选择 https://github.com/LuckSiege/PictureSelector
-    compileOnly 'io.github.lucksiege:pictureselector:v2.7.3-rc08'
+    compileOnly 'io.github.lucksiege:pictureselector:v2.7.3-rc02'
     compileOnly 'org.apache.commons:commons-lang3:3.9'
 
     // Android的工具类   https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
