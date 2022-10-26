@@ -13,6 +13,7 @@ import android.webkit.WebView;
 import android.widget.Toast;
 
 import com.blankj.utilcode.util.ResourceUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -32,6 +33,14 @@ import androidx.appcompat.app.AlertDialog;
 public class CustomWebViewChrome extends WebChromeClient {
 
     private Activity currrentActivity;
+
+    public ValueCallback<Uri[]> getFilePathCallback() {
+        return filePathCallback;
+    }
+
+    public void setFilePathCallback(ValueCallback<Uri[]> filePathCallback) {
+        this.filePathCallback = filePathCallback;
+    }
 
     public CustomWebViewChrome(WebView webView) {
         Context context = webView.getContext();
@@ -171,6 +180,10 @@ public class CustomWebViewChrome extends WebChromeClient {
      */
     public void handleDataFromIntent(int requestCode, int resultCode, Intent data) {
         isClickDialog = false;
+        if (filePathCallback == null) {
+            ToastUtils.showLong("因拍照内存不足导致页面销毁，请重新选择图片！");
+            return;
+        }
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode >= RequestCodeConstants.PHOTO && requestCode <= RequestCodeConstants.AUDIO) {
                 List<LocalMedia> result = PictureSelector.obtainMultipleResult(data);
