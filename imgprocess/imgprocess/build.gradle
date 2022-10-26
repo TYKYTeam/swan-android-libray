@@ -59,8 +59,9 @@ dependencies {
 
     implementation 'com.github.HuanTanSheng:EasyPhotos:3.1.5'
 
-//    implementation 'com.quickbirdstudios:opencv:3.4.5'
+    implementation 'com.quickbirdstudios:opencv:3.4.5'
 
     implementation 'me.jessyan:autosize:1.2.1'
+
 
 }

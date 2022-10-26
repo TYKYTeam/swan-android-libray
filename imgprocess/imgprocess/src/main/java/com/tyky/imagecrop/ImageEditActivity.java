@@ -46,11 +46,6 @@ public class ImageEditActivity extends AppCompatActivity {
 
         imageView.setImageToCrop(imagebitmap);
 
-
-
-
-
-
     }
 
     public static void setBitmap(Bitmap bitmap,Activity activity,MyAddTextListener listener){

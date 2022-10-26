@@ -2,9 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tyky.imagecrop">
 
-    <application>
-
-
+    <application
+        >
         <activity android:name=".ImageFinalProcessActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             ></activity>
@@ -18,9 +17,8 @@
             android:name=".camera.TestActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".MainActivity">
+
         </activity>
-
-
     </application>
     <uses-feature android:name="android.hardware.camera" />
 

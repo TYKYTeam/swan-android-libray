@@ -14,7 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TableLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
@@ -24,16 +24,14 @@ import androidx.core.content.ContextCompat;
 
 
 import com.blankj.utilcode.util.BarUtils;
-
-
 import com.blankj.utilcode.util.ToastUtils;
+
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.tyky.imagecrop.ImageCropActivity;
 import com.tyky.imagecrop.R;
 
 import java.io.File;
-
 
 import me.jessyan.autosize.internal.CustomAdapt;
 import me.pqpo.smartcropperlib.SmartCropper;
@@ -42,6 +40,7 @@ public class TestActivity extends AppCompatActivity implements CustomAdapt {
 
     JTCameraView jtCameraView=null;
     private String photoPath;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,54 +56,32 @@ public class TestActivity extends AppCompatActivity implements CustomAdapt {
             setContentView(R.layout.activity_test);
             initView();
         }
+
         BarUtils.setStatusBarVisibility(getWindow(),false);
 
 //        SmartCropper.buildImageDetector(this);
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+
     }
 
     private void initView(){
 
-        TabLayout tabLayout=findViewById(R.id.tablelayout);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
 
-            }
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-        ImageView backimg=findViewById(R.id.testfinish);
-        backimg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
-        ImageView imgselect=findViewById(R.id.camera_selectimg);
-        imgselect.setOnClickListener(new View.OnClickListener() {
+        ImageView selectpicture=findViewById(R.id.camera_getpicture);
+        selectpicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getPictureFromPhoto();
             }
         });
 
-
-        tabLayout.selectTab(tabLayout.getTabAt(2));
-
+        ImageView imageViewback=findViewById(R.id.camera_test_back);
+        imageViewback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         jtCameraView=findViewById(R.id.jtcameraview);
         CoverView coverView=findViewById(R.id.cover);
@@ -146,6 +123,7 @@ public class TestActivity extends AppCompatActivity implements CustomAdapt {
 
             @Override
             public void onCupture(Bitmap bitmap) {
+                Log.d("MyTest","获取到一张照片");
 //                    ImageProcessActivity.setBitmap(bitmap,TestActivity.this);
 //                ImageProcessActivity.setBitmap(bitmap,TestActivity.this);
                 if (bitmap==null){
@@ -182,30 +160,18 @@ public class TestActivity extends AppCompatActivity implements CustomAdapt {
 
 
     private void checkPermission() {
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},12);
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE},12);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         if (jtCameraView!=null){
             jtCameraView.stopPreview();
             jtCameraView.releaseCamera();
         }
 
 
-    }
-
-
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return 780;
     }
 
 
@@ -217,6 +183,7 @@ public class TestActivity extends AppCompatActivity implements CustomAdapt {
     }
 
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
@@ -224,8 +191,11 @@ public class TestActivity extends AppCompatActivity implements CustomAdapt {
         if (resultCode != RESULT_OK) {
             return;
         }
+
         switch (requestCode) {
+
             case 1021:
+
                 Uri selectedImage = data.getData();
                 String[] filePathColumns = {MediaStore.Images.Media.DATA};
                 Cursor c = getContentResolver().query(selectedImage, filePathColumns, null, null, null);
@@ -233,7 +203,7 @@ public class TestActivity extends AppCompatActivity implements CustomAdapt {
                 int columnIndex = c.getColumnIndex(filePathColumns[0]);
                 photoPath = c.getString(columnIndex);
                 c.close();
-                Bitmap bitmap=BitmapFactory.decodeFile(photoPath);
+                Bitmap bitmap= BitmapFactory.decodeFile(photoPath);
                 ImageCropActivity.setBitmap(bitmap,TestActivity.this);
 //                AddWatermarkActivity.setBitmap(bitmap,TestActivity.this,null);  //这个是直接跳转到添加水印界面
                 finish();
@@ -261,5 +231,16 @@ public class TestActivity extends AppCompatActivity implements CustomAdapt {
             }
         }
 
+    }
+
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return true;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return 360;
     }
 }

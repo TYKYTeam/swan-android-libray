@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="#000000"
     tools:context=".ImageFinalProcessActivity">
 
     <RelativeLayout
         android:id="@+id/camera_process_top"
         android:gravity="center_vertical"
-        android:background="#504A4A"
+        android:background="@color/tab_bar_color"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -21,10 +22,10 @@
             android:background="@drawable/camera_ripple_back"
             android:layout_alignTop="@+id/camera_process_title"
             android:layout_alignBottom="@id/camera_process_title"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="18dp"
             android:id="@+id/camera_process_back"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:src="@drawable/camera_edit_back"/>
         
         
@@ -32,7 +33,7 @@
             android:maxWidth="300dp"
             android:id="@+id/camera_process_title"
             android:layout_marginLeft="18dp"
-            android:textSize="20sp"
+            android:textSize="22sp"
             android:layout_toRightOf="@+id/camera_process_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,9 +44,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/camera_bottom_container"
-        android:background="#090909"
+        android:background="#A31C1C1E"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         >
 
@@ -64,27 +65,29 @@
 
 
                     <RelativeLayout
+                        android:layout_marginBottom="5dp"
                         android:id="@+id/camera_final_1"
                         android:clickable="true"
                         android:background="@drawable/camera_edit_button"
                         android:gravity="center"
                         android:layout_weight="1"
                         android:layout_marginLeft="30dp"
-                        android:layout_gravity="center_vertical"
+                        android:layout_gravity="bottom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         >
 
                         <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:src="@drawable/camera_left"
                             android:id="@+id/camera_1_img"
                             />
 
                         <TextView
-                            android:textSize="10sp"
-                            android:layout_marginTop="5dp"
+                            android:textSize="12sp"
+                            android:layout_marginTop="8dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="左转"
@@ -94,30 +97,32 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:layout_marginBottom="5dp"
                         android:id="@+id/camera_final_2"
                         android:clickable="true"
                         android:background="@drawable/camera_edit_button"
                         android:gravity="center"
                         android:layout_weight="1"
                         android:layout_marginLeft="30dp"
-                        android:layout_gravity="center_vertical"
+                        android:layout_gravity="bottom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         >
-
+                        <!--                            android:src="@drawable/camera_process_draw"-->
                         <ImageView
                             android:layout_alignLeft="@id/tempid_two"
                             android:layout_alignRight="@id/tempid_two"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/camera_process_draw"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/camera_biaozhuimg"
+
                             android:id="@+id/camera_2_img"
                             />
 
                         <TextView
                             android:id="@+id/tempid_two"
-                            android:textSize="10sp"
-                            android:layout_marginTop="5dp"
+                            android:textSize="12sp"
+                            android:layout_marginTop="4dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="标注"
@@ -128,27 +133,28 @@
 
 
                     <RelativeLayout
+                        android:layout_marginBottom="5dp"
                         android:id="@+id/camera_final_3"
                         android:clickable="true"
                         android:background="@drawable/camera_edit_button"
                         android:gravity="center"
                         android:layout_weight="1"
                         android:layout_marginLeft="30dp"
-                        android:layout_gravity="center_vertical"
+                        android:layout_gravity="bottom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         >
 
                         <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:src="@drawable/camera_water"
                             android:id="@+id/camera_3_img"
                             />
 
                         <TextView
-                            android:textSize="10sp"
-                            android:layout_marginTop="5dp"
+                            android:textSize="12sp"
+                            android:layout_marginTop="8dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="水印"
@@ -159,13 +165,14 @@
 
 
                     <RelativeLayout
+                        android:layout_marginBottom="5dp"
                         android:id="@+id/camera_final_4"
                         android:clickable="true"
                         android:background="@drawable/camera_edit_button"
                         android:gravity="center"
                         android:layout_weight="1"
                         android:layout_marginLeft="20dp"
-                        android:layout_gravity="center_vertical"
+                        android:layout_gravity="bottom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         >
@@ -173,16 +180,16 @@
                         <ImageView
                             android:layout_alignLeft="@id/process_level"
                             android:layout_alignRight="@id/process_level"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:src="@drawable/camera_leave_picture"
                             android:id="@+id/camera_4_img"
                             />
 
                         <TextView
                             android:id="@+id/process_level"
-                            android:textSize="10sp"
-                            android:layout_marginTop="5dp"
+                            android:textSize="12sp"
+                            android:layout_marginTop="8dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="水平镜像"
@@ -193,13 +200,14 @@
 
 
                     <RelativeLayout
+                        android:layout_marginBottom="5dp"
                         android:id="@+id/camera_final_5"
                         android:clickable="true"
                         android:background="@drawable/camera_edit_button"
                         android:gravity="center"
                         android:layout_weight="1"
                         android:layout_marginLeft="20dp"
-                        android:layout_gravity="center_vertical"
+                        android:layout_gravity="bottom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         >
@@ -207,16 +215,16 @@
                         <ImageView
                             android:layout_alignRight="@id/process_topbottom"
                             android:layout_alignLeft="@id/process_topbottom"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:src="@drawable/camera_topbottom_picture"
                             android:id="@+id/camera_5_img"
                             />
 
                         <TextView
                             android:id="@+id/process_topbottom"
-                            android:textSize="10sp"
-                            android:layout_marginTop="5dp"
+                            android:textSize="12sp"
+                            android:layout_marginTop="8dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="上下镜像"
@@ -237,7 +245,7 @@
             android:clickable="true"
             android:background="@drawable/camera_ensureok"
             android:id="@+id/camera_save"
-            android:layout_width="40dp"
+            android:layout_width="45dp"
             android:layout_height="25dp"
             app:layout_constraintLeft_toRightOf="@id/camera_horizontail"
             android:src="@drawable/camera_ensure_save"
@@ -251,11 +259,12 @@
 
 
     <HorizontalScrollView
+        android:layout_marginBottom="3dp"
         android:id="@+id/camera_process_bottom"
         android:background="#000000"
         app:layout_constraintBottom_toTopOf="@id/camera_bottom_container"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="80dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -265,8 +274,8 @@
             <RelativeLayout
                 android:id="@+id/camera_relative_one"
                 android:layout_marginLeft="8dp"
-                android:layout_width="60dp"
-                android:layout_height="60dp">
+                android:layout_width="80dp"
+                android:layout_height="80dp">
 
                 <ImageView
                     android:id="@+id/camera_original_1"
@@ -282,7 +291,7 @@
                     android:paddingTop="3dp"
                     android:paddingBottom="3dp"
                     android:textColor="#ffffff"
-                    android:textSize="8sp"
+                    android:textSize="14sp"
                     android:gravity="center"
                     android:layout_alignParentBottom="true"
                     />
@@ -300,8 +309,8 @@
             <RelativeLayout
                 android:id="@+id/camera_relative_two"
                 android:layout_marginLeft="8dp"
-                android:layout_width="60dp"
-                android:layout_height="60dp">
+                android:layout_width="80dp"
+                android:layout_height="80dp">
 
                 <ImageView
                     android:id="@+id/camera_ruihua_1"
@@ -317,7 +326,7 @@
                     android:paddingTop="3dp"
                     android:paddingBottom="3dp"
                     android:textColor="#ffffff"
-                    android:textSize="8sp"
+                    android:textSize="14sp"
                     android:gravity="center"
                     android:layout_alignParentBottom="true"
                     />
@@ -334,9 +343,6 @@
 
 
         </LinearLayout>
-
-
-
 
 
     </HorizontalScrollView>

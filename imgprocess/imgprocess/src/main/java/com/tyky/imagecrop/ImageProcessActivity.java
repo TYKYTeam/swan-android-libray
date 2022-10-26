@@ -22,7 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-
 import com.tyky.imagecrop.addimgmark.AddWatermarkActivity;
 import com.tyky.imagecrop.imgprocess.PhotoEnhance;
 import com.tyky.imagecrop.imgprocess.PhotoUtils;
@@ -30,7 +29,13 @@ import com.vachel.editor.MyAddTextListener;
 import com.vachel.editor.PictureEditActivity;
 import com.vachel.editor.util.BitmapUtil;
 
-
+import org.opencv.android.OpenCVLoader;
+import org.opencv.android.Utils;
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.core.Size;
+import org.opencv.imgproc.Imgproc;
 
 import java.security.Permission;
 import java.util.ArrayList;
@@ -102,10 +107,10 @@ public class ImageProcessActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onResume() {
         super.onResume();
-//        if (!OpenCVLoader.initDebug())  // 初始化opencv
-//            Log.e("OpenCv", "Unable to load OpenCV");
-//        else
-//            Log.e("OpenCv", "OpenCV loaded");
+        if (!OpenCVLoader.initDebug())  // 初始化opencv
+            Log.e("OpenCv", "Unable to load OpenCV");
+        else
+            Log.e("OpenCv", "OpenCV loaded");
     }
 
     @Override
@@ -127,7 +132,7 @@ public class ImageProcessActivity extends AppCompatActivity implements View.OnCl
 
 
         }else if (msg.equals("图片旋转")){
-            srcbitmap=PhotoUtils.rotateImage(srcbitmap,90);
+            srcbitmap= PhotoUtils.rotateImage(srcbitmap,90);
             enhance=new PhotoEnhance(srcbitmap);
             imageView.setImageBitmap(srcbitmap);
 
@@ -148,7 +153,7 @@ public class ImageProcessActivity extends AppCompatActivity implements View.OnCl
 
 
         }else if (msg.equals("上下翻转")){
-            srcbitmap= PhotoUtils.reverseImage(srcbitmap,1,-1);
+            srcbitmap=PhotoUtils.reverseImage(srcbitmap,1,-1);
             imageView.setImageBitmap(srcbitmap);
             enhance=new PhotoEnhance(srcbitmap);
 
@@ -164,7 +169,7 @@ public class ImageProcessActivity extends AppCompatActivity implements View.OnCl
 
 
         }else if (msg.equals("增强锐化")){
-//            srcbitmap=sharpenImage(srcbitmap);
+            srcbitmap=sharpenImage(srcbitmap);
             imageView.setImageBitmap(srcbitmap);
             enhance=new PhotoEnhance(srcbitmap);
 
@@ -173,49 +178,49 @@ public class ImageProcessActivity extends AppCompatActivity implements View.OnCl
 
     }
 
-//    private Bitmap sharpenImage(Bitmap inputImageBitmap) {
-//        Mat img = new Mat();
-////        Utils.bitmapToMat(inputImageBitmap, img);  // 将bitmap转换成了mat矩阵
-//        Utils.bitmapToMat(inputImageBitmap,img,false);    // bitmap 的类型为 CV8uc4
-//        Mat kener=new Mat(3,3, CvType.CV_32FC1);
-//        kener.put(0,0,new float[]{0,-1,0,-1,5,-1,0,-1,0});
-//
-//        // Imgproc.cvtColor(img, img, Imgproc.COLOR_RGB2BGRA);
-//        Mat dest = new Mat(img.rows(), img.cols(), img.type());  // 创建一个新的矩阵
-////        Imgproc.GaussianBlur(img, dest, new Size(5, 5), 10);  // 高斯模糊，这个是初步的处理图像
-////        Core.addWeighted(img, 1.5, dest, -0.5, 0, dest);  // 线性混合
-//
-//        List<Mat> list=new ArrayList<>();
-////        Imgproc.cvtColor(img,);
-//
-////        Imgproc.filter2D(img,dest,-1,kener);   // 这个是用来 图像增强锐化的，但是并不能把图像增亮
-//        Mat erodemat= Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3,3));
-//        Imgproc.erode(img,dest,erodemat);
-//        Core.split(dest,list);    // 成功将矩阵分成了一通道
-//
-//        for (int i=0;i<list.size();i++){
-//            int z=list.get(i).rows()*list.get(i).cols();
-//            byte[] mydata=new byte[z];
-//            list.get(i).get(0,0,mydata);
-//
-//
-//            for (int j=0;j<mydata.length;j++){
-//                int s=mydata[j]&0xff;
-//                int k= (int) (s*1.4+5);
-//                if (k>255){
-//                    k=255;
-//                    ;                }
-//                mydata[j]= (byte) k;
-//            }
-//            list.get(i).put(0,0,mydata);
-//
-//        }
-//
-//        Core.merge(list,dest);
-//        Bitmap img_bitmap = Bitmap.createBitmap(dest.cols(), dest.rows(), Bitmap.Config.ARGB_8888);  //根据位图创建一个新的bitmap
-//        Utils.matToBitmap(dest, img_bitmap);  // 将目的mat图像放到bitmap中
-//        return img_bitmap;
-//    }
+    private Bitmap sharpenImage(Bitmap inputImageBitmap) {
+        Mat img = new Mat();
+//        Utils.bitmapToMat(inputImageBitmap, img);  // 将bitmap转换成了mat矩阵
+        Utils.bitmapToMat(inputImageBitmap,img,false);    // bitmap 的类型为 CV8uc4
+        Mat kener=new Mat(3,3, CvType.CV_32FC1);
+        kener.put(0,0,new float[]{0,-1,0,-1,5,-1,0,-1,0});
+
+        // Imgproc.cvtColor(img, img, Imgproc.COLOR_RGB2BGRA);
+        Mat dest = new Mat(img.rows(), img.cols(), img.type());  // 创建一个新的矩阵
+//        Imgproc.GaussianBlur(img, dest, new Size(5, 5), 10);  // 高斯模糊，这个是初步的处理图像
+//        Core.addWeighted(img, 1.5, dest, -0.5, 0, dest);  // 线性混合
+
+        List<Mat> list=new ArrayList<>();
+//        Imgproc.cvtColor(img,);
+
+//        Imgproc.filter2D(img,dest,-1,kener);   // 这个是用来 图像增强锐化的，但是并不能把图像增亮
+        Mat erodemat= Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3,3));
+        Imgproc.erode(img,dest,erodemat);
+        Core.split(dest,list);    // 成功将矩阵分成了一通道
+
+        for (int i=0;i<list.size();i++){
+            int z=list.get(i).rows()*list.get(i).cols();
+            byte[] mydata=new byte[z];
+            list.get(i).get(0,0,mydata);
+
+
+            for (int j=0;j<mydata.length;j++){
+                int s=mydata[j]&0xff;
+                int k= (int) (s*1.4+5);
+                if (k>255){
+                    k=255;
+                    ;                }
+                mydata[j]= (byte) k;
+            }
+            list.get(i).put(0,0,mydata);
+
+        }
+
+        Core.merge(list,dest);
+        Bitmap img_bitmap = Bitmap.createBitmap(dest.cols(), dest.rows(), Bitmap.Config.ARGB_8888);  //根据位图创建一个新的bitmap
+        Utils.matToBitmap(dest, img_bitmap);  // 将目的mat图像放到bitmap中
+        return img_bitmap;
+    }
 
 
 

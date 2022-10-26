@@ -22,14 +22,13 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-
-import com.blankj.utilcode.util.ScreenUtils;
 
 /**
  * @author jarlen
@@ -66,10 +65,11 @@ public class OperateView extends View
 		super(context);
 //		this.mContext = context;
 		bgBmp = resizeBmp;
+//		bgBmp.setDensity(getResources().getDisplayMetrics().densityDpi);
 		int width = bgBmp.getWidth();
 		int height = bgBmp.getHeight();
-
 		mCanvasLimits = new Rect(0, 0, width, height);
+		Log.d("MyTest","OperateView width "+width+"  heigth :"+height);
 	}
 
 	/**
@@ -113,7 +113,15 @@ public class OperateView extends View
 		int sc = canvas.save();  // 将canvas的状态保存到栈中
 		canvas.clipRect(mCanvasLimits);  //只在这个矩形区域上绘制
 //		canvas.drawBitmap(bgBmp, 0, 0, paint);  // 在view上绘制一张背景图片, 就是指的那个 从 相机拍摄过来的呃图片
+
+
+		Log.d("MyTest","onDraw getwidth "+getWidth()+"   height "+getHeight());
+
+
+
 		canvas.drawBitmap(bgBmp,mCanvasLimits,new Rect(0,0,getWidth(),getHeight()),paint);
+
+
 		drawImages(canvas);  // 这里绘制的是水印的内容，已经绘制出去了就无法改变了吧
 		canvas.restoreToCount(sc);  // 恢复之后就可以再重新画叉号了，而画布上也不会再有原来的图标内容
 		for (ImageObject ad : imgLists)  //将imglists 里面的图像画出来
@@ -124,6 +132,20 @@ public class OperateView extends View
 			}
 		}
 	}
+
+
+	public Bitmap resizeBitmap(float newWidth, float newHeight, Bitmap bitmap) {
+
+		Matrix matrix = new Matrix();
+		matrix.postScale(newWidth / bitmap.getWidth(),
+
+				newHeight / bitmap.getHeight());
+		Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
+				bitmap.getHeight(), matrix, true);
+
+		return newBitmap;
+	}
+
 
 	public void save()
 	{
@@ -175,7 +197,6 @@ public class OperateView extends View
 	 */
 	private void handleMultiTouchManipulateEvent(MotionEvent event)
 	{
-
 
 		switch (event.getAction() & MotionEvent.ACTION_MASK)
 		{

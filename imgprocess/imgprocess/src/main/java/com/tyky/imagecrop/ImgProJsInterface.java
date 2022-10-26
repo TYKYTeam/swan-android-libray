@@ -32,7 +32,6 @@ public class ImgProJsInterface {
 
         SPUtils.getInstance().put("method_img", paramModel.getCallBackMethod());
 
-
         SPUtils.getInstance().put("method_imgtype", paramModel.getType() == null ? 1 : paramModel.getType());
 
         ActivityUtils.startActivity(TestActivity.class);
@@ -40,6 +39,7 @@ public class ImgProJsInterface {
         return gson.toJson(ResultModel.success(""));  //不传值也是通用的，异步操作
 
     }
+
 
 
 }

@@ -221,7 +221,6 @@ public class OperateUtils {
     public ImageObject getImageObject(Bitmap srcBmp, OperateView operateView,
                                       int quadrant, int x, int y) {  // 传过来的参数是： 150  5  100
 
-
         BitmapFactory.Options options=new BitmapFactory.Options();
         options.inSampleSize=2;
         Bitmap rotateBm = BitmapFactory.decodeResource(activity.getResources(),
