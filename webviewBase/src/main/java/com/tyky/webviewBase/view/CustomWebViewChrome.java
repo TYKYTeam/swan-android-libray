@@ -190,7 +190,7 @@ public class CustomWebViewChrome extends WebChromeClient {
                 Uri[] uriArray = new Uri[result.size()];
                 for (int i = 0; i < result.size(); i++) {
                     LocalMedia localMedia = result.get(i);
-                    String path = localMedia.getPath();
+                    String path = localMedia.getRealPath();
                     Uri uri = Uri.fromFile(new File(path));
                     uriArray[i] = uri;
                 }
@@ -203,6 +203,7 @@ public class CustomWebViewChrome extends WebChromeClient {
             }
             if (requestCode == RequestCodeConstants.FILE) {
                 Uri data1 = data.getData();
+
                 if (data1 == null) {
                     filePathCallback.onReceiveValue(new Uri[]{});
                 } else {
