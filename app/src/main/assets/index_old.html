@@ -44,6 +44,9 @@
                 <div>
                     文件选择<input type="file" accept="file/*" />
                 </div>
+                <div>
+                    图片多选<input type="file" accept="image/png,image/jpeg,image/gif" multiple />
+                </div>
 
                 <button type="default" onclick="clearWebviewData()">清除webview数据</button>
                 <button type="default" onclick="reloadWebview()">webview重载首页</button>
@@ -114,6 +117,8 @@
                     <button type="default" onclick="shareImage()">分享图片</button>
                     <button type="default" onclick="shareTextImage()">分享图文</button>
                     <button type="default" onclick="shareToWechatFriend()">分享文本给微信好友</button>
+                    <button type="default" onclick="shareTextByWxOrigin()">分享文本（微信原生）</button>
+                    <button type="default" onclick="shareImageByWxOrigin()">分享图片（微信原生）</button>
                 </div>
             </fieldset>
 
@@ -458,7 +463,7 @@
             let content = {
                 "latitude": "31.178513",
                 "longitude": "121.494612",
-                "title":"世博大道"
+                "title": "世博大道"
             }
             if (window.map) {
                 let result = window.map.callSDKMap(JSON.stringify(content))
@@ -636,14 +641,14 @@
                 console.log(result)
             }
         }
-        
+
         function openDebuggerMode() {
             if (window.debugger) {
                 let result = window.debugger.openDebuggerMode()
                 console.log(result)
             }
         }
-        
+
         function closeDebuggerMode() {
             if (window.debugger) {
                 let result = window.debugger.closeDebuggerMode()
@@ -951,12 +956,39 @@
             }
         }
 
-        function shareToWechatFriend() {
+        function shareTextByWxOrigin() {
+            if (window.share) {
+                let content = {
+                    shareContent: "分享的文本内容",
+                    shareTitle: "分享标题",
+                    shareDescription: "分享描述",
+                    shareTargetType: 0
+                }
+                let result = window.share.shareTextByWxOrigin(JSON.stringify(content))
+                console.log(result)
+            }
+        }
+
+        function shareImageByWxOrigin() {
+            if (window.share) {
+                let content = {
+                    type: 1,
+                    shareContent: "/storage/emulated/0/DCIM/com.tyky.guizhou.dangjian.party/1667294414888_100.JPG",
+                    shareTitle: "分享标题",
+                    shareDescription: "分享描述",
+                    shareTargetType: 0
+                }
+                let result = window.share.shareImageByWxOrigin(JSON.stringify(content))
+                console.log(result)
+            }
+        }
+
+        function shareToWxOrigin() {
             if (window.share) {
                 let content = {
                     content: "分享的文本内容"
                 }
-                let result = window.share.shareToWechatFriend(JSON.stringify(content))
+                let result = window.share.shareToWxOrigin(JSON.stringify(content))
                 console.log(result)
             }
         }
