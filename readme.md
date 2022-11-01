@@ -601,6 +601,90 @@ if (window.share) {
     console.log(result)
 }
 ```
+
+### 5.分享文本（微信原生）
+
+通过微信SDK分享文本，支持分享给好友或朋友圈
+
+> **提示：使用此功能需要先申请APPID，需要先申请微信移动应用的APPID，并在远程编译的时候勾选分享模块，进行配置项的填写**,可参考[微信分享SDK申请 | 移动应用开发支撑系统开发文档](http://ark.tyky.com.cn:35603/mobile/docs/questions/wechat_share.html#_1-注册与登录)
+
+**传参：**
+```
+{
+    shareContent: "分享的文本内容",
+    shareTitle:"",
+    shareDescription:"",
+    shareTargetType:0
+}
+```
+
+- shareContent 分享的文本内容，不能为空
+- shareTitle 分享标题
+- shareDescription 分享描述，不能为空
+- shareTargetType 分享目标：0：好友 1：朋友圈，不传默认为0
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.share) {
+    let content = {
+        shareContent: "分享的文本内容",
+        shareTitle:"分享标题",
+        shareDescription:"分享描述",
+        shareTargetType:0
+    }
+    let result = window.share.shareTextByWxOrigin(JSON.stringify(content))
+    console.log(result)
+}
+```
+
+### 6.分享图片（微信原生）
+通过微信SDK分享图片，支持分享给好友或朋友圈
+
+> **提示：使用此功能需要先申请APPID，需要先申请微信移动应用的APPID，并在远程编译的时候勾选分享模块，进行配置项的填写**,可参考[微信分享SDK申请 | 移动应用开发支撑系统开发文档](http://ark.tyky.com.cn:35603/mobile/docs/questions/wechat_share.html#_1-注册与登录)
+
+**传参：**
+```
+{
+    type: 1,
+    shareContent: "/storage/emulated/0/DCIM/com.tyky.guizhou.dangjian.party/1667294414888_100.JPG",
+    shareTitle: "分享标题",
+    shareDescription: "分享描述",
+    shareTargetType: 0
+}
+```
+- type 0：图片base64 1：设备图片文件路径
+- shareContent 当type为0，传图片base64数据；当type为1，传设备本机图片路径
+- shareTitle 分享标题
+- shareDescription 分享描述，不能为空
+- shareTargetType 分享目标：0：好友 1：朋友圈，不传默认为0
+
+**返回结果：**
+```
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+if (window.share) {
+    let content = {
+        type: 1,
+        shareContent: "/storage/emulated/0/DCIM/com.tyky.guizhou.dangjian.party/1667294414888_100.JPG",
+        shareTitle: "分享标题",
+        shareDescription: "分享描述",
+        shareTargetType: 0
+    }
+    let result = window.share.shareImageByWxOrigin(JSON.stringify(content))
+    console.log(result)
+}
+```
+
 ## device设备
 
 ### 1.获取设备mac地址
