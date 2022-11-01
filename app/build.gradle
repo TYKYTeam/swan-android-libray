@@ -7,7 +7,8 @@ android {
     buildToolsVersion '28.0.3'
 
     defaultConfig {
-        applicationId "com.tyky.acl"
+//        applicationId "com.tyky.acl"
+        applicationId "com.tyky.guizhou.dangjian.party"
         minSdkVersion 21
         targetSdkVersion 32
         versionCode 1
@@ -36,8 +37,21 @@ android {
                 //是否开启开机自启
                 OPEN_AUTO_START : "true",
                 //首页是否为横屏
-                IS_LANDSCAPE : "true"
+                IS_LANDSCAPE : "true",
+                //微信分享SDK的APPID
+                WECHAT_APP_ID : "wx296455bddd21a70c"
         ]
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file('hnBuild.jks')
+            storePassword 'tyky!1290'
+            keyPassword 'tyky!1290'
+            keyAlias = 'key0'
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
     }
 
     buildTypes {
@@ -45,7 +59,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug{
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+        }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -85,7 +104,7 @@ dependencies {
     implementation project(path: ':update')
 //    implementation project(path: ':imgprocess')
 //    implementation project(path: ':jgpush')
-    implementation project(path: ':autostart')
+//    implementation project(path: ':autostart')
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
