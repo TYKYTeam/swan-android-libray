@@ -6,11 +6,11 @@ public class WxShareParamModel extends ParamModel {
     /**
      * 分享标题
      */
-    private String shareTitle;
+    private String shareTitle = "";
     /**
      * 分享描述
      */
-    private String shareDescription;
+    private String shareDescription = "";
     /**
      * 缩略图base64
      */
@@ -22,9 +22,9 @@ public class WxShareParamModel extends ParamModel {
     private String shareContent;
 
     /**
-     * 分享类型 0：文本 1：图片 2：视频 3：网页 4：小程序
+     * 分享目标类型 0：好友 1：朋友圈
      */
-    private Integer type;
+    private int shareTargetType = 0;
 
     public String getShareThumbData() {
         return shareThumbData;
@@ -42,14 +42,12 @@ public class WxShareParamModel extends ParamModel {
         this.shareContent = shareContent;
     }
 
-    @Override
-    public Integer getType() {
-        return type;
+    public int getShareTargetType() {
+        return shareTargetType;
     }
 
-    @Override
-    public void setType(Integer type) {
-        this.type = type;
+    public void setShareTargetType(int shareTargetType) {
+        this.shareTargetType = shareTargetType;
     }
 
     public String getShareTitle() {

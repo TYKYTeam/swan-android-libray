@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
+import android.util.Pair;
 import android.webkit.JavascriptInterface;
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -17,6 +18,8 @@ import com.blankj.utilcode.util.IntentUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.UriUtils;
 import com.google.gson.Gson;
+import com.tyky.share.bean.WxShareParamModel;
+import com.tyky.share.utils.WxUtils;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.model.ParamModel;
 import com.tyky.webviewBase.model.ResultModel;
@@ -143,22 +146,101 @@ public class ShareJsInterface {
     }
 
 
+    /**
+     * 调用微信分享SDK分享文本
+     *
+     * @param paramStr
+     * @return
+     */
     @JavascriptInterface
-    public String shareToWxOrigin(String paramStr) {
-        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
-        String data = paramModel.getContent();
-        if (StringUtils.isEmpty(data)) {
-            return gson.toJson(ResultModel.errorParam());
+    public String shareTextByWxOrigin(String paramStr) {
+        //1.检测微信是否安装
+        //2.检测appId是否有数值
+        Pair<Boolean, String> booleanStringPair = checkWechatShareParam();
+        if (!booleanStringPair.first) {
+            return gson.toJson(ResultModel.errorParam(booleanStringPair.second));
         }
-        //判断如果有base64开头，处理一下
-        if (data.contains("base64,")) {
-            data = org.apache.commons.lang3.StringUtils.substringAfter(data, "base64,");
+
+        WxShareParamModel paramModel = gson.fromJson(paramStr, WxShareParamModel.class);
+
+        //不能为空
+        String shareContent = paramModel.getShareContent();
+        if (StringUtils.isEmpty(shareContent)) {
+            return gson.toJson(ResultModel.errorParam("shareContent不能为空"));
         }
-        byte[] bytes = EncodeUtils.base64Decode(data);
 
+        String shareDescription = paramModel.getShareDescription();
+        if (StringUtils.isEmpty(shareDescription)) {
+            return gson.toJson(ResultModel.errorParam("shareDescription不能为空"));
+        }
 
+        int shareTargetType = paramModel.getShareTargetType();
+        String shareTitle = paramModel.getShareTitle();
+
+        WxUtils.shareText(shareContent, shareTargetType, shareTitle, shareDescription);
         return gson.toJson(ResultModel.success(""));
     }
 
+    /**
+     * 调用微信分享SDK分享图片
+     *
+     * @param paramStr
+     * @return
+     */
+    @JavascriptInterface
+    public String shareImageByWxOrigin(String paramStr) {
+        //1.检测微信是否安装
+        //2.检测appId是否有数值
+        Pair<Boolean, String> booleanStringPair = checkWechatShareParam();
+        if (!booleanStringPair.first) {
+            return gson.toJson(ResultModel.errorParam(booleanStringPair.second));
+        }
+
+        WxShareParamModel paramModel = gson.fromJson(paramStr, WxShareParamModel.class);
+        Integer type = paramModel.getType();
+        if (type == null) {
+            return gson.toJson(ResultModel.errorParam("type不能为空"));
+        }
+
+        //不能为空
+        String shareContent = paramModel.getShareContent();
+        if (StringUtils.isEmpty(shareContent)) {
+            return gson.toJson(ResultModel.errorParam("shareContent不能为空"));
+        }
+
+        String shareDescription = paramModel.getShareDescription();
+        if (StringUtils.isEmpty(shareDescription)) {
+            return gson.toJson(ResultModel.errorParam("shareDescription不能为空"));
+        }
+
+        int shareTargetType = paramModel.getShareTargetType();
+        String shareTitle = paramModel.getShareTitle();
+
+        //0：传base64字符串 1：传手机本机路径，如/storage/emulated/0/DCIM/com.tyky.guizhou.dangjian.party/1667294414888_100.JPG
+        if (type == 0) {
+            WxUtils.sharePicture(shareContent, shareTargetType, shareTitle, shareDescription);
+        } else {
+            WxUtils.sharePictureByImgFilePath(shareContent, shareTargetType, shareTitle, shareDescription);
+        }
+        return gson.toJson(ResultModel.success(""));
+    }
+
+
+    /**
+     * 检测微信是否安装及appId是否有数值
+     *
+     * @return 返回Pair, Boolean代表是否通过验证，String为错误提示信息
+     */
+    private Pair<Boolean, String> checkWechatShareParam() {
+        String weixinPkg = "com.tencent.mm";
+        if (!AppUtils.isAppInstalled(weixinPkg)) {
+            return Pair.create(false, "分享失败，微信未安装！！");
+        }
+        if (org.apache.commons.lang3.StringUtils.isBlank(WxUtils.appId)) {
+            return Pair.create(false, "分享失败，微信APP_ID数值为空，请在远程编译时候填写对应配置项！！");
+        }
+
+        return Pair.create(true, "");
+    }
 
 }
