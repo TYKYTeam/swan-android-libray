@@ -44,6 +44,7 @@ android {
     }
 
     signingConfigs {
+        //wxdce36271069f2818使用的包名是com.tyky.guizhou.dangjian.party，签名文件如下
         debug {
             storeFile file('hnBuild.jks')
             storePassword 'tyky!1290'
