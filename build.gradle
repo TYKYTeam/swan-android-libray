@@ -7,6 +7,7 @@ buildscript {
         maven{ url'https://maven.aliyun.com/repository/google'}
         mavenCentral()
         maven { url 'https://jitpack.io' }
+        maven { url 'https://repo1.maven.org/maven2/' }
         maven { url "https://mirrors.tencent.com/nexus/repository/maven-public/" }
     }
     dependencies {
@@ -25,6 +26,7 @@ allprojects {
         maven{ url'https://maven.aliyun.com/repository/google'}
         mavenCentral()
         maven { url 'https://jitpack.io' }
+        maven { url 'https://repo1.maven.org/maven2/' }
         maven { url "https://mirrors.tencent.com/nexus/repository/maven-public/" }
     }
 }

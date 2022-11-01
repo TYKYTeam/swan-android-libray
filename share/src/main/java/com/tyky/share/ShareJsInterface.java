@@ -129,7 +129,7 @@ public class ShareJsInterface {
         }
         String weixinPkg = "com.tencent.mm";
         if (!AppUtils.isAppInstalled(weixinPkg)) {
-            return gson.toJson(ResultModel.errorParam("分析失败，微信未安装！！"));
+            return gson.toJson(ResultModel.errorParam("分享失败，微信未安装！！"));
         }
         Intent intent = new Intent();
         ComponentName cop = new ComponentName(weixinPkg, "com.tencent.mm.ui.tools.ShareImgUI");
@@ -141,5 +141,24 @@ public class ShareJsInterface {
         ActivityUtils.getTopActivity().startActivity(intent);
         return gson.toJson(ResultModel.success(""));
     }
+
+
+    @JavascriptInterface
+    public String shareToWxOrigin(String paramStr) {
+        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        String data = paramModel.getContent();
+        if (StringUtils.isEmpty(data)) {
+            return gson.toJson(ResultModel.errorParam());
+        }
+        //判断如果有base64开头，处理一下
+        if (data.contains("base64,")) {
+            data = org.apache.commons.lang3.StringUtils.substringAfter(data, "base64,");
+        }
+        byte[] bytes = EncodeUtils.base64Decode(data);
+
+
+        return gson.toJson(ResultModel.success(""));
+    }
+
 
 }
