@@ -4,13 +4,14 @@
     package="com.tyky.share">
 
     <application>
-        <activity
-            android:name=".wxapi.WXEntryActivity"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:launchMode="singleTask"
-            android:taskAffinity="com.tyky.share"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+<!--        微信回调，暂时没用到，先屏蔽-->
+<!--        <activity-->
+<!--            android:name=".wxapi.WXEntryActivity"-->
+<!--            android:exported="true"-->
+<!--            android:label="@string/app_name"-->
+<!--            android:launchMode="singleTask"-->
+<!--            android:taskAffinity="com.tyky.share"-->
+<!--            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>-->
         <!--信分享SDKapp_id-->
         <meta-data
             android:name="wechat_app_id"
