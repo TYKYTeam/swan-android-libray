@@ -225,6 +225,82 @@ public class ShareJsInterface {
         return gson.toJson(ResultModel.success(""));
     }
 
+    /**
+     * 调用微信分享SDK分享视频(分享给好友会有卡片形式）
+     *
+     * @param paramStr
+     * @return
+     */
+    @JavascriptInterface
+    public String shareVideoByWxOrigin(String paramStr) {
+        //1.检测微信是否安装
+        //2.检测appId是否有数值
+        Pair<Boolean, String> booleanStringPair = checkWechatShareParam();
+        if (!booleanStringPair.first) {
+            return gson.toJson(ResultModel.errorParam(booleanStringPair.second));
+        }
+
+        WxShareParamModel paramModel = gson.fromJson(paramStr, WxShareParamModel.class);
+
+        //不能为空
+        String shareContent = paramModel.getShareContent();
+        if (StringUtils.isEmpty(shareContent)) {
+            return gson.toJson(ResultModel.errorParam("shareContent不能为空"));
+        }
+
+        String shareDescription = paramModel.getShareDescription();
+        if (StringUtils.isEmpty(shareDescription)) {
+            return gson.toJson(ResultModel.errorParam("shareDescription不能为空"));
+        }
+
+        int shareTargetType = paramModel.getShareTargetType();
+        String shareTitle = paramModel.getShareTitle();
+
+        //缩略图base64
+        String thumbData = paramModel.getShareThumbData();
+
+        WxUtils.shareVideo(shareContent, shareTargetType, shareTitle, shareDescription,thumbData);
+        return gson.toJson(ResultModel.success(""));
+    }
+
+    /**
+     * 调用微信分享SDK分享网页链接（分享给好友会有卡片形式）
+     *
+     * @param paramStr
+     * @return
+     */
+    @JavascriptInterface
+    public String shareWebUrlByWxOrigin(String paramStr) {
+        //1.检测微信是否安装
+        //2.检测appId是否有数值
+        Pair<Boolean, String> booleanStringPair = checkWechatShareParam();
+        if (!booleanStringPair.first) {
+            return gson.toJson(ResultModel.errorParam(booleanStringPair.second));
+        }
+
+        WxShareParamModel paramModel = gson.fromJson(paramStr, WxShareParamModel.class);
+
+        //不能为空
+        String shareContent = paramModel.getShareContent();
+        if (StringUtils.isEmpty(shareContent)) {
+            return gson.toJson(ResultModel.errorParam("shareContent不能为空"));
+        }
+
+        String shareDescription = paramModel.getShareDescription();
+        if (StringUtils.isEmpty(shareDescription)) {
+            return gson.toJson(ResultModel.errorParam("shareDescription不能为空"));
+        }
+
+        int shareTargetType = paramModel.getShareTargetType();
+        String shareTitle = paramModel.getShareTitle();
+
+        //缩略图base64
+        String thumbData = paramModel.getShareThumbData();
+
+        WxUtils.shareWeb(shareContent, shareTargetType, shareTitle, shareDescription,thumbData);
+        return gson.toJson(ResultModel.success(""));
+    }
+
 
     /**
      * 检测微信是否安装及appId是否有数值

@@ -13,6 +13,8 @@ import com.tencent.mm.opensdk.modelmsg.WXVideoObject;
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.File;
 
 import static com.tencent.mm.opensdk.modelmsg.SendMessageToWX.Req.WXSceneSession;
@@ -22,7 +24,7 @@ import static com.tencent.mm.opensdk.modelmsg.SendMessageToWX.Req.WXSceneTimelin
  * 参考文档 [WXMediaMessage （微信媒体消息内容）说明 | 微信开放文档](https://developers.weixin.qq.com/doc/oplatform/Mobile_App/Share_and_Favorites/Android.html)
  * 微信分享工具类(没有对接小程序和音乐）
  *
- * @author starsone
+ * @author stars-one
  */
 public class WxUtils {
 
@@ -37,8 +39,8 @@ public class WxUtils {
      *
      * @param text        文本内容（长度需大于 0 且不超过 10KB）
      * @param flag        0：好友 1：朋友圈
-     * @param title       分享标题
-     * @param description 分享描述
+     * @param title       分享标题(限制长度不超过 512Bytes)
+     * @param description 分享描述(限制长度不超过 1KB)
      */
     public static void shareText(String text, int flag, String title, String description) {
         //初始化一个 WXTextObject 对象，填写分享的文本内容
@@ -58,8 +60,8 @@ public class WxUtils {
      *
      * @param imgBase64   图片base64数据
      * @param flag        0：好友 1：朋友圈
-     * @param title       分享标题
-     * @param description 分享描述
+     * @param title       分享标题(限制长度不超过 512Bytes)
+     * @param description 分享描述(限制长度不超过 1KB)
      */
     public static void sharePicture(String imgBase64, int flag, String title, String description) {
         //base64数据处理
@@ -80,8 +82,8 @@ public class WxUtils {
      *
      * @param imgFilePath 图片本地路径
      * @param flag        0：好友 1：朋友圈
-     * @param title       分享标题
-     * @param description 分享描述
+     * @param title       分享标题(限制长度不超过 512Bytes)
+     * @param description 分享描述(限制长度不超过 1KB)
      */
     public static void sharePictureByImgFilePath(String imgFilePath, int flag, String title, String description) {
         //初始化一个 WXImageObject 对象，填写分享图片
@@ -97,14 +99,15 @@ public class WxUtils {
     }
 
     /**
-     * 分享视频
+     * 分享视频（分享给好友会以消息卡片展示）
      *
-     * @param videoUrl    视频链接
+     * @param videoUrl    视频链接（文本长度不能超过10KB）
      * @param flag        0：好友 1：朋友圈
-     * @param title       分享标题
-     * @param description 分享描述
+     * @param title       分享标题(限制长度不超过 512Bytes)
+     * @param description 分享描述(限制长度不超过 1KB)
+     * @param thumbData   缩略图base64(不能超过32KB）
      */
-    public static void shareVideo(String videoUrl, int flag, String title, String description) {
+    public static void shareVideo(String videoUrl, int flag, String title, String description, String thumbData) {
         //初始化一个 WXImageObject 对象，填写分享图片
         WXVideoObject wxImageObject = new WXVideoObject();
         wxImageObject.videoUrl = videoUrl;
@@ -114,18 +117,28 @@ public class WxUtils {
         msg.mediaObject = wxImageObject;
         msg.title = title;
         msg.description = description;
+        if (StringUtils.isNotBlank(thumbData)) {
+            String data = thumbData;
+            if (data.contains("base64,")) {
+                data = org.apache.commons.lang3.StringUtils.substringAfter(data, "base64,");
+            }
+            byte[] bytes = EncodeUtils.base64Decode(data);
+            Bitmap bitmap = ImageUtils.bytes2Bitmap(bytes);
+            msg.setThumbImage(bitmap);
+        }
         sendMessage(msg, flag);
     }
 
     /**
-     * 分享网页
+     * 分享网页（分享给好友会以消息卡片展示）
      *
-     * @param webUrl      网页链接
+     * @param webUrl      网页链接（文本长度不能超过10KB）
      * @param flag        0：好友 1：朋友圈
-     * @param title       分享标题
-     * @param description 分享描述
+     * @param title       分享标题(限制长度不超过 512Bytes)
+     * @param description 分享描述(限制长度不超过 1KB)
+     * @param thumbData   缩略图base64(不能超过32KB）
      */
-    public static void shareWeb(String webUrl, int flag, String title, String description) {
+    public static void shareWeb(String webUrl, int flag, String title, String description, String thumbData) {
         //初始化一个 WXImageObject 对象，填写分享图片
         WXWebpageObject wxImageObject = new WXWebpageObject();
         wxImageObject.webpageUrl = webUrl;
@@ -135,6 +148,16 @@ public class WxUtils {
         msg.mediaObject = wxImageObject;
         msg.title = title;
         msg.description = description;
+
+        if (StringUtils.isNotBlank(thumbData)) {
+            String data = thumbData;
+            if (data.contains("base64,")) {
+                data = org.apache.commons.lang3.StringUtils.substringAfter(data, "base64,");
+            }
+            byte[] bytes = EncodeUtils.base64Decode(data);
+            Bitmap bitmap = ImageUtils.bytes2Bitmap(bytes);
+            msg.setThumbImage(bitmap);
+        }
         sendMessage(msg, flag);
     }
 

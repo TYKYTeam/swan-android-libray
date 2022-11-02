@@ -14,7 +14,7 @@ public class WxShareParamModel extends ParamModel {
     /**
      * 缩略图base64
      */
-    private String shareThumbData;
+    private String shareThumbData = "";
 
     /**
      * 分享内容
