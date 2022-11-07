@@ -4,7 +4,10 @@
     package="com.tyky.logupload">
 
     <application android:requestLegacyExternalStorage="true">
-        <activity android:name=".activity.MyTestActivity" />
+        <!--正式环境还是测试环境，测试环境进入展示异常的页面-->
+        <meta-data android:name="is_prod_env" android:value="${IS_PROD_ENV}"/>
+
+        <activity android:name=".activity.ErrorTipActivity" />
         <activity android:name=".activity.CrashActivity" />
 
         <provider
@@ -17,8 +20,8 @@
                 android:value="androidx.startup" />
         </provider>
     </application>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

@@ -17,6 +17,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.FileIOUtils;
+import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ImageUtils;
 import com.blankj.utilcode.util.IntentUtils;
 import com.blankj.utilcode.util.PathUtils;
@@ -40,6 +42,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class CrashActivity extends AppCompatActivity {
 
     public static final String CRASH_MODEL = "crash_model";
+    public static final String CRASH_FILE_PATH = "crash_file_path";
 
     private final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH:mm", Locale.getDefault());
 
@@ -55,7 +58,14 @@ public class CrashActivity extends AppCompatActivity {
 
         KLog.d("进入CrashActivity！！！！");
         setContentView(R.layout.activity_crash);
-        model = getIntent().getParcelableExtra(CRASH_MODEL);
+        //从本地文件读取错误日志的json
+        String crashFilePath = getIntent().getStringExtra(CRASH_FILE_PATH);
+
+        String jsonData = FileIOUtils.readFile2String(crashFilePath);
+        model = GsonUtils.fromJson(jsonData, CrashModel.class);
+
+        //model = getIntent().getParcelableExtra(CRASH_MODEL);
+
         if (model == null) {
             return;
         }
@@ -96,7 +106,6 @@ public class CrashActivity extends AppCompatActivity {
         tv_version.setText(platform);
 
         String cpuAbi = device.getCpuAbi();
-        KLog.d("数据！！！！：" + cpuAbi);
 
         tv_cpuAbi.setText(cpuAbi);
 
@@ -214,7 +223,7 @@ public class CrashActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);*/
 
-        Uri  uri = Uri.fromFile(file);
+        Uri uri = Uri.fromFile(file);
         //if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
         //    uri = UriUtils.file2Uri(file);
         //} else {

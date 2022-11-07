@@ -39,7 +39,9 @@ android {
                 //首页是否为横屏
                 IS_LANDSCAPE : "true",
                 //微信分享SDK的APPID
-                WECHAT_APP_ID : "wxdce36271069f2818"
+                WECHAT_APP_ID : "wxdce36271069f2818",
+                //正式环境还是测试环境，测试环境进入出现异常进入展示异常的页面
+                IS_PROD_ENV:"true"
         ]
     }
 
