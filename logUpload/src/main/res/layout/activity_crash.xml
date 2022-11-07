@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    tools:ignore="ResourceName">
+
+    <RelativeLayout
+        android:id="@+id/sToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="?attr/smToolbar">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/simpleTitle"
+            android:textColor="?attr/smToolbarText"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/sTvMore"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="13dp"
+            android:text="@string/simpleShare"
+            android:textColor="?attr/smToolbarShareText"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/sScrollView"
+        android:layout_width="match_parent"
+        android:background="?attr/smContentBackground"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/simpleCrashInfo"
+                android:textColor="?attr/smIdentText"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/sTextMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:textColor="?attr/smDescText"
+                tools:text="TextView" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="#efefef" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/simpleClassName"
+                    android:textColor="?attr/smIdentText"
+                    android:textSize="@dimen/simple_text_item_size" />
+
+                <TextView
+                    android:id="@+id/sTvClassName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/smDescText"
+                    android:layout_marginLeft="7dp"
+                    android:textSize="@dimen/simple_text_item_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/smIdentText"
+                    android:text="@string/simpleFunName"
+                    android:textSize="@dimen/simple_text_item_size" />
+
+                <TextView
+                    android:id="@+id/sTvMethodName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/smDescText"
+                    android:layout_marginLeft="7dp"
+                    android:textSize="@dimen/simple_text_item_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/simpleLineNum"
+                    android:textColor="?attr/smIdentText"
+                    android:textSize="@dimen/simple_text_item_size" />
+
+                <TextView
+                    android:id="@+id/sTvLineNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/smDescText"
+                    android:layout_marginLeft="7dp"
+                    android:textSize="@dimen/simple_text_item_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/simpleExceptionType"
+                    android:textColor="?attr/smIdentText"
+                    android:textSize="@dimen/simple_text_item_size" />
+
+                <TextView
+                    android:id="@+id/sTvExceptionType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/smDescText"
+                    android:layout_marginLeft="7dp"
+                    android:textSize="@dimen/simple_text_item_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/simpleTime"
+                    android:textColor="?attr/smIdentText"
+                    android:textSize="@dimen/simple_text_item_size" />
+
+                <TextView
+                    android:id="@+id/sTvTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/smDescText"
+                    android:layout_marginLeft="7dp"
+                    android:textSize="@dimen/simple_text_item_size" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="#efefef" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/simpleModel"
+                    android:textColor="?attr/smIdentText"
+                    android:textSize="@dimen/simple_text_item_size" />
+
+                <TextView
+                    android:id="@+id/sTvModel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/smDescText"
+                    android:layout_marginLeft="7dp"
+                    android:textSize="@dimen/simple_text_item_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/simpleBrand"
+                    android:textColor="?attr/smIdentText"
+                    android:textSize="@dimen/simple_text_item_size" />
+
+                <TextView
+                    android:id="@+id/sTvBrand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/smDescText"
+                    android:layout_marginLeft="7dp"
+                    android:textSize="@dimen/simple_text_item_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/simpleVersion"
+                    android:textColor="?attr/smIdentText"
+                    android:textSize="@dimen/simple_text_item_size" />
+
+                <TextView
+                    android:id="@+id/sTvVersion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/smDescText"
+                    android:layout_marginLeft="7dp"
+                    android:textSize="@dimen/simple_text_item_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/simpleCpuAbi"
+                    android:textColor="?attr/smIdentText"
+                    android:textSize="@dimen/simple_text_item_size" />
+
+                <TextView
+                    android:id="@+id/sTvCpuAbi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/smDescText"
+                    android:layout_marginLeft="7dp"
+                    android:textSize="@dimen/simple_text_item_size" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="#efefef" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="versionCode: "
+                    android:textColor="?attr/smIdentText"
+                    android:textSize="@dimen/simple_text_item_size" />
+
+                <TextView
+                    android:id="@+id/sTvVersionCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/smDescText"
+                    android:layout_marginLeft="7dp"
+                    android:textSize="@dimen/simple_text_item_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="versionName: "
+                    android:textColor="?attr/smIdentText"
+                    android:textSize="@dimen/simple_text_item_size" />
+
+                <TextView
+                    android:id="@+id/sTvVersionName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/smDescText"
+                    android:layout_marginLeft="7dp"
+                    android:textSize="@dimen/simple_text_item_size" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="#efefef" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/simpleAllInfo"
+                android:textColor="?attr/smIdentText"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/sTvFullException"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?attr/smDescText"
+                android:textSize="@dimen/simple_text_item_size" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

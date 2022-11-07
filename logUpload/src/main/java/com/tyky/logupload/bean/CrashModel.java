@@ -5,6 +5,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.blankj.utilcode.util.DeviceUtils;
+
 /**
  * author : ChenPeng
  * date : 2018/4/21
@@ -225,7 +227,7 @@ public class CrashModel implements Parcelable {
         //系统版本号-Android5.0
         private String release = Build.VERSION.RELEASE;
         //
-        private String cpuAbi = Build.CPU_ABI;
+        private String cpuAbi = DeviceUtils.getABIs()[0];
 
         public Device() {
         }
@@ -282,6 +284,17 @@ public class CrashModel implements Parcelable {
             dest.writeString(version);
             dest.writeString(release);
             dest.writeString(cpuAbi);
+        }
+
+        @Override
+        public String toString() {
+            return "Device{" +
+                    "model='" + model + '\'' +
+                    ", brand='" + brand + '\'' +
+                    ", version='" + version + '\'' +
+                    ", release='" + release + '\'' +
+                    ", cpuAbi='" + cpuAbi + '\'' +
+                    '}';
         }
     }
 

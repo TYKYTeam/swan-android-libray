@@ -2,9 +2,6 @@ package com.tyky.logupload.utils;
 
 import android.annotation.SuppressLint;
 
-import com.blankj.utilcode.util.AppUtils;
-import com.tyky.logupload.bean.CrashModel;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +28,9 @@ public class CrashCatcherHelper implements Thread.UncaughtExceptionHandler {
     @Override
     public void uncaughtException(Thread t, Throwable ex) {
         callbackCrash(t, ex);
-        transmitException(t, ex);
-        AppUtils.exitApp();
+        //transmitException(t, ex);
+        //AppUtils.exitApp();
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     public static void addOnCrashListener(OnCrashListener listener) {
@@ -40,7 +38,7 @@ public class CrashCatcherHelper implements Thread.UncaughtExceptionHandler {
     }
 
     public interface OnCrashListener {
-        void onCrash(Thread t, Throwable ex, CrashModel crashModel);
+        void onCrash(Thread t, Throwable ex);
     }
 
     /**
@@ -50,10 +48,9 @@ public class CrashCatcherHelper implements Thread.UncaughtExceptionHandler {
      */
     private static void callbackCrash(Thread t, Throwable ex) {
         //将数据转为实体类对象
-        CrashModel crashModel = SpiderManUtils.parseCrash(ex);
         if (!onCrashListeners.isEmpty()) {
             for (OnCrashListener onCrashListener : onCrashListeners) {
-                onCrashListener.onCrash(t, ex, crashModel);
+                onCrashListener.onCrash(t, ex);
             }
         }
     }

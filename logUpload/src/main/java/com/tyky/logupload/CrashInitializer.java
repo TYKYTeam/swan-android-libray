@@ -16,7 +16,8 @@ public class CrashInitializer implements Initializer<Void> {
         //if (application == null) {
         //    application = SpiderManUtils.getApplicationByReflect();
         //}
-
+        //初始化框架
+        CrashUploader.init();
         return null;
     }
 
