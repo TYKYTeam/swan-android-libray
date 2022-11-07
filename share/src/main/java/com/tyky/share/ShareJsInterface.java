@@ -68,10 +68,14 @@ public class ShareJsInterface {
         byte[] bytes = EncodeUtils.base64Decode(data);
         Bitmap bitmap = ImageUtils.bytes2Bitmap(bytes);
 
+        //File file = new File(PathUtils.getExternalAppCachePath(), System.currentTimeMillis() + ".png");
+        //ImageUtils.save(bitmap,file.getPath(), Bitmap.CompressFormat.PNG, true);
+
         File file = ImageUtils.save2Album(bitmap, Bitmap.CompressFormat.PNG, true);
         Uri uri = null;
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
-            UriUtils.file2Uri(file);
+            //todo android12还未测试功能分享是否可用
+            uri = UriUtils.file2Uri(file);
         } else {
             uri = Uri.fromFile(file);
         }
