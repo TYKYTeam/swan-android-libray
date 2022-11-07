@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,12 +98,6 @@ public class CustomWebViewActivity extends AppCompatActivity {
         clLoading = findViewById(R.id.clLoading);
 
         customWebView.loadUrl(url);
-
-        //解决android 7.0以上版本 exposed beyond app through ClipData.Item.getUri()问题
-        // 即共享文件时；
-        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-        StrictMode.setVmPolicy(builder.build());
-        builder.detectFileUriExposure();
     }
 
     @Override

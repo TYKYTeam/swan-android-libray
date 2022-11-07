@@ -1,6 +1,7 @@
 package com.tyky.webviewBase;
 
 import android.app.Application;
+import android.os.StrictMode;
 
 import com.kongzue.dialogx.DialogX;
 
@@ -25,6 +26,13 @@ public class BaseApplication extends Application {
                 }
             }
         }*/
+
+        //解决android 7.0以上版本 exposed beyond app through ClipData.Item.getUri()问题
+        // 即共享文件时；
+
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        builder.detectFileUriExposure();
 
         //初始化dialog
         DialogX.init(BaseApplication.this);
