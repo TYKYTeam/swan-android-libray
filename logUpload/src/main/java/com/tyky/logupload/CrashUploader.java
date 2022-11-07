@@ -82,8 +82,8 @@ public class CrashUploader {
     }
 
     public static void uploadLog(CrashModel crashModel) {
-        //String url = "http://183.62.130.45:35603/mobile/swanPkgSystem/swan-business/crash/uploadCrash";
-        String url = "http://10.232.107.44:9060/swan-business/crash/uploadCrash";
+        //String url = "http://183.62.130.45:35603/mobile/swanPkgSystem/swan-business/crash-log/uploadCrash/";
+        String url = "http://10.232.107.44:9060/swan-business/crash-log/uploadCrash/";
 
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), GsonUtils.toJson(crashModel));
         Request build = new Request.Builder()
@@ -106,8 +106,8 @@ public class CrashUploader {
     }
 
     public static void uploadLog(String path, UploadListener listener) {
-        //String url = "http://183.62.130.45:35603/mobile/swanPkgSystem/swan-business/crash/uploadCrash";
-        String url = "http://10.232.107.44:9060/swan-business/crash/uploadCrash";
+        //String url = "http://183.62.130.45:35603/mobile/swanPkgSystem/swan-business/crash-log/uploadCrash/";
+        String url = "http://10.232.107.44:9060/swan-business//crash-log/uploadCrash/";
         File file = new File(path);
         if (file.exists()) {
             String data = FileIOUtils.readFile2String(file);
