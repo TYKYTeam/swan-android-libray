@@ -65,6 +65,19 @@ public class CrashModel implements Parcelable {
     private int versionCode;
     private String versionName;
 
+    /**
+     * 基座版本信息字段
+     */
+    private String baseLibraryVersion;
+
+    public String getBaseLibraryVersion() {
+        return baseLibraryVersion;
+    }
+
+    public void setBaseLibraryVersion(String baseLibraryVersion) {
+        this.baseLibraryVersion = baseLibraryVersion;
+    }
+
     protected CrashModel(Parcel in) {
         ex = (Throwable) in.readSerializable();
         exceptionMsg = in.readString();
@@ -77,6 +90,7 @@ public class CrashModel implements Parcelable {
         time = in.readLong();
         versionCode = in.readInt();
         versionName = in.readString();
+        baseLibraryVersion = in.readString();
     }
 
     public CrashModel() {
@@ -216,6 +230,7 @@ public class CrashModel implements Parcelable {
         dest.writeLong(time);
         dest.writeInt(versionCode);
         dest.writeString(versionName);
+        dest.writeString(baseLibraryVersion);
     }
 
     public static class Device implements Parcelable {
