@@ -33,8 +33,13 @@ public class CrashUploader {
 
     static final String tag = "CrashUploader";
 
+    static String pkgName = "";
+
     public static void init() {
         CrashCatcherHelper.init();
+
+        pkgName = AppUtils.getAppPackageName();
+
         CrashCatcherHelper.addOnCrashListener(new CrashCatcherHelper.OnCrashListener() {
             @Override
             public void onCrash(Thread t, Throwable ex) {
@@ -43,6 +48,9 @@ public class CrashUploader {
 
                 //先存本地，之后再进行上传
                 CrashModel crashModel = SpiderManUtils.parseCrash(ex);
+                //修复包名错误问题
+                crashModel.setPackageName(pkgName);
+
                 File file = new File(PathUtils.getExternalAppCachePath(), System.currentTimeMillis() + ".log");
                 FileIOUtils.writeFileFromString(file, GsonUtils.toJson(crashModel));
                 KLog.d("文件写入" + file.getPath());

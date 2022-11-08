@@ -49,7 +49,6 @@ public class SpiderManUtils {
 
             model.setFullException(sw.toString());
 
-            model.setPackageName(AppUtils.getAppPackageName());
             model.setVersionCode(AppUtils.getAppVersionCode());
             model.setVersionName(AppUtils.getAppVersionName());
         } catch (Exception e) {
