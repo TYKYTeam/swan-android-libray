@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 
 import com.blankj.utilcode.util.DeviceUtils;
+import com.blankj.utilcode.util.RomUtils;
 
 /**
  * author : ChenPeng
@@ -229,6 +230,8 @@ public class CrashModel implements Parcelable {
         //
         private String cpuAbi = DeviceUtils.getABIs()[0];
 
+        private String deviceSystemRom = RomUtils.getRomInfo().getName() +" "+ RomUtils.getRomInfo().getVersion();
+
         public Device() {
         }
 
@@ -251,6 +254,10 @@ public class CrashModel implements Parcelable {
                 return new Device[size];
             }
         };
+
+        public String getDeviceSystemRom() {
+            return deviceSystemRom;
+        }
 
         public String getModel() {
             return model;
