@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.AppUtils;
 import com.tyky.logupload.R;
 import com.tyky.logupload.bean.CrashModel;
+import com.tyky.webviewBase.utils.LibraryInfoUtils;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -48,7 +49,9 @@ public class SpiderManUtils {
             model.setExceptionType(exceptionType);
 
             model.setFullException(sw.toString());
-
+            //设置版本基座版本信息
+            model.setBaseLibraryVersion(LibraryInfoUtils.getCurrentLibraryVersion());
+            model.setPackageName(AppUtils.getAppPackageName());
             model.setVersionCode(AppUtils.getAppVersionCode());
             model.setVersionName(AppUtils.getAppVersionName());
         } catch (Exception e) {

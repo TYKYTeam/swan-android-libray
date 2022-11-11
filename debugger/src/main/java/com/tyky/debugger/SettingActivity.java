@@ -47,6 +47,9 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
+        String t = null;
+        String substring = t.substring(0);
+
         mEturl = findViewById(R.id.etUrl);
         mBtnscan = findViewById(R.id.btnScan);
         mBtnvisit = findViewById(R.id.btnVisit);
