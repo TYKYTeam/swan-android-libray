@@ -39,6 +39,7 @@ import com.tyky.webviewBase.event.UrlLoadEvent;
 import com.tyky.webviewBase.event.UrlLoadFinishEvent;
 import com.tyky.webviewBase.event.WebviewEvent;
 import com.tyky.webviewBase.model.ResultModel;
+import com.tyky.webviewBase.utils.LibraryInfoUtils;
 import com.tyky.webviewBase.utils.SpeechService;
 import com.tyky.webviewBase.view.CustomWebView;
 import com.tyky.webviewBase.view.CustomWebViewChrome;
@@ -52,6 +53,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 
 import androidx.annotation.Nullable;
@@ -98,6 +101,21 @@ public class CustomWebViewActivity extends AppCompatActivity {
         clLoading = findViewById(R.id.clLoading);
 
         customWebView.loadUrl(url);
+
+        //如果包含有debugger模块，调用上传错误日志方法
+        if (LibraryInfoUtils.getCurrentLibraryDependencyList().contains("debugger")) {
+            try {
+                Class<?> aClass = Class.forName("com.tyky.logupload.CrashUploader");
+                for (Method declaredMethod : aClass.getDeclaredMethods()) {
+                    if (declaredMethod.getName().equals("uploadAll")) {
+                        declaredMethod.invoke(null);
+                        break;
+                    }
+                }
+            } catch (ClassNotFoundException | IllegalAccessException | InvocationTargetException e) {
+                KLog.e("反射调用上传日志失败！！");
+            }
+        }
     }
 
     @Override

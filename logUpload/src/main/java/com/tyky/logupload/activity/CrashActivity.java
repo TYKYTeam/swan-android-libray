@@ -23,6 +23,7 @@ import com.blankj.utilcode.util.ImageUtils;
 import com.blankj.utilcode.util.IntentUtils;
 import com.blankj.utilcode.util.PathUtils;
 import com.socks.library.KLog;
+import com.tyky.logupload.CrashUploader;
 import com.tyky.logupload.R;
 import com.tyky.logupload.bean.CrashModel;
 import com.tyky.logupload.utils.SpiderManUtils;
@@ -118,6 +119,9 @@ public class CrashActivity extends AppCompatActivity {
                 showMenu(v);
             }
         });
+
+        //上传日志文件
+        CrashUploader.uploadLog(crashFilePath,null);
     }
 
     private void showMenu(View v) {
