@@ -1,3 +1,4 @@
+include ':ocr'
 include ':logUpload'
 include ':autostart'
 include ':jgpush'
