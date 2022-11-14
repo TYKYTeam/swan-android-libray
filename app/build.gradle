@@ -46,15 +46,27 @@ android {
     }
 
     signingConfigs {
+        //用筑红云的签名文件和包名测试微信分享功能
         //wxdce36271069f2818使用的包名是com.tyky.guizhou.dangjian.party，签名文件如下
-        debug {
+        /*debug {
             storeFile file('hnBuild.jks')
             storePassword 'tyky!1290'
             keyPassword 'tyky!1290'
             keyAlias = 'key0'
             v1SigningEnabled true
             v2SigningEnabled true
+        }*/
+
+        //百度OCR功能使用此签名
+        debug {
+            storeFile file("xuexibao.keys")
+            storePassword "tyky\$123456"
+            keyAlias "tyky_czing"
+            keyPassword "tyky\$123456"//将这里的“**”替换成自己的信息
+            v1SigningEnabled true
+            v2SigningEnabled true
         }
+
     }
 
     buildTypes {
@@ -105,6 +117,7 @@ dependencies {
     implementation project(path: ':baiduface')
     implementation project(path: ':filePreview')
     implementation project(path: ':update')
+    implementation project(path: ':ocr')
 //    implementation project(path: ':imgprocess')
 //    implementation project(path: ':jgpush')
 //    implementation project(path: ':autostart')
