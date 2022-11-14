@@ -3131,6 +3131,11 @@ window.getLocation = function(object) {
 
 目前极光推送并没有对应的JS接口，目前只是对接SDK，并且手机上能够收到极光平台上推送的消息
 
+极光推送应用申请流程较为简单，需要输入包名即可，可以参考这个[极光开发者服务](https://www.jiguang.cn/portal/#/dev/newOverview?appKey=e6d1598cff079379d74bb53c)
+
+应用申请成功后，从应用设置里获取到AppKey，之后在远程编译的时候勾选上极光推送的模块，填写对应的配置信息即可，如下图所示：
+
+![](https://img2022.cnblogs.com/blog/1210268/202211/1210268-20221114105936152-1436969027.png)
 
 ## 关于Module创建
 
