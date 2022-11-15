@@ -275,7 +275,8 @@
             if (window.ocr) {
                 let content = {
                     "callBackMethod": "getLocation",
-                    "type": 1
+                    "type": 0,
+                    "content":""
                 }
                 let result = window.ocr.generalBasicOCR(JSON.stringify(content))
                 alert(result)
