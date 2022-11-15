@@ -3145,6 +3145,8 @@ window.getLocation = function(object) {
 2. 传入图片base64数据，获取OCR结果
 3. 进入选择图片页面（含拍照），选择本机某个图片后获取OCR结果
 
+> PS **图片格式支持PNG，JPG，JPEG**
+
 **传参：**
 
 ```js
