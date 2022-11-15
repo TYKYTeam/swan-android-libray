@@ -3095,14 +3095,10 @@ setImgProcess
 
 - `type` 当type=1，返回处理后的图片文件路径，当type=2，返回处理后的图片路径和图片base64数据。如果不传type，默认为1
 
-
-
 **返回结果：**
 ```
 //成功
 {"code":200,"desc":"","result":{path:"",base64:""}}
-
-
 ```
 
 - `path`  图片文件路径
@@ -3124,7 +3120,6 @@ window.getLocation = function(object) {
     console.log(object);
     alert(JSON.stringify(object))
 }
-
 ```
 
 ## jgpush 极光推送
@@ -3136,6 +3131,69 @@ window.getLocation = function(object) {
 应用申请成功后，从应用设置里获取到AppKey，之后在远程编译的时候勾选上极光推送的模块，填写对应的配置信息即可，如下图所示：
 
 ![](https://img2022.cnblogs.com/blog/1210268/202211/1210268-20221114105936152-1436969027.png)
+## OCR 百度OCR功能
+
+使用
+![](https://img2022.cnblogs.com/blog/1210268/202211/1210268-20221114151755192-1847163410.png)
+
+### 1.通用文字识别
+
+`generalBasicOCR`
+
+通用文字识别，根据传参不同，有以下几种情况：
+1. 传入本机图片路径，获得OCR结果
+2. 传入图片base64数据，获取OCR结果
+3. 进入选择图片页面（含拍照），选择本机某个图片后获取OCR结果
+
+**传参：**
+
+```js
+{
+    "callBackMethod": "getLocation",
+    "type": 0,
+    "content":""
+}
+```
+
+- `type` 0:进入选择图片页面（含拍照），选择本机某个图片后获取OCR结果 1：本机图片路径 2：图片base64数据
+- `content` 当type为0，可不传；type为1，传本机图片路径；type为2，传图片base64数据 
+- `callBackMethod` 识别之后返回的结果的回调函数
+
+**返回结果：**
+```js
+//成功
+{"code":200,"desc":"","result":{"direction":0,"wordList":[{"words":"文件"},{"words":"提交"},{"words":"分支"},{"words":"标签"},{"words":"贡献者"},{"words":"分支图"},{"words":"比较"}],"wordsResultNumber":7,"jsonRes":"{"direction":0,"words_result":[{"words":"文件"},{"words":"提交"},{"words":"分支"},{"words":"标签"},{"words":"贡献者"},{"words":"分支图"},{"words":"比较"}],"words_result_num":7,"log_id":1592424865855578651}","logId":1592424865855578651}}
+```
+result的实体数据解释如下：
+
+|字段				|必选	|类型	|说明																									|
+|--	|--	|--	|--	|
+|direction			|否		|int32	|图像方向，当detect_direction=true时存在。-1:未定义，0:正向，1: 逆时针90度，2:逆时针180度，3:逆时针270度|
+|log_id				|是		|uint64	|唯一的log id，用于问题定位																				|
+|words_result_num	|是		|uint32	|识别结果数，表示words_result的元素个数																	|
+|words_result		|是		|array()|定位和识别结果数组																						|
+|+words				|否		|string	|识别结果字符串																							|
+
+**H5调用示例：**
+```
+if (window.ocr) {
+    let content = {
+        "callBackMethod": "getLocation",
+        "type": 0,
+        "content":""
+    }
+    let result = window.ocr.generalBasicOCR(JSON.stringify(content))
+    alert(result)
+    console.log(result)
+}
+
+window.getLocation = function(object) {
+    console.log(object);
+    alert(JSON.stringify(object))
+}
+
+```
+### 2.身份证正面识别
 
 ## 关于Module创建
 
