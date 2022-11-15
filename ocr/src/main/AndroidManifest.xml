@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.tyky.ocr">
 
+    <application>
+        <meta-data
+            android:name="baidu_ocr_api_key"
+            android:value="${BAIDU_OCR_API_KEY}" />
+        <meta-data
+            android:name="baidu_ocr_secret_key"
+            android:value="${BAIDU_OCR_SECRET_KEY}" />
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="com.tyky.ocr.OcrInitializer"
+                android:value="androidx.startup" />
+        </provider>
+    </application>
 </manifest>

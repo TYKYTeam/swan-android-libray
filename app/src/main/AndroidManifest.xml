@@ -13,7 +13,7 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidComponentLibrary"
-        tools:replace="android:allowBackup"
+        tools:replace="android:allowBackup,android:icon,android:theme"
         tools:targetApi="n">
 
         <activity android:name=".MainActivity" android:exported="true" android:theme="@style/MySplashTheme">

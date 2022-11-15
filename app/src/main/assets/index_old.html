@@ -258,10 +258,55 @@
                     <button type="default" onclick="openimgprocess()">拍摄图片</button>
                 </div>
             </fieldset>
+
+            <fieldset>
+                <legend>OCR ocr识别</legend>
+                <div class="contentDiv">
+                    <button type="default" onclick="generalBasicOCR()">文字识别</button>
+                    <button type="default" onclick="idcardOCROnlineFront()">身份证正面拍照识别</button>
+                    <button type="default" onclick="idcardOCROnlineBack()">身份证反面拍照识别</button>
+                </div>
+            </fieldset>
         </div>
     </body>
 
     <script>
+        function generalBasicOCR(){
+            if (window.ocr) {
+                let content = {
+                    "callBackMethod": "getLocation",
+                    "type": 1
+                }
+                let result = window.ocr.generalBasicOCR(JSON.stringify(content))
+                alert(result)
+                console.log(result)
+            }
+        }
+        
+        function idcardOCROnlineFront(){
+            if (window.ocr) {
+                let content = {
+                    "callBackMethod": "getLocation",
+                    "type": 1
+                }
+                let result = window.ocr.idcardOCROnlineFront(JSON.stringify(content))
+                alert(result)
+                console.log(result)
+            }
+        }
+        
+        function idcardOCROnlineBack(){
+            if (window.ocr) {
+                let content = {
+                    "callBackMethod": "getLocation",
+                    "type": 1
+                }
+                let result = window.ocr.idcardOCROnlineBack(JSON.stringify(content))
+                alert(result)
+                console.log(result)
+            }
+        }
+        
         function openimgprocess() {
             if (window.imgprocess) {
                 let content = {
@@ -272,9 +317,6 @@
                 console.log(result)
             }
         }
-
-
-
 
         function clearWebviewData() {
             if (window.webviewBase) {
