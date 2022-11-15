@@ -82,6 +82,7 @@ public class OcrJsInterface {
                 Activity topActivity = ActivityUtils.getTopActivity();
                 PictureSelector.create(topActivity)
                         .openGallery(PictureMimeType.ofImage())
+                        .queryMimeTypeConditions(PictureMimeType.ofJPEG(),PictureMimeType.ofPNG())
                         .maxSelectNum(1)
                         .isCamera(true)
                         .isPreviewImage(true)
