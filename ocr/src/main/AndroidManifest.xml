@@ -4,6 +4,8 @@
     package="com.tyky.ocr">
 
     <application>
+        <activity android:name=".TestActivity"></activity>
+
         <meta-data
             android:name="baidu_ocr_api_key"
             android:value="${BAIDU_OCR_API_KEY}" />
@@ -21,4 +23,5 @@
                 android:value="androidx.startup" />
         </provider>
     </application>
+
 </manifest>

@@ -3193,10 +3193,100 @@ window.getLocation = function(object) {
     console.log(object);
     alert(JSON.stringify(object))
 }
-
 ```
 ### 2.身份证正面识别
 
+`idcardOCROnlineFront`
+
+打开相机，拍身份证正面（姓名）并识别信息
+
+**传参：**
+```json
+{
+    "callBackMethod": "getLocation",
+}
+```
+
+**返回结果：**
+```json
+{
+     "code": 200,
+     "desc": "",
+     "result": {
+          "address": "安徽省宿州市埇桥区朱仙庄镇",
+          "birthday": "19661102",
+          "ethnic": "汉",
+          "gender": "男",
+          "idNumber": "652901196611026716",
+          "name": "徐乐"
+     }
+}
+```
+																					|
+
+**H5调用示例：**
+```
+if (window.ocr) {
+    let content = {
+        "callBackMethod": "getLocation",
+    }
+    let result = window.ocr.idcardOCROnlineFront(JSON.stringify(content))
+    alert(result)
+    console.log(result)
+}
+
+window.getLocation = function(object) {
+    console.log(object);
+    alert(JSON.stringify(object))
+}
+```
+
+### 身份证反面识别
+
+`idcardOCROnlineBack`
+
+打开相机，拍身份证反面（国徽）并识别信息
+
+**传参：**
+```json
+{
+    "callBackMethod": "getLocation",
+}
+```
+
+**返回结果：**
+```json
+{
+     "code": 200,
+     "desc": "",
+     "result": {
+          "expiryDate": "20201218",
+          "issueAuthority": "青乌市公安局四方分局",
+          "signDate": "20101218"
+     }
+}
+```
+
+- `issueAuthority` 签发机关																					|
+- `signDate` 签证时间																					|
+- `expiryDate` 到期时间		 																			|
+
+**H5调用示例：**
+```
+if (window.ocr) {
+    let content = {
+        "callBackMethod": "getLocation",
+    }
+    let result = window.ocr.idcardOCROnlineBack(JSON.stringify(content))
+    alert(result)
+    console.log(result)
+}
+
+window.getLocation = function(object) {
+    console.log(object);
+    alert(JSON.stringify(object))
+}
+```
 ## 关于Module创建
 
 

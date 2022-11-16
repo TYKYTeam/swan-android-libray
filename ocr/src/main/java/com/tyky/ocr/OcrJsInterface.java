@@ -2,6 +2,7 @@ package com.tyky.ocr;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.webkit.JavascriptInterface;
 
 import com.baidu.ocr.sdk.OCR;
@@ -82,7 +83,7 @@ public class OcrJsInterface {
                 Activity topActivity = ActivityUtils.getTopActivity();
                 PictureSelector.create(topActivity)
                         .openGallery(PictureMimeType.ofImage())
-                        .queryMimeTypeConditions(PictureMimeType.ofJPEG(),PictureMimeType.ofPNG())
+                        .queryMimeTypeConditions(PictureMimeType.ofJPEG(), PictureMimeType.ofPNG())
                         .maxSelectNum(1)
                         .isCamera(true)
                         .isPreviewImage(true)
@@ -130,6 +131,16 @@ public class OcrJsInterface {
      */
     @JavascriptInterface
     public String idcardOCROnlineFront(String param) {
+        ParamModel paramModel = GsonUtils.fromJson(param, ParamModel.class);
+        String callBackMethod = paramModel.getCallBackMethod();
+        if (StringUtils.isEmpty(callBackMethod)) {
+            return GsonUtils.toJson(ResultModel.errorParam());
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.putString(TestActivity.CALLBACK_METHOD,callBackMethod);
+        bundle.putBoolean(TestActivity.IS_FRONT,true);
+        ActivityUtils.startActivity(bundle,TestActivity.class);
         return GsonUtils.toJson(ResultModel.success(""));
     }
 
@@ -138,6 +149,16 @@ public class OcrJsInterface {
      */
     @JavascriptInterface
     public String idcardOCROnlineBack(String param) {
+        ParamModel paramModel = GsonUtils.fromJson(param, ParamModel.class);
+        String callBackMethod = paramModel.getCallBackMethod();
+        if (StringUtils.isEmpty(callBackMethod)) {
+            return GsonUtils.toJson(ResultModel.errorParam());
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.putString(TestActivity.CALLBACK_METHOD,callBackMethod);
+        bundle.putBoolean(TestActivity.IS_FRONT,false);
+        ActivityUtils.startActivity(bundle,TestActivity.class);
         return GsonUtils.toJson(ResultModel.success(""));
     }
 }

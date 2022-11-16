@@ -33,6 +33,9 @@ android {
 
 dependencies {
     implementation files('libs/ocrsdk.aar')
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.activity:activity:1.2.0'
+
     //图片,视频,音频选择 https://github.com/LuckSiege/PictureSelector
     compileOnly 'io.github.lucksiege:pictureselector:v2.7.3-rc08'
     compileOnly 'org.apache.commons:commons-lang3:3.9'
@@ -47,4 +50,5 @@ dependencies {
     compileOnly 'androidx.constraintlayout:constraintlayout:2.1.2'
     compileOnly 'org.greenrobot:eventbus:3.0.0'
     compileOnly project(path: ':webviewBase')
+    implementation project(path: ':ocr_ui')
 }
