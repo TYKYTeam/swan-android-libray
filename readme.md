@@ -3215,7 +3215,6 @@ window.getLocation = function(object) {
      }
 }
 ```
-																					|
 
 **H5调用示例：**
 ```
