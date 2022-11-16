@@ -10,6 +10,7 @@ import com.baidu.ocr.sdk.OnResultListener;
 import com.baidu.ocr.sdk.exception.OCRError;
 import com.baidu.ocr.sdk.model.GeneralBasicParams;
 import com.baidu.ocr.sdk.model.GeneralResult;
+import com.baidu.ocr.sdk.model.WordSimple;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.EncodeUtils;
 import com.blankj.utilcode.util.GsonUtils;
@@ -30,6 +31,7 @@ import com.tyky.webviewBase.view.GlideEngine;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebViewInterface("ocr")
@@ -116,11 +118,17 @@ public class OcrJsInterface {
         OCR.getInstance(topActivity).recognizeGeneralBasic(generalBasicParams, new OnResultListener<GeneralResult>() {
             @Override
             public void onResult(GeneralResult generalResult) {
-                EventBus.getDefault().post(new JsCallBackEvent(callBackMethod, generalResult));
+                List<? extends WordSimple> wordList = generalResult.getWordList();
+                List<String> result = new ArrayList<>();
+                for (WordSimple wordSimple : wordList) {
+                    result.add(wordSimple.getWords());
+                }
+                EventBus.getDefault().post(new JsCallBackEvent(callBackMethod, result));
             }
 
             @Override
             public void onError(OCRError ocrError) {
+                KLog.e("通用文字识别失败：" + ocrError.getMessage());
                 EventBus.getDefault().post(new JsCallBackEvent(callBackMethod, ocrError.getMessage()));
             }
         });
@@ -138,9 +146,9 @@ public class OcrJsInterface {
         }
 
         Bundle bundle = new Bundle();
-        bundle.putString(TestActivity.CALLBACK_METHOD,callBackMethod);
-        bundle.putBoolean(TestActivity.IS_FRONT,true);
-        ActivityUtils.startActivity(bundle,TestActivity.class);
+        bundle.putString(TestActivity.CALLBACK_METHOD, callBackMethod);
+        bundle.putBoolean(TestActivity.IS_FRONT, true);
+        ActivityUtils.startActivity(bundle, TestActivity.class);
         return GsonUtils.toJson(ResultModel.success(""));
     }
 
@@ -156,9 +164,9 @@ public class OcrJsInterface {
         }
 
         Bundle bundle = new Bundle();
-        bundle.putString(TestActivity.CALLBACK_METHOD,callBackMethod);
-        bundle.putBoolean(TestActivity.IS_FRONT,false);
-        ActivityUtils.startActivity(bundle,TestActivity.class);
+        bundle.putString(TestActivity.CALLBACK_METHOD, callBackMethod);
+        bundle.putBoolean(TestActivity.IS_FRONT, false);
+        ActivityUtils.startActivity(bundle, TestActivity.class);
         return GsonUtils.toJson(ResultModel.success(""));
     }
 }

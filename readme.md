@@ -3164,17 +3164,10 @@ window.getLocation = function(object) {
 **返回结果：**
 ```js
 //成功
-{"code":200,"desc":"","result":{"direction":0,"wordList":[{"words":"文件"},{"words":"提交"},{"words":"分支"},{"words":"标签"},{"words":"贡献者"},{"words":"分支图"},{"words":"比较"}],"wordsResultNumber":7,"jsonRes":"{"direction":0,"words_result":[{"words":"文件"},{"words":"提交"},{"words":"分支"},{"words":"标签"},{"words":"贡献者"},{"words":"分支图"},{"words":"比较"}],"words_result_num":7,"log_id":1592424865855578651}","logId":1592424865855578651}}
+{"code":200,"desc":"","result":["文件","提交","分支","标签","贡献者","分支图","比较"]}
 ```
-result的实体数据解释如下：
 
-|字段				|必选	|类型	|说明																									|
-|--	|--	|--	|--	|
-|direction			|否		|int32	|图像方向，当detect_direction=true时存在。-1:未定义，0:正向，1: 逆时针90度，2:逆时针180度，3:逆时针270度|
-|log_id				|是		|uint64	|唯一的log id，用于问题定位																				|
-|words_result_num	|是		|uint32	|识别结果数，表示words_result的元素个数																	|
-|words_result		|是		|array()|定位和识别结果数组																						|
-|+words				|否		|string	|识别结果字符串																							|
+result为解析出的每行对应的文字列表数据
 
 **H5调用示例：**
 ```
