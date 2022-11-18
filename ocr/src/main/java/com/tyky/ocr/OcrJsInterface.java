@@ -146,9 +146,9 @@ public class OcrJsInterface {
         }
 
         Bundle bundle = new Bundle();
-        bundle.putString(TestActivity.CALLBACK_METHOD, callBackMethod);
-        bundle.putBoolean(TestActivity.IS_FRONT, true);
-        ActivityUtils.startActivity(bundle, TestActivity.class);
+        bundle.putString(MesosphereActivity.CALLBACK_METHOD, callBackMethod);
+        bundle.putBoolean(MesosphereActivity.IS_FRONT, true);
+        ActivityUtils.startActivity(bundle, MesosphereActivity.class);
         return GsonUtils.toJson(ResultModel.success(""));
     }
 
@@ -164,9 +164,9 @@ public class OcrJsInterface {
         }
 
         Bundle bundle = new Bundle();
-        bundle.putString(TestActivity.CALLBACK_METHOD, callBackMethod);
-        bundle.putBoolean(TestActivity.IS_FRONT, false);
-        ActivityUtils.startActivity(bundle, TestActivity.class);
+        bundle.putString(MesosphereActivity.CALLBACK_METHOD, callBackMethod);
+        bundle.putBoolean(MesosphereActivity.IS_FRONT, false);
+        ActivityUtils.startActivity(bundle, MesosphereActivity.class);
         return GsonUtils.toJson(ResultModel.success(""));
     }
 }

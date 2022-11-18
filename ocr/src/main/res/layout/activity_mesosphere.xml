@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:layout_height="match_parent"
-    tools:context=".TestActivity">
+    tools:context=".MesosphereActivity">
 
     <ProgressBar
         android:progress="-1"

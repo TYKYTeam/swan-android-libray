@@ -26,7 +26,7 @@ import java.io.File;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class TestActivity extends AppCompatActivity {
+public class MesosphereActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_CAMERA = 7102;
 
@@ -39,7 +39,7 @@ public class TestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
+        setContentView(R.layout.activity_mesosphere);
 
         callBackMethod = getIntent().getStringExtra(CALLBACK_METHOD);
         isFront = getIntent().getBooleanExtra(IS_FRONT, true);

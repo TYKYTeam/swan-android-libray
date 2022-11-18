@@ -4,7 +4,7 @@
     package="com.tyky.ocr">
 
     <application>
-        <activity android:name=".TestActivity"></activity>
+        <activity android:name=".MesosphereActivity"></activity>
 
         <meta-data
             android:name="baidu_ocr_api_key"
