@@ -1,3 +1,4 @@
+include ':baiduSpeechRecognition'
 include ':ocr'
 include ':ocr_ui'
 include ':logUpload'
@@ -56,3 +57,6 @@ project(':imgprocess').projectDir=new File(settingsDir,'/imgprocess/imgprocess/'
 
 include ':editor'
 project(':editor').projectDir=new File(settingsDir,'/imgprocess/editor/')
+
+include ':baiduSpeechRecognition_core'
+project(':baiduSpeechRecognition_core').projectDir=new File(settingsDir,'/baiduSpeechRecognition/core/')

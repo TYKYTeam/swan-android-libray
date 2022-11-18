@@ -121,6 +121,7 @@ dependencies {
     implementation project(path: ':filePreview')
     implementation project(path: ':update')
     implementation project(path: ':ocr')
+    implementation project(path: ':baiduSpeechRecognition')
 //    implementation project(path: ':imgprocess')
 //    implementation project(path: ':jgpush')
 //    implementation project(path: ':autostart')

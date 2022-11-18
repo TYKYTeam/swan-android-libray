@@ -3279,6 +3279,11 @@ window.getLocation = function(object) {
     alert(JSON.stringify(object))
 }
 ```
+## 百度语音识别
+
+![](https://img2022.cnblogs.com/blog/1210268/202211/1210268-20221118174359955-1969152111.png)
+
+
 ## 关于Module创建
 
 
