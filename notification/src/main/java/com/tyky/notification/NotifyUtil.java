@@ -50,7 +50,14 @@ public class NotifyUtil {
         Activity topActivity = ActivityUtils.getTopActivity();
         Intent intent = new Intent(topActivity, H5WebviewActivity.class);
         intent.putExtra("url", url);
-        PendingIntent pendingIntent = PendingIntent.getActivity(topActivity, 0, intent, 0);
+        //适配android12以上版本
+        PendingIntent pendingIntent;
+        if (android.os.Build.VERSION.SDK_INT >= 31) {
+            pendingIntent = PendingIntent.getActivity(topActivity, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        }else{
+            pendingIntent = PendingIntent.getActivity(topActivity, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        }
+
         Notification notification = new NotificationCompat.Builder(topActivity,channel_id)
                 .setContentTitle(title)
                 .setContentText(text)

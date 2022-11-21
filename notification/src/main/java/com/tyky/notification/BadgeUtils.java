@@ -89,7 +89,13 @@ public class BadgeUtils {
         }
 
         Intent intent = new Intent(activity, activity.getClass());
-        PendingIntent pendingIntent = PendingIntent.getActivity(activity, 0, intent, 0);
+        PendingIntent pendingIntent;
+        if (android.os.Build.VERSION.SDK_INT >= 31) {
+            pendingIntent = PendingIntent.getActivity(activity, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        }else{
+            pendingIntent = PendingIntent.getActivity(activity, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        }
+
         Notification notification = new NotificationCompat.Builder(ActivityUtils.getTopActivity(), "badge")
                 .setContentTitle("应用角标")
                 .setContentText("您有" + count + "条未读消息")
