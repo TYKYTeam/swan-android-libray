@@ -59,9 +59,11 @@ public class MapActivity extends AppCompatActivity {
         findViewById(R.id.ivLocation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mLocationClient.stop();
-                mLocationClient = null;
-                mLocationClient = BaiduMapUtils.restartBdLocation(mMapView);
+                if (mLocationClient != null) {
+                    mLocationClient.stop();
+                    mLocationClient = null;
+                    mLocationClient = BaiduMapUtils.restartBdLocation(mMapView);
+                }
             }
         });
     }
@@ -85,7 +87,7 @@ public class MapActivity extends AppCompatActivity {
      */
     private void routeSearch() {
         routePlanSearch = RoutePlanSearch.newInstance();
-        routePlanSearch.setOnGetRoutePlanResultListener(new MyRoutePlanResultListener(type,mMapView.getMap()));
+        routePlanSearch.setOnGetRoutePlanResultListener(new MyRoutePlanResultListener(type, mMapView.getMap()));
         //根据地点名来构建起点和终点
         PlanNode stNode = PlanNode.withCityNameAndPlaceName(data.getStartCityName(), data.getStartName());
         PlanNode enNode = PlanNode.withCityNameAndPlaceName(data.getEndCityName(), data.getEndName());
@@ -106,7 +108,8 @@ public class MapActivity extends AppCompatActivity {
                 DrivingRoutePlanOption drivingRoutePlanOption = new DrivingRoutePlanOption().from(stNode).to(enNode);
                 routePlanSearch.drivingSearch(drivingRoutePlanOption);
                 break;
-            default:break;
+            default:
+                break;
         }
 
     }
