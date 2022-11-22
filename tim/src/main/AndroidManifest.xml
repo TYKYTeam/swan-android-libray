@@ -87,6 +87,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".main.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -221,7 +222,7 @@
         <!-- ********华为推送设置end******** -->
 
         <!-- ********魅族推送设置start******** -->
-        <receiver android:name="com.tencent.qcloud.tim.demo.thirdpush.OEMPush.MEIZUPushReceiver">
+        <receiver android:exported="false" android:name="com.tencent.qcloud.tim.demo.thirdpush.OEMPush.MEIZUPushReceiver">
             <intent-filter>
 
                 <!-- 接收push消息 -->
@@ -251,7 +252,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <!-- push应用定义消息receiver声明 -->
-        <receiver android:name="com.tencent.qcloud.tim.demo.thirdpush.OEMPush.VIVOPushMessageReceiverImpl">
+        <receiver android:exported="false" android:name="com.tencent.qcloud.tim.demo.thirdpush.OEMPush.VIVOPushMessageReceiverImpl">
             <intent-filter>
 
                 <!-- 接收push消息 -->
@@ -324,7 +325,7 @@
             android:value="tpns.hk.tencent.com" />-->
 
         <!-- TPNS receiver -->
-        <receiver android:name="com.tencent.qcloud.tim.demo.thirdpush.TPNSPush.TPNSMessageReceiver">
+        <receiver tools:replace="android:exported" android:exported="false" android:name="com.tencent.qcloud.tim.demo.thirdpush.TPNSPush.TPNSMessageReceiver">
             <intent-filter>
                 <!-- 接收消息透传 -->
                 <action android:name="com.tencent.android.xg.vip.action.PUSH_MESSAGE" />
