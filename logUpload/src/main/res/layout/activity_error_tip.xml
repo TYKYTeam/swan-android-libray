@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="抱歉，应用发生错误,即将重启应用"
+        android:text="主人，应用运行遇到了点小意外，正在为您抢修！"
         app:layout_constraintEnd_toEndOf="@id/ivTip"
         app:layout_constraintStart_toStartOf="@id/ivTip"
         app:layout_constraintTop_toBottomOf="@id/ivTip" />
