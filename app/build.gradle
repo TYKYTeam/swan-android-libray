@@ -19,32 +19,36 @@ android {
         //不加，依赖IM或编译会编译报错
         manifestPlaceholders = [
                 // TPNS 推送服务 accessId、accessKey
-                XG_ACCESS_ID : "",
-                XG_ACCESS_KEY: "",
+                XG_ACCESS_ID        : "",
+                XG_ACCESS_KEY       : "",
 
                 //选择在AndroidManifest中写上
-                JPUSH_PKGNAME : applicationId,
+                JPUSH_PKGNAME       : applicationId,
                 //JPush 上注册的包名对应的 Appkey.
-                JPUSH_APPKEY : "e6d1598cff079379d74bb53c",
+                JPUSH_APPKEY        : "e6d1598cff079379d74bb53c",
                 //暂时填写默认值即可.
-                JPUSH_CHANNEL : "developer-default",
+                JPUSH_CHANNEL       : "developer-default",
 
                 //开机自启的参数
                 //主页面
-                MAIN_PAGE : "com.tyky.acl.MainActivity",
+                MAIN_PAGE           : "com.tyky.acl.MainActivity",
                 //包名
-                MAIN_PKG_NAME : "com.tyky.acl",
+                MAIN_PKG_NAME       : "com.tyky.acl",
                 //是否开启开机自启
-                OPEN_AUTO_START : "true",
+                OPEN_AUTO_START     : "true",
                 //首页是否为横屏
-                IS_LANDSCAPE : "true",
+                IS_LANDSCAPE        : "true",
                 //微信分享SDK的APPID
-                WECHAT_APP_ID : "wxdce36271069f2818",
+                WECHAT_APP_ID       : "wxdce36271069f2818",
                 //正式环境还是测试环境，测试环境进入出现异常进入展示异常的页面
-                IS_PROD_ENV:"false",
+                IS_PROD_ENV         : "false",
                 //百度ocr的对应参数
-                BAIDU_OCR_API_KEY:"gYfDcX6rF5uRRKLQConOIVCR",
-                BAIDU_OCR_SECRET_KEY:"Fwyg0F4VCgMTeq1VNikWyrIVpu2mrmTL"
+                BAIDU_OCR_API_KEY   : "gYfDcX6rF5uRRKLQConOIVCR",
+                BAIDU_OCR_SECRET_KEY: "Fwyg0F4VCgMTeq1VNikWyrIVpu2mrmTL",
+                //百度语音识别参数
+                BAIDU_VOICE_AK      : "7v4dljw5jf18ow6Ppnx2UWV7A4Vyq42M",
+                BAIDU_VOICE_SK      : "QnV55IgFVdKGSwM0ZGN8eWVRV9aLcIBa",
+                BAIDU_VOICE_APPID   : "25718709"
         ]
     }
 
@@ -61,14 +65,14 @@ android {
         }*/
 
         //百度OCR功能使用此签名
-        debug {
+        /*debug {
             storeFile file("xuexibao.keys")
             storePassword "tyky\$123456"
             keyAlias "tyky_czing"
             keyPassword "tyky\$123456"//将这里的“**”替换成自己的信息
             v1SigningEnabled true
             v2SigningEnabled true
-        }
+        }*/
 
     }
 
@@ -77,7 +81,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-        debug{
+        debug {
             minifyEnabled false
             signingConfig signingConfigs.debug
         }
@@ -120,7 +124,7 @@ dependencies {
     implementation project(path: ':baiduface')
     implementation project(path: ':filePreview')
     implementation project(path: ':update')
-    implementation project(path: ':ocr')
+//    implementation project(path: ':ocr')
     implementation project(path: ':baiduSpeechRecognition')
 //    implementation project(path: ':imgprocess')
 //    implementation project(path: ':jgpush')

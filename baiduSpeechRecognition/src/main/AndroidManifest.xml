@@ -3,7 +3,10 @@
     package="com.tyky.baiduSpeechRecognition">
 
     <application>
-        <activity android:name=".VoiceActivity"></activity>
+        <meta-data android:name="baidu_voice_ak" android:value="${BAIDU_VOICE_AK}"/>
+        <meta-data android:name="baidu_voice_sk" android:value="${BAIDU_VOICE_SK}"/>
+        <meta-data android:name="baidu_voice_appid" android:value="${BAIDU_VOICE_APPID}"/>
+        <activity android:name=".VoiceActivity" />
     </application>
 
 </manifest>

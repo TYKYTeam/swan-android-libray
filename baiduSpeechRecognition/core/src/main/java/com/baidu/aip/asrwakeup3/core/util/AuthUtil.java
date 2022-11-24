@@ -1,6 +1,7 @@
 package com.baidu.aip.asrwakeup3.core.util;
 
 import com.baidu.speech.asr.SpeechConstant;
+import com.blankj.utilcode.util.MetaDataUtils;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -12,25 +13,28 @@ import java.util.Map;
  * 如果暂时没有后端服务接口，建议将ak sk加密存储减少暴露风险。
  **/
 public class AuthUtil {
-    public static   String   getAk(){
-        //todo 填入apiKey
-        return "7v4dljw5jf18ow6Ppnx2UWV7A4Vyq42M";
+
+    static final String ak = MetaDataUtils.getMetaDataInApp("baidu_voice_ak");
+    static final String sk = MetaDataUtils.getMetaDataInApp("baidu_voice_sk");
+    static final String appId =MetaDataUtils.getMetaDataInApp("baidu_voice_appid");
+
+    public static String getAk() {
+        return ak;
     }
 
-    public static   String   getSk(){
-        //todo 填入secretKey
-        return  "QnV55IgFVdKGSwM0ZGN8eWVRV9aLcIBa";
-    }
-    public static   String getAppId(){
-        //todo 填入appId
-        return  "25718709";
+    public static String getSk() {
+        return sk;
     }
 
-    public static Map<String, Object> getParam(){
+    public static String getAppId() {
+        return appId;
+    }
+
+    public static Map<String, Object> getParam() {
         Map<String, Object> params = new LinkedHashMap<String, Object>();
         params.put(SpeechConstant.APP_ID, getAppId()); // 添加appId
         params.put(SpeechConstant.APP_KEY, getAk()); // 添加apiKey
         params.put(SpeechConstant.SECRET, getSk()); // 添加secretKey
-        return  params;
+        return params;
     }
 }

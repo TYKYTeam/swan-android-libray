@@ -26,4 +26,6 @@ android {
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
     api 'androidx.appcompat:appcompat:1.1.0'
+    // Android的工具类   https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
+    implementation 'com.blankj:utilcodex:1.30.6'
 }
