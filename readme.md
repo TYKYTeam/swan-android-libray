@@ -3267,7 +3267,7 @@ window.getLocation = function(object) {
 ```
 if (window.ocr) {
     let content = {
-        "callBackMethod": "getLocation",
+        "callBackMethod": "getLocation"
     }
     let result = window.ocr.idcardOCROnlineBack(JSON.stringify(content))
     alert(result)
@@ -3283,6 +3283,44 @@ window.getLocation = function(object) {
 
 ![](https://img2022.cnblogs.com/blog/1210268/202211/1210268-20221118174359955-1969152111.png)
 
+### 1.短语音识别
+
+`speechRecognition`
+
+说一句话并转为文字
+
+**传参：**
+```json
+{
+    "callBackMethod": "getLocation"
+}
+```
+
+**返回结果：**
+```json
+{
+     "code": 200,
+     "desc": "",
+     "result": "识别的文字"
+}
+```
+
+**H5调用示例：**
+```js
+if (window.baiduSpeechRecognition) {
+    let content = {
+        "callBackMethod": "getLocation"
+    }
+    let result = window.baiduSpeechRecognition.speechRecognition(JSON.stringify(content))
+    alert(result)
+    console.log(result)
+}
+
+window.getLocation = function(object) {
+    console.log(object);
+    alert(JSON.stringify(object))
+}
+```
 
 ## 关于Module创建
 
