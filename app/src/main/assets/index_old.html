@@ -175,6 +175,7 @@
                     <button type="default" onclick="registerNetworkDisconnectionListener()">开启网络连接断开监听</button>
                     <button type="default" onclick="registerNetworkConnectionListener()">开启网络连接成功监听</button>
                     <button type="default" onclick="registerPhoneListener()">开启手机来电监听</button>
+                    <button type="default" onclick="registerOnBackPressListener()">开启返回键监听</button>
                 </div>
             </fieldset>
 
@@ -732,6 +733,7 @@
                 console.log(result)
             }
         }
+        
 
         window.networkDisconnect = function() {
             alert("网络已断开")
@@ -761,7 +763,20 @@
             }
         }
 
-
+        function registerOnBackPressListener() {
+            if (window.listener) {
+                let content = {
+                    "callBackMethod": "onBackPress"
+                }
+                let result = window.listener.registerOnBackPressListener(JSON.stringify(content))
+                console.log(result)
+            }
+        }
+        
+        window.onBackPress = function(){
+            alert("按下了返回键")
+        }
+        
         function save() {
             if (window.storage) {
                 let content = {

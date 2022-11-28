@@ -122,5 +122,23 @@ public class ListenerJsInterface {
         return gson.toJson(ResultModel.success(""));
     }
 
+    /**
+     * 返回键监听
+     * @param paramStr
+     * @return
+     */
+    @JavascriptInterface
+    public String registerOnBackPressListener(String paramStr) {
+        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+
+        String methodName = paramModel.getCallBackMethod();
+        if (StringUtils.isEmpty(methodName)) {
+            return gson.toJson(ResultModel.errorParam());
+        }
+
+        SPUtils.getInstance().put("OnBackPressMethod",methodName);
+        return gson.toJson(ResultModel.success(""));
+    }
+
 
 }

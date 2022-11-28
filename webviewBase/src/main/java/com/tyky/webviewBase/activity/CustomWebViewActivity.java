@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.blankj.utilcode.util.EncodeUtils;
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ImageUtils;
 import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
@@ -315,6 +317,8 @@ public class CustomWebViewActivity extends AppCompatActivity {
 
         } catch (ClassNotFoundException | IllegalAccessException | NoSuchFieldException ignored) {
         }
+        //设置返回键监听方法为空
+        SPUtils.getInstance().put("OnBackPressMethod", "");
         //释放EventBus和语音TTS
         EventBus.getDefault().unregister(this);
         SpeechService.release();
@@ -431,6 +435,12 @@ public class CustomWebViewActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
+        String onBackPressMethodName = SPUtils.getInstance().getString("OnBackPressMethod");
+        if (!TextUtils.isEmpty(onBackPressMethodName)) {
+            EventBus.getDefault().post(new JsCallBackEvent(onBackPressMethodName,null));
+        }
+
         if (customWebView.canGoBack()) {
             customWebView.goBack();
         } else {
