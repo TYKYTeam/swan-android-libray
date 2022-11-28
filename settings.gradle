@@ -21,7 +21,6 @@ include ':media'
 include ':update'
 include ':webviewBase'
 include ':app'
-
 rootProject.name = "AndroidComponentLibrary"
 
 //以下是腾讯云IM的Module接入
@@ -61,6 +60,3 @@ project(':editor').projectDir=new File(settingsDir,'/imgprocess/editor/')
 
 include ':baiduSpeechRecognition_core'
 project(':baiduSpeechRecognition_core').projectDir=new File(settingsDir,'/baiduSpeechRecognition/core/')
-
-//百度OCR本地sdk
-include ':baiduOcrSdk'

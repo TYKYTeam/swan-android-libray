@@ -1,2 +1,0 @@
-configurations.maybeCreate("baiduOcrSdk")
-artifacts.add("baiduOcrSdk", file('ocrsdk.aar'))
