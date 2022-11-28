@@ -32,7 +32,8 @@ android {
 }
 
 dependencies {
-    implementation files('libs/ocrsdk.aar')
+//    implementation files('libs/ocrsdk.aar')
+    provided files('libs/ocrsdk.aar')
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.activity:activity:1.2.0'
 
