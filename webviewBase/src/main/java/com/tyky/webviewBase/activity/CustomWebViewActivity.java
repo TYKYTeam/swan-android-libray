@@ -338,6 +338,10 @@ public class CustomWebViewActivity extends AppCompatActivity {
             //重新加载首页地址
             customWebView.loadUrl(url);
         }
+        if (type == 3) {
+            //设置webview的ua
+            customWebView.setUa(event.getData());
+        }
     }
 
     /**

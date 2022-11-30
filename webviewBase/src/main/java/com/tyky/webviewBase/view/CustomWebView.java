@@ -83,8 +83,8 @@ public class CustomWebView extends WebView {
         } catch (IllegalArgumentException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
+        //设置ua
         String userAgentString = webSettings.getUserAgentString();
-        KLog.e(userAgentString);
         webSettings.setUserAgentString(userAgentString + " tyky_android");
 
         //addJavascriptInterface(new WebViewJavaScript(), "android");
@@ -94,6 +94,15 @@ public class CustomWebView extends WebView {
 
         //设置下载文件监听器
         setDownloadListener(new WebviewDownloader(getContext()));
+    }
+
+    /**
+     * 设置ua
+     * @param ua
+     */
+    public void setUa(String ua) {
+        WebSettings webSettings = getSettings();
+        webSettings.setUserAgentString(ua);
     }
 
     /**

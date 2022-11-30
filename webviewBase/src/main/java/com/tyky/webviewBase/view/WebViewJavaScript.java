@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.event.WebviewEvent;
+import com.tyky.webviewBase.model.ParamModel;
 import com.tyky.webviewBase.model.ResultModel;
 
 import org.greenrobot.eventbus.EventBus;
@@ -74,4 +75,16 @@ public class WebViewJavaScript {
         map.put("versionCode", appInfo.getVersionCode());
         return gson.toJson(ResultModel.success(map));
     }
+
+    /**
+     * 获取APP应用信息
+     */
+    @JavascriptInterface
+    public String setWebviewUa(String param) {
+        ParamModel paramModel = gson.fromJson(param, ParamModel.class);
+        String content = paramModel.getContent();
+        EventBus.getDefault().post(new WebviewEvent(content,3));
+        return gson.toJson(ResultModel.success(""));
+    }
+
 }
