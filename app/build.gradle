@@ -25,7 +25,7 @@ android {
                 //选择在AndroidManifest中写上
                 JPUSH_PKGNAME       : applicationId,
                 //JPush 上注册的包名对应的 Appkey.
-                JPUSH_APPKEY        : "e6d1598cff079379d74bb53c",
+                JPUSH_APPKEY        : "e13093ab65b8e91c5fbe3fce",
                 //暂时填写默认值即可.
                 JPUSH_CHANNEL       : "developer-default",
 
@@ -108,7 +108,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
     implementation project(path: ':webviewBase')
-    implementation project(path: ':auth')
+//    implementation project(path: ':auth')
     implementation project(path: ':media')
     implementation project(path: ':notification')
     implementation project(path: ':share')
@@ -121,13 +121,13 @@ dependencies {
     implementation project(path: ':mapNav')
     implementation project(path: ':page')
     implementation project(path: ':tim')
-    implementation project(path: ':baiduface')
+//    implementation project(path: ':baiduface')
     implementation project(path: ':filePreview')
     implementation project(path: ':update')
 //    implementation project(path: ':ocr')
-    implementation project(path: ':baiduSpeechRecognition')
+//    implementation project(path: ':baiduSpeechRecognition')
 //    implementation project(path: ':imgprocess')
-//    implementation project(path: ':jgpush')
+    implementation project(path: ':jgpush')
 //    implementation project(path: ':autostart')
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
