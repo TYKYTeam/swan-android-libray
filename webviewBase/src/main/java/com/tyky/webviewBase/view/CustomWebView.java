@@ -102,7 +102,7 @@ public class CustomWebView extends WebView {
      */
     public void setUa(String ua) {
         WebSettings webSettings = getSettings();
-        webSettings.setUserAgentString(ua);
+        webSettings.setUserAgentString(ua+" tyky_android");
     }
 
     /**
