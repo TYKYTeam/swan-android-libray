@@ -442,7 +442,7 @@ public class CustomWebViewActivity extends AppCompatActivity {
 
         String onBackPressMethodName = SPUtils.getInstance().getString("OnBackPressMethod");
         if (!TextUtils.isEmpty(onBackPressMethodName)) {
-            EventBus.getDefault().post(new JsCallBackEvent(onBackPressMethodName,null));
+            EventBus.getDefault().post(new JsCallBackEvent(onBackPressMethodName,""));
         }
 
         if (customWebView.canGoBack()) {
