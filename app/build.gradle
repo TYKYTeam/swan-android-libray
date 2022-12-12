@@ -107,7 +107,23 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
-    implementation project(path: ':webviewBase')
+    
+    //验收的模块
+//    implementation project(path: ':media')
+//    implementation project(path: ':share')
+//    implementation project(path: ':device')
+//    implementation project(path: ':debugger')
+//    implementation project(path: ':update')
+//    implementation project(path: ':jgpush')
+//    implementation project(path: ':map') //5M大小
+//    implementation project(path: ':mapNav')
+//    implementation project(path: ':storage')
+//    implementation project(path: ':listener')
+//    implementation project(path: ':tim')
+//    implementation project(path: ':notification')
+//    implementation project(path: ':webviewBase')
+
+
 //    implementation project(path: ':auth')
     implementation project(path: ':media')
     implementation project(path: ':notification')
@@ -129,6 +145,7 @@ dependencies {
 //    implementation project(path: ':imgprocess')
     implementation project(path: ':jgpush')
 //    implementation project(path: ':autostart')
+
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
