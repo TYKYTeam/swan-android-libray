@@ -18,10 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
+import com.blankj.utilcode.util.ToastUtils;
 import com.tencent.imsdk.v2.V2TIMCallback;
 import com.tencent.qcloud.tim.demo.DemoApplication;
 import com.tencent.qcloud.tim.demo.R;
@@ -34,6 +31,10 @@ import com.tencent.qcloud.tim.demo.utils.TUIUtils;
 import com.tencent.qcloud.tuicore.TUIThemeManager;
 import com.tencent.qcloud.tuicore.component.activities.BaseLightActivity;
 import com.tencent.qcloud.tuicore.util.ToastUtil;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 /**
  * <p>
@@ -118,7 +119,7 @@ public class LoginForDevActivity extends BaseLightActivity {
                     public void onError(final int code, final String desc) {
                         runOnUiThread(new Runnable() {
                             public void run() {
-                                ToastUtil.toastLongMessage(getString(R.string.failed_login_tip) + ", errCode = " + code + ", errInfo = " + desc);
+                                ToastUtils.showLong(getString(R.string.failed_login_tip) + ", errCode = " + code + ", errInfo = " + desc);
                             }
                         });
                         DemoLog.i(TAG, "imLogin errorCode = " + code + ", errorInfo = " + desc);
