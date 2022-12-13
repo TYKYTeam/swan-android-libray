@@ -171,6 +171,10 @@ public class LoginForDevActivity extends BaseLightActivity {
                 ThemeSelectActivity.startSelectTheme(LoginForDevActivity.this);
             }
         });
+
+        //IM登录页隐藏了主题切换和语言切换按钮
+        modifyTheme.setVisibility(View.GONE);
+        languageArea.setVisibility(View.GONE);
     }
 
     private void setCurrentTheme() {
