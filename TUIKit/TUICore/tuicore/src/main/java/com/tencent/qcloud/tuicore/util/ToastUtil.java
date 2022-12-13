@@ -1,11 +1,8 @@
 package com.tencent.qcloud.tuicore.util;
 
-import android.view.Gravity;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tencent.qcloud.tuicore.TUIConfig;
+import com.blankj.utilcode.util.ToastUtils;
 
 /**
  * UI通用方法类
@@ -23,10 +20,16 @@ public class ToastUtil {
     }
 
     private static void toastMessage(final String message, boolean isLong) {
+
         BackgroundTasks.getInstance().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (toast != null) {
+                if (isLong) {
+                    ToastUtils.showLong(message);
+                } else {
+                    ToastUtils.showShort(message);
+                }
+                /*if (toast != null) {
                     toast.cancel();
                     toast = null;
                 }
@@ -40,7 +43,7 @@ public class ToastUtil {
                         textView.setGravity(Gravity.CENTER);
                     }
                     toast.show();
-                }
+                }*/
             }
         });
     }

@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.tencent.imsdk.v2.V2TIMCallback;
 import com.tencent.qcloud.tim.demo.DemoApplication;
 import com.tencent.qcloud.tim.demo.R;
@@ -119,7 +118,7 @@ public class LoginForDevActivity extends BaseLightActivity {
                     public void onError(final int code, final String desc) {
                         runOnUiThread(new Runnable() {
                             public void run() {
-                                ToastUtils.showLong(getString(R.string.failed_login_tip) + ", errCode = " + code + ", errInfo = " + desc);
+                                ToastUtil.toastLongMessage(getString(R.string.failed_login_tip) + ", errCode = " + code + ", errInfo = " + desc);
                             }
                         });
                         DemoLog.i(TAG, "imLogin errorCode = " + code + ", errorInfo = " + desc);
