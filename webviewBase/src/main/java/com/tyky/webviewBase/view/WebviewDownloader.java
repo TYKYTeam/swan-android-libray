@@ -13,6 +13,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.TextView;
 
 import com.kongzue.dialogx.dialogs.CustomDialog;
+import com.kongzue.dialogx.dialogs.MessageDialog;
 import com.kongzue.dialogx.interfaces.OnBindView;
 import com.socks.library.KLog;
 import com.tyky.webviewBase.R;
@@ -34,56 +35,61 @@ public class WebviewDownloader implements DownloadListener {
     @Override
     public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimeType, long contentLength) {
 
-        String tempFileName = StringUtils.substringBetween(contentDisposition, "\"");
         try {
-            tempFileName = URLDecoder.decode(tempFileName, "utf-8");
-        } catch (UnsupportedEncodingException e) {
-            KLog.e("解码失败"+e.getMessage());
-        }
-        final String fileName = tempFileName;
-        //字节转为具体大小
-        final String fileSize = formatFileSize(contentLength);
-        //扩展名
-        String extendName = "";
-        if (fileName != null && fileName.contains(".")) {
-            extendName = StringUtils.substringAfterLast(fileName, ".");
-        }
-        String finalExtendName = extendName;
-
-        String mimeTypeFromExtension = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extendName);
-
-        CustomDialog.show(new OnBindView<CustomDialog>(R.layout.dialog_downloader) {
-            @Override
-            public void onBind(final CustomDialog dialog, View v) {
-                TextView tvFileSize = v.findViewById(R.id.tvFileSize);
-                tvFileSize.setText(fileSize);
-
-                TextView tvExtendName = v.findViewById(R.id.tvExtendName);
-                tvExtendName.setText(finalExtendName);
-
-                TextView tvFileName = v.findViewById(R.id.tvFileName);
-
-                if (StringUtils.isNotBlank(fileName)) {
-                    tvFileName.setText(fileName);
-                } else {
-                    tvFileName.setText("未知");
-                }
-
-                v.findViewById(R.id.btnDownload).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        downloadBySystem(url, fileName, mimeTypeFromExtension);
-                        dialog.dismiss();
-                    }
-                });
-                v.findViewById(R.id.btnCancel).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
+            String tempFileName = StringUtils.substringBetween(contentDisposition, "\"");
+            try {
+                tempFileName = URLDecoder.decode(tempFileName, "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                KLog.e("解码失败" + e.getMessage());
             }
-        }).setAlign(CustomDialog.ALIGN.BOTTOM).setMaskColor(Color.parseColor("#4D000000"));
+            final String fileName = tempFileName;
+            //字节转为具体大小
+            final String fileSize = formatFileSize(contentLength);
+            //扩展名
+            String extendName = "";
+            if (fileName != null && fileName.contains(".")) {
+                extendName = StringUtils.substringAfterLast(fileName, ".");
+            }
+            String finalExtendName = extendName;
+
+            String mimeTypeFromExtension = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extendName);
+
+            CustomDialog.show(new OnBindView<CustomDialog>(R.layout.dialog_downloader) {
+                @Override
+                public void onBind(final CustomDialog dialog, View v) {
+                    TextView tvFileSize = v.findViewById(R.id.tvFileSize);
+                    tvFileSize.setText(fileSize);
+
+                    TextView tvExtendName = v.findViewById(R.id.tvExtendName);
+                    tvExtendName.setText(finalExtendName);
+
+                    TextView tvFileName = v.findViewById(R.id.tvFileName);
+
+                    if (StringUtils.isNotBlank(fileName)) {
+                        tvFileName.setText(fileName);
+                    } else {
+                        tvFileName.setText("未知");
+                    }
+
+                    v.findViewById(R.id.btnDownload).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            downloadBySystem(url, fileName, mimeTypeFromExtension);
+                            dialog.dismiss();
+                        }
+                    });
+                    v.findViewById(R.id.btnCancel).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.dismiss();
+                        }
+                    });
+                }
+            }).setAlign(CustomDialog.ALIGN.BOTTOM).setMaskColor(Color.parseColor("#4D000000"));
+        } catch (NullPointerException e) {
+            MessageDialog.show("提示", "扫码不支持访问文件下载地址！", "确定");
+        }
+
     }
 
 
@@ -127,6 +133,7 @@ public class WebviewDownloader implements DownloadListener {
 
     /**
      * 计算文件大小
+     *
      * @param fileS
      * @return
      */
