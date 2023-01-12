@@ -1,0 +1,125 @@
+apply plugin: 'maven-publish'
+
+def NEXUS_MAVEN_URL = "http://localhost:9888/repository/maven-releases/"
+def NEXUS_USERNAME = "admin"
+def NEXUS_PASSWORD = "admin"
+
+//与jitpack发布的保持同个组织名
+def POM_GROUP_ID = "com.github.TYKYTeam.swan-android-libray"
+//版本好
+def POM_VERSION = "1.9"
+//aar包方式
+def POM_PACKAGING = "aar"
+//下面三个数值自动读取模块名
+def POM_NAME = ""
+def POM_ARTIFACT_ID = ""
+def POM_DESCRIPTION = ""
+
+
+def depList = parent.getDependencies()
+depList.getModules().each {
+    println "数据。。" + this.name
+    POM_ARTIFACT_ID = this.name
+    POM_NAME = this.name
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            aar_pub(MavenPublication) {
+
+                //定义group和版本
+                group = POM_GROUP_ID
+                //定义构造物id
+                artifactId = POM_ARTIFACT_ID
+                version = POM_VERSION
+
+//            artifact androidSourcesJar//将源码打包进aar，如果不需要可以去掉
+//            artifact androidJavadocsJar//将注释打包进aar，如果不需要可以去掉
+                artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+
+                pom {
+                    name = POM_NAME
+                    description = POM_DESCRIPTION
+                    url = 'http://www.example.com/library'
+                    //类型设置为aar
+                    packaging = POM_PACKAGING
+
+                    licenses {
+                        license {
+                            name = 'The Apache License, Version 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'com'
+                            name = 'stars-one'
+                            email = 'stars-one@example.com'
+                        }
+                    }
+                }
+
+                //带上依赖 ，否则会报错
+                pom.withXml {
+                    def dependenciesNode = asNode().appendNode('dependencies')
+
+                    def scopes = [configurations.compile]
+                    if (configurations.hasProperty("api")) {
+                        scopes.add(configurations.api)
+                    }
+                    if (configurations.hasProperty("implementation")) {
+                        scopes.add(configurations.implementation)
+                    }
+                    if (configurations.hasProperty("debugImplementation")) {
+                        scopes.add(configurations.debugImplementation)
+                    }
+                    if (configurations.hasProperty("releaseImplementation")) {
+                        scopes.add(configurations.releaseImplementation)
+                    }
+
+                    scopes.each { scope ->
+                        scope.allDependencies.each {
+                            if (it instanceof ModuleDependency) {
+                                boolean isTransitive = ((ModuleDependency) it).transitive
+                                if (!isTransitive) {
+                                    println "<<<< not transitive dependency: [${it.group}, ${it.name}, ${it.version}]"
+                                    return
+                                }
+                            }
+
+                            if (it.group == "${project.rootProject.name}.libs" || it.version == 'unspecified') {
+                                return
+                            }
+
+                            if (it.group && it.name && it.version) {
+                                def dependencyNode = dependenciesNode.appendNode('dependency')
+                                dependencyNode.appendNode('groupId', it.group)
+                                dependencyNode.appendNode('artifactId', it.name)
+                                dependencyNode.appendNode('version', it.version)
+                                dependencyNode.appendNode('scope', scope.name)
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+        repositories {
+            maven {
+                //设置仓库地址和账号密码
+                url = NEXUS_MAVEN_URL
+                credentials {
+                    username = NEXUS_USERNAME
+                    password = NEXUS_PASSWORD
+                }
+                //下面是动态切换release仓库或snapshot仓库
+//            def releasesRepoUrl = "$buildDir/repos/releases"
+//            def snapshotsRepoUrl = "$buildDir/repos/snapshots"
+//            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            }
+        }
+    }
+}
+
