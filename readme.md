@@ -1530,7 +1530,7 @@ if (window.listener) {
 
 ### 3.来电监听
 
-`registerPhoneListener`
+registerPhoneListener
 
 来电时候的监听回调
 
@@ -1563,41 +1563,7 @@ if (window.listener) {
     console.log(result)
 }
 ```
-### 4.返回键监听
 
-`registerOnBackPressListener`
-
-当手机按下返回键时候的监听回调
-
-**传参：**
-
-```
-//传递个js回调的方法名，之后Android原生会执行对应的JS方法
-{
-    "callBackMethod": "onBackPress"
-}
-```
-
-**返回结果：**
-```
-//成功
-{"code":200,"desc":"","result":""}
-```
-
-**H5调用示例：**
-```
-if (window.listener) {
-        let content = {
-            "callBackMethod": "onBackPress"
-        }
-        let result = window.listener.registerOnBackPressListener(JSON.stringify(content))
-        console.log(result)
-    }
-
-window.onBackPress = function(){
-    alert("按下了返回键")
-}
-```
 
 ## map
 
