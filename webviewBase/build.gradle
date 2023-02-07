@@ -1,12 +1,33 @@
+buildscript {
+    apply from: "../nexus-maven-publish.gradle"
+}
+
 plugins {
     id 'com.android.library'
     id 'com.github.dcendents.android-maven'
-    id 'publishing'
-    id 'maven-publish'
 }
 
 group = 'com.github.stars-one'
 
+//生成文档注释
+task androidJavadocs(type: Javadoc) {
+    failOnError = false
+    source = android.sourceSets.main.java.srcDirs
+    ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+    classpath += files(ext.androidJar)
+}
+
+//将文档打包成jar
+task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
+    archiveClassifier.set('javadoc')
+    from androidJavadocs.destinationDir
+}
+
+//将源码打包，这一点对kotlin来说很重要，否则业务侧无法看到源码
+task androidSourcesJar(type: Jar) {
+    archiveClassifier.set('sources')
+    from android.sourceSets.main.java.srcDirs
+}
 
 android {
     compileSdkVersion 30
@@ -60,4 +81,9 @@ dependencies {
     def dialogx_version = "0.0.45"
     api "com.github.kongzue.DialogX:DialogX:${dialogx_version}"
 
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+    options.compilerArgs << "-Xlint:unchecked"
 }

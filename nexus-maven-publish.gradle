@@ -7,7 +7,7 @@ def NEXUS_PASSWORD = "admin"
 //与jitpack发布的保持同个组织名
 def POM_GROUP_ID = "com.github.TYKYTeam.swan-android-libray"
 //版本好
-def POM_VERSION = "1.9"
+def POM_VERSION = "2.1"
 //aar包方式
 def POM_PACKAGING = "aar"
 //下面三个数值自动读取模块名
@@ -122,4 +122,6 @@ afterEvaluate {
         }
     }
 }
+
+
 
