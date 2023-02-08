@@ -3424,7 +3424,7 @@ public class DebuggerInitializer implements Initializer<Void> {
 
 如果是需要权限的，也是在此声明对应的权限，同时也要考虑到动态权限申请的情况
 
-比较好的方式就是卸载对应Js方法里,用到就声明
+比较好的方式就是写在对应Js方法里,用到就声明
 
 #### ParamModel实体类字段：
 
