@@ -3368,6 +3368,51 @@ window.getLocation = function(object) {
 如果想要保持返回结果规范，可以参考上述代码
 
 PS：之后使用不要忘记了依赖自己新建的module哦！！
+### 5.返回数据
+
+这里存在两种不同的返回数据方法，定为同步和异步。
+
+当出现需要跳转页面，或者获取数据不是立刻就能拿到的情况，则使用异步。
+
+同步就比较简单，直接返回数据即可，不过需要转为json字符串
+```java
+return gson.toJson(ResultModel.success(""));
+```
+
+如果有数据，success里面则放数据，否则就传个空字符串即可
+
+异步，需要与传参一起连用，传参需要传`callBackMethod`参数，此参数即为js回调的方法名，之后通过EventBus发送JSCallBackEvent事件，触发webview执行js代码，从而实现传参
+
+下面以二维码扫描为例：
+```java
+/**
+ * 二维码扫描
+ *
+ * @param paramStr
+ * @return
+ */
+@JavascriptInterface
+public String qrScan(String paramStr) {
+    ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+    String callbackMethod = paramModel.getCallBackMethod();
+    if (callbackMethod == null) {
+        return gson.toJson(ResultModel.errorParam());
+    }
+
+    IntentEvent intentEvent = new IntentEvent(QrScanActivity.class, callbackMethod);
+    EventBus.getDefault().post(intentEvent);
+
+    return gson.toJson(ResultModel.success(""));
+}
+```
+注意：异步也是要返回正常json数据
+
+之后再跳转里的Activity页面，获得扫码之后的数据，会调用下面代码，从而完成JS异步回传数据，如下代码示例
+```java
+EventBus.getDefault().post(new JsCallBackEvent(methodName, text));
+```
+
+JsCallBackEvent接收一个回调JS方法名(前端调用传递的和具体要返回的数据)
 
 ### 补充
 #### 需要Application进行初始化操作
