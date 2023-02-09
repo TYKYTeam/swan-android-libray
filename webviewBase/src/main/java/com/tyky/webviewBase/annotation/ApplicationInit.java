@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 用来标明各module中Application的初始化
+ * 用来标明各module中Application的初始化（已废弃）
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
