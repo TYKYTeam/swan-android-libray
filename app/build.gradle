@@ -109,22 +109,24 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
     
     //验收的模块
-//    implementation project(path: ':media')
-//    implementation project(path: ':share')
-//    implementation project(path: ':device')
-//    implementation project(path: ':debugger')
-//    implementation project(path: ':update')
-//    implementation project(path: ':jgpush')
-//    implementation project(path: ':map') //5M大小
-//    implementation project(path: ':mapNav')
-//    implementation project(path: ':storage')
-//    implementation project(path: ':listener')
-//    implementation project(path: ':tim')
-//    implementation project(path: ':notification')
-//    implementation project(path: ':webviewBase')
+   /* implementation project(path: ':media')
+    implementation project(path: ':share')
+    implementation project(path: ':device')
+    implementation project(path: ':debugger')
+    implementation project(path: ':update')
+    implementation project(path: ':jgpush')
+    implementation project(path: ':map') //5M大小
+    implementation project(path: ':mapNav')
+    implementation project(path: ':storage')
+    implementation project(path: ':listener')
+    implementation project(path: ':tim')
+    implementation project(path: ':notification')
+    implementation project(path: ':webviewBase')*/
 
 
-//    implementation project(path: ':auth')
+    //测试用的模块，由于某些模块比较多，导致编译多久，所以屏蔽了些
+    //需要的自行取消注释即可
+    implementation project(path: ':auth')
     implementation project(path: ':media')
     implementation project(path: ':notification')
     implementation project(path: ':share')
