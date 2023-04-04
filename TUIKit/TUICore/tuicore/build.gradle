@@ -50,5 +50,6 @@ dependencies {
     } else {
         api 'com.tencent.imsdk:imsdk-plus:6.0.1975'
     }
+    implementation 'com.tencent.tbs:tbssdk:44286'
 
 }

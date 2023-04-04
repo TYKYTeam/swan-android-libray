@@ -2,20 +2,20 @@ package com.tyky.webviewBase.view;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
-import android.net.http.SslError;
 import android.os.Build;
-import android.webkit.SslErrorHandler;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+
+import androidx.annotation.RequiresApi;
 
 import com.blankj.utilcode.util.PhoneUtils;
 import com.socks.library.KLog;
+import com.tencent.smtt.export.external.interfaces.SslError;
+import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
+import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 import com.tyky.webviewBase.event.UrlLoadFinishEvent;
 
 import org.greenrobot.eventbus.EventBus;
-
-import androidx.annotation.RequiresApi;
 
 public class CustomWebViewClient extends WebViewClient {
 
@@ -76,10 +76,10 @@ public class CustomWebViewClient extends WebViewClient {
     }
 
     @Override
-    public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+    public void onReceivedSslError(WebView webView, SslErrorHandler sslErrorHandler, SslError sslError) {
         //取消ssl证书验证，避免加载白屏
-        if (handler != null) {
-            handler.proceed();
+        if (sslErrorHandler != null) {
+            sslErrorHandler.proceed();
         }
     }
 }

@@ -117,6 +117,7 @@ dependencies {
     implementation project(':tuicontact')
     implementation project(':tuichat')
     implementation project(':tuigroup')
+    implementation 'com.tencent.tbs:tbssdk:44286'
 
 
 }

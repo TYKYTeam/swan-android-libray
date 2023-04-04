@@ -81,6 +81,7 @@ dependencies {
     def dialogx_version = "0.0.45"
     api "com.github.kongzue.DialogX:DialogX:${dialogx_version}"
 
+    implementation 'com.tencent.tbs:tbssdk:44286'
 }
 
 tasks.withType(JavaCompile) {

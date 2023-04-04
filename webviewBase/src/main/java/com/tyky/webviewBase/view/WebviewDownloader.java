@@ -8,14 +8,14 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Environment;
 import android.view.View;
-import android.webkit.DownloadListener;
-import android.webkit.MimeTypeMap;
 import android.widget.TextView;
 
 import com.kongzue.dialogx.dialogs.CustomDialog;
 import com.kongzue.dialogx.dialogs.MessageDialog;
 import com.kongzue.dialogx.interfaces.OnBindView;
 import com.socks.library.KLog;
+import com.tencent.smtt.sdk.DownloadListener;
+import com.tencent.smtt.sdk.MimeTypeMap;
 import com.tyky.webviewBase.R;
 
 import org.apache.commons.lang3.StringUtils;

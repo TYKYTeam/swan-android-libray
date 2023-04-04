@@ -3,7 +3,6 @@ package com.tencent.qcloud.tuicore;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -11,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.TypedValue;
-import android.webkit.WebView;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
@@ -19,6 +17,7 @@ import androidx.annotation.Nullable;
 
 import com.tencent.qcloud.tuicore.interfaces.ITUIThemeChangeable;
 import com.tencent.qcloud.tuicore.util.TUIBuild;
+import com.tencent.smtt.sdk.WebView;
 
 import java.util.ArrayList;
 import java.util.List;

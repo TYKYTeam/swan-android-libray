@@ -47,4 +47,5 @@ dependencies {
     compileOnly 'com.github.zhaokaiqiang.klog:library:1.6.0'
     compileOnly 'androidx.constraintlayout:constraintlayout:2.1.2'
     compileOnly project(path: ':webviewBase')
+    implementation 'com.tencent.tbs:tbssdk:44286'
 }

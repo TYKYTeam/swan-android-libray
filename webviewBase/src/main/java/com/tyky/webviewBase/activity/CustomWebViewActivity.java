@@ -29,6 +29,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.socks.library.KLog;
+import com.tencent.smtt.sdk.QbSdk;
 import com.tyky.webviewBase.R;
 import com.tyky.webviewBase.constants.PreviewPicture;
 import com.tyky.webviewBase.constants.RequestCodeConstants;
@@ -117,6 +118,11 @@ public class CustomWebViewActivity extends AppCompatActivity {
             } catch (ClassNotFoundException | IllegalAccessException | InvocationTargetException e) {
                 KLog.e("反射调用上传日志失败！！");
             }
+        }
+
+        // 系统android版本高于android6这个版本无需使用X5内核
+        if (android.os.Build.VERSION.SDK_INT >= 23) {
+            QbSdk.forceSysWebView();
         }
     }
 

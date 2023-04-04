@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/page_title_height" />
 
-    <WebView
+    <com.tencent.smtt.sdk.WebView
         android:id="@+id/wv_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

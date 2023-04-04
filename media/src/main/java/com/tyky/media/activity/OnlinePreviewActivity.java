@@ -1,8 +1,8 @@
 package com.tyky.media.activity;
 
 import android.os.Bundle;
-import android.webkit.WebSettings;
 
+import com.tencent.smtt.sdk.WebSettings;
 import com.tyky.media.R;
 import com.tyky.webviewBase.view.CustomWebView;
 

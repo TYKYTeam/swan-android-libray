@@ -3,21 +3,21 @@ package com.tyky.webviewBase.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.webkit.CookieManager;
-import android.webkit.WebSettings;
-import android.webkit.WebStorage;
-import android.webkit.WebView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.socks.library.KLog;
+import com.tencent.smtt.sdk.CookieManager;
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebStorage;
+import com.tencent.smtt.sdk.WebView;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.utils.ReflectUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 public class CustomWebView extends WebView {
 
@@ -98,11 +98,12 @@ public class CustomWebView extends WebView {
 
     /**
      * 设置ua
+     *
      * @param ua
      */
     public void setUa(String ua) {
         WebSettings webSettings = getSettings();
-        webSettings.setUserAgentString(ua+" tyky_android");
+        webSettings.setUserAgentString(ua + " tyky_android");
     }
 
     /**
