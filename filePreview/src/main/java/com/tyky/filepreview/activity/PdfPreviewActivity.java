@@ -1,6 +1,9 @@
 package com.tyky.filepreview.activity;
 
 import android.os.Bundle;
+import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.blankj.utilcode.util.EncodeUtils;
 import com.blankj.utilcode.util.FileIOUtils;
@@ -15,27 +18,31 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-
-import androidx.appcompat.app.AppCompatActivity;
+import java.util.concurrent.Future;
 
 public class PdfPreviewActivity extends AppCompatActivity {
+    private Future<?> displayPdf;
+    private String fileContent;
+    private View imageBack;
+    private PDFView pdfView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdf_preview);
 
-        String filePath = getIntent().getStringExtra("filePath");
-        String content = FileIOUtils.readFile2String(filePath);
+        initData();
+        initView();
+        bindListener();
+        loadPdf();
+    }
 
-        PDFView pdfView = findViewById(R.id.pdfView);
-
+    private void loadPdf() {
         WaitDialog dialog = WaitDialog.show("加载中");
-        if (content.startsWith("http")) {
-            ThreadUtils.getIoPool().submit(() -> {
-
+        if (fileContent.startsWith("http")) {
+            displayPdf = ThreadUtils.getIoPool().submit(() -> {
                 try {
-                    URLConnection urlConnection = new URL(content).openConnection();
+                    URLConnection urlConnection = new URL(fileContent).openConnection();
                     InputStream inputStream = urlConnection.getInputStream();
                     runOnUiThread(() -> {
                         pdfView.fromStream(inputStream)   //从链接加载pdf文件预览
@@ -48,42 +55,60 @@ public class PdfPreviewActivity extends AppCompatActivity {
                                 .spacing(10) // in dp
                                 .onLoad(nbPages -> dialog.doDismiss())
                                 .load();
-
                         pdfView.fitToWidth();
                         pdfView.zoomWithAnimation(1f);
                     });
                 } catch (IOException e) {
                     runOnUiThread(() -> {
-                        KLog.e("下载失败："+e.getMessage());
+                        KLog.e("下载失败：" + e.getMessage());
                         dialog.doDismiss();
                         ToastUtils.showShort("下载pdf文件失败，原因" + e.getMessage());
                     });
                 }
-
             });
-        } else {
-            //base64字符串 未测试！
-            ThreadUtils.getIoPool().submit(() -> {
-                byte[] bytes = EncodeUtils.base64Decode(content);
-
-                runOnUiThread(() -> {
-                    pdfView.fromBytes(bytes)   //设置pdf文件地址
-                            .defaultPage(0)
-                            .swipeHorizontal(false)
-                            .enableSwipe(false)
-                            .enableDoubletap(true)
-                            .enableAnnotationRendering(true)
-                            //.scrollHandle(new DefaultScrollHandle(PdfShowActivity.this))
-                            .spacing(10) // in dp
-                            .onLoad(nbPages -> dialog.doDismiss())
-                            .load();
-
-                    pdfView.fitToWidth();
-                    pdfView.zoomWithAnimation(1f);
-                });
-            });
-
+            return;
         }
 
+        //base64字符串 未测试！
+        ThreadUtils.getIoPool().submit(() -> {
+            byte[] bytes = EncodeUtils.base64Decode(fileContent);
+            runOnUiThread(() -> {
+                pdfView.fromBytes(bytes)   //设置pdf文件地址
+                        .defaultPage(0)
+                        .swipeHorizontal(false)
+                        .enableSwipe(false)
+                        .enableDoubletap(true)
+                        .enableAnnotationRendering(true)
+                        //.scrollHandle(new DefaultScrollHandle(PdfShowActivity.this))
+                        .spacing(10) // in dp
+                        .onLoad(nbPages -> dialog.doDismiss())
+                        .load();
+
+                pdfView.fitToWidth();
+                pdfView.zoomWithAnimation(1f);
+            });
+        });
+    }
+
+    private void bindListener() {
+        imageBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (displayPdf != null && !displayPdf.isCancelled()) {
+                    displayPdf.cancel(true);
+                }
+                finish();
+            }
+        });
+    }
+
+    private void initView() {
+        imageBack = findViewById(R.id.imageBack);
+        pdfView = findViewById(R.id.pdfView);
+    }
+
+    private void initData() {
+        String filePath = getIntent().getStringExtra("filePath");
+        fileContent = FileIOUtils.readFile2String(filePath);
     }
 }
