@@ -8,6 +8,9 @@ import android.provider.ContactsContract;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
+import androidx.annotation.NonNull;
+
+import com.annimon.stream.Stream;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ClipboardUtils;
 import com.blankj.utilcode.util.GsonUtils;
@@ -17,7 +20,9 @@ import com.blankj.utilcode.util.StringUtils;
 import com.google.gson.Gson;
 import com.tyky.media.activity.OnlinePreviewActivity;
 import com.tyky.media.activity.QrScanActivity;
+import com.tyky.media.bean.DownloadInfo;
 import com.tyky.media.bean.MyContacts;
+import com.tyky.media.utils.FileDownloadUtil;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.event.ImagePreviewEvent;
 import com.tyky.webviewBase.event.IntentEvent;
@@ -33,7 +38,6 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
 
 @WebViewInterface("android_media")
 public class MediaJsInterface {
@@ -164,7 +168,6 @@ public class MediaJsInterface {
         return gson.toJson(ResultModel.success(""));
     }
 
-
     /**
      * 文字转语音
      *
@@ -294,10 +297,32 @@ public class MediaJsInterface {
         //intent.putExtra("url", content);
         Bundle bundle = new Bundle();
         bundle.putString("url", content);
-        ActivityUtils.startActivity(bundle,OnlinePreviewActivity.class);
+        ActivityUtils.startActivity(bundle, OnlinePreviewActivity.class);
         return gson.toJson(ResultModel.success(""));
+    }
 
+    /**
+     * 多文件下载
+     */
+    @JavascriptInterface
+    public String downloadFiles(String paramStr) {
+        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        String[] downloadUrls = paramModel.getDownloadUrls();
+        if (downloadUrls.length < 1) {
+            return gson.toJson(ResultModel.errorParam("url为空"));
+        }
 
+        List<DownloadInfo> downloadInfos = new ArrayList<>();
+        Stream.of(downloadUrls).forEach(url -> {
+            DownloadInfo downloadInfo = new DownloadInfo();
+            downloadInfo.setUrl(url);
+            String fileName = FileDownloadUtil.getInstance().parseUrlFileName(url);
+            downloadInfo.setFileName(fileName);
+            downloadInfos.add(downloadInfo);
+        });
+
+        FileDownloadUtil.getInstance().downloads(downloadInfos);
+        return gson.toJson(ResultModel.success("开始下载"));
     }
 
 

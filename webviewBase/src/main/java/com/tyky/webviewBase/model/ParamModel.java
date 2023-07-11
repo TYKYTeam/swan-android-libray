@@ -40,6 +40,18 @@ public class ParamModel {
      */
     private String activityName;
 
+    /**
+     * 文件下载地址
+     */
+    private String[] downloadUrls;
+
+    private String downloadUrl;
+
+    /**
+     * 文件名
+     */
+    private String fileName;
+
     //-------------IM的Module传参字段开始----------
     /**
      * 登录userId
@@ -55,6 +67,29 @@ public class ParamModel {
     private boolean isGotoPage;
     //-------------IM的Module传参字段结束----------
 
+    public String[] getDownloadUrls() {
+        return downloadUrls;
+    }
+
+    public void setDownloadUrls(String[] downloadUrl) {
+        this.downloadUrls = downloadUrl;
+    }
+
+    public String getDownloadUrl() {
+        return downloadUrl;
+    }
+
+    public void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
     public String getUserId() {
         return userId;
