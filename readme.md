@@ -414,11 +414,44 @@ if (window.android_media) {
 }
 ```
 
+### 10. 文件下载
+downloadFiles
+
+**传参：**
+```
+{
+    downloadUrls: [
+        "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/6/202306061101187527ED04.doc&fileName=申报模板.doc",
+        "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/26/202306261528193AED92EB.docx&fileName=平板登录页需求.docx",
+        "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/26/20230626152758996F8393.docx&fileName=app进度填报调整20230616.docx"
+    ],
+}
+```
+
+**返回结果：**
+```
+{"code":200,"desc":"","result":["开始下载"]}
+```
+
+**H5调用示例：**
+```
+if (window.android_media) {
+    let content = {
+        "downloadUrls": [
+            "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/6/202306061101187527ED04.doc&fileName=申报模板.doc",
+            "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/26/202306261528193AED92EB.docx&fileName=平板登录页需求.docx",
+            "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/26/20230626152758996F8393.docx&fileName=app进度填报调整20230616.docx"
+        ],
+    }
+    let result = window.android_media.downloadFiles(JSON.stringify(content))
+    alert(result)
+    console.log(result)
+}
+```
+
 ### 还未实现功能清单
 
 8. 图片压缩（H5传参）
-
-9. 文件下载
 10. 文件预览(文件先下载再预览)
 11. 安装apk
 ## notification通知
