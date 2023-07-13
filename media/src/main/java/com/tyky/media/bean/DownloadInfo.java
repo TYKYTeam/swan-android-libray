@@ -1,15 +1,20 @@
 package com.tyky.media.bean;
 
+import com.tyky.media.utils.FileDownloadUtil;
+
 public class DownloadInfo {
     private String url;
-    private String FileName;
+    private String fileName;
+    private FileDownloadUtil.OnDownloadListener listener;
 
-    public DownloadInfo(String url, String fileName) {
+    public DownloadInfo(String url, String fileName, FileDownloadUtil.OnDownloadListener listener) {
         this.url = url;
-        FileName = fileName;
+        this.fileName = fileName;
+        this.listener = listener;
     }
 
     public DownloadInfo() {
+
     }
 
     public String getUrl() {
@@ -21,18 +26,28 @@ public class DownloadInfo {
     }
 
     public String getFileName() {
-        return FileName;
+        return fileName;
     }
 
     public void setFileName(String fileName) {
-        FileName = fileName;
+        this.fileName = fileName;
+    }
+
+
+    public FileDownloadUtil.OnDownloadListener getListener() {
+        return listener;
+    }
+
+    public void setListener(FileDownloadUtil.OnDownloadListener listener) {
+        this.listener = listener;
     }
 
     @Override
     public String toString() {
         return "DownloadInfo{" +
                 "url='" + url + '\'' +
-                ", FileName='" + FileName + '\'' +
+                ", fileName='" + fileName + '\'' +
+                ", listener=" + listener +
                 '}';
     }
 }

@@ -425,6 +425,7 @@ downloadFiles
         "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/26/202306261528193AED92EB.docx&fileName=平板登录页需求.docx",
         "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/26/20230626152758996F8393.docx&fileName=app进度填报调整20230616.docx"
     ],
+    "callBackMethod": "downloadCallback"
 }
 ```
 
@@ -432,20 +433,35 @@ downloadFiles
 ```
 {"code":200,"desc":"","result":["开始下载"]}
 ```
+**下载结束返回结果：**
+```
+{"code":200,"desc":"","result":[
+                                    {"downloadFileName":"平板登录页需求.docx", "isSuccess":true},
+                                    {"downloadFileName":"app进度填报调整20230616.docx", "isSuccess":true},
+                                    {"downloadFileName":"申报模版.doc", "isSuccess":true},
+                                ]
+}
+```
 
 **H5调用示例：**
 ```
-if (window.android_media) {
-    let content = {
-        "downloadUrls": [
-            "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/6/202306061101187527ED04.doc&fileName=申报模板.doc",
-            "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/26/202306261528193AED92EB.docx&fileName=平板登录页需求.docx",
-            "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/26/20230626152758996F8393.docx&fileName=app进度填报调整20230616.docx"
-        ],
+window.downloadCallback = function(object) {
+    alert(JSON.stringify(object))
+}
+function downloadFile() {
+    if (window.android_media) {
+        let content = {
+            "downloadUrls": [
+                "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/6/202306061101187527ED04.doc&fileName=申报模板.doc",
+                "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/26/202306261528193AED92EB.docx&fileName=平板登录页需求.docx",
+                "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/26/20230626152758996F8393.docx&fileName=app进度填报调整20230616.docx"
+            ],
+            "callBackMethod": "downloadCallback",
+        }
+        let result = window.android_media.downloadFiles(JSON.stringify(content))
+        alert(result)
+        console.log(result)
     }
-    let result = window.android_media.downloadFiles(JSON.stringify(content))
-    alert(result)
-    console.log(result)
 }
 ```
 

@@ -1,14 +1,15 @@
 package com.tyky.media.utils;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
-import com.blankj.utilcode.util.PathUtils;
 import com.blankj.utilcode.util.ThreadUtils;
 import com.tyky.media.bean.DownloadInfo;
-import com.tyky.media.bean.DownloadingInfo;
+import com.tyky.media.bean.DownloadResult;
+import com.tyky.webviewBase.event.JsCallBackEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,7 +21,12 @@ import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorCompletionService;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 import okhttp3.OkHttpClient;
@@ -104,43 +110,57 @@ public class FileDownloadUtil {
     /**
      * 下载多个文件
      */
-    public void downloads(List<DownloadInfo> downloadUrls) {
-        for (DownloadInfo downloadUrl : downloadUrls) {
-            download(downloadUrl, new OnDownloadListener() {
-                @Override
-                public void onProgress(double progress) {
+    public void downloads(List<DownloadInfo> downloadInfoList, String callBackMethod) {
+        ExecutorService ioPool = ThreadUtils.getIoPool();
+        ExecutorCompletionService<DownloadResult> completionService = new ExecutorCompletionService<>(ioPool);
+        ArrayList<Future<DownloadResult>> futureList = new ArrayList<>();
 
-                }
-
-                @Override
-                public void onError(Exception e) {
-
-                }
-
-                @Override
-                public void onSuccess(File outputFile) {
-
-                }
-            });
+        // 添加多任务
+        for (DownloadInfo info : downloadInfoList) {
+            futureList.add(download(completionService, info));
         }
-    }
+        // 所有任务提交后，关闭任务提交，任务都执行结束，关闭线程池
+        ioPool.shutdown();
 
-    /**
-     * 下载文件
-     */
-    public Future<?> download(DownloadInfo downloadInfo, OnDownloadListener listener) {
-        // 利用通道完成文件的复制(非直接缓冲区)
-        Future<?> feature = ThreadUtils.getIoPool().submit(new Runnable() {
+        // 异步获取下载结果  通知 h5
+        new Thread(new Runnable() {
             @Override
             public void run() {
+                List<DownloadResult> results = Stream.of(futureList).map(future -> {
+                    DownloadResult result = new DownloadResult();
+                    try {
+                        // 非阻塞获取结果
+                        result = completionService.take().get();
+                        return result;
+                    } catch (ExecutionException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    return result;
+                }).collect(Collectors.toList());
+
+                // 所有任务执行结束
+                EventBus.getDefault().post(new JsCallBackEvent(callBackMethod, results));
+            }
+        }).start();
+
+    }
+
+    public Future<DownloadResult> download(ExecutorCompletionService<DownloadResult> completionService,
+                                           DownloadInfo downloadInfo) {
+        return completionService.submit(new Callable<DownloadResult>() {
+            @Override
+            public DownloadResult call() {
+                DownloadResult result = new DownloadResult();
+                String url = downloadInfo.getUrl();
+                String fileName = downloadInfo.getFileName();
+                OnDownloadListener listener = downloadInfo.getListener();
+                File file = UrlUtils.getFile(fileName);
+                //续传开始的进度
+                long lastDownloadPosition = getFileLength(file);
                 try {
-                    String url = downloadInfo.getUrl();
-                    String fileName = downloadInfo.getFileName();
-                    File file = getFile(fileName);
-                    //续传开始的进度
-                    long lastDownloadPosition = getFileLength(file);
                     // 发起请求
                     Response resp = getRequest(url, lastDownloadPosition);
+                    // 断点续传
                     if (!TextUtils.isEmpty(resp.header("Content-Range")) && resp.code() != 416) {
                         // 继续下载
                         downloadContinue(resp, file, listener);
@@ -148,18 +168,22 @@ public class FileDownloadUtil {
                         // 开始下载
                         startDownload(url, file, listener);
                     }
+                    // 单个文件下载监听回调
                     if (listener != null) {
                         listener.onSuccess(file);
                     }
+                    result.setSuccess(true);
                 } catch (IOException e) {
                     if (listener != null) {
                         e.printStackTrace();
-                        listener.onError(e);
+                        listener.onError(fileName, e);
                     }
+                    result.setSuccess(false);
                 }
+                result.setDownloadFileName(fileName);
+                return result;
             }
         });
-        return feature;
     }
 
     /**
@@ -245,28 +269,9 @@ public class FileDownloadUtil {
     public interface OnDownloadListener {
         void onProgress(double progress);
 
-        void onError(Exception e);
+        void onError(String fileName, Exception e);
 
         void onSuccess(File outputFile);
-    }
-
-    /**
-     * 从url中获取文件名
-     */
-    public String parseUrlFileName(String url) {
-        String[] split = url.split("/");
-        String fileName = split[split.length - 1];
-        if (fileName.contains("=")) {
-            fileName = fileName.substring(fileName.indexOf("=") + 1);
-        }
-        return fileName;
-    }
-
-    /**
-     * 获取文件
-     */
-    public File getFile(String fileName) {
-        return new File(PathUtils.getExternalAppFilesPath(), fileName);
     }
 
 }

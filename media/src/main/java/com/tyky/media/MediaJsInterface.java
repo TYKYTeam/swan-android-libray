@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
@@ -23,6 +24,7 @@ import com.tyky.media.activity.QrScanActivity;
 import com.tyky.media.bean.DownloadInfo;
 import com.tyky.media.bean.MyContacts;
 import com.tyky.media.utils.FileDownloadUtil;
+import com.tyky.media.utils.UrlUtils;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.event.ImagePreviewEvent;
 import com.tyky.webviewBase.event.IntentEvent;
@@ -275,15 +277,6 @@ public class MediaJsInterface {
     }
 
     /**
-     * 预览文件（不包含图片）
-     */
-    @JavascriptInterface
-    public void previewFile() {
-
-    }
-
-
-    /**
      * 预览在线文件
      */
     @JavascriptInterface
@@ -308,20 +301,27 @@ public class MediaJsInterface {
     public String downloadFiles(String paramStr) {
         ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
         String[] downloadUrls = paramModel.getDownloadUrls();
+        String callBackMethod = paramModel.getCallBackMethod();
+
         if (downloadUrls.length < 1) {
             return gson.toJson(ResultModel.errorParam("url为空"));
+        }
+
+        if (TextUtils.isEmpty(callBackMethod)) {
+            return gson.toJson(ResultModel.errorParam("未传回调函数"));
         }
 
         List<DownloadInfo> downloadInfos = new ArrayList<>();
         Stream.of(downloadUrls).forEach(url -> {
             DownloadInfo downloadInfo = new DownloadInfo();
-            downloadInfo.setUrl(url);
-            String fileName = FileDownloadUtil.getInstance().parseUrlFileName(url);
+            String fileName = UrlUtils.parseUrlFileName(url);
             downloadInfo.setFileName(fileName);
+            downloadInfo.setUrl(url);
             downloadInfos.add(downloadInfo);
         });
 
-        FileDownloadUtil.getInstance().downloads(downloadInfos);
+        // 异步下载
+        FileDownloadUtil.getInstance().downloads(downloadInfos, callBackMethod);
         return gson.toJson(ResultModel.success("开始下载"));
     }
 
