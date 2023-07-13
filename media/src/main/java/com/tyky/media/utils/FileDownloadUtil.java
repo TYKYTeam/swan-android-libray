@@ -154,7 +154,7 @@ public class FileDownloadUtil {
                 String url = downloadInfo.getUrl();
                 String fileName = downloadInfo.getFileName();
                 OnDownloadListener listener = downloadInfo.getListener();
-                File file = UrlUtils.getFile(fileName);
+                File file = FileUtils.getFile(fileName);
                 //续传开始的进度
                 long lastDownloadPosition = getFileLength(file);
                 try {

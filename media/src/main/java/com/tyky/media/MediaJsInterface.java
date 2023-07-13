@@ -19,12 +19,13 @@ import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.PhoneUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.google.gson.Gson;
+import com.tyky.media.activity.FilePreviewActivity;
 import com.tyky.media.activity.OnlinePreviewActivity;
 import com.tyky.media.activity.QrScanActivity;
 import com.tyky.media.bean.DownloadInfo;
 import com.tyky.media.bean.MyContacts;
 import com.tyky.media.utils.FileDownloadUtil;
-import com.tyky.media.utils.UrlUtils;
+import com.tyky.media.utils.FileUtils;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.event.ImagePreviewEvent;
 import com.tyky.webviewBase.event.IntentEvent;
@@ -295,6 +296,19 @@ public class MediaJsInterface {
     }
 
     /**
+     * 预览文件
+     */
+    @JavascriptInterface
+    public String previewFile(String paramStr) {
+        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        String url = paramModel.getDownloadUrl();
+        Bundle bundle = new Bundle();
+        bundle.putString(FilePreviewActivity.FILE_URL, url);
+        ActivityUtils.startActivity(bundle, FilePreviewActivity.class);
+        return gson.toJson(ResultModel.success(""));
+    }
+
+    /**
      * 多文件下载
      */
     @JavascriptInterface
@@ -314,7 +328,7 @@ public class MediaJsInterface {
         List<DownloadInfo> downloadInfos = new ArrayList<>();
         Stream.of(downloadUrls).forEach(url -> {
             DownloadInfo downloadInfo = new DownloadInfo();
-            String fileName = UrlUtils.parseUrlFileName(url);
+            String fileName = FileUtils.parseUrlFileName(url);
             downloadInfo.setFileName(fileName);
             downloadInfo.setUrl(url);
             downloadInfos.add(downloadInfo);

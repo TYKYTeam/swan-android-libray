@@ -4,7 +4,7 @@ import com.blankj.utilcode.util.PathUtils;
 
 import java.io.File;
 
-public class UrlUtils {
+public class FileUtils {
     /**
      * 从url中获取文件名
      */
@@ -22,5 +22,14 @@ public class UrlUtils {
      */
     public static File getFile(String fileName) {
         return new File(PathUtils.getExternalAppFilesPath(), fileName);
+    }
+
+    /**
+     * 替换文件名后缀
+     */
+    public static String getTransformFileName(File file, String suffix) {
+        String name = file.getName();
+        String prefix = name.substring(0, name.indexOf('.') + 1);
+        return prefix + suffix;
     }
 }

@@ -57,4 +57,21 @@ dependencies {
     implementation 'com.zhy:okhttputils:2.6.2'
     compileOnly 'com.squareup.okhttp3:okhttp:3.3.1'
     implementation 'com.annimon:stream:1.2.1'
+
+    //pdf预览 https://github.com/barteksc/AndroidPdfViewer
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+
+    // android-poi
+    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '3.17'
+    implementation group: 'org.apache.poi', name: 'poi-scratchpad', version: '3.17'
+    implementation group: 'org.apache.xmlbeans', name: 'xmlbeans', version: '3.1.0'
+    implementation 'javax.xml.stream:stax-api:1.0'
+    implementation 'com.fasterxml:aalto-xml:1.2.2'
+
+    //生成PDF相关
+    implementation 'com.itextpdf:itextg:5.5.9'
+    implementation group: 'com.itextpdf.tool', name: 'xmlworker', version: '5.5.13.3'
+
+
+    implementation 'org.jsoup:jsoup:1.13.1'
 }

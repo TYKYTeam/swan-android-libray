@@ -2,23 +2,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tyky.media">
 
-    <application>
-        <activity android:name=".activity.OnlinePreviewActivity" >
-
-        </activity>
-
-        <activity
-            android:name=".activity.QrScanActivity"
-            android:label="扫一扫" />
-    </application>
-
     <queries>
         <intent>
             <action android:name="android.intent.action.TTS_SERVICE" />
         </intent>
     </queries>
-    <uses-permission android:name="android.permission.CALL_PHONE" />
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <application>
+        <activity android:name=".activity.FilePreviewActivity" />
+        <activity android:name=".activity.OnlinePreviewActivity" />
+        <activity
+            android:name=".activity.QrScanActivity"
+            android:label="扫一扫" />
+    </application>
 
 </manifest>

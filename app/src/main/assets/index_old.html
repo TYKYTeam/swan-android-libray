@@ -90,6 +90,7 @@
 
                     <button type="default" onclick="previewFileUrl()">在线预览</button>
                     <button type="default" onclick="downloadFile()">多文件下载</button>
+                    <button type="default" onclick="previewFile()">文件预览</button>
 
                 </div>
             </fieldset>
@@ -300,6 +301,16 @@
                 }
                 let result = window.android_media.downloadFiles(JSON.stringify(content))
                 alert(result)
+                console.log(result)
+            }
+        }
+
+        function previewFile() {
+            if (window.android_media) {
+                let content = {
+                    "downloadUrl": "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/6/202306061101187527ED04.doc&fileName=申报模板.doc",
+                }
+                let result = window.android_media.previewFile(JSON.stringify(content))
                 console.log(result)
             }
         }

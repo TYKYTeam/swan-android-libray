@@ -68,7 +68,7 @@ public class WebViewJavaScript {
     @JavascriptInterface
     public String getAppInfo() {
         AppUtils.AppInfo appInfo = AppUtils.getAppInfo();
-        Map<String,Object> map = new HashMap();
+        Map<String,Object> map = new HashMap<>();
         map.put("appName", appInfo.getName());
         map.put("pkgName", appInfo.getPackageName());
         map.put("versionName", appInfo.getVersionName());

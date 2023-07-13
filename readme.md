@@ -465,6 +465,35 @@ function downloadFile() {
 }
 ```
 
+### 11. 文件离线预览，支持 pdf, doc, docx
+downloadFiles
+
+**传参：**
+```
+{
+    downloadUrls: "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/26/20230626152758996F8393.docx&fileName=app进度填报调整20230616.docx",
+}
+```
+
+**返回结果：**
+```
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+```
+function previewFile() {
+    if (window.android_media) {
+        let content = {
+            "downloadUrls": "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/26/20230626152758996F8393.docx&fileName=app进度填报调整20230616.docx",
+        }
+        let result = window.android_media.previewFile(JSON.stringify(content))
+        alert(result)
+        console.log(result)
+    }
+}
+```
+
 ### 还未实现功能清单
 
 8. 图片压缩（H5传参）

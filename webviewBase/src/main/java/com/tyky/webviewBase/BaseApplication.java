@@ -1,6 +1,7 @@
 package com.tyky.webviewBase;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.StrictMode;
 
 import com.kongzue.dialogx.DialogX;
@@ -9,9 +10,12 @@ import com.tencent.smtt.sdk.QbSdk;
 import com.tencent.smtt.sdk.TbsListener;
 
 public class BaseApplication extends Application {
+    private static Context context;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        context = getApplicationContext();
 
         /*List<Class<?>> classes = ReflectUtil.scanClassListByAnnotation(BaseApplication.this, "com.tyky", ApplicationInit.class);
 
@@ -102,4 +106,9 @@ public class BaseApplication extends Application {
             }
         });
     }
+
+    public static Context getAppContext() {
+        return context;
+    }
+
 }
