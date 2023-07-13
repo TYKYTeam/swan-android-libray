@@ -14,7 +14,6 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
 import com.socks.library.KLog;
-import com.tyky.media.MediaApplication;
 import com.tyky.media.R;
 import com.tyky.webviewBase.BaseApplication;
 
@@ -133,24 +132,13 @@ public class PdfUtils {
         return pdfFile;
     }
 
-    public File word2003ToHtml(File file) {
-        WordToHtmlUtils wordToHtmlUtils = new WordToHtmlUtils(MediaApplication.getAppContext().getResources().getDisplayMetrics().heightPixels);
-        String htmlFileName = FileUtils.getTransformFileName(file, "html");
-        try {
-            wordToHtmlUtils.docToHtml(file, htmlFileName);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return FileUtils.getFile(htmlFileName);
-    }
-
     public File docx2Pdf(File file) {
         String pdfFileName = FileUtils.getTransformFileName(file, "pdf");
         File outPdfFile = FileUtils.getFile(pdfFileName);
         try {
             FileInputStream src = new FileInputStream(file);
             // pdf文件的尺寸
-            Document pdfDocument = new Document(PageSize.A3, 72, 72, 72, 72);
+            Document pdfDocument = new Document(PageSize.A4, 72, 72, 72, 72);
 
             FileOutputStream out = new FileOutputStream(outPdfFile);
 
@@ -171,7 +159,10 @@ public class PdfUtils {
                         XWPFPicture pic = iterator.next();
                         XWPFPictureData picdata = pic.getPictureData();
                         byte[] bytepic = picdata.getData();
+
+
                         Image imag = Image.getInstance(bytepic);
+                        imag.scalePercent(50);
                         pdfDocument.add(imag);
                     }
                     // 中文字体的解决
@@ -196,65 +187,6 @@ public class PdfUtils {
         }
         return outPdfFile;
     }
-
-
-    // 使用poi获取文件的文本信息
-//    public String getText(File file) {
-//        String name = file.getName();
-//        try {
-//            if (name.endsWith(".xlsx")) {
-//                XSSFWorkbook workbook = new XSSFWorkbook(file);
-//                XSSFExcelExtractor extractor = new XSSFExcelExtractor(workbook);
-//                String content = extractor.getText();
-//                workbook.close();
-//                return content;
-//            } else if (name.endsWith(".xls")) {
-//                POIFSFileSystem fileSystem = new POIFSFileSystem(file);
-//                ExcelExtractor extractor = new EventBasedExcelExtractor(fileSystem);
-//                String content = extractor.getText();
-//                fileSystem.close();
-//                return content;
-//            } else if (name.endsWith(".docx")) {
-//                XWPFDocument document = new XWPFDocument(new FileInputStream(file));
-//                XWPFWordExtractor extractor = new XWPFWordExtractor(document);
-//                String content = extractor.getText();
-//                document.close();
-//                return content;
-//            } else if (name.endsWith(".doc")) {
-//                InputStream inputStream = new FileInputStream(file);
-//                WordExtractor extractor = new WordExtractor(inputStream);
-//                String content = extractor.getText();
-//                inputStream.close();
-//                return content;
-//            } else if (name.endsWith(".txt")) {
-//                BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "GBK"));
-//                StringBuilder sb = new StringBuilder(16);
-//                String txt = "";
-//                while ((txt = reader.readLine()) != null) {
-//                    sb.append(txt);
-//                }
-//                reader.close();
-//                return sb.toString();
-//            }
-//        } catch (IOException | OpenXML4JException e) {
-//            e.printStackTrace();
-//        }
-//        return "";
-//    }
-//
-//    /**
-//     * doc转为pdf，先将doc转为html，再将html转为pdf，因为使用poi无法直接将doc转为pdf
-//     */
-//    public File doc2pdf1(File sourceFile) {
-//        // doc转换html
-//        File htmlFile = convert2PdfOneByOne(sourceFile);
-//        if (!htmlFile.exists()) {
-//            // 转换失败
-//            return UrlUtils.getFile(UrlUtils.getTransformFileName(sourceFile, "pdf"));
-//        }
-//        // html转换pdf
-//        return htmlToPdf(htmlFile);
-//    }
 
     /**
      * doc转为pdf，先将doc转为html，再将html转为pdf，因为使用poi无法直接将doc转为pdf
