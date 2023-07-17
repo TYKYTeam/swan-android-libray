@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 import com.tyky.page.utils.WXLaunchMiniUtil;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.event.StatusBarEvent;
-import com.tyky.webviewBase.event.StatusBarImmersiveEvent;
+import com.tyky.webviewBase.event.ImmersiveBarEvent;
 import com.tyky.webviewBase.model.ParamModel;
 import com.tyky.webviewBase.model.ResultModel;
 
@@ -114,12 +114,14 @@ public class PageJsInterface {
      * @return
      */
     @JavascriptInterface
-    public String immersiveStatusBar(String paramStr) {
+    public String immersiveBar(String paramStr) {
         ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
         boolean isFitWindow = paramModel.isFitWindow();
+        boolean light = paramModel.isLight();
+        String color = paramModel.getColor();
         //构建事件，通过EventBus发送
-        StatusBarImmersiveEvent statusBarImmersiveEvent = new StatusBarImmersiveEvent(isFitWindow);
-        EventBus.getDefault().post(statusBarImmersiveEvent);
+        ImmersiveBarEvent immersiveBarEvent = new ImmersiveBarEvent(isFitWindow, light, color);
+        EventBus.getDefault().post(immersiveBarEvent);
         return gson.toJson(ResultModel.success(""));
     }
 

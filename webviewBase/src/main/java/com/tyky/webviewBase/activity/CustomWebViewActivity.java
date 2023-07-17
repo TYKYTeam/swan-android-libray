@@ -17,6 +17,12 @@ import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.palette.graphics.Palette;
+
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.EncodeUtils;
@@ -34,10 +40,10 @@ import com.tyky.webviewBase.R;
 import com.tyky.webviewBase.constants.PreviewPicture;
 import com.tyky.webviewBase.constants.RequestCodeConstants;
 import com.tyky.webviewBase.event.ImagePreviewEvent;
+import com.tyky.webviewBase.event.ImmersiveBarEvent;
 import com.tyky.webviewBase.event.IntentEvent;
 import com.tyky.webviewBase.event.JsCallBackEvent;
 import com.tyky.webviewBase.event.StatusBarEvent;
-import com.tyky.webviewBase.event.StatusBarImmersiveEvent;
 import com.tyky.webviewBase.event.TakeScreenshotEvent;
 import com.tyky.webviewBase.event.UrlLoadEvent;
 import com.tyky.webviewBase.event.UrlLoadFinishEvent;
@@ -61,12 +67,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.palette.graphics.Palette;
 
 public class CustomWebViewActivity extends AppCompatActivity {
 
@@ -193,14 +193,16 @@ public class CustomWebViewActivity extends AppCompatActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void immersiveStatusBar(StatusBarImmersiveEvent event) {
+    public void immersiveBar(ImmersiveBarEvent event) {
         boolean isFitWindow = event.isFitWindow();
-        UltimateBarX
-                .statusBarOnly(this)
+        boolean isLight = event.isLight();
+        String colorStr = event.getColor();
+        int color = TextUtils.isEmpty(colorStr) ? Color.TRANSPARENT : Color.parseColor(colorStr);
+        UltimateBarX.statusBarOnly(this)
                 .fitWindow(isFitWindow)
-                .color(Color.TRANSPARENT)
-                .light(true)
-                .lvlColor(Color.TRANSPARENT)
+                .color(color)
+                .light(isLight)
+                .lvlColor(color)
                 .apply();
     }
 

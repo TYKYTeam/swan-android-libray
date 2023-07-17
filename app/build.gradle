@@ -46,9 +46,9 @@ android {
                 BAIDU_OCR_API_KEY   : "gYfDcX6rF5uRRKLQConOIVCR",
                 BAIDU_OCR_SECRET_KEY: "Fwyg0F4VCgMTeq1VNikWyrIVpu2mrmTL",
                 //百度语音识别参数
-                BAIDU_VOICE_AK      : "7v4dljw5jf18ow6Ppnx2UWV7A4Vyq42M",
-                BAIDU_VOICE_SK      : "QnV55IgFVdKGSwM0ZGN8eWVRV9aLcIBa",
-                BAIDU_VOICE_APPID   : "25718709"
+                BAIDU_VOICE_AK      : "czDXYqvYx0Dm2lx7PtPrcZnw",
+                BAIDU_VOICE_SK      : "y1ptqHau1ww1jFSC4S4D1A1PiqUkOHCr",
+                BAIDU_VOICE_APPID   : "34413470"
         ]
     }
 
@@ -143,8 +143,10 @@ dependencies {
     implementation project(path: ':filePreview')
     implementation project(path: ':update')
 //    implementation project(path: ':ocr')
-//    implementation project(path: ':baiduSpeechRecognition')
-//    implementation project(path: ':imgprocess')
+    implementation project(path: ':baiduSpeechRecognition')
+    implementation project(path: ':imgprocess')
+
+
     implementation project(path: ':jgpush')
 //    implementation project(path: ':autostart')
 

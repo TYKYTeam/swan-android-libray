@@ -25,10 +25,24 @@ public class ParamModel {
      */
     private String callBackMethod;
 
+    //-------------沉浸式状态栏----------
     /**
      * 沉浸式状态栏
      */
     private boolean isFitWindow;
+
+    /**
+     *  light 模式（状态栏字体颜色变灰，导航栏内部按钮颜色变灰）
+     *  true  : 状态栏字体灰色，导航栏按钮灰色
+     *  false : 状态栏字体白色，导航栏按钮白色
+     */
+    private boolean isLight;
+
+    /**
+     * 背景颜色
+     */
+    private String color;
+    //-------------沉浸式状态栏----------
 
     /**
      * shareperfence存储需要用到的key和value
@@ -75,6 +89,22 @@ public class ParamModel {
 
     public boolean isFitWindow() {
         return isFitWindow;
+    }
+
+    public boolean isLight() {
+        return isLight;
+    }
+
+    public void setLight(boolean light) {
+        isLight = light;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public void setFitWindow(boolean fitWindow) {
