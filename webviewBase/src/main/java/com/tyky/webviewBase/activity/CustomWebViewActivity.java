@@ -37,6 +37,7 @@ import com.tyky.webviewBase.event.ImagePreviewEvent;
 import com.tyky.webviewBase.event.IntentEvent;
 import com.tyky.webviewBase.event.JsCallBackEvent;
 import com.tyky.webviewBase.event.StatusBarEvent;
+import com.tyky.webviewBase.event.StatusBarImmersiveEvent;
 import com.tyky.webviewBase.event.TakeScreenshotEvent;
 import com.tyky.webviewBase.event.UrlLoadEvent;
 import com.tyky.webviewBase.event.UrlLoadFinishEvent;
@@ -48,6 +49,7 @@ import com.tyky.webviewBase.view.CustomWebView;
 import com.tyky.webviewBase.view.CustomWebViewChrome;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
+import com.zackratos.ultimatebarx.ultimatebarx.java.UltimateBarX;
 
 import org.apache.commons.lang3.StringUtils;
 import org.greenrobot.eventbus.EventBus;
@@ -188,6 +190,18 @@ public class CustomWebViewActivity extends AppCompatActivity {
         //修复Android10及以上版本出现状态栏遮挡页面问题
         ViewGroup contentParent = CustomWebViewActivity.this.findViewById(android.R.id.content);
         contentParent.getChildAt(0).setFitsSystemWindows(true);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void immersiveStatusBar(StatusBarImmersiveEvent event) {
+        boolean isFitWindow = event.isFitWindow();
+        UltimateBarX
+                .statusBarOnly(this)
+                .fitWindow(isFitWindow)
+                .color(Color.TRANSPARENT)
+                .light(true)
+                .lvlColor(Color.TRANSPARENT)
+                .apply();
     }
 
    /* @RequiresApi(api = Build.VERSION_CODES.M)

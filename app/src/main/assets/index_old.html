@@ -225,6 +225,8 @@
                     <button type="default" onclick="openUrlByBrowser()">使用浏览器打开链接</button>
                     <button type="default" onclick="restartApp()">重启APP</button>
                     <button type="default" onclick="changeStatusBar()">更改状态栏颜色</button>
+                    <button type="default" onclick="immersiveStatusBar1()">沉浸式状态栏1</button>
+                    <button type="default" onclick="immersiveStatusBar2()">沉浸式状态栏2</button>
                     <button type="default" onclick="gotoWeixinMiniProgress()">跳转微信小程序</button>
                 </div>
             </fieldset>
@@ -468,10 +470,29 @@
         function changeStatusBar() {
             if (window.page) {
                 let content = {
-                    "type": "2",
-                    "content": "#4283f2",
+                    "type": "1",
                 }
                 let result = window.page.changeStatusBar(JSON.stringify(content))
+                console.log(result)
+            }
+        }
+
+        function immersiveStatusBar1() {
+            if (window.page) {
+                let content = {
+                    "isFitWindow": "true",
+                }
+                let result = window.page.immersiveStatusBar(JSON.stringify(content))
+                console.log(result)
+            }
+        }
+
+         function immersiveStatusBar2() {
+            if (window.page) {
+                let content = {
+                    "isFitWindow": "false",
+                }
+                let result = window.page.immersiveStatusBar(JSON.stringify(content))
                 console.log(result)
             }
         }

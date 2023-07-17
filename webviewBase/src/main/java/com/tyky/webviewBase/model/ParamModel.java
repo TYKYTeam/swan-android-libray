@@ -26,6 +26,11 @@ public class ParamModel {
     private String callBackMethod;
 
     /**
+     * 沉浸式状态栏
+     */
+    private boolean isFitWindow;
+
+    /**
      * shareperfence存储需要用到的key和value
      */
     private String key;
@@ -66,6 +71,15 @@ public class ParamModel {
      */
     private boolean isGotoPage;
     //-------------IM的Module传参字段结束----------
+
+
+    public boolean isFitWindow() {
+        return isFitWindow;
+    }
+
+    public void setFitWindow(boolean fitWindow) {
+        isFitWindow = fitWindow;
+    }
 
     public String[] getDownloadUrls() {
         return downloadUrls;

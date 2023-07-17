@@ -2839,6 +2839,39 @@ if (window.page) {
 }
 ```
 
+### 6.沉浸式状态栏
+`immersiveStatusBar`
+
+将状态栏设置为沉浸式状态栏，同时设置状态栏和底部导航条的颜色
+
+**传参：**
+
+```js
+{
+    "isFitWindow": "true",
+}
+```
+
+- `isFitWindow` 是否填充窗口，true，状态栏会填充显示，false，状态栏会被压缩
+
+**返回结果：**
+```js
+//成功
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+
+```js
+if (window.page) {
+    let content = {
+        "isFitWindow": "false",
+    }
+    let result = window.page.immersiveStatusBar(JSON.stringify(content))
+    console.log(result)
+}
+```
+
 ## tim
 腾讯云IM模块
 
