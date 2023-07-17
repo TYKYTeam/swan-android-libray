@@ -2849,10 +2849,13 @@ if (window.page) {
 ```js
 {
     "isFitWindow": "true",
+    "isLight": "false",
+    "color": "#ff00ff",
 }
 ```
-
 - `isFitWindow` 是否填充窗口，true，状态栏会填充显示，false，状态栏会被压缩
+- `isLight` light 模式（状态栏字体颜色变灰，导航栏内部按钮颜色变灰）  true  : 状态栏字体灰色，导航栏按钮灰色 false : 状态栏字体白色，导航栏按钮白色
+- `color` 背景色，不填，默认透明色
 
 **返回结果：**
 ```js
@@ -2863,11 +2866,13 @@ if (window.page) {
 **H5调用示例：**
 
 ```js
-if (window.page) {
+ if (window.page) {
     let content = {
-        "isFitWindow": "false",
+        "isFitWindow": "true",
+        "isLight": "false",
+        "color": "#ff00ff",
     }
-    let result = window.page.immersiveStatusBar(JSON.stringify(content))
+    let result = window.page.immersiveBar(JSON.stringify(content))
     console.log(result)
 }
 ```
