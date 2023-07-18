@@ -2840,7 +2840,7 @@ if (window.page) {
 ```
 
 ### 6.沉浸式状态栏
-`immersiveStatusBar`
+`immersiveBar`
 
 将状态栏设置为沉浸式状态栏，同时设置状态栏和底部导航条的颜色
 
