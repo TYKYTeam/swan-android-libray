@@ -116,11 +116,13 @@ public class PageJsInterface {
     @JavascriptInterface
     public String immersiveBar(String paramStr) {
         ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        boolean isStatusBarVisible = paramModel.isStatusBarVisible();
         boolean isFitWindow = paramModel.isFitWindow();
         boolean light = paramModel.isLight();
         String color = paramModel.getColor();
+        boolean isNavBarVisible = paramModel.isNavBarVisible();
         //构建事件，通过EventBus发送
-        ImmersiveBarEvent immersiveBarEvent = new ImmersiveBarEvent(isFitWindow, light, color);
+        ImmersiveBarEvent immersiveBarEvent = new ImmersiveBarEvent(isStatusBarVisible, isFitWindow, light, isNavBarVisible, color);
         EventBus.getDefault().post(immersiveBarEvent);
         return gson.toJson(ResultModel.success(""));
     }

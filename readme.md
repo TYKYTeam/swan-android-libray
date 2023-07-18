@@ -2848,14 +2848,17 @@ if (window.page) {
 
 ```js
 {
+    "isStatusBarVisible" : "true",
     "isFitWindow": "true",
-    "isLight": "false",
-    "color": "#ff00ff",
+    "isLight": "true",
+    "color": "",
+    "isNavBarVisible" : "false",
 }
 ```
-- `isFitWindow` 是否填充窗口，true，状态栏会填充显示，false，状态栏会被压缩
-- `isLight` light 模式（状态栏字体颜色变灰，导航栏内部按钮颜色变灰）  true  : 状态栏字体灰色，导航栏按钮灰色 false : 状态栏字体白色，导航栏按钮白色
-- `color` 背景色，不填，默认透明色
+- `isStatusBarVisible` 是否显示状态栏（时间、电量、信号...）true：显示状态栏 false：隐藏状态栏
+- `isFitWindow` 是否忽略状态栏（时间、电量、信号...）占位高度 true  : DecorView 内容位于状态栏和导航栏之间（不占用状态栏） false : contentView 内容可以伸到状态栏位置（沉浸式）
+- `isLight` light 模式（状态栏字体(时间、电量、信号...)颜色变灰，导航栏内部按钮颜色变灰）  true  : 状态栏字体灰色，导航栏按钮灰色 false : 状态栏字体白色，导航栏按钮白色
+- `color` 背景色 设置状态栏或导航栏颜色  "" 默认透明色
 
 **返回结果：**
 ```js
@@ -2868,9 +2871,11 @@ if (window.page) {
 ```js
  if (window.page) {
     let content = {
+        "isStatusBarVisible" : "true",
         "isFitWindow": "true",
-        "isLight": "false",
-        "color": "#ff00ff",
+        "isLight": "true",
+        "color": "",
+        "isNavBarVisible" : "false",
     }
     let result = window.page.immersiveBar(JSON.stringify(content))
     console.log(result)

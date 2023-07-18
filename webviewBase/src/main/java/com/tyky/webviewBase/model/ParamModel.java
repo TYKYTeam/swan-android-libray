@@ -27,9 +27,18 @@ public class ParamModel {
 
     //-------------沉浸式状态栏----------
     /**
-     * 沉浸式状态栏
+     * 是否忽略状态栏（时间、电量、信号）占位高度
+     * true  : DecorView 内容位于状态栏和导航栏之间（不占用状态栏）
+     * false : contentView 内容可以伸到状态栏位置（沉浸式）
      */
     private boolean isFitWindow;
+
+    /**
+     * 是否显示状态栏（时间、电量、信号）
+     * true：显示状态栏
+     * false：隐藏状态栏
+     */
+    private boolean isStatusBarVisible;
 
     /**
      *  light 模式（状态栏字体颜色变灰，导航栏内部按钮颜色变灰）
@@ -40,8 +49,16 @@ public class ParamModel {
 
     /**
      * 背景颜色
+     * 设置状态栏或导航栏颜色
      */
     private String color;
+
+    /**
+     * 是否显示导航栏
+     *  true  : 显示底部导航栏
+     *  false : 隐藏底部导航栏
+     */
+    private boolean isNavBarVisible;
     //-------------沉浸式状态栏----------
 
     /**
@@ -109,6 +126,22 @@ public class ParamModel {
 
     public void setFitWindow(boolean fitWindow) {
         isFitWindow = fitWindow;
+    }
+
+    public boolean isStatusBarVisible() {
+        return isStatusBarVisible;
+    }
+
+    public void setStatusBarVisible(boolean statusBarVisible) {
+        isStatusBarVisible = statusBarVisible;
+    }
+
+    public boolean isNavBarVisible() {
+        return isNavBarVisible;
+    }
+
+    public void setNavBarVisible(boolean navBarVisible) {
+        isNavBarVisible = navBarVisible;
     }
 
     public String[] getDownloadUrls() {

@@ -82,9 +82,6 @@ dependencies {
     api "com.github.kongzue.DialogX:DialogX:${dialogx_version}"
 
     implementation 'com.tencent.tbs:tbssdk:44286'
-
-    // 沉浸式状态栏
-    implementation 'com.gitee.zackratos:UltimateBarX:0.8.0'
 }
 
 tasks.withType(JavaCompile) {

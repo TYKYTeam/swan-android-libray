@@ -5,15 +5,19 @@ package com.tyky.webviewBase.event;
  */
 public class ImmersiveBarEvent {
     private boolean isFitWindow;
+    private boolean isStatusBarVisible;
     private boolean isLight;
+    private boolean isNavBarVisible;
     private String color;
 
     public ImmersiveBarEvent() {
     }
 
-    public ImmersiveBarEvent(boolean isFitWindow, boolean isLight, String color) {
+    public ImmersiveBarEvent(boolean isStatusBarVisible, boolean isFitWindow, boolean isLight, boolean isNavBarVisible, String color) {
+        this.isStatusBarVisible = isStatusBarVisible;
         this.isFitWindow = isFitWindow;
         this.isLight = isLight;
+        this.isNavBarVisible = isNavBarVisible;
         this.color = color;
     }
 
@@ -23,6 +27,14 @@ public class ImmersiveBarEvent {
 
     public void setFitWindow(boolean fitWindow) {
         isFitWindow = fitWindow;
+    }
+
+    public boolean isStatusBarVisible() {
+        return isStatusBarVisible;
+    }
+
+    public void setStatusBarVisible(boolean statusBarVisible) {
+        isStatusBarVisible = statusBarVisible;
     }
 
     public boolean isLight() {
@@ -39,5 +51,13 @@ public class ImmersiveBarEvent {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public boolean isNavBarVisible() {
+        return isNavBarVisible;
+    }
+
+    public void setNavBarVisible(boolean navBarVisible) {
+        isNavBarVisible = navBarVisible;
     }
 }

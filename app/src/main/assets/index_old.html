@@ -225,8 +225,10 @@
                     <button type="default" onclick="openUrlByBrowser()">使用浏览器打开链接</button>
                     <button type="default" onclick="restartApp()">重启APP</button>
                     <button type="default" onclick="changeStatusBar()">更改状态栏颜色</button>
-                    <button type="default" onclick="immersiveBar1()">only状态栏 light true</button>
-                    <button type="default" onclick="immersiveBar2()">only状态栏 light false</button>
+                    <button type="default" onclick="immersiveBar1()">isFitWindow true</button>
+                    <button type="default" onclick="immersiveBar2()">isFitWindow false</button>
+                    <button type="default" onclick="immersiveBar3()">only状态栏 light false</button>
+                    <button type="default" onclick="immersiveBar4()">only状态栏 light false</button>
                     <button type="default" onclick="gotoWeixinMiniProgress()">跳转微信小程序</button>
                 </div>
             </fieldset>
@@ -480,19 +482,38 @@
         function immersiveBar1() {
             if (window.page) {
                 let content = {
+                    "isStatusBarVisible": "true",
                     "isFitWindow": "true",
                     "isLight": "true",
+                    "isNavBarVisible": "false",
                     "color": "",
                 }
                 let result = window.page.immersiveBar(JSON.stringify(content))
                 console.log(result)
             }
         }
+
         function immersiveBar2() {
             if (window.page) {
                 let content = {
+                    "isStatusBarVisible": "true",
+                    "isFitWindow": "false",
+                    "isLight": "true",
+                    "isNavBarVisible": "false",
+                    "color": "",
+                }
+                let result = window.page.immersiveBar(JSON.stringify(content))
+                console.log(result)
+            }
+        }
+
+        function immersiveBar3() {
+            if (window.page) {
+                let content = {
+                    "isStatusBarVisible": "true",
                     "isFitWindow": "true",
                     "isLight": "false",
+                    "isNavBarVisible": "true",
                     "color": "#ff00ff",
                 }
                 let result = window.page.immersiveBar(JSON.stringify(content))
@@ -500,6 +521,19 @@
             }
         }
 
+        function immersiveBar4() {
+            if (window.page) {
+                let content = {
+                    "isStatusBarVisible": "true",
+                    "isFitWindow": "true",
+                    "isLight": "true",
+                    "isNavBarVisible": "false",
+                    "color": "",
+                }
+                let result = window.page.immersiveBar(JSON.stringify(content))
+                console.log(result)
+            }
+        }
         function gotoWeixinMiniProgress() {
             if (window.page) {
                 let content = {

@@ -55,7 +55,6 @@ import com.tyky.webviewBase.view.CustomWebView;
 import com.tyky.webviewBase.view.CustomWebViewChrome;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
-import com.zackratos.ultimatebarx.ultimatebarx.java.UltimateBarX;
 
 import org.apache.commons.lang3.StringUtils;
 import org.greenrobot.eventbus.EventBus;
@@ -194,16 +193,23 @@ public class CustomWebViewActivity extends AppCompatActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void immersiveBar(ImmersiveBarEvent event) {
+        boolean isStatusBarVisible = event.isStatusBarVisible();
         boolean isFitWindow = event.isFitWindow();
         boolean isLight = event.isLight();
+        boolean isNavBarVisible = event.isNavBarVisible();
         String colorStr = event.getColor();
         int color = TextUtils.isEmpty(colorStr) ? Color.TRANSPARENT : Color.parseColor(colorStr);
-        UltimateBarX.statusBarOnly(this)
-                .fitWindow(isFitWindow)
-                .color(color)
-                .light(isLight)
-                .lvlColor(color)
-                .apply();
+
+        BarUtils.setStatusBarVisibility(this, isStatusBarVisible);
+        if (isStatusBarVisible) {
+            BarUtils.setStatusBarColor(CustomWebViewActivity.this, color, isFitWindow);
+            BarUtils.setStatusBarLightMode(CustomWebViewActivity.this, isLight);
+        }
+
+        BarUtils.setNavBarVisibility(this, isNavBarVisible);
+        if (isNavBarVisible) {
+            BarUtils.setNavBarColor(this, color);
+        }
     }
 
    /* @RequiresApi(api = Build.VERSION_CODES.M)
