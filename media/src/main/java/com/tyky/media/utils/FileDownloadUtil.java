@@ -119,20 +119,19 @@ public class FileDownloadUtil {
         for (DownloadInfo info : downloadInfoList) {
             futureList.add(download(completionService, info));
         }
-        // 所有任务提交后，关闭任务提交，任务都执行结束，关闭线程池
-        ioPool.shutdown();
 
         // 异步获取下载结果  通知 h5
         new Thread(new Runnable() {
             @Override
             public void run() {
                 List<DownloadResult> results = Stream.of(futureList).map(future -> {
-                    DownloadResult result = new DownloadResult();
+                    DownloadResult result = null;
                     try {
                         // 非阻塞获取结果
                         result = completionService.take().get();
                         return result;
                     } catch (ExecutionException | InterruptedException e) {
+                        result = new DownloadResult();
                         e.printStackTrace();
                     }
                     return result;
