@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.RomUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.google.gson.Gson;
 import com.tyky.webviewBase.annotation.WebViewInterface;
+import com.tyky.webviewBase.event.WebViewScalableEvent;
 import com.tyky.webviewBase.event.TakeScreenshotEvent;
 import com.tyky.webviewBase.model.ParamModel;
 import com.tyky.webviewBase.model.ResultModel;
@@ -182,5 +183,17 @@ public class DeviceJsInterface {
     public String getIpAddress() {
         String result = IpAddressUtil.getIpAddress();
         return gson.toJson(ResultModel.success(result));
+    }
+
+    /**
+     * 设置支持缩放
+     * @return
+     */
+    @JavascriptInterface
+    public String setWebViewScalable(String paramStr) {
+        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        boolean isWebViewScalable = paramModel.isWebViewScalable();
+        EventBus.getDefault().post(new WebViewScalableEvent(isWebViewScalable));
+        return gson.toJson(ResultModel.success(""));
     }
 }

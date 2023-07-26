@@ -126,4 +126,9 @@ public class CustomWebView extends WebView {
     public CustomWebViewChrome getCustomWebViewChrome() {
         return customWebViewChrome;
     }
+
+    @Override
+    public void setInitialScale(int i) {
+        super.setInitialScale(i);
+    }
 }

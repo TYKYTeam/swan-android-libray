@@ -43,6 +43,7 @@ import com.tyky.webviewBase.event.ImagePreviewEvent;
 import com.tyky.webviewBase.event.ImmersiveBarEvent;
 import com.tyky.webviewBase.event.IntentEvent;
 import com.tyky.webviewBase.event.JsCallBackEvent;
+import com.tyky.webviewBase.event.WebViewScalableEvent;
 import com.tyky.webviewBase.event.StatusBarEvent;
 import com.tyky.webviewBase.event.TakeScreenshotEvent;
 import com.tyky.webviewBase.event.UrlLoadEvent;
@@ -210,6 +211,17 @@ public class CustomWebViewActivity extends AppCompatActivity {
         if (isNavBarVisible) {
             BarUtils.setNavBarColor(this, color);
         }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void setWebViewScalable(WebViewScalableEvent event) {
+        boolean isWebViewScalable = event.isWebViewScalable();
+        customWebView.getSettings().setSupportZoom(isWebViewScalable);
+        customWebView.getSettings().setBuiltInZoomControls(isWebViewScalable);
+        customWebView.getSettings().setDisplayZoomControls(false);
+//        customWebView.setInitialScale(100);
+//        loadUrl("/index_old.html");
     }
 
    /* @RequiresApi(api = Build.VERSION_CODES.M)

@@ -103,6 +103,16 @@ public class ParamModel {
     private boolean isGotoPage;
     //-------------IM的Module传参字段结束----------
 
+    // webView是否支持缩放
+    private boolean isWebViewScalable;
+
+    public boolean isWebViewScalable() {
+        return isWebViewScalable;
+    }
+
+    public void setWebViewScalable(boolean webViewScalable) {
+        isWebViewScalable = webViewScalable;
+    }
 
     public boolean isFitWindow() {
         return isFitWindow;

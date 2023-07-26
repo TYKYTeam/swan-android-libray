@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <meta name="viewport"
-        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        content="width=device-width,initial-scale=1,minimum-scale=0.5,maximum-scale=10,user-scalable=yes" />
     <head>
         <title></title>
         <meta charset="UTF-8" />
@@ -152,6 +152,7 @@
                     <button type="default" onclick="getScreenOrientation()">获取当前屏幕方向状态</button>
                     <button type="default" onclick="getScreenWH()">获取当前屏幕分辨率</button>
                     <button type="default" onclick="getIpAddress()">获取ip地址</button>
+                    <button type="default" onclick="setWebViewScalable()">设置webView是否可缩放</button>
                 </div>
             </fieldset>
 
@@ -741,6 +742,19 @@
         function getIpAddress() {
             if (window.device) {
                 let result = window.device.getIpAddress()
+                alert(result)
+                console.log(result)
+            }
+        }
+
+        let flag = false
+        function setWebViewScalable() {
+            if (window.device) {
+                flag = !flag
+                let content = {
+                    "isWebViewScalable": flag,
+                }
+                let result = window.device.setWebViewScalable(JSON.stringify(content))
                 alert(result)
                 console.log(result)
             }
