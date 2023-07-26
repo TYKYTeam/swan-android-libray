@@ -336,7 +336,7 @@ public class MediaJsInterface {
 
         // 异步下载
         FileDownloadUtil.getInstance().downloads(downloadInfos, callBackMethod);
-        return gson.toJson(ResultModel.success("开始下载"));
+        return gson.toJson(ResultModel.success(""));
     }
 
 

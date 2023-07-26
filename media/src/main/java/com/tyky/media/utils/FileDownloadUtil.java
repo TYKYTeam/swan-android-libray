@@ -120,28 +120,21 @@ public class FileDownloadUtil {
             futureList.add(download(completionService, info));
         }
 
-        // 异步获取下载结果  通知 h5
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                List<DownloadResult> results = Stream.of(futureList).map(future -> {
-                    DownloadResult result = null;
-                    try {
-                        // 非阻塞获取结果
-                        result = completionService.take().get();
-                        return result;
-                    } catch (ExecutionException | InterruptedException e) {
-                        result = new DownloadResult();
-                        e.printStackTrace();
-                    }
-                    return result;
-                }).collect(Collectors.toList());
-
-                // 所有任务执行结束
-                EventBus.getDefault().post(new JsCallBackEvent(callBackMethod, results));
+        List<DownloadResult> results = Stream.of(futureList).map(future -> {
+            DownloadResult result = null;
+            try {
+                // 非阻塞获取结果
+                result = completionService.take().get();
+                return result;
+            } catch (ExecutionException | InterruptedException e) {
+                result = new DownloadResult();
+                e.printStackTrace();
             }
-        }).start();
+            return result;
+        }).collect(Collectors.toList());
 
+        // 所有任务执行结束 回调前端函数
+        EventBus.getDefault().post(new JsCallBackEvent(callBackMethod, results));
     }
 
     public Future<DownloadResult> download(ExecutorCompletionService<DownloadResult> completionService,
