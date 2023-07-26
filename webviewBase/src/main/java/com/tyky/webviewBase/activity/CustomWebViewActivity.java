@@ -220,8 +220,6 @@ public class CustomWebViewActivity extends AppCompatActivity {
         customWebView.getSettings().setSupportZoom(isWebViewScalable);
         customWebView.getSettings().setBuiltInZoomControls(isWebViewScalable);
         customWebView.getSettings().setDisplayZoomControls(false);
-//        customWebView.setInitialScale(100);
-//        loadUrl("/index_old.html");
     }
 
    /* @RequiresApi(api = Build.VERSION_CODES.M)
