@@ -431,10 +431,6 @@ downloadFiles
 
 **返回结果：**
 ```
-{"code":200,"desc":"","result":["开始下载"]}
-```
-**下载结束返回结果：**
-```
 {"code":200,"desc":"","result":[
                                     {"downloadFileName":"平板登录页需求.docx", "isSuccess":true},
                                     {"downloadFileName":"app进度填报调整20230616.docx", "isSuccess":true},
@@ -466,12 +462,12 @@ function downloadFile() {
 ```
 
 ### 11. 文件离线预览，支持 pdf, doc, docx
-downloadFiles
+previewFile
 
 **传参：**
 ```
 {
-    downloadUrls: "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/26/20230626152758996F8393.docx&fileName=app进度填报调整20230616.docx",
+    downloadUrl: "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/26/20230626152758996F8393.docx&fileName=app进度填报调整20230616.docx",
 }
 ```
 
@@ -485,7 +481,7 @@ downloadFiles
 function previewFile() {
     if (window.android_media) {
         let content = {
-            "downloadUrls": "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/26/20230626152758996F8393.docx&fileName=app进度填报调整20230616.docx",
+            "downloadUrl": "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/26/20230626152758996F8393.docx&fileName=app进度填报调整20230616.docx",
         }
         let result = window.android_media.previewFile(JSON.stringify(content))
         alert(result)
@@ -1141,6 +1137,43 @@ if (window.device) {
     let result = window.device.getIpAddress()
     alert(result)
     console.log(result)
+}
+```
+
+### 11.设置webView是否可缩放
+
+`setWebViewScalable`
+
+设置webView是否可缩放
+
+**传参：**
+
+```
+{
+    isWebViewScalable: true
+}
+```
+
+**返回结果：**
+
+```js
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+
+```
+let flag = false
+function setWebViewScalable() {
+    if (window.device) {
+        flag = !flag
+        let content = {
+            "isWebViewScalable": flag,
+        }
+        let result = window.device.setWebViewScalable(JSON.stringify(content))
+        alert(result)
+        console.log(result)
+    }
 }
 ```
 
