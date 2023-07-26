@@ -1144,7 +1144,11 @@ if (window.device) {
 
 `setWebViewScalable`
 
-设置webView是否可缩放
+设置webView是否可缩放，需配合h5的属性为viewport的meta标签一起使用。
+viewport有几个关键属性
+`minimum-scale 设置最小缩放 （数值）
+maximum-scale 设置最大缩放 （数值）
+user-scalable 设置能否缩放 （yes/no）`
 
 **传参：**
 
