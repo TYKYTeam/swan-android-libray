@@ -20,7 +20,6 @@ import com.blankj.utilcode.util.PhoneUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.google.gson.Gson;
 import com.tyky.media.activity.FilePreviewActivity;
-import com.tyky.media.activity.OnlinePreviewActivity;
 import com.tyky.media.activity.QrScanActivity;
 import com.tyky.media.bean.DownloadInfo;
 import com.tyky.media.bean.MyContacts;
@@ -275,24 +274,6 @@ public class MediaJsInterface {
         }
         cursor.close();
         return contacts;
-    }
-
-    /**
-     * 预览在线文件
-     */
-    @JavascriptInterface
-    public String previewFileUrl(String paramStr) {
-        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
-        String content = paramModel.getContent();
-        if (StringUtils.isEmpty(content)) {
-            return gson.toJson(ResultModel.errorParam());
-        }
-        //Intent intent = IntentUtils.getComponentIntent("com.tyky.media.activity", "com.tyky.media.activity.OnlinePreviewActivity");
-        //intent.putExtra("url", content);
-        Bundle bundle = new Bundle();
-        bundle.putString("url", content);
-        ActivityUtils.startActivity(bundle, OnlinePreviewActivity.class);
-        return gson.toJson(ResultModel.success(""));
     }
 
     /**

@@ -13,7 +13,6 @@
 
     <application>
         <activity android:name=".activity.FilePreviewActivity" />
-        <activity android:name=".activity.OnlinePreviewActivity" />
         <activity
             android:name=".activity.QrScanActivity"
             android:label="扫一扫" />

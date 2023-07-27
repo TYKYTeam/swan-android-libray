@@ -3,6 +3,8 @@
     package="com.tyky.filepreview">
 
     <application>
+        <activity android:name=".activity.OnlinePreviewActivity" />
         <activity android:name=".activity.PdfPreviewActivity" />
     </application>
+
 </manifest>

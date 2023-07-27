@@ -88,19 +88,17 @@
                     <button type="default" onclick="speakText()">文字转语音</button>
                     <button type="default" onclick="getContacts()">获取手机通讯录列表</button>
 
-                    <button type="default" onclick="previewFileUrl()">在线预览</button>
                     <button type="default" onclick="downloadFile()">多文件下载</button>
                     <button type="default" onclick="previewFile()">文件预览</button>
 
                 </div>
             </fieldset>
 
-
-
             <fieldset>
                 <legend>filePreview 文件预览</legend>
                 <div class="contentDiv">
                     <button type="default" onclick="previewPdf()">pdf预览</button>
+                    <button type="default" onclick="previewFileUrl()">在线预览</button>
                 </div>
             </fieldset>
 
@@ -1146,12 +1144,12 @@
         }
 
         function previewFileUrl() {
-            if (window.android_media) {
+            if (window.filePreview) {
                 let content = {
                     // content: "http://183.62.130.45:35604/onlinePreview?url=aHR0cDovLzEwLjIzMy4yMDYuMTI6NTAwMC9iYXNlLWFwaXNlcnZpY2Uvc3RvcmFnZS9kb3dubG9hZC9rbm93bGVkZ2ViYXNlLWJ1c2luZXNzL3VwbG9hZC83ZTFjYmRkZWZiZDQ0ZTZmYmUxNjMxNGQxODRkNmIwNl%2Fnu5%2FkuIDouqvku73orqTor4FzZGvmlofmoaMtdjIuMi5wZGY%3D"
-                    content: "http://183.62.130.45:35604/onlinePreview?url=aHR0cDovLzEwLjIzMy4yMDYuMTI6NTAwMC9iYXNlLWFwaXNlcnZpY2Uvc3RvcmFnZS9kb3dubG9hZC9rbm93bGVkZ2ViYXNlLWJ1c2luZXNzL3VwbG9hZC83ZTFjYmRkZWZiZDQ0ZTZmYmUxNjMxNGQxODRkNmIwNl%2Fnu5%2FkuIDouqvku73orqTor4FzZGvmlofmoaMtdjIuMi5wZGY%3D&officePreviewType=image"
+                    content: "http://ark.tyky.com.cn:35604/onlinePreview?url=aHR0cDovLzEwLjIzMy4yMDYuMTI6NTAwMC9iYXNlLWFwaXNlcnZpY2Uvc3RvcmFnZS9kb3dubG9hZC9rbm93bGVkZ2ViYXNlLWJ1c2luZXNzL3VwbG9hZC83ZTFjYmRkZWZiZDQ0ZTZmYmUxNjMxNGQxODRkNmIwNl%2Fnu5%2FkuIDouqvku73orqTor4FzZGvmlofmoaMtdjIuMi5wZGY%3D&officePreviewType=image"
                 }
-                let result = window.android_media.previewFileUrl(JSON.stringify(content))
+                let result = window.filePreview.previewFileUrl(JSON.stringify(content))
                 // alert(result);
                 console.log(result)
             }

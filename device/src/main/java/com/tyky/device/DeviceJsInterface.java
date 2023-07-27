@@ -194,6 +194,6 @@ public class DeviceJsInterface {
         ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
         boolean isWebViewScalable = paramModel.isWebViewScalable();
         EventBus.getDefault().post(new WebViewScalableEvent(isWebViewScalable));
-        return gson.toJson(ResultModel.success(""));
+        return gson.toJson(ResultModel.success(isWebViewScalable));
     }
 }
