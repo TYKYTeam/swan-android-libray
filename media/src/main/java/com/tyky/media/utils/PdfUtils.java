@@ -105,12 +105,11 @@ public class PdfUtils {
     }
 
     //转换某一个文件
-    public File convert2PdfOneByOne(File file) {
+    public void convert2PdfOneByOne(File file, FileToPdfListener fileToPdfListener) {
         String pdfFileName = FileUtils.getTransformFileName(file, "pdf");
         File pdfFile = FileUtils.getFile(pdfFileName);
         try {
             InputStream inputStream = new FileInputStream(file);
-
             WordExtractor extractor = new WordExtractor(inputStream);
             String[] content = extractor.getParagraphText();
             String fontPath = getFontPath();
@@ -128,11 +127,13 @@ public class PdfUtils {
             doc.close();
         } catch (DocumentException | IOException e) {
             e.printStackTrace();
+            fileToPdfListener.onTransformFail();
         }
-        return pdfFile;
+
+        fileToPdfListener.onTransformSuccess(pdfFile);
     }
 
-    public File docx2Pdf(File file) {
+    public void docx2Pdf(File file, FileToPdfListener fileToPdfListener) {
         String pdfFileName = FileUtils.getTransformFileName(file, "pdf");
         File outPdfFile = FileUtils.getFile(pdfFileName);
         try {
@@ -184,8 +185,9 @@ public class PdfUtils {
             pdfWriter.close();
         } catch (Exception e) {
             KLog.d("docx转pdf文件异常");
+            fileToPdfListener.onTransformFail();
         }
-        return outPdfFile;
+        fileToPdfListener.onTransformSuccess(outPdfFile);
     }
 
     /**
@@ -335,15 +337,20 @@ public class PdfUtils {
         return outFile;
     }
 
-    public File toPdf(File sourceFile) {
+    public void toPdf(File sourceFile, FileToPdfListener fileToPdfListener) {
         String fileName = sourceFile.getName();
         if (fileName.endsWith(".doc")) {
-//            return doc2pdf1(sourceFile);
-            return convert2PdfOneByOne(sourceFile);
+            convert2PdfOneByOne(sourceFile, fileToPdfListener);
+            return;
         }
-        if (fileName.endsWith(".docx")) {
-            return docx2Pdf(sourceFile);
-        }
-        return FileUtils.getFile(FileUtils.getTransformFileName(sourceFile, "pdf"));
+        // docx
+        docx2Pdf(sourceFile, fileToPdfListener);
     }
+
+    public interface FileToPdfListener {
+        void onTransformFail();
+
+        void onTransformSuccess(File file);
+    }
+
 }

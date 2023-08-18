@@ -25,6 +25,13 @@ public class FileUtils {
     }
 
     /**
+     * 获取文件
+     */
+    public static File getFile(String fileName, String relatePath) {
+        return new File(PathUtils.getExternalAppFilesPath(),  "/" + relatePath + "/" +  fileName);
+    }
+
+    /**
      * 替换文件名后缀
      */
     public static String getTransformFileName(File file, String suffix) {

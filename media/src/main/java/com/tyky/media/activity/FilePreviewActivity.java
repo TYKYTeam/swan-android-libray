@@ -18,10 +18,8 @@ import com.tyky.media.utils.FileUtils;
 import com.tyky.media.utils.PdfUtils;
 
 import java.io.File;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 
 /**
  * 文件预览
@@ -36,6 +34,7 @@ public class FilePreviewActivity extends AppCompatActivity {
     private View openByOther;
     private View retryBtn;
     private FileDownloadUtil.OnDownloadListener downloadListener;
+    private PdfUtils.FileToPdfListener fileToPdfListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +62,9 @@ public class FilePreviewActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * 文件下载回调
+     */
     private void initListener() {
         downloadListener = new FileDownloadUtil.OnDownloadListener() {
             @Override
@@ -73,17 +75,42 @@ public class FilePreviewActivity extends AppCompatActivity {
             @Override
             public void onError(String fileName, Exception e) {
                 KLog.d("文件下载失败");
+                WaitDialog.dismiss();
+                ToastUtils.showLong("文件下载失败");
+                updateDisplayView(false);
             }
 
             @Override
             public void onSuccess(File outputFile) {
                 KLog.d("文件下载成功");
+                if (FilePreviewActivity.this.isFinishing() || FilePreviewActivity.this.isDestroyed()) {
+                    return;
+                }
+                // 展示pdf文件
+                previewToPdf(outputFile);
+            }
+        };
+
+        fileToPdfListener = new PdfUtils.FileToPdfListener() {
+            @Override
+            public void onTransformFail() {
+                WaitDialog.dismiss();
+                ToastUtils.showLong("源文件转pdf失败");
+                updateDisplayView(false);
+            }
+
+            @Override
+            public void onTransformSuccess(File targetFile) {
+                KLog.d("文件转换pdf成功");
+                // 展示pdf文件
+                previewFile(targetFile);
             }
         };
 
         imageBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                WaitDialog.dismiss();
                 finish();
             }
         });
@@ -123,70 +150,39 @@ public class FilePreviewActivity extends AppCompatActivity {
         // 获取本地 sdcard/Android/data/com.tyky.acl/files/ 下对应文件
         File file = FileUtils.getFile(fileName);
 
-        // 源文件为pdf文件直接展示
-        if (fileName.endsWith("pdf") && file.exists()) {
-            // 展示pdf文件
-            previewFile(file);
-            return;
-        }
-
         // 判断本地是否存在源文件，本地没有文件，下载文件
-        if (!file.exists() && !downloadFile()) {
+        if (!file.exists()) {
+            downloadFile();
             return;
         }
 
-        // 源文件为pdf文件直接展示
-        if (fileName.endsWith("pdf")) {
+        previewToPdf(file);
+    }
+
+    // 统一转换为pdf
+    private void previewToPdf(File file) {
+        // 本地存在文件，源文件为pdf文件直接展示
+        if (file.getName().endsWith("pdf")) {
             // 展示pdf文件
             previewFile(file);
             return;
         }
-
-        // 源文件非pdf文件 需要转换为pdf文件
-        String pdfName = FileUtils.getTransformFileName(file, "pdf");
-        File pdfFile = FileUtils.getFile(pdfName);
 
         // 将源文件转换为pdf文件，生成pdf文件
-        File toPdfFile = PdfUtils.getInstance().toPdf(file);
-
-        // 获取本地对应的pdf文件名称
-        if (!toPdfFile.exists()) {
-            WaitDialog.dismiss();
-            ToastUtils.showLong("源文件转pdf失败");
-            updateDisplayView(false);
-            return;
-        }
-        // 展示pdf文件
-        previewFile(pdfFile);
+        PdfUtils.getInstance().toPdf(file, fileToPdfListener);
     }
 
     // 下载文件
-    private boolean downloadFile() {
+    private void downloadFile() {
         String fileName = FileUtils.parseUrlFileName(fileUrl);
+
         DownloadInfo downloadInfo = new DownloadInfo();
         downloadInfo.setUrl(fileUrl);
         downloadInfo.setFileName(fileName);
         downloadInfo.setListener(downloadListener);
-
         ExecutorService ioPool = ThreadUtils.getIoPool();
         ExecutorCompletionService<DownloadResult> completionService = new ExecutorCompletionService<>(ioPool);
-        Future<DownloadResult> resultFuture = FileDownloadUtil.getInstance().download(completionService, downloadInfo);
-        boolean isSuccess = false;
-        try {
-            // 阻塞当前线程
-            DownloadResult result = resultFuture.get();
-            isSuccess = result.isSuccess();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        ioPool.shutdown();
-        String tips = isSuccess ? fileName + "下载成功" : fileName + "源文件下载失败";
-        KLog.d(tips);
-        if (!isSuccess) {
-            WaitDialog.dismiss();
-            ToastUtils.showLong(tips);
-        }
-        return isSuccess;
+        FileDownloadUtil.getInstance().download(completionService, downloadInfo);
     }
 
 
