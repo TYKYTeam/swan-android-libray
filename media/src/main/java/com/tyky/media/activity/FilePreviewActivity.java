@@ -18,6 +18,7 @@ import com.tyky.media.utils.FileUtils;
 import com.tyky.media.utils.PdfUtils;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.ExecutorService;
 
@@ -25,8 +26,9 @@ import java.util.concurrent.ExecutorService;
  * 文件预览
  */
 public class FilePreviewActivity extends AppCompatActivity {
-    public static final String FILE_URL = "filePath";
+    public static final String FILE_INFO = "fileInfo";
     private String fileUrl;
+    private String fileName;
     private PDFView pdfView;
     private View imageBack;
     private View llOpenSuccess;
@@ -47,7 +49,10 @@ public class FilePreviewActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        fileUrl = getIntent().getStringExtra(FILE_URL);
+        DownloadInfo downloadInfo = (DownloadInfo) getIntent().getSerializableExtra(FILE_INFO);
+        fileUrl = downloadInfo.getUrl();
+        fileName = downloadInfo.getName();
+        KLog.d(fileUrl + "    " + fileName);
     }
 
     private void initView() {
@@ -59,7 +64,6 @@ public class FilePreviewActivity extends AppCompatActivity {
         // 暂时先不用
         openByOther.setVisibility(View.GONE);
         retryBtn = findViewById(R.id.retryBtn);
-
     }
 
     /**
@@ -145,8 +149,6 @@ public class FilePreviewActivity extends AppCompatActivity {
     private void initPdfFile() {
         WaitDialog.show("加载中");
 
-        // 从url中获取文件名称
-        String fileName = FileUtils.parseUrlFileName(fileUrl);
         // 获取本地 sdcard/Android/data/com.tyky.acl/files/ 下对应文件
         File file = FileUtils.getFile(fileName);
 
@@ -174,11 +176,9 @@ public class FilePreviewActivity extends AppCompatActivity {
 
     // 下载文件
     private void downloadFile() {
-        String fileName = FileUtils.parseUrlFileName(fileUrl);
-
         DownloadInfo downloadInfo = new DownloadInfo();
         downloadInfo.setUrl(fileUrl);
-        downloadInfo.setFileName(fileName);
+        downloadInfo.setName(fileName);
         downloadInfo.setListener(downloadListener);
         ExecutorService ioPool = ThreadUtils.getIoPool();
         ExecutorCompletionService<DownloadResult> completionService = new ExecutorCompletionService<>(ioPool);

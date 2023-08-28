@@ -1,15 +1,21 @@
 package com.tyky.media.bean;
 
+import android.text.TextUtils;
+
 import com.tyky.media.utils.FileDownloadUtil;
 
-public class DownloadInfo {
+import java.io.Serializable;
+
+public class DownloadInfo implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String url;
-    private String fileName;
+    private String name;
     private FileDownloadUtil.OnDownloadListener listener;
 
     public DownloadInfo(String url, String fileName, FileDownloadUtil.OnDownloadListener listener) {
         this.url = url;
-        this.fileName = fileName;
+        this.name = fileName;
         this.listener = listener;
     }
 
@@ -18,19 +24,19 @@ public class DownloadInfo {
     }
 
     public String getUrl() {
-        return url;
+        return TextUtils.isEmpty(url) ? "" : url;
     }
 
     public void setUrl(String url) {
         this.url = url;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getName() {
+        return name;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setName(String name) {
+        this.name = name;
     }
 
 
@@ -46,7 +52,7 @@ public class DownloadInfo {
     public String toString() {
         return "DownloadInfo{" +
                 "url='" + url + '\'' +
-                ", fileName='" + fileName + '\'' +
+                ", fileName='" + name + '\'' +
                 ", listener=" + listener +
                 '}';
     }

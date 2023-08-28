@@ -120,21 +120,24 @@ public class FileDownloadUtil {
             futureList.add(download(completionService, info));
         }
 
-        List<DownloadResult> results = Stream.of(futureList).map(future -> {
-            DownloadResult result = null;
-            try {
-                // 非阻塞获取结果
-                result = completionService.take().get();
-                return result;
-            } catch (ExecutionException | InterruptedException e) {
-                result = new DownloadResult();
-                e.printStackTrace();
+        ThreadUtils.getSinglePool().submit(new Runnable() {
+            @Override
+            public void run() {
+                List<DownloadResult> results = Stream.of(futureList).map(future -> {
+                    DownloadResult result = null;
+                    try {
+                        result = completionService.take().get();
+                        return result;
+                    } catch (ExecutionException | InterruptedException e) {
+                        result = new DownloadResult();
+                        e.printStackTrace();
+                    }
+                    return result;
+                }).collect(Collectors.toList());
+                // 所有任务执行结束 回调前端函数
+                EventBus.getDefault().post(new JsCallBackEvent(callBackMethod, results));
             }
-            return result;
-        }).collect(Collectors.toList());
-
-        // 所有任务执行结束 回调前端函数
-        EventBus.getDefault().post(new JsCallBackEvent(callBackMethod, results));
+        });
     }
 
     public Future<DownloadResult> download(ExecutorCompletionService<DownloadResult> completionService,
@@ -144,7 +147,7 @@ public class FileDownloadUtil {
             public DownloadResult call() {
                 DownloadResult result = new DownloadResult();
                 String url = downloadInfo.getUrl();
-                String fileName = downloadInfo.getFileName();
+                String fileName = downloadInfo.getName();
                 OnDownloadListener listener = downloadInfo.getListener();
                 File file = FileUtils.getFile(fileName);
                 //续传开始的进度

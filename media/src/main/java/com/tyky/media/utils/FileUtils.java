@@ -9,10 +9,22 @@ public class FileUtils {
      * 从url中获取文件名
      */
     public static String parseUrlFileName(String url) {
+        /**
+         * http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/26/202306261528193AED92EB.docx&fileName=平板登录页需求.docx",
+         */
         String[] split = url.split("/");
         String fileName = split[split.length - 1];
-        if (fileName.contains("=")) {
+        String[] params = fileName.split("&");
+        for (String param : params) {
+            if (!param.contains("=")) {
+                continue;
+            }
+            if (!param.contains(".")) {
+                continue;
+            }
+
             fileName = fileName.substring(fileName.indexOf("=") + 1);
+            break;
         }
         return fileName;
     }

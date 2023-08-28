@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.tyky.media.activity.FilePreviewActivity;
 import com.tyky.media.activity.QrScanActivity;
 import com.tyky.media.bean.DownloadInfo;
+import com.tyky.media.bean.MediaRequestModel;
 import com.tyky.media.bean.MyContacts;
 import com.tyky.media.utils.FileDownloadUtil;
 import com.tyky.media.utils.FileUtils;
@@ -29,7 +30,6 @@ import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.event.ImagePreviewEvent;
 import com.tyky.webviewBase.event.IntentEvent;
 import com.tyky.webviewBase.event.JsCallBackEvent;
-import com.tyky.webviewBase.model.ParamModel;
 import com.tyky.webviewBase.model.ResultModel;
 import com.tyky.webviewBase.utils.SpeechService;
 import com.yanzhenjie.permission.AndPermission;
@@ -53,7 +53,7 @@ public class MediaJsInterface {
      */
     @JavascriptInterface
     public String copyTextToClipboard(String paramStr) {
-        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        MediaRequestModel paramModel = gson.fromJson(paramStr, MediaRequestModel.class);
         String content = paramModel.getContent();
         if (StringUtils.isEmpty(content)) {
             return gson.toJson(ResultModel.errorParam());
@@ -79,7 +79,7 @@ public class MediaJsInterface {
     @SuppressLint("MissingPermission")
     @JavascriptInterface
     public String callPhone(String paramStr) {
-        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        MediaRequestModel paramModel = gson.fromJson(paramStr, MediaRequestModel.class);
         String phone = paramModel.getPhone();
         if (StringUtils.isEmpty(phone)) {
             return gson.toJson(ResultModel.errorParam());
@@ -106,7 +106,7 @@ public class MediaJsInterface {
      */
     @JavascriptInterface
     public String goToCall(String paramStr) {
-        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        MediaRequestModel paramModel = gson.fromJson(paramStr, MediaRequestModel.class);
         String content = paramModel.getPhone();
         if (StringUtils.isEmpty(content)) {
             return gson.toJson(ResultModel.errorParam());
@@ -122,7 +122,7 @@ public class MediaJsInterface {
      */
     @JavascriptInterface
     public String sendSms(String paramStr) {
-        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        MediaRequestModel paramModel = gson.fromJson(paramStr, MediaRequestModel.class);
         String content = paramModel.getContent();
         String phone = paramModel.getPhone();
         if (StringUtils.isEmpty(content) || StringUtils.isEmpty(phone)) {
@@ -140,7 +140,7 @@ public class MediaJsInterface {
      */
     @JavascriptInterface
     public String previewPicture(String paramStr) {
-        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        MediaRequestModel paramModel = gson.fromJson(paramStr, MediaRequestModel.class);
         String content = paramModel.getContent();
         int type = paramModel.getType();
         if (type == 0 || StringUtils.isEmpty(content)) {
@@ -158,7 +158,7 @@ public class MediaJsInterface {
      */
     @JavascriptInterface
     public String qrScan(String paramStr) {
-        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        MediaRequestModel paramModel = gson.fromJson(paramStr, MediaRequestModel.class);
         String callbackMethod = paramModel.getCallBackMethod();
         if (callbackMethod == null) {
             return gson.toJson(ResultModel.errorParam());
@@ -177,7 +177,7 @@ public class MediaJsInterface {
      */
     @JavascriptInterface
     public String speakText(String paramStr) {
-        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        MediaRequestModel paramModel = gson.fromJson(paramStr, MediaRequestModel.class);
         String content = paramModel.getContent();
         if (StringUtils.isEmpty(content)) {
             return gson.toJson(ResultModel.errorParam());
@@ -188,7 +188,7 @@ public class MediaJsInterface {
 
     @JavascriptInterface
     public String testCallBack(String paramStr) {
-        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        MediaRequestModel paramModel = gson.fromJson(paramStr, MediaRequestModel.class);
         String callbackMethod = paramModel.getCallBackMethod();
         if (callbackMethod == null) {
             return gson.toJson(ResultModel.errorParam());
@@ -202,7 +202,7 @@ public class MediaJsInterface {
      */
     @JavascriptInterface
     public String getContacts(String paramStr) {
-        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        MediaRequestModel paramModel = gson.fromJson(paramStr, MediaRequestModel.class);
         String callbackMethod = paramModel.getCallBackMethod();
         if (callbackMethod == null) {
             return gson.toJson(ResultModel.errorParam());
@@ -281,10 +281,28 @@ public class MediaJsInterface {
      */
     @JavascriptInterface
     public String previewFile(String paramStr) {
-        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
-        String url = paramModel.getDownloadUrl();
+        MediaRequestModel paramModel = gson.fromJson(paramStr, MediaRequestModel.class);
+        DownloadInfo downloadInfo = paramModel.getPreviewFileInfo();
         Bundle bundle = new Bundle();
-        bundle.putString(FilePreviewActivity.FILE_URL, url);
+        String url = "";
+        String fileName = "";
+        if (downloadInfo == null) {
+            url = paramModel.getDownloadUrl();
+            fileName = FileUtils.parseUrlFileName(url);
+            downloadInfo = new DownloadInfo();
+            downloadInfo.setUrl(url);
+            downloadInfo.setName(fileName);
+
+        } else  {
+            url = downloadInfo.getUrl();
+            fileName = downloadInfo.getName();
+            if (TextUtils.isEmpty(fileName)) {
+                // 从url中截取fileName
+                downloadInfo.setName(FileUtils.parseUrlFileName(url));
+            }
+        }
+        bundle.putSerializable(FilePreviewActivity.FILE_INFO, downloadInfo);
+
         ActivityUtils.startActivity(bundle, FilePreviewActivity.class);
         return gson.toJson(ResultModel.success(""));
     }
@@ -294,31 +312,39 @@ public class MediaJsInterface {
      */
     @JavascriptInterface
     public String downloadFiles(String paramStr) {
-        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        MediaRequestModel paramModel = gson.fromJson(paramStr, MediaRequestModel.class);
         String[] downloadUrls = paramModel.getDownloadUrls();
-        String callBackMethod = paramModel.getCallBackMethod();
 
-        if (downloadUrls.length < 1) {
-            return gson.toJson(ResultModel.errorParam("url为空"));
-        }
+        DownloadInfo[] downloadInfos = paramModel.getDownloadInfos();
+        String callBackMethod = paramModel.getCallBackMethod();
 
         if (TextUtils.isEmpty(callBackMethod)) {
             return gson.toJson(ResultModel.errorParam("未传回调函数"));
         }
 
-        List<DownloadInfo> downloadInfos = new ArrayList<>();
-        Stream.of(downloadUrls).forEach(url -> {
-            DownloadInfo downloadInfo = new DownloadInfo();
-            String fileName = FileUtils.parseUrlFileName(url);
-            downloadInfo.setFileName(fileName);
-            downloadInfo.setUrl(url);
-            downloadInfos.add(downloadInfo);
-        });
+        List<DownloadInfo> infos = new ArrayList<>();
+
+        if (downloadUrls != null && downloadUrls.length > 0) {
+            Stream.of(downloadUrls).forEach(url -> {
+                DownloadInfo downloadInfo = new DownloadInfo();
+                String fileName = FileUtils.parseUrlFileName(url);
+                downloadInfo.setName(fileName);
+                downloadInfo.setUrl(url);
+                infos.add(downloadInfo);
+            });
+        } else if (downloadInfos != null && downloadInfos.length > 0){
+            Stream.of(downloadInfos).forEach(downloadInfo -> {
+                if (TextUtils.isEmpty(downloadInfo.getName())) {
+                    downloadInfo.setName(FileUtils.parseUrlFileName(downloadInfo.getUrl()));
+                }
+                infos.add(downloadInfo);
+            });
+        } else {
+            return gson.toJson(ResultModel.errorParam("未传文件url相关信息"));
+        }
 
         // 异步下载
-        FileDownloadUtil.getInstance().downloads(downloadInfos, callBackMethod);
+        FileDownloadUtil.getInstance().downloads(infos, callBackMethod);
         return gson.toJson(ResultModel.success(""));
     }
-
-
 }
