@@ -420,6 +420,22 @@ downloadFiles
 **传参：**
 ```
 {
+    "downloadInfos": [
+            {
+                name: "1.doc",
+                url: "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/6/202306061101187527ED04.doc&fileName=申报模板.doc"
+            },
+            {
+                name: "2.docx",
+                url: "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/26/202306261528193AED92EB.docx&fileName=平板登录页需求.docx"
+            },
+        ],
+    "callBackMethod": "downloadCallback"
+}
+```
+
+```
+{
     downloadUrls: [
         "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/6/202306061101187527ED04.doc&fileName=申报模板.doc",
         "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/26/202306261528193AED92EB.docx&fileName=平板登录页需求.docx",
@@ -440,6 +456,33 @@ downloadFiles
 ```
 
 **H5调用示例：**
+```
+        window.downloadCallback = function(object) {
+            alert(JSON.stringify(object))
+        }
+        function downloadFile() {
+            if (window.android_media) {
+                let content = {
+                    "downloadInfos": [
+                        {
+                            name: "1.doc",
+                            url: "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/6/202306061101187527ED04.doc&fileName=申报模板.doc"
+                        },
+                        {
+                            name: "2.docx",
+                            url: "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/26/202306261528193AED92EB.docx&fileName=平板登录页需求.docx"
+                        },
+                    ],
+                    "callBackMethod": "downloadCallback"
+                }
+                let result = window.android_media.downloadFiles(JSON.stringify(content))
+                alert(result)
+                console.log(result)
+            }
+        }
+```
+
+
 ```
 window.downloadCallback = function(object) {
     alert(JSON.stringify(object))
@@ -466,6 +509,13 @@ previewFile
 
 **传参：**
 ```
+"previewFileInfo": {
+    fileName: "平板登录页需求.docx",
+    url: "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/26/202306261528193AED92EB.docx&fileName=平板登录页需求.docx"
+}
+```
+
+```
 {
     downloadUrl: "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/26/20230626152758996F8393.docx&fileName=app进度填报调整20230616.docx",
 }
@@ -477,6 +527,21 @@ previewFile
 ```
 
 **H5调用示例：**
+```
+function previewFile() {
+    if (window.android_media) {
+        let content = {
+            "previewFileInfo": {
+                fileName: "平板登录页需求.docx",
+                url: "http://wuhantaiji.tpddns.cn:8008/projectlibrary-business/fileServer/downloadFile?filePath=/2023/6/26/202306261528193AED92EB.docx&fileName=平板登录页需求.docx"
+            }
+        }
+        let result = window.android_media.previewFile(JSON.stringify(content))
+        console.log(result)
+    }
+}
+```
+
 ```
 function previewFile() {
     if (window.android_media) {
