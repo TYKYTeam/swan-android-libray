@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.RomUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.google.gson.Gson;
 import com.tyky.webviewBase.annotation.WebViewInterface;
+import com.tyky.webviewBase.event.ScreenOrientationEvent;
 import com.tyky.webviewBase.event.WebViewScalableEvent;
 import com.tyky.webviewBase.event.TakeScreenshotEvent;
 import com.tyky.webviewBase.model.ParamModel;
@@ -158,6 +159,20 @@ public class DeviceJsInterface {
         }
         //1：横屏 0：竖屏
         return gson.toJson(ResultModel.success(result));
+    }
+
+    /**
+     * 设置屏幕状态
+     * 1：横屏 0：竖屏
+     *
+     * @return 屏幕旋转
+     */
+    @JavascriptInterface
+    public String setScreenOrientation(String paramStr) {
+        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        int screenOrientation = paramModel.getOrientation();
+        EventBus.getDefault().post(new ScreenOrientationEvent(screenOrientation));
+        return gson.toJson(ResultModel.success(""));
     }
 
     /**

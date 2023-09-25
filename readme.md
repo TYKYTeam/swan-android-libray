@@ -1159,6 +1159,36 @@ if (window.device) {
     alert(result);
 }
 ```
+
+### 9.设置当前屏幕方向状态
+
+setScreenOrientation
+
+**传参：**
+```
+//0:竖屏 1：横屏
+{
+    orientation: '0',
+} 
+```
+
+**返回结果：**
+
+```
+{"code":200,"desc":"","result":''}
+```
+
+**H5调用示例：**
+
+```
+if (window.device) {
+    let content = {
+        orientation: "0"
+    }
+    let result = window.device.setScreenOrientation(JSON.stringify(content))
+}
+```
+
 ### 9.获取屏幕分辨率
 
 `getScreenWH`

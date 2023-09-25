@@ -43,6 +43,7 @@ import com.tyky.webviewBase.event.ImagePreviewEvent;
 import com.tyky.webviewBase.event.ImmersiveBarEvent;
 import com.tyky.webviewBase.event.IntentEvent;
 import com.tyky.webviewBase.event.JsCallBackEvent;
+import com.tyky.webviewBase.event.ScreenOrientationEvent;
 import com.tyky.webviewBase.event.WebViewScalableEvent;
 import com.tyky.webviewBase.event.StatusBarEvent;
 import com.tyky.webviewBase.event.TakeScreenshotEvent;
@@ -220,6 +221,16 @@ public class CustomWebViewActivity extends AppCompatActivity {
         customWebView.getSettings().setSupportZoom(isWebViewScalable);
         customWebView.getSettings().setBuiltInZoomControls(isWebViewScalable);
         customWebView.getSettings().setDisplayZoomControls(false);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void setScreenOrientation(ScreenOrientationEvent event) {
+        Integer orientation = event.getScreenOrientation();
+        if (orientation == 0) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            return;
+        }
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
 
    /* @RequiresApi(api = Build.VERSION_CODES.M)

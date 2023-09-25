@@ -16,6 +16,12 @@ public class ParamModel {
      * 类型
      */
     private Integer type;
+
+    /**
+     *  1：横屏 0：竖屏
+     */
+    private Integer orientation;
+
     /**
      * 回调方法
      */
@@ -210,6 +216,14 @@ public class ParamModel {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public Integer getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(Integer orientation) {
+        this.orientation = orientation;
     }
 
     public List<String> getDataList() {

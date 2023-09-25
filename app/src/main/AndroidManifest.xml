@@ -16,7 +16,8 @@
         tools:replace="android:allowBackup,android:icon,android:theme"
         tools:targetApi="n">
 
-        <activity android:name=".MainActivity" android:exported="true" android:theme="@style/MySplashTheme">
+        <activity android:name=".MainActivity" android:exported="true" android:theme="@style/MySplashTheme"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
