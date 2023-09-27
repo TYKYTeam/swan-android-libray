@@ -18,11 +18,13 @@ public class AndroidBug5497Workaround {
         new AndroidBug5497Workaround(activity);
     }
 
+    private Activity mActivity;
     private View mChildOfContent;
     private int usableHeightPrevious;
     private FrameLayout.LayoutParams frameLayoutParams;
 
     private AndroidBug5497Workaround(Activity activity) {
+        mActivity = activity;
         FrameLayout content = (FrameLayout) activity.findViewById(android.R.id.content);
         mChildOfContent = content.getChildAt(0);
         mChildOfContent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -45,6 +47,8 @@ public class AndroidBug5497Workaround {
                 // keyboard probably just became hidden
                 frameLayoutParams.height = usableHeightSansKeyboard;
             }
+            // 防止移动时显示window背景
+            mActivity.getWindow().setBackgroundDrawable(null);
             mChildOfContent.requestLayout();
             usableHeightPrevious = usableHeightNow;
         }
