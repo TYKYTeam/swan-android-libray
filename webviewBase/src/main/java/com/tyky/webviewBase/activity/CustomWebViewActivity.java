@@ -39,6 +39,7 @@ import com.tencent.smtt.sdk.QbSdk;
 import com.tyky.webviewBase.R;
 import com.tyky.webviewBase.constants.PreviewPicture;
 import com.tyky.webviewBase.constants.RequestCodeConstants;
+import com.tyky.webviewBase.event.AutoAdapterKeyboardEvent;
 import com.tyky.webviewBase.event.ImagePreviewEvent;
 import com.tyky.webviewBase.event.ImmersiveBarEvent;
 import com.tyky.webviewBase.event.IntentEvent;
@@ -51,6 +52,7 @@ import com.tyky.webviewBase.event.UrlLoadEvent;
 import com.tyky.webviewBase.event.UrlLoadFinishEvent;
 import com.tyky.webviewBase.event.WebviewEvent;
 import com.tyky.webviewBase.model.ResultModel;
+import com.tyky.webviewBase.utils.AndroidBug5497Workaround;
 import com.tyky.webviewBase.utils.LibraryInfoUtils;
 import com.tyky.webviewBase.utils.SpeechService;
 import com.tyky.webviewBase.view.CustomWebView;
@@ -231,6 +233,12 @@ public class CustomWebViewActivity extends AppCompatActivity {
             return;
         }
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void AutoAdapterKeyboard(AutoAdapterKeyboardEvent event) {
+        // 解决webview全屏遮挡输入框问题
+        AndroidBug5497Workaround.assistActivity(this);
     }
 
    /* @RequiresApi(api = Build.VERSION_CODES.M)

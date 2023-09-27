@@ -1189,7 +1189,34 @@ if (window.device) {
 }
 ```
 
-### 9.获取屏幕分辨率
+### 10.设置当前屏幕方向状态
+
+|               | 不带WebView |   WebView 非全屏 |   WebView 全屏 或 沉浸式状态栏 |
+|---------------|-------------|-----------------|-------------------------------|
+|   adjustPan   |   有效      |       失效      |           失效                 |
+|   adjustResize|   有效      |       有效      |           失效                 |
+
+autoAdapterKeyboard
+
+**传参：**
+
+**返回结果：**
+
+```
+{"code":200,"desc":"","result":''}
+```
+
+**H5调用示例：**
+
+```
+if (window.device) {
+    let result = window.device.autoAdapterKeyboard()
+    console.log(result);
+    alert(result);
+}
+```
+
+### 11.获取屏幕分辨率
 
 `getScreenWH`
 
@@ -1211,7 +1238,7 @@ if (window.device) {
 }
 ```
 
-### 10.获取ip地址
+### 12.获取ip地址
 
 `getIpAddress`
 
@@ -1235,7 +1262,7 @@ if (window.device) {
 }
 ```
 
-### 11.设置webView是否可缩放
+### 13.设置webView是否可缩放
 
 `setWebViewScalable`
 

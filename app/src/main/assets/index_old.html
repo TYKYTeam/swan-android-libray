@@ -153,6 +153,7 @@
                     <button type="default" onclick="getScreenOrientation()">获取当前屏幕方向状态</button>
                     <button type="default" onclick="setScreenOrientation('0')">设置当前屏幕方向0</button>
                     <button type="default" onclick="setScreenOrientation('1')">设置当前屏幕方向1</button>
+                    <button type="default" onclick="autoAdapterKeyboard()">软件盘webview全屏遮挡问题处理</button>
                     <button type="default" onclick="getScreenWH()">获取当前屏幕分辨率</button>
                     <button type="default" onclick="getIpAddress()">获取ip地址</button>
                     <button type="default" onclick="setWebViewScalable()">设置webView是否可缩放</button>
@@ -1121,6 +1122,15 @@
             }
 
         }
+
+        function autoAdapterKeyboard(orientation) {
+            if (window.device) {
+                let result = window.device.autoAdapterKeyboard()
+                console.log(result);
+                alert(result);
+            }
+        }
+
 
         function getScreenWH() {
             if (window.device) {

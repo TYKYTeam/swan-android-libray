@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.RomUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.google.gson.Gson;
 import com.tyky.webviewBase.annotation.WebViewInterface;
+import com.tyky.webviewBase.event.AutoAdapterKeyboardEvent;
 import com.tyky.webviewBase.event.ScreenOrientationEvent;
 import com.tyky.webviewBase.event.WebViewScalableEvent;
 import com.tyky.webviewBase.event.TakeScreenshotEvent;
@@ -172,6 +173,15 @@ public class DeviceJsInterface {
         ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
         int screenOrientation = paramModel.getOrientation();
         EventBus.getDefault().post(new ScreenOrientationEvent(screenOrientation));
+        return gson.toJson(ResultModel.success(""));
+    }
+
+    /**
+     * 处理软件盘遮挡输入框问题（webView全屏，adjustResize、adjustPan属性会失效 ）
+     */
+    @JavascriptInterface
+    public String autoAdapterKeyboard() {
+        EventBus.getDefault().post(new AutoAdapterKeyboardEvent());
         return gson.toJson(ResultModel.success(""));
     }
 
