@@ -14,17 +14,17 @@ public class AndroidBug5497Workaround {
     // For more information, see https://code.google.com/p/android/issues/detail?id=5497
     // To use this class, simply invoke assistActivity() on an Activity that already has its content view set.
 
-    public static void assistActivity (Activity activity) {
-        new AndroidBug5497Workaround(activity);
+    public static void assistActivity (Activity activity, boolean isFitWindow) {
+        new AndroidBug5497Workaround(activity, isFitWindow);
     }
 
-    private Activity mActivity;
     private View mChildOfContent;
+    private boolean mIsFitWindow;
     private int usableHeightPrevious;
     private FrameLayout.LayoutParams frameLayoutParams;
 
-    private AndroidBug5497Workaround(Activity activity) {
-        mActivity = activity;
+    private AndroidBug5497Workaround(Activity activity, boolean isFitWindow) {
+        mIsFitWindow = isFitWindow;
         FrameLayout content = (FrameLayout) activity.findViewById(android.R.id.content);
         mChildOfContent = content.getChildAt(0);
         mChildOfContent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -47,8 +47,6 @@ public class AndroidBug5497Workaround {
                 // keyboard probably just became hidden
                 frameLayoutParams.height = usableHeightSansKeyboard;
             }
-            // 防止移动时显示window背景
-            mActivity.getWindow().setBackgroundDrawable(null);
             mChildOfContent.requestLayout();
             usableHeightPrevious = usableHeightNow;
         }
@@ -57,6 +55,9 @@ public class AndroidBug5497Workaround {
     private int computeUsableHeight() {
         Rect r = new Rect();
         mChildOfContent.getWindowVisibleDisplayFrame(r);
+        if (mIsFitWindow) {
+            return r.bottom;
+        }
         return (r.bottom - r.top);// 全屏模式下： return r.bottom
     }
 

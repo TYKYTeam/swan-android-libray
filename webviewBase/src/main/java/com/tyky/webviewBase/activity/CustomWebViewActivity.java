@@ -78,6 +78,7 @@ public class CustomWebViewActivity extends AppCompatActivity {
     //String url = "http://10.232.241.118:8080/#/pages/index/index";
     private CustomWebView customWebView;
     private ImageView ivPreview;
+    private boolean isFitWindow = false; // 是否填充状态栏
 
     private ConstraintLayout clLoading;
 
@@ -198,7 +199,7 @@ public class CustomWebViewActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void immersiveBar(ImmersiveBarEvent event) {
         boolean isStatusBarVisible = event.isStatusBarVisible();
-        boolean isFitWindow = event.isFitWindow();
+        isFitWindow = event.isFitWindow();
         boolean isLight = event.isLight();
         boolean isNavBarVisible = event.isNavBarVisible();
         String colorStr = event.getColor();
@@ -238,7 +239,7 @@ public class CustomWebViewActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void AutoAdapterKeyboard(AutoAdapterKeyboardEvent event) {
         // 解决webview全屏遮挡输入框问题
-        AndroidBug5497Workaround.assistActivity(this);
+        AndroidBug5497Workaround.assistActivity(this, isFitWindow);
     }
 
    /* @RequiresApi(api = Build.VERSION_CODES.M)
