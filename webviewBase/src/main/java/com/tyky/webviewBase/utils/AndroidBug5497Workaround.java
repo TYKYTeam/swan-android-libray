@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 
+import com.blankj.utilcode.util.BarUtils;
+
 /**
  *
  */
@@ -56,7 +58,7 @@ public class AndroidBug5497Workaround {
         Rect r = new Rect();
         mChildOfContent.getWindowVisibleDisplayFrame(r);
         if (mIsFitWindow) {
-            return r.bottom;
+            return r.bottom + BarUtils.getActionBarHeight();
         }
         return (r.bottom - r.top);// 全屏模式下： return r.bottom
     }
