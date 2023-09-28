@@ -1210,7 +1210,10 @@ autoAdapterKeyboard
 
 ```
 if (window.device) {
-    let result = window.device.autoAdapterKeyboard()
+    let content = {
+        isFitWindow
+    }
+    let result = window.device.autoAdapterKeyboard(JSON.stringify(content))
     console.log(result);
     alert(result);
 }
