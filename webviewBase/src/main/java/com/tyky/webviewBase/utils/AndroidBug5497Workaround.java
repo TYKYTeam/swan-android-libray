@@ -21,12 +21,13 @@ public class AndroidBug5497Workaround {
     }
 
     private View mChildOfContent;
-    private boolean mIsFitWindow;
+    // 是否是全屏
+    private final boolean mIsFullScreen;
     private int usableHeightPrevious;
     private FrameLayout.LayoutParams frameLayoutParams;
 
-    private AndroidBug5497Workaround(Activity activity, boolean isFitWindow) {
-        mIsFitWindow = isFitWindow;
+    private AndroidBug5497Workaround(Activity activity, boolean isFullScreen) {
+        mIsFullScreen = isFullScreen;
         FrameLayout content = (FrameLayout) activity.findViewById(android.R.id.content);
         mChildOfContent = content.getChildAt(0);
         mChildOfContent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -57,10 +58,11 @@ public class AndroidBug5497Workaround {
     private int computeUsableHeight() {
         Rect r = new Rect();
         mChildOfContent.getWindowVisibleDisplayFrame(r);
-        if (mIsFitWindow) {
-            return r.bottom + BarUtils.getActionBarHeight();
+        if (mIsFullScreen) {
+            // 全屏模式下
+            return r.bottom;
         }
-        return (r.bottom - r.top);// 全屏模式下： return r.bottom
+        return (r.bottom - r.top);
     }
 
 }

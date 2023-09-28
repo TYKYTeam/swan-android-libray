@@ -180,8 +180,11 @@ public class DeviceJsInterface {
      * 处理软件盘遮挡输入框问题（webView全屏，adjustResize、adjustPan属性会失效 ）
      */
     @JavascriptInterface
-    public String autoAdapterKeyboard() {
-        EventBus.getDefault().post(new AutoAdapterKeyboardEvent());
+    public String autoAdapterKeyboard(String paramStr) {
+        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        AutoAdapterKeyboardEvent autoAdapterKeyboardEvent = new AutoAdapterKeyboardEvent();
+        autoAdapterKeyboardEvent.setFullScreen(paramModel.isFitWindow());
+        EventBus.getDefault().post(autoAdapterKeyboardEvent);
         return gson.toJson(ResultModel.success(""));
     }
 
