@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.blankj.utilcode.util.ThreadUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.github.barteksc.pdfviewer.PDFView;
+import com.github.barteksc.pdfviewer.listener.OnRenderListener;
 import com.kongzue.dialogx.dialogs.WaitDialog;
 import com.socks.library.KLog;
 import com.tyky.media.R;
@@ -200,6 +201,13 @@ public class FilePreviewActivity extends AppCompatActivity {
                 .enableAnnotationRendering(true)
                 //.scrollHandle(new DefaultScrollHandle(PdfShowActivity.this))
                 .spacing(10) // in dp
+                // 横屏时也可以自适应宽度
+                .onRender(new OnRenderListener() {
+                    @Override
+                    public void onInitiallyRendered(int nbPages, float pageWidth, float pageHeight) {
+                        pdfView.fitToWidth();
+                    }
+                })
                 .onLoad(nbPages -> {
                     WaitDialog.dismiss();
                     updateDisplayView(true);
