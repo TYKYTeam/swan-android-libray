@@ -193,6 +193,8 @@ public class FilePreviewActivity extends AppCompatActivity {
             ToastUtils.showLong("pdf预览文件不存在");
             return;
         }
+        pdfView.fitToWidth();
+        pdfView.zoomWithAnimation(1f);
         pdfView.fromFile(pdfFile)   //从链接加载pdf文件预览
                 .defaultPage(0)
                 .swipeHorizontal(false)
@@ -216,8 +218,7 @@ public class FilePreviewActivity extends AppCompatActivity {
                     ToastUtils.showLong("文件预览失败");
                 })
                 .load();
-        pdfView.fitToWidth();
-        pdfView.zoomWithAnimation(1f);
+
     }
 
     @Override

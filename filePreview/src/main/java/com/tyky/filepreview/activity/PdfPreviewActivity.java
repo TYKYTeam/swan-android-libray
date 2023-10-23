@@ -46,6 +46,8 @@ public class PdfPreviewActivity extends AppCompatActivity {
                     URLConnection urlConnection = new URL(fileContent).openConnection();
                     InputStream inputStream = urlConnection.getInputStream();
                     runOnUiThread(() -> {
+                        pdfView.fitToWidth();
+                        pdfView.zoomWithAnimation(1f);
                         pdfView.fromStream(inputStream)   //从链接加载pdf文件预览
                                 .defaultPage(0)
                                 .swipeHorizontal(false)
@@ -63,8 +65,6 @@ public class PdfPreviewActivity extends AppCompatActivity {
                                 })
                                 .onLoad(nbPages -> dialog.doDismiss())
                                 .load();
-                        pdfView.fitToWidth();
-                        pdfView.zoomWithAnimation(1f);
                     });
                 } catch (IOException e) {
                     runOnUiThread(() -> {

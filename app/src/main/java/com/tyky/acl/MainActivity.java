@@ -10,7 +10,9 @@ public class MainActivity extends CustomWebViewActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadUrl("/index_old.html");
-//        loadUrl("http://10.72.0.59:8088/pad/index.html");
+
+        // 武汉硚口项目测试环境地址，账号：admin   密码：Fgj123456
+//        loadUrl("http://wuhantaiji.tpddns.cn:8009/pad/#/");
 
         //loadUrl("http://wuhantaiji.tpddns.cn:8056/static/app/test06.html?r=212");
 //        loadUrl("http://ark.tyky.com.cn:35603/mobile/native/#/");
