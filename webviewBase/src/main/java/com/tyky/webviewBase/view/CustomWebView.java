@@ -22,6 +22,7 @@ import java.util.List;
 public class CustomWebView extends WebView {
 
     private CustomWebViewChrome customWebViewChrome;
+    private CustomWebViewClient customWebViewClient;
 
     public CustomWebView(@NonNull Context context) {
         super(context);
@@ -90,7 +91,8 @@ public class CustomWebView extends WebView {
         //addJavascriptInterface(new WebViewJavaScript(), "android");
         customWebViewChrome = new CustomWebViewChrome(this);
         setWebChromeClient(customWebViewChrome);
-        setWebViewClient(new CustomWebViewClient());
+        customWebViewClient = new CustomWebViewClient();
+        setWebViewClient(customWebViewClient);
 
         //设置下载文件监听器
         setDownloadListener(new WebviewDownloader(getContext()));
@@ -125,6 +127,10 @@ public class CustomWebView extends WebView {
 
     public CustomWebViewChrome getCustomWebViewChrome() {
         return customWebViewChrome;
+    }
+
+    public CustomWebViewClient getCustomWebViewClient() {
+        return customWebViewClient;
     }
 
 }

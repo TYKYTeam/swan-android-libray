@@ -18,25 +18,29 @@ import com.tyky.webviewBase.event.UrlLoadFinishEvent;
 import org.greenrobot.eventbus.EventBus;
 
 public class CustomWebViewClient extends WebViewClient {
+    /**
+     * 判断页面是否加载完成
+     */
+    private boolean mIsLoading;
 
     @Override
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
-        KLog.d("页面加载结束", url);
+        KLog.d("onPageFinished: " + url);
+        view.getSettings().setBlockNetworkImage(false);
         EventBus.getDefault().post(new UrlLoadFinishEvent());
     }
 
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
-        KLog.d("页面开始加载", url);
+        KLog.d("onPageStarted" + url);
     }
 
     @Override
     public void onPageCommitVisible(WebView view, String url) {
         super.onPageCommitVisible(view, url);
-        KLog.d("页面onPageCommitVisible",url);
-
+        KLog.d("页面onPageCommitVisible: " + url);
     }
 
     /**
@@ -44,8 +48,8 @@ public class CustomWebViewClient extends WebViewClient {
      */
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        handleUrl(view, url);
-        return true;
+        KLog.d("shouldOverrideUrlLoading: " + url);
+        return handleUrl(view, url);
     }
 
     /**
@@ -59,19 +63,35 @@ public class CustomWebViewClient extends WebViewClient {
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
         String url = request.getUrl().toString();
-        handleUrl(view, url);
-        return true;
+        KLog.d("shouldOverrideUrlLoading: " + url);
+        return handleUrl(view, url);
     }
 
     @SuppressLint("MissingPermission")
-    private void handleUrl(WebView view, String url) {
+    private boolean handleUrl(WebView view, String url) {
         String phone = url.substring(4);
-        if (url.contains("tel")) {
+        if (url.contains("tel:")) {
             PhoneUtils.dial(phone);
-        } else if (url.contains("sms")) {
+            return true;
+        }
+        if (url.contains("sms")) {
             PhoneUtils.sendSms(phone, "");
-        } else {
+            return true;
+        }
+        if (!(url.startsWith("http") || url.startsWith("https"))) {
+            return true;
+        }
+        WebView.HitTestResult hitTestResult = view.getHitTestResult();
+        int hitType = hitTestResult.getType();
+        if (hitType != WebView.HitTestResult.UNKNOWN_TYPE) {
+            KLog.d("WebViewManger", "没有进行重定向操作");
+            //这里执行自定义的操作
             view.loadUrl(url);
+            return true;
+        } else {
+            KLog.d("WebViewManger", "进行了重定向操作");
+            //重定向时hitType为0 ,执行默认的操作
+            return false;
         }
     }
 
