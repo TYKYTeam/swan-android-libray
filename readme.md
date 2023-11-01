@@ -1306,12 +1306,11 @@ function setWebViewScalable() {
 }
 ```
 
-### 14.设置webView是否可缩放
+### 14.触发返回上一个界面
 
 `onBack`
 
 触发返回。
-viewport有几个关键属性
 
 **返回结果：**
 
