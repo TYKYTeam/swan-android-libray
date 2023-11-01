@@ -1306,6 +1306,31 @@ function setWebViewScalable() {
 }
 ```
 
+### 14.设置webView是否可缩放
+
+`onBack`
+
+触发返回。
+viewport有几个关键属性
+
+**返回结果：**
+
+```js
+{"code":200,"desc":"","result":""}
+```
+
+**H5调用示例：**
+
+```
+function onBack() {
+    if (window.device) {
+        let result = window.device.onBack()
+        alert(result)
+        console.log(result)
+    }
+}
+```
+
 ## storage使用
 ### 1.保存数据
 

@@ -2,6 +2,7 @@ package com.tyky.webviewBase.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Build;
 import android.util.AttributeSet;
 
 import androidx.annotation.NonNull;
@@ -51,6 +52,9 @@ public class CustomWebView extends WebView {
         webSettings.setBuiltInZoomControls(false);
         webSettings.setDisplayZoomControls(false);
         webSettings.setAllowFileAccessFromFileURLs(true);
+        // 处理http 和 https 图片混合的问题
+        webSettings.setMixedContentMode(WebSettings.LOAD_NORMAL);
+        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
         // 视频播放需要使用
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 16) {
@@ -91,7 +95,7 @@ public class CustomWebView extends WebView {
         //addJavascriptInterface(new WebViewJavaScript(), "android");
         customWebViewChrome = new CustomWebViewChrome(this);
         setWebChromeClient(customWebViewChrome);
-        customWebViewClient = new CustomWebViewClient();
+        customWebViewClient = new CustomWebViewClient(this);
         setWebViewClient(customWebViewClient);
 
         //设置下载文件监听器

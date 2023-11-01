@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.ScreenUtils;
 import com.google.gson.Gson;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.event.AutoAdapterKeyboardEvent;
+import com.tyky.webviewBase.event.BackPressEvent;
 import com.tyky.webviewBase.event.ScreenOrientationEvent;
 import com.tyky.webviewBase.event.WebViewScalableEvent;
 import com.tyky.webviewBase.event.TakeScreenshotEvent;
@@ -223,5 +224,15 @@ public class DeviceJsInterface {
         boolean isWebViewScalable = paramModel.isWebViewScalable();
         EventBus.getDefault().post(new WebViewScalableEvent(isWebViewScalable));
         return gson.toJson(ResultModel.success(isWebViewScalable));
+    }
+
+    /**
+     * 设置支持缩放
+     * @return
+     */
+    @JavascriptInterface
+    public String onBack() {
+        EventBus.getDefault().post(new BackPressEvent());
+        return gson.toJson(ResultModel.success(""));
     }
 }

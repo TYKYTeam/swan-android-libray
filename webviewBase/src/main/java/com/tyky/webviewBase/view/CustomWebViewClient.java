@@ -3,6 +3,7 @@ package com.tyky.webviewBase.view;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Build;
+import android.view.View;
 
 import androidx.annotation.RequiresApi;
 
@@ -18,17 +19,21 @@ import com.tyky.webviewBase.event.UrlLoadFinishEvent;
 import org.greenrobot.eventbus.EventBus;
 
 public class CustomWebViewClient extends WebViewClient {
-    /**
-     * 判断页面是否加载完成
-     */
-    private boolean mIsLoading;
+    private final CustomWebView webView;
+
+    public CustomWebViewClient(CustomWebView webView) {
+        this.webView = webView;
+    }
 
     @Override
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
         KLog.d("onPageFinished: " + url);
-        view.getSettings().setBlockNetworkImage(false);
-        EventBus.getDefault().post(new UrlLoadFinishEvent());
+        // 有重定向时，onPageFinished方法回执行多次，需要使用以下条件来判断页面是否真正加载完毕
+        if (webView.getProgress() == 100) {
+            EventBus.getDefault().post(new UrlLoadFinishEvent());
+            webView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -49,7 +54,7 @@ public class CustomWebViewClient extends WebViewClient {
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
         KLog.d("shouldOverrideUrlLoading: " + url);
-        return handleUrl(view, url);
+        return handleUrl(view, url, null);
     }
 
     /**
@@ -64,11 +69,11 @@ public class CustomWebViewClient extends WebViewClient {
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
         String url = request.getUrl().toString();
         KLog.d("shouldOverrideUrlLoading: " + url);
-        return handleUrl(view, url);
+        return handleUrl(view, url, request);
     }
 
     @SuppressLint("MissingPermission")
-    private boolean handleUrl(WebView view, String url) {
+    private boolean handleUrl(WebView view, String url, WebResourceRequest request) {
         String phone = url.substring(4);
         if (url.contains("tel:")) {
             PhoneUtils.dial(phone);
@@ -91,7 +96,10 @@ public class CustomWebViewClient extends WebViewClient {
         } else {
             KLog.d("WebViewManger", "进行了重定向操作");
             //重定向时hitType为0 ,执行默认的操作
-            return false;
+            if (request == null) {
+                return super.shouldOverrideUrlLoading(view, url);
+            }
+            return super.shouldOverrideUrlLoading(view, request);
         }
     }
 

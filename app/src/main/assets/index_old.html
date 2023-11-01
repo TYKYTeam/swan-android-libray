@@ -158,6 +158,7 @@
                     <button type="default" onclick="getScreenWH()">获取当前屏幕分辨率</button>
                     <button type="default" onclick="getIpAddress()">获取ip地址</button>
                     <button type="default" onclick="setWebViewScalable()">设置webView是否可缩放</button>
+                    <button type="default" onclick="onBack()">返回按钮</button>
                 </div>
             </fieldset>
 
@@ -798,6 +799,14 @@
                     "isWebViewScalable": flag,
                 }
                 let result = window.device.setWebViewScalable(JSON.stringify(content))
+                alert(result)
+                console.log(result)
+            }
+        }
+
+        function onBack() {
+            if (window.device) {
+                let result = window.device.onBack()
                 alert(result)
                 console.log(result)
             }

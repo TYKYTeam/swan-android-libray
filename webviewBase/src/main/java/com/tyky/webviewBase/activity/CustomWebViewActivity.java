@@ -40,6 +40,7 @@ import com.tyky.webviewBase.R;
 import com.tyky.webviewBase.constants.PreviewPicture;
 import com.tyky.webviewBase.constants.RequestCodeConstants;
 import com.tyky.webviewBase.event.AutoAdapterKeyboardEvent;
+import com.tyky.webviewBase.event.BackPressEvent;
 import com.tyky.webviewBase.event.ImagePreviewEvent;
 import com.tyky.webviewBase.event.ImmersiveBarEvent;
 import com.tyky.webviewBase.event.IntentEvent;
@@ -482,6 +483,10 @@ public class CustomWebViewActivity extends AppCompatActivity {
         EventBus.getDefault().post(new JsCallBackEvent(callBackMethod, file.getPath()));
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onBack(BackPressEvent event) {
+        onBackPressed();
+    }
 
     /**
      * 是否开启双击返回
