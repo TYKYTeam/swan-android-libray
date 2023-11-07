@@ -4,12 +4,14 @@ import android.webkit.JavascriptInterface;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.tyky.webviewBase.annotation.WebViewInterface;
 import com.tyky.webviewBase.event.WebviewEvent;
 import com.tyky.webviewBase.model.ParamModel;
 import com.tyky.webviewBase.model.ResultModel;
+import com.tyky.webviewBase.utils.SpeechService;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -84,6 +86,22 @@ public class WebViewJavaScript {
         ParamModel paramModel = gson.fromJson(param, ParamModel.class);
         String content = paramModel.getContent();
         EventBus.getDefault().post(new WebviewEvent(content,3));
+        return gson.toJson(ResultModel.success(""));
+    }
+
+    /**
+     * 文字转语音
+     *
+     * @param paramStr
+     */
+    @JavascriptInterface
+    public String speakTextInBase(String paramStr) {
+        ParamModel paramModel = gson.fromJson(paramStr, ParamModel.class);
+        String content = paramModel.getContent();
+        if (StringUtils.isEmpty(content)) {
+            return gson.toJson(ResultModel.errorParam());
+        }
+        SpeechService.speakText(content);
         return gson.toJson(ResultModel.success(""));
     }
 

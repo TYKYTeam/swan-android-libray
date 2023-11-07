@@ -106,6 +106,31 @@ if (window.webviewBase) {
     console.log(result)
 }
 ```
+
+### 4.文本转语音
+`speakTextInBase()`
+
+获取当前APP相关版本号等信息
+
+**传参：无需传参**
+
+**返回结果：**
+```
+"{"code":200,"desc":"","result":""}"
+```
+
+**H5调用示例：**
+```
+ if (window.webviewBase) {
+    let content = {
+        content: "这是一段测试语音的文本"
+    }
+    let result = window.webviewBase.speakTextInBase(JSON.stringify(content))
+    alert(result);
+    console.log(result)
+}
+```
+
 ## filePreview 文件预览
 此模块由于依赖的pdf库较大（15M） 所以单独出来
 
