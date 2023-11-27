@@ -44,10 +44,14 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled true
+            proguardFile 'proguard-rules.pro'
+        }
         release {
-            minifyEnabled false
+            minifyEnabled true
             //混淆配置修改
-
+            proguardFile 'proguard-rules.pro'
         }
     }
     compileOptions {
