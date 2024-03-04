@@ -92,6 +92,11 @@ public class CustomWebView extends WebView {
         String userAgentString = webSettings.getUserAgentString();
         webSettings.setUserAgentString(userAgentString + " tyky_android");
 
+        // 处理cookie无法使用问题
+        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            CookieManager.getInstance().setAcceptThirdPartyCookies(this, true);
+        }
+
         //addJavascriptInterface(new WebViewJavaScript(), "android");
         customWebViewChrome = new CustomWebViewChrome(this);
         setWebChromeClient(customWebViewChrome);
