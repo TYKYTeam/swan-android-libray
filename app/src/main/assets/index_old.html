@@ -52,6 +52,7 @@
                 <button type="default" onclick="reloadWebview()">webview重载首页</button>
                 <button type="default" onclick="getAppInfo()">获取APP信息</button>
                 <button type="default" onclick="setWebviewUa()">设置Webview的User Agent</button>
+                <button type="default" onclick="speakTextInBase()">文本转语音</button>
                 <div>
                     <button
                         onclick="downloadImage('https://img2022.cnblogs.com/blog/1210268/202205/1210268-20220523164528070-228215774.jpg','测试')">a标签下载</button>
@@ -459,6 +460,17 @@
                 setTimeout(()=>{
                     console.log("修改后UA：", navigator.userAgent)
                 },2000)
+            }
+        }
+
+        function speakTextInBase() {
+            if (window.webviewBase) {
+                let content = {
+                    content: "这是一段测试语音的文本"
+                }
+                let result = window.webviewBase.speakTextInBase(JSON.stringify(content))
+                alert(result);
+                console.log(result)
             }
         }
 

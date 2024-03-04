@@ -36,6 +36,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.socks.library.KLog;
 import com.tencent.smtt.sdk.QbSdk;
+import com.tencent.smtt.sdk.WebSettings;
 import com.tyky.webviewBase.R;
 import com.tyky.webviewBase.constants.PreviewPicture;
 import com.tyky.webviewBase.constants.RequestCodeConstants;
@@ -525,5 +526,13 @@ public class CustomWebViewActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    protected CustomWebView getCustomWebView() {
+        return customWebView;
+    }
+
+    protected WebSettings getWebSettings() {
+        return customWebView != null ? customWebView.getSettings() : null;
     }
 }
